@@ -64,10 +64,8 @@ class Settings(BaseSettings):
     NEW_USER_COINS: int = 100            # Starting wallet balance
 
     # ── CORS ─────────────────────────────────────────────────────────────────
-    # Not needed when the backend serves the frontend itself (same origin),
-    # but kept permissive for local dev servers / Live Server setups.
     CORS_ORIGINS: str = (
-        "http://localhost:3000,http://localhost:5173,http://localhost:5500,"
+        "*,http://localhost:3000,http://localhost:5173,http://localhost:5500,"
         "http://127.0.0.1:5500,http://localhost:8000,http://127.0.0.1:8000,"
         "http://localhost:8080"
     )
@@ -83,6 +81,8 @@ class Settings(BaseSettings):
 
     def get_cors_origins(self) -> List[str]:
         """Return CORS origins as a list."""
+        if "*" in self.CORS_ORIGINS:
+            return ["*"]
         return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
 
 
