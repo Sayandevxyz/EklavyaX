@@ -14,7 +14,7 @@ const API_BASE =
   window.EKLAVYAX_API_BASE ||
   localStorage.getItem("eklavya_api_base") ||
   (window.location.hostname.includes("vercel.app")
-    ? "https://eklavyax.onrender.com/"
+    ? "https://eklavyax.onrender.com"
     : "");
 
 
