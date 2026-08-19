@@ -1354,3 +1354,35 @@ aside .profile-info span {
         overflow-x: hidden !important;
     }
 }
+/* =========================================================
+   REMOVE LARGE LOGO / SPLASH IMAGE
+   Keep only the small sidebar logo
+   ========================================================= */
+
+body > img,
+.content > img,
+main > img,
+.container > img {
+  display: none !important;
+}
+
+/* Prevent any unwanted full-screen logo/banner */
+.logo-splash,
+.splash-logo,
+.hero-logo,
+.page-logo,
+.loading-logo {
+  display: none !important;
+}
+
+/* Keep sidebar logo */
+aside.sidebar .logo {
+  display: flex !important;
+}
+
+aside.sidebar .logo img {
+  display: block !important;
+  width: 38px !important;
+  height: 38px !important;
+  object-fit: contain !important;
+}
