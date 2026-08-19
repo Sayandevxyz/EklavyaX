@@ -1185,3 +1185,172 @@ aside .profile-info span {
     padding: 10px !important;
   }
 }
+/* =========================================================
+   EKLAVYAX — LOGO / LAYOUT FIX
+   ========================================================= */
+
+/* Sidebar logo MUST stay small */
+.container > .sidebar .logo {
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 18px 14px !important;
+    overflow: hidden !important;
+}
+
+.container > .sidebar .logo img {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 !important;
+}
+
+.container > .sidebar .logo-text {
+    width: auto !important;
+    max-width: none !important;
+    font-size: 1.25rem !important;
+    white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   IMPORTANT:
+   Prevent logo.png from appearing as a giant image
+   anywhere in the main content.
+   ========================================================= */
+
+.content > img,
+.courses > img,
+.courses-section > img,
+.catalog-section > img {
+    display: none !important;
+}
+
+
+/* Any accidental logo image outside sidebar */
+.content img[src*="logo.png"] {
+    display: none !important;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.container > .content {
+    margin-left: 240px !important;
+    width: calc(100% - 240px) !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 28px 32px 48px !important;
+    overflow-x: hidden !important;
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+    .container {
+        display: flex !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+    }
+
+    .container > .sidebar {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 240px !important;
+        height: 100vh !important;
+        z-index: 1000 !important;
+    }
+
+    .container > .content {
+        margin-left: 240px !important;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        display: block !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+    }
+
+    .container > .sidebar {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        left: auto !important;
+        top: auto !important;
+        overflow: visible !important;
+    }
+
+    .container > .sidebar .logo {
+        height: 58px !important;
+        padding: 10px 14px !important;
+    }
+
+    .container > .sidebar .logo img {
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        max-width: 32px !important;
+        max-height: 32px !important;
+    }
+
+    nav.menu {
+        display: flex !important;
+        flex-direction: row !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        padding: 8px 10px !important;
+        gap: 6px !important;
+        scrollbar-width: none !important;
+    }
+
+    nav.menu::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    nav.menu a {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        white-space: nowrap !important;
+        padding: 9px 12px !important;
+        font-size: 0.72rem !important;
+        transform: none !important;
+    }
+
+    aside .profile {
+        display: none !important;
+    }
+
+    .container > .content {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        padding: 18px 12px 40px !important;
+        overflow-x: hidden !important;
+    }
+}
