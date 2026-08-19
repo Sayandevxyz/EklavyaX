@@ -777,33 +777,38 @@ aside .profile-info span {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
   }
+/* =========================================================
+   RESPONSIVE DESIGN (DESKTOP & TABLET)
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .content {
+    padding: 24px;
+  }
+
+  .courses-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* =========================================================
-   MOBILE
-   IMPORTANT FIX
+   MOBILE RESPONSIVE (PHONES: <= 768px)
    ========================================================= */
 
 @media (max-width: 768px) {
-
   html,
   body {
     width: 100% !important;
     max-width: 100% !important;
-
     overflow-x: hidden !important;
   }
 
   .container {
     display: flex !important;
-
     flex-direction: column !important;
-
     width: 100% !important;
     max-width: 100% !important;
-
     min-width: 0 !important;
-
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -813,291 +818,181 @@ aside .profile-info span {
      ----------------------------- */
 
   .sidebar,
-  aside.sidebar {
+  aside.sidebar,
+  .container > .sidebar {
     position: relative !important;
-
     top: auto !important;
     left: auto !important;
-
     width: 100% !important;
     min-width: 0 !important;
-
+    max-width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
-
     margin: 0 !important;
-
     display: block !important;
-
     overflow: visible !important;
-
     border-right: none !important;
-
-    border-bottom:
-      1px solid rgba(245, 240, 226, 0.1);
-
-    box-shadow:
-      0 5px 20px rgba(0, 0, 0, 0.25);
+    border-bottom: 1px dashed rgba(245, 240, 226, 0.15) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
   }
 
-  /* Logo */
-
   .sidebar .logo,
-  aside .logo {
+  aside .logo,
+  .container > .sidebar .logo {
     width: 100% !important;
-
     display: flex !important;
-
+    align-items: center !important;
     justify-content: flex-start !important;
-
-    padding: 14px 16px !important;
+    gap: 10px !important;
+    padding: 12px 16px !important;
   }
 
   .sidebar .logo img,
-  aside .logo img {
+  aside .logo img,
+  .container > .sidebar .logo img {
     width: 32px !important;
     height: 32px !important;
-
+    min-width: 32px !important;
+    min-height: 32px !important;
     max-width: 32px !important;
     max-height: 32px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 !important;
   }
 
   .sidebar .logo-text,
-  aside .logo-text {
-    font-size: 1.2rem !important;
+  aside .logo-text,
+  .container > .sidebar .logo-text {
+    font-size: 1.25rem !important;
+    white-space: nowrap !important;
   }
 
-  /* Navigation */
-
+  /* Horizontal scrolling navigation on phones */
   nav.menu {
     width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 8px !important;
+    padding: 4px 12px 12px !important;
+    flex: none !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch;
+  }
 
-    display: grid !important;
-
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr)) !important;
-
-    gap: 5px !important;
-
-    padding: 5px 8px 8px !important;
-
-    overflow: visible !important;
+  nav.menu::-webkit-scrollbar {
+    display: none !important;
   }
 
   nav.menu a {
-    width: 100% !important;
-
-    min-width: 0 !important;
-
-    justify-content: center !important;
-
-    flex-direction: column !important;
-
-    gap: 3px !important;
-
-    padding: 7px 3px !important;
-
-    border-radius: 8px !important;
-
-    font-size: 0.62rem !important;
-
-    line-height: 1.1 !important;
-
-    text-align: center !important;
-
-    white-space: normal !important;
+    width: auto !important;
+    min-width: max-content !important;
+    padding: 8px 14px !important;
+    gap: 7px !important;
+    font-size: 0.76rem !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    transform: none !important;
   }
 
   nav.menu a i {
     width: auto !important;
-
-    min-width: 0 !important;
-
-    font-size: 0.8rem !important;
+    min-width: auto !important;
+    font-size: 0.85rem !important;
   }
-
-  /* Hide profile on mobile to save space */
 
   aside .profile {
     display: none !important;
   }
 
   /* -----------------------------
-     CONTENT
+     MOBILE MAIN CONTENT
      ----------------------------- */
 
-  .content {
+  .content,
+  main.content,
+  .container > .content {
     position: relative !important;
-
     width: 100% !important;
-
     max-width: 100% !important;
-
     min-width: 0 !important;
-
-    margin: 0 !important;
-
-    padding: 14px 10px 35px !important;
-
-    gap: 15px !important;
-
+    margin-left: 0 !important;
+    padding: 16px 14px 40px !important;
+    gap: 16px !important;
     overflow-x: hidden !important;
   }
 
+  .page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .explore-more-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 11px 16px !important;
+  }
+
   /* -----------------------------
-     COURSES
+     COURSES & GRID
      ----------------------------- */
 
   .courses {
     width: 100% !important;
-
     max-width: 100% !important;
-
     min-width: 0 !important;
-
-    padding: 15px !important;
-
-    border-radius: 14px !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
   }
-
-  .courses > div:first-child {
-    width: 100% !important;
-
-    display: flex !important;
-
-    flex-direction: column !important;
-
-    align-items: flex-start !important;
-
-    gap: 10px !important;
-  }
-
-  .courses h2 {
-    font-size: 1.35rem !important;
-  }
-
-  .courses > div:first-child > div {
-    width: 100% !important;
-
-    display: block !important;
-  }
-
-  .courses > div:first-child p {
-    font-size: 0.78rem !important;
-
-    line-height: 1.45 !important;
-  }
-
-  .courses > div:first-child > a {
-    width: 100% !important;
-
-    max-width: 100% !important;
-
-    padding: 10px 12px !important;
-
-    font-size: 0.78rem !important;
-  }
-
-  /* -----------------------------
-     COURSE GRID
-     ----------------------------- */
 
   .courses-grid {
     display: grid !important;
-
     width: 100% !important;
-
     max-width: 100% !important;
-
     min-width: 0 !important;
-
     grid-template-columns: 1fr !important;
-
-    gap: 12px !important;
-
-    margin-top: 15px !important;
+    gap: 14px !important;
+    margin-top: 14px !important;
   }
-
-  /* -----------------------------
-     COURSE CARD
-     ----------------------------- */
 
   .course-card {
     width: 100% !important;
-
     max-width: 100% !important;
-
     min-width: 0 !important;
-
-    padding: 13px !important;
-
-    border-radius: 13px !important;
-
-    overflow: hidden !important;
+    padding: 14px !important;
+    border-radius: 14px !important;
   }
 
   .course-card h3 {
-    font-size: 0.92rem !important;
+    font-size: 0.95rem !important;
   }
 
   .course-card p {
-    font-size: 0.73rem !important;
-
-    line-height: 1.4 !important;
-  }
-
-  .course-card img {
-    height: 130px !important;
-
-    max-width: 100% !important;
-  }
-
-  .course-card .btn-primary,
-  .course-card .btn-secondary {
-    width: 100% !important;
-
-    min-height: 38px !important;
-
-    padding: 8px 10px !important;
-
-    font-size: 0.73rem !important;
+    font-size: 0.76rem !important;
   }
 
   /* -----------------------------
-     CATALOG
+     CATALOG BANNER
      ----------------------------- */
 
   .catalog-section {
     width: 100% !important;
-
     max-width: 100% !important;
-
     min-width: 0 !important;
-
-    padding: 15px !important;
-
+    padding: 16px !important;
     display: flex !important;
-
     flex-direction: column !important;
-
     align-items: stretch !important;
-
     gap: 12px !important;
-
-    border-radius: 14px !important;
-  }
-
-  .catalog-section h3 {
-    font-size: 1rem !important;
-  }
-
-  .catalog-section p {
-    font-size: 0.75rem !important;
+    border-radius: 16px !important;
   }
 
   .catalog-section a {
     width: 100% !important;
-
     justify-content: center !important;
   }
 
@@ -1106,282 +1001,39 @@ aside .profile-info span {
      ----------------------------- */
 
   .app-modal {
-    padding: 10px !important;
-
-    align-items: flex-start !important;
+    padding: 12px !important;
   }
 
   .modal-card {
     width: 100% !important;
-
     max-width: 100% !important;
-
-    max-height: calc(100vh - 20px) !important;
-
-    padding: 15px !important;
-
+    padding: 16px !important;
     border-radius: 14px !important;
-  }
-
-  .modal-header h2 {
-    font-size: 1.15rem !important;
   }
 }
 
 /* =========================================================
-   SMALL PHONES
+   EXTRA SMALL PHONES (<= 480px)
    ========================================================= */
 
-@media (max-width: 420px) {
-
-  nav.menu {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr)) !important;
-  }
-
+@media (max-width: 480px) {
   nav.menu a {
-    font-size: 0.58rem !important;
-
-    padding: 6px 2px !important;
-  }
-
-  nav.menu a i {
+    padding: 7px 11px !important;
     font-size: 0.72rem !important;
   }
 
-  .content {
-    padding: 10px 8px 30px !important;
+  .content,
+  main.content,
+  .container > .content {
+    padding: 12px 10px 35px !important;
   }
 
   .courses {
     padding: 12px !important;
   }
 
-  .courses h2 {
-    font-size: 1.2rem !important;
+  .courses h1,
+  .page-title-row h1 {
+    font-size: 1.3rem !important;
   }
-
-  .course-card {
-    padding: 11px !important;
-  }
-}
-
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 350px) {
-
-  nav.menu {
-    grid-template-columns:
-      repeat(3, 1fr) !important;
-  }
-
-  nav.menu a {
-    font-size: 0.52rem !important;
-  }
-
-  .courses {
-    padding: 10px !important;
-  }
-}
-/* =========================================================
-   EKLAVYAX — LOGO / LAYOUT FIX
-   ========================================================= */
-
-/* Sidebar logo MUST stay small */
-.container > .sidebar .logo {
-    width: 100% !important;
-    height: auto !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    padding: 18px 14px !important;
-    overflow: hidden !important;
-}
-
-.container > .sidebar .logo img {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    min-height: 34px !important;
-    max-width: 34px !important;
-    max-height: 34px !important;
-    object-fit: contain !important;
-    display: block !important;
-    margin: 0 !important;
-}
-
-.container > .sidebar .logo-text {
-    width: auto !important;
-    max-width: none !important;
-    font-size: 1.25rem !important;
-    white-space: nowrap !important;
-}
-
-
-/* =========================================================
-   IMPORTANT:
-   Prevent logo.png from appearing as a giant image
-   anywhere in the main content.
-   ========================================================= */
-
-.content > img,
-.courses > img,
-.courses-section > img,
-.catalog-section > img {
-    display: none !important;
-}
-
-
-/* Any accidental logo image outside sidebar */
-.content img[src*="logo.png"] {
-    display: none !important;
-}
-
-
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
-
-.container > .content {
-    margin-left: 240px !important;
-    width: calc(100% - 240px) !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    padding: 28px 32px 48px !important;
-    overflow-x: hidden !important;
-}
-
-
-/* =========================================================
-   DESKTOP
-   ========================================================= */
-
-@media (min-width: 769px) {
-
-    .container {
-        display: flex !important;
-        width: 100% !important;
-        min-height: 100vh !important;
-    }
-
-    .container > .sidebar {
-        position: fixed !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 240px !important;
-        height: 100vh !important;
-        z-index: 1000 !important;
-    }
-
-    .container > .content {
-        margin-left: 240px !important;
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-    .container {
-        display: block !important;
-        width: 100% !important;
-        min-height: 100vh !important;
-    }
-
-    .container > .sidebar {
-        position: relative !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        min-height: 0 !important;
-        left: auto !important;
-        top: auto !important;
-        overflow: visible !important;
-    }
-
-    .container > .sidebar .logo {
-        height: 58px !important;
-        padding: 10px 14px !important;
-    }
-
-    .container > .sidebar .logo img {
-        width: 32px !important;
-        height: 32px !important;
-        min-width: 32px !important;
-        min-height: 32px !important;
-        max-width: 32px !important;
-        max-height: 32px !important;
-    }
-
-    nav.menu {
-        display: flex !important;
-        flex-direction: row !important;
-        width: 100% !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        padding: 8px 10px !important;
-        gap: 6px !important;
-        scrollbar-width: none !important;
-    }
-
-    nav.menu::-webkit-scrollbar {
-        display: none !important;
-    }
-
-    nav.menu a {
-        flex: 0 0 auto !important;
-        width: auto !important;
-        white-space: nowrap !important;
-        padding: 9px 12px !important;
-        font-size: 0.72rem !important;
-        transform: none !important;
-    }
-
-    aside .profile {
-        display: none !important;
-    }
-
-    .container > .content {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        padding: 18px 12px 40px !important;
-        overflow-x: hidden !important;
-    }
-}
-/* =========================================================
-   REMOVE LARGE LOGO / SPLASH IMAGE
-   Keep only the small sidebar logo
-   ========================================================= */
-
-body > img,
-.content > img,
-main > img,
-.container > img {
-  display: none !important;
-}
-/* Prevent any unwanted full-screen logo/banner */
-.logo-splash,
-.splash-logo,
-.hero-logo,
-.page-logo,
-.loading-logo {
-  display: none !important;
-}
-
-/* Keep sidebar logo */
-aside.sidebar .logo {
-  display: flex !important;
-}
-
-aside.sidebar .logo img {
-  display: block !important;
-  width: 38px !important;
-  height: 38px !important;
-  object-fit: contain !important;
 }
