@@ -1,6 +1,6 @@
 /* =========================================================
-   EklavyaX — STUDENT DASHBOARD
-   Chalkboard & Gamified STEM Learning Aesthetic
+   EKLAVYAX — STUDENT DASHBOARD
+   Responsive Desktop + Tablet + Mobile
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap');
@@ -9,21 +9,31 @@
   --board: #162c22;
   --board-dark: #0f1d16;
   --board-surface: #1a3327;
+
   --chalk: #f5f0e2;
   --chalk-dim: #a9bdae;
+
   --marigold: #eeb43e;
   --marigold-dark: #d4982a;
   --terracotta: #d97a5c;
+
   --paper: #f3ead4;
   --paper-soft: #eae0c8;
   --paper-line: rgba(60, 45, 20, 0.08);
+
   --ink: #2a3b4d;
   --ink-soft: #5a6b78;
+
   --accent-blue: #4059a5;
   --accent-green: #22c55e;
+
   --font-hand: 'Kalam', cursive;
   --font-body: 'Work Sans', sans-serif;
 }
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
   box-sizing: border-box;
@@ -33,40 +43,83 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100vh;
-  background:
-    radial-gradient(1200px 700px at 50% -10%, rgba(255, 255, 255, 0.04), transparent 60%),
-    radial-gradient(900px 600px at 90% 100%, rgba(0, 0, 0, 0.35), transparent 60%),
-    linear-gradient(135deg, #0d1e17 0%, #152b21 50%, #0c1c15 100%);
-  color: var(--chalk);
-  font-family: var(--font-body);
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Chalkboard grid pattern */
+body {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
+
+  background:
+    radial-gradient(
+      1200px 700px at 50% -10%,
+      rgba(255, 255, 255, 0.04),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 600px at 90% 100%,
+      rgba(0, 0, 0, 0.35),
+      transparent 60%
+    ),
+    linear-gradient(
+      135deg,
+      #0d1e17 0%,
+      #152b21 50%,
+      #0c1c15 100%
+    );
+
+  color: var(--chalk);
+  font-family: var(--font-body);
+}
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
+
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px
+    );
+
   background-size: 36px 36px;
-  mask-image: linear-gradient(to bottom, black, transparent 95%);
+
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 95%
+  );
 }
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
 
 .container {
   display: flex;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
 }
 
 /* =========================================================
-   SIDEBAR
+   SIDEBAR — DESKTOP
    ========================================================= */
 
 .sidebar,
@@ -74,123 +127,234 @@ aside.sidebar {
   position: fixed;
   left: 0;
   top: 0;
+
   z-index: 100;
+
   width: 240px;
   height: 100vh;
+
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #11221a 0%, #0d1a14 100%);
+
+  background:
+    linear-gradient(
+      180deg,
+      #11221a 0%,
+      #0d1a14 100%
+    );
+
   border-right: 1.5px dashed rgba(245, 240, 226, 0.15);
-  box-shadow: 10px 0 35px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
+
+  box-shadow:
+    10px 0 35px rgba(0, 0, 0, 0.35);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  flex-shrink: 0;
 }
+
+/* =========================================================
+   LOGO
+   ========================================================= */
 
 .sidebar .logo,
 aside .logo {
   display: flex;
   align-items: center;
+
   gap: 12px;
+
   padding: 26px 22px 20px;
+
+  flex-shrink: 0;
 }
 
 .logo img {
   width: 36px;
   height: 36px;
+
   object-fit: contain;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+
+  flex-shrink: 0;
+
+  filter:
+    drop-shadow(
+      0 3px 6px rgba(0, 0, 0, 0.3)
+    );
 }
 
 .logo-text {
   font-family: var(--font-hand);
+
   font-size: 1.6rem;
   font-weight: 700;
+
   color: var(--marigold);
+
   letter-spacing: 0.5px;
+
+  white-space: nowrap;
 }
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
 nav.menu {
   flex: 1;
+
   display: flex;
   flex-direction: column;
+
   gap: 6px;
+
   padding: 10px 12px;
+
+  min-height: 0;
 }
 
 nav.menu a {
   display: flex;
   align-items: center;
+
   gap: 14px;
+
+  width: 100%;
+
   padding: 11px 16px;
+
   border-radius: 12px;
+
   color: var(--chalk-dim);
+
   font-size: 0.92rem;
   font-weight: 600;
+
   text-decoration: none;
-  transition: all 0.2s ease;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  white-space: nowrap;
 }
 
 nav.menu a i {
   width: 20px;
+
+  min-width: 20px;
+
   text-align: center;
+
   font-size: 1.05rem;
+
   opacity: 0.85;
 }
 
 nav.menu a:hover {
   background: rgba(245, 240, 226, 0.07);
+
   color: var(--chalk);
+
   transform: translateX(4px);
 }
 
 nav.menu a.active {
-  background: linear-gradient(135deg, var(--paper) 0%, var(--paper-soft) 100%);
+  background:
+    linear-gradient(
+      135deg,
+      var(--paper) 0%,
+      var(--paper-soft) 100%
+    );
+
   color: var(--ink);
+
   font-weight: 700;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 nav.menu a.active i {
   color: var(--terracotta);
+
   opacity: 1;
 }
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
 
 aside .profile {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 16px 12px 20px;
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px dashed rgba(245, 240, 226, 0.18);
-  border-radius: 14px;
-  color: var(--chalk);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
 
-aside .profile:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
+  gap: 12px;
+
+  margin: 16px 12px 20px;
+
+  padding: 12px 14px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  border:
+    1px dashed rgba(
+      245,
+      240,
+      226,
+      0.18
+    );
+
+  border-radius: 14px;
+
+  color: var(--chalk);
+
+  cursor: pointer;
+
+  flex-shrink: 0;
 }
 
 aside .profile img {
   width: 42px;
   height: 42px;
+
+  min-width: 42px;
+
   border-radius: 50%;
-  border: 2px solid var(--marigold);
+
+  border:
+    2px solid var(--marigold);
+
   background: var(--paper);
+}
+
+aside .profile .profile-info {
+  min-width: 0;
 }
 
 aside .profile .profile-info strong {
   display: block;
+
   font-family: var(--font-hand);
+
   font-size: 1.05rem;
+
   color: var(--chalk);
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 aside .profile .profile-info span {
   font-size: 0.78rem;
+
   color: var(--terracotta);
+
   font-weight: 600;
 }
 
@@ -199,212 +363,381 @@ aside .profile .profile-info span {
    ========================================================= */
 
 .content {
-  flex-grow: 1;
+  width: calc(100% - 240px);
+
+  max-width: calc(100% - 240px);
+
   min-width: 0;
+
   min-height: 100vh;
+
   margin-left: 240px;
+
   padding: 28px 32px 48px;
+
   display: flex;
   flex-direction: column;
+
   gap: 22px;
+
+  overflow-x: hidden;
 }
 
 /* =========================================================
-   TOP BANNER — Lined Notebook Look
+   TOP BAR
    ========================================================= */
 
 .top-bar {
   position: relative;
+
+  width: 100%;
+  max-width: 100%;
+
   display: flex;
+
   justify-content: space-between;
   align-items: center;
+
+  gap: 20px;
+
   padding: 24px 30px;
+
   background:
-    repeating-linear-gradient(transparent,
+    repeating-linear-gradient(
+      transparent,
       transparent 27px,
-      var(--paper-line) 28px),
-    linear-gradient(135deg, var(--paper) 0%, var(--paper-soft) 100%);
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+      var(--paper-line) 28px
+    ),
+    linear-gradient(
+      135deg,
+      var(--paper) 0%,
+      var(--paper-soft) 100%
+    );
+
+  border:
+    1.5px solid rgba(
+      255,
+      255,
+      255,
+      0.6
+    );
+
   border-radius: 20px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.25);
+
   overflow: hidden;
 }
 
-/* Red notebook margin line on left */
 .top-bar::before {
   content: "";
+
   position: absolute;
+
   left: 18px;
   top: 0;
   bottom: 0;
+
   width: 2px;
-  background: rgba(217, 122, 92, 0.35);
+
+  background:
+    rgba(217, 122, 92, 0.35);
 }
 
 .welcome-text {
+  min-width: 0;
+
   padding-left: 14px;
 }
 
 .welcome-text h1 {
   font-family: var(--font-hand);
-  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+
+  font-size:
+    clamp(
+      1.6rem,
+      2.5vw,
+      2.1rem
+    );
+
   font-weight: 700;
+
   color: var(--ink);
+
   line-height: 1.2;
+
+  overflow-wrap: anywhere;
 }
 
 .welcome-text h2 {
   font-size: 0.95rem;
+
   font-weight: 500;
+
   color: var(--ink-soft);
+
   margin-top: 4px;
 }
 
 .profile-section {
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   gap: 8px;
+
+  flex-shrink: 0;
 }
 
 .profile-section img {
   width: 68px;
   height: 68px;
+
   border-radius: 50%;
-  border: 3px solid var(--marigold);
-  background: #ffffff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+
+  border:
+    3px solid var(--marigold);
+
+  background: #fff;
+
+  box-shadow:
+    0 6px 16px rgba(
+      0,
+      0,
+      0,
+      0.15
+    );
 }
 
 .streak {
   display: inline-flex;
+
   align-items: center;
+  justify-content: center;
+
   gap: 6px;
+
   padding: 6px 14px;
+
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--marigold), var(--terracotta));
-  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--marigold),
+      var(--terracotta)
+    );
+
+  color: #fff;
+
   font-size: 0.78rem;
+
   font-weight: 800;
-  box-shadow: 0 4px 12px rgba(217, 122, 92, 0.3);
+
+  white-space: nowrap;
 }
 
 /* =========================================================
-   STATS GRID
+   STATS
    ========================================================= */
 
 .stats {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
   gap: 16px;
 }
 
 .stat-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  background:
-    repeating-linear-gradient(transparent,
-      transparent 23px,
-      var(--paper-line) 24px),
-    linear-gradient(145deg, var(--paper), var(--paper-soft));
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+  min-width: 0;
 
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 18px 20px;
+
+  background:
+    repeating-linear-gradient(
+      transparent,
+      transparent 23px,
+      var(--paper-line) 24px
+    ),
+    linear-gradient(
+      145deg,
+      var(--paper),
+      var(--paper-soft)
+    );
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 24px rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
 }
 
 .stat-card i {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   width: 44px;
+  min-width: 44px;
+
   height: 44px;
+
   border-radius: 14px;
+
   font-size: 1.15rem;
-  color: #ffffff;
-  flex-shrink: 0;
+
+  color: #fff;
 }
 
 .stat-card h3 {
   font-family: var(--font-hand);
+
   font-size: 1.55rem;
-  font-weight: 700;
+
   color: var(--ink);
+
   line-height: 1.1;
+
+  white-space: nowrap;
 }
 
 .stat-card p {
   font-size: 0.8rem;
+
   font-weight: 600;
+
   color: var(--ink-soft);
 }
 
-/* Stat color variants with dashed borders */
-.stat-card.stat-orange {
+/* Stat colors */
+
+.stat-orange {
   border: 2px dashed var(--terracotta);
 }
 
-.stat-card.stat-orange i {
-  background: linear-gradient(135deg, #f97316, var(--terracotta));
-  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+.stat-orange i {
+  background:
+    linear-gradient(
+      135deg,
+      #f97316,
+      var(--terracotta)
+    );
 }
 
-.stat-card.stat-gold {
+.stat-gold {
   border: 2px dashed var(--marigold);
 }
 
-.stat-card.stat-gold i {
-  background: linear-gradient(135deg, #eab308, var(--marigold-dark));
-  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+.stat-gold i {
+  background:
+    linear-gradient(
+      135deg,
+      #eab308,
+      var(--marigold-dark)
+    );
 }
 
-.stat-card.stat-green {
+.stat-green {
   border: 2px dashed var(--accent-green);
 }
 
-.stat-card.stat-green i {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+.stat-green i {
+  background:
+    linear-gradient(
+      135deg,
+      #22c55e,
+      #16a34a
+    );
 }
 
-.stat-card.stat-blue {
+.stat-blue {
   border: 2px dashed #3b82f6;
 }
 
-.stat-card.stat-blue i {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+.stat-blue i {
+  background:
+    linear-gradient(
+      135deg,
+      #3b82f6,
+      #2563eb
+    );
 }
 
 /* =========================================================
-   MAIN GRID (Continue Learning + Side Widgets)
+   MAIN GRID
    ========================================================= */
 
 .main-grid {
+  width: 100%;
+  max-width: 100%;
+
   display: grid;
-  grid-template-columns: minmax(0, 1.85fr) minmax(290px, 1fr);
+
+  grid-template-columns:
+    minmax(0, 1.85fr)
+    minmax(260px, 1fr);
+
   gap: 20px;
+
+  min-width: 0;
 }
 
 .continue-learning,
 .weekly-progress,
 .leaderboard,
 .lab-sim {
+  min-width: 0;
+
+  width: 100%;
+
   background:
-    repeating-linear-gradient(transparent,
+    repeating-linear-gradient(
+      transparent,
       transparent 27px,
-      var(--paper-line) 28px),
-    linear-gradient(145deg, var(--paper), var(--paper-soft));
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
+      var(--paper-line) 28px
+    ),
+    linear-gradient(
+      145deg,
+      var(--paper),
+      var(--paper-soft)
+    );
+
+  border:
+    1.5px solid rgba(
+      255,
+      255,
+      255,
+      0.5
+    );
+
   border-radius: 20px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+
+  box-shadow:
+    0 12px 35px rgba(
+      0,
+      0,
+      0,
+      0.2
+    );
+
   padding: 22px 24px;
 }
 
@@ -413,84 +746,135 @@ aside .profile .profile-info span {
 .leaderboard h3,
 .lab-sim h2 {
   font-family: var(--font-hand);
+
   font-size: 1.45rem;
+
   font-weight: 700;
+
   color: var(--ink);
+
   margin-bottom: 16px;
 }
 
 /* =========================================================
-   SUBJECT CARDS (Chalkboard mini-cards)
+   SUBJECT CARDS
    ========================================================= */
 
 .subject-card {
   display: flex;
+
   align-items: center;
+
   gap: 16px;
+
+  width: 100%;
+
   margin-bottom: 12px;
+
   padding: 14px 18px;
-  background: linear-gradient(135deg, #13281f 0%, #0d1e17 100%);
-  border: 1px dashed rgba(245, 240, 226, 0.18);
+
+  background:
+    linear-gradient(
+      135deg,
+      #13281f 0%,
+      #0d1e17 100%
+    );
+
+  border:
+    1px dashed rgba(
+      245,
+      240,
+      226,
+      0.18
+    );
+
   border-radius: 14px;
+
   color: var(--chalk);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  min-width: 0;
 }
 
-.subject-card:hover {
-  transform: translateX(4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
-}
-
-.subject-card i {
+.subject-card > i {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   width: 42px;
+  min-width: 42px;
+
   height: 42px;
+
   border-radius: 12px;
-  background: rgba(238, 180, 62, 0.15);
+
+  background:
+    rgba(238, 180, 62, 0.15);
+
   color: var(--marigold);
+
   font-size: 1.15rem;
-  flex-shrink: 0;
 }
 
 .subject-card .details {
   flex: 1;
+
   min-width: 0;
 }
 
 .subject-card h3 {
   font-family: var(--font-body);
+
   font-size: 0.98rem;
+
   font-weight: 700;
+
   color: var(--chalk);
+
   margin: 0 0 2px;
 }
 
 .subject-card p {
   font-size: 0.78rem;
+
   color: var(--chalk-dim);
+
   margin-bottom: 8px;
+
+  overflow-wrap: anywhere;
 }
 
 .subject-card .bar {
   width: 100%;
+
   height: 7px;
-  background: rgba(255, 255, 255, 0.1);
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
   border-radius: 999px;
+
   overflow: hidden;
+
   margin-bottom: 4px;
 }
 
 .subject-card .fill.blue {
   height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+
+  background:
+    linear-gradient(
+      90deg,
+      #3b82f6,
+      #60a5fa
+    );
+
   border-radius: 999px;
 }
 
 .subject-card span {
   font-size: 0.72rem;
+
   color: var(--chalk-dim);
 }
 
@@ -499,8 +883,13 @@ aside .profile .profile-info span {
    ========================================================= */
 
 .side-widgets {
+  width: 100%;
+  min-width: 0;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 20px;
 }
 
@@ -509,164 +898,263 @@ aside .profile .profile-info span {
 }
 
 .weekly-progress canvas {
+  display: block;
+
   margin: 10px auto;
-  max-width: 130px;
-  max-height: 130px;
+
+  width: 130px !important;
+  height: 130px !important;
+
+  max-width: 100%;
 }
 
 .weekly-progress p {
   font-size: 0.82rem;
+
   color: var(--ink-soft);
+
   margin-top: 8px;
 }
 
-/* Leaderboard */
+/* =========================================================
+   LEADERBOARD
+   ========================================================= */
+
 .leaderboard-item {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(42, 59, 77, 0.08);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--ink);
-  transition: transform 0.2s ease;
-}
 
-.leaderboard-item:hover {
-  transform: translateX(3px);
+  align-items: center;
+
+  gap: 10px;
+
+  width: 100%;
+
+  min-width: 0;
+
+  padding: 10px 14px;
+
+  margin-bottom: 8px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.65);
+
+  border:
+    1px solid rgba(
+      42,
+      59,
+      77,
+      0.08
+    );
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+
+  color: var(--ink);
 }
 
 .leaderboard-item .icon-wrapper {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   width: 26px;
+  min-width: 26px;
+
   height: 26px;
+
   border-radius: 50%;
-  font-size: 0.85rem;
 }
 
 .leaderboard-item .name {
   flex: 1;
+
+  min-width: 0;
+
   white-space: nowrap;
+
   overflow: hidden;
+
   text-overflow: ellipsis;
 }
 
 .leaderboard-item .points {
+  flex-shrink: 0;
+
   font-weight: 800;
+
   color: var(--ink);
+
+  white-space: nowrap;
 }
 
 /* =========================================================
-   LAB SIMULATION SECTION
+   LAB SIMULATION
    ========================================================= */
 
 .lab-sim {
   margin-top: 4px;
+
+  width: 100%;
 }
 
 .tabs {
   display: flex;
+
+  flex-wrap: wrap;
+
   gap: 8px;
+
   margin-bottom: 18px;
 }
 
 .tabs button {
   padding: 8px 18px;
-  border: none;
-  border-radius: 999px;
-  background: rgba(42, 59, 77, 0.08);
-  color: var(--ink-soft);
-  font-family: var(--font-body);
-  font-size: 0.84rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
 
-.tabs button:hover {
-  background: rgba(42, 59, 77, 0.14);
-  color: var(--ink);
+  border: none;
+
+  border-radius: 999px;
+
+  background:
+    rgba(42, 59, 77, 0.08);
+
+  color: var(--ink-soft);
+
+  font-family: var(--font-body);
+
+  font-size: 0.84rem;
+
+  font-weight: 700;
+
+  cursor: pointer;
 }
 
 .tabs button.active {
-  background: linear-gradient(135deg, var(--marigold), var(--terracotta));
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(217, 122, 92, 0.25);
+  background:
+    linear-gradient(
+      135deg,
+      var(--marigold),
+      var(--terracotta)
+    );
+
+  color: #fff;
 }
 
 .lab-cards {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
   gap: 16px;
+
+  min-width: 0;
 }
 
 .lab-card {
-  padding: 14px;
-  background: linear-gradient(135deg, #13281f 0%, #0d1e17 100%);
-  border: 1px dashed rgba(245, 240, 226, 0.18);
-  border-radius: 16px;
-  text-align: center;
-  color: var(--chalk);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
-  transition: transform 0.25s ease;
-}
+  min-width: 0;
 
-.lab-card:hover {
-  transform: translateY(-5px);
+  padding: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #13281f 0%,
+      #0d1e17 100%
+    );
+
+  border:
+    1px dashed rgba(
+      245,
+      240,
+      226,
+      0.18
+    );
+
+  border-radius: 16px;
+
+  text-align: center;
+
+  color: var(--chalk);
 }
 
 .lab-card img {
+  display: block;
+
   width: 100%;
+
   height: 140px;
+
   object-fit: cover;
+
   border-radius: 12px;
+
   margin-bottom: 10px;
 }
 
 .lab-card h3 {
-  font-family: var(--font-body);
   font-size: 0.95rem;
-  font-weight: 700;
+
   color: var(--chalk);
+
   margin-bottom: 4px;
 }
 
 .lab-card p {
   font-size: 0.74rem;
+
   color: var(--chalk-dim);
+
   margin-bottom: 12px;
 }
 
 .lab-card button {
   width: 100%;
+
   padding: 9px 0;
+
   border: none;
+
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--marigold), var(--terracotta));
-  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--marigold),
+      var(--terracotta)
+    );
+
+  color: #fff;
+
   font-weight: 800;
-  font-size: 0.85rem;
+
   cursor: pointer;
-  transition: filter 0.2s ease;
 }
 
-.lab-card button:hover {
-  filter: brightness(1.08);
-}
+/* =========================================================
+   MODAL
+   ========================================================= */
 
-/* Modal */
 .modal {
   display: none;
+
   position: fixed;
+
   inset: 0;
+
   z-index: 1000;
-  background: rgba(10, 20, 15, 0.92);
+
+  width: 100vw;
+  height: 100vh;
+
+  background:
+    rgba(10, 20, 15, 0.92);
+
   backdrop-filter: blur(8px);
 }
 
@@ -678,30 +1166,47 @@ aside .profile .profile-info span {
 .modal-content iframe {
   width: 100%;
   height: 100%;
+
   border: none;
 }
 
 .close {
   position: absolute;
+
   top: 18px;
   right: 25px;
+
   z-index: 1100;
+
   width: 42px;
   height: 42px;
+
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.15);
+
+  color: #fff;
+
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   font-size: 24px;
+
   cursor: pointer;
 }
 
-/* Responsive */
+/* =========================================================
+   TABLET
+   ========================================================= */
+
 @media (max-width: 1100px) {
+
   .stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 
   .main-grid {
@@ -709,29 +1214,462 @@ aside .profile .profile-info span {
   }
 
   .lab-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 }
 
+/* =========================================================
+   MOBILE — IMPORTANT
+   ========================================================= */
+
 @media (max-width: 768px) {
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .container {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 100vh;
+  }
+
+  /* -----------------------------------------
+     MOBILE SIDEBAR
+     ----------------------------------------- */
 
   .sidebar,
   aside.sidebar {
     position: relative;
+
+    left: auto;
+    top: auto;
+
     width: 100%;
+    max-width: 100%;
+
     height: auto;
+    min-height: auto;
+
+    border-right: none;
+
+    border-bottom:
+      1px dashed rgba(
+        245,
+        240,
+        226,
+        0.15
+      );
+
+    box-shadow:
+      0 8px 25px rgba(
+        0,
+        0,
+        0,
+        0.25
+      );
+
+    overflow: visible;
   }
 
-  .content {
-    margin-left: 0;
+  /* Logo */
+
+  .sidebar .logo,
+  aside .logo {
     padding: 16px;
+
+    justify-content: flex-start;
+  }
+
+  .logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-text {
+    font-size: 1.35rem;
+  }
+
+  /* Navigation becomes horizontal */
+
+  nav.menu {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: row;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    gap: 8px;
+
+    padding:
+      4px 12px 12px;
+
+    flex: none;
+
+    scrollbar-width: none;
+  }
+
+  nav.menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav.menu a {
+    width: auto;
+
+    min-width: max-content;
+
+    padding: 9px 12px;
+
+    gap: 7px;
+
+    font-size: 0.75rem;
+
+    border-radius: 10px;
+
+    flex-shrink: 0;
+  }
+
+  nav.menu a i {
+    width: auto;
+    min-width: auto;
+
+    font-size: 0.85rem;
+  }
+
+  nav.menu a:hover {
+    transform: none;
+  }
+
+  /* Hide profile from sidebar on small screens */
+
+  aside .profile {
+    display: none;
+  }
+
+  /* -----------------------------------------
+     CONTENT
+     ----------------------------------------- */
+
+  .content {
+    width: 100%;
+    max-width: 100%;
+
+    min-width: 0;
+
+    margin-left: 0;
+
+    padding:
+      14px 12px 35px;
+
+    gap: 16px;
+
+    overflow-x: hidden;
+  }
+
+  /* -----------------------------------------
+     TOP BAR
+     ----------------------------------------- */
+
+  .top-bar {
+    width: 100%;
+    max-width: 100%;
+
+    padding:
+      18px 16px;
+
+    border-radius: 16px;
+
+    gap: 10px;
+  }
+
+  .top-bar::before {
+    left: 10px;
+  }
+
+  .welcome-text {
+    padding-left: 8px;
+
+    min-width: 0;
+  }
+
+  .welcome-text h1 {
+    font-size: 1.35rem;
+
+    overflow-wrap: anywhere;
+  }
+
+  .welcome-text h2 {
+    font-size: 0.78rem;
+  }
+
+  .profile-section img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .streak {
+    font-size: 0.62rem;
+
+    padding:
+      5px 8px;
+
+    text-align: center;
+
+    max-width: 105px;
+
+    white-space: normal;
+  }
+
+  /* -----------------------------------------
+     STATS
+     ----------------------------------------- */
+
+  .stats {
+    width: 100%;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .stat-card {
+    width: 100%;
+
+    padding: 12px;
+
+    gap: 10px;
+
+    border-radius: 14px;
+  }
+
+  .stat-card i {
+    width: 36px;
+    min-width: 36px;
+
+    height: 36px;
+
+    font-size: 0.9rem;
+
+    border-radius: 10px;
+  }
+
+  .stat-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .stat-card p {
+    font-size: 0.68rem;
+  }
+
+  /* -----------------------------------------
+     MAIN GRID
+     ----------------------------------------- */
+
+  .main-grid {
+    width: 100%;
+    max-width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .continue-learning,
+  .weekly-progress,
+  .leaderboard,
+  .lab-sim {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 16px;
+
+    border-radius: 16px;
+  }
+
+  /* -----------------------------------------
+     SUBJECT CARDS
+     ----------------------------------------- */
+
+  .subject-card {
+    width: 100%;
+
+    padding: 12px;
+
+    gap: 10px;
+  }
+
+  .subject-card > i {
+    width: 36px;
+    min-width: 36px;
+
+    height: 36px;
+
+    font-size: 0.9rem;
+  }
+
+  .subject-card h3 {
+    font-size: 0.88rem;
+  }
+
+  .subject-card p {
+    font-size: 0.7rem;
+  }
+
+  .subject-card span {
+    font-size: 0.65rem;
+  }
+
+  /* -----------------------------------------
+     LEADERBOARD
+     ----------------------------------------- */
+
+  .leaderboard-item {
+    padding: 9px 10px;
+
+    gap: 7px;
+
+    font-size: 0.75rem;
+  }
+
+  .leaderboard-item .points {
+    font-size: 0.7rem;
+  }
+
+  /* -----------------------------------------
+     LAB
+     ----------------------------------------- */
+
+  .lab-cards {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .lab-card {
+    width: 100%;
+  }
+
+  .lab-card img {
+    height: 170px;
+  }
+
+  .tabs {
+    width: 100%;
+
+    overflow-x: auto;
+
+    flex-wrap: nowrap;
+
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabs button {
+    flex-shrink: 0;
+
+    padding:
+      8px 14px;
+
+    font-size: 0.75rem;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .content {
+    padding:
+      10px 8px 30px;
+  }
+
+  .top-bar {
+    padding:
+      14px 12px;
+  }
+
+  .welcome-text h1 {
+    font-size: 1.15rem;
+  }
+
+  .welcome-text h2 {
+    font-size: 0.7rem;
+  }
+
+  .profile-section img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .streak {
+    font-size: 0.55rem;
+
+    max-width: 85px;
   }
 
   .stats {
-    grid-template-columns: 1fr;
+    gap: 7px;
   }
 
-  .lab-cards {
-    grid-template-columns: 1fr;
+  .stat-card {
+    padding: 10px;
+
+    gap: 7px;
   }
+
+  .stat-card i {
+    width: 32px;
+    min-width: 32px;
+
+    height: 32px;
+  }
+
+  .stat-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .stat-card p {
+    font-size: 0.6rem;
+  }
+
+  .continue-learning,
+  .weekly-progress,
+  .leaderboard,
+  .lab-sim {
+    padding: 12px;
+  }
+}
+
+/* =========================================================
+   PREVENT FLEX/GRID OVERFLOW
+   ========================================================= */
+
+.content > *,
+.main-grid > *,
+.side-widgets > *,
+.continue-learning > *,
+.weekly-progress > *,
+.leaderboard > *,
+.lab-sim > *,
+.lab-cards > * {
+  min-width: 0;
+  max-width: 100%;
 }
