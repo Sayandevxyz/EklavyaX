@@ -687,3 +687,138 @@ textarea.form-control {
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
+
+/* =========================================================
+   MOBILE RESPONSIVE (PHONES: <= 768px)
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .content-area,
+  main.content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px 14px 40px !important;
+    gap: 16px !important;
+  }
+
+  .page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .page-title h1 {
+    font-size: 1.45rem !important;
+  }
+
+  .header-actions {
+    width: 100% !important;
+  }
+
+  .header-actions button,
+  .header-actions a {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .stat-card {
+    padding: 14px 12px !important;
+  }
+
+  .stat-card .stat-value {
+    font-size: 1.45rem !important;
+  }
+
+  /* Settings Page Mobile */
+  .settings-container {
+    grid-template-columns: 1fr !important;
+    padding: 16px 14px !important;
+    gap: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .settings-nav {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-right: 0 !important;
+    padding-bottom: 10px !important;
+    gap: 6px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .settings-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .settings-nav-btn {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 0.8rem !important;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .avatar-picker {
+    justify-content: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .avatar-option {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  /* Tab group horizontal scroll */
+  .tab-group {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 4px !important;
+    scrollbar-width: none !important;
+  }
+
+  .tab-group::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .tab-btn {
+    flex-shrink: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Modal Cards on Phone */
+  .modal-card {
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-area,
+  main.content {
+    padding: 12px 10px 35px !important;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .settings-container {
+    padding: 14px 10px !important;
+  }
+}
