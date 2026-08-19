@@ -1,0 +1,240 @@
+/* =========================================================
+   EklavyaX — FONT SYSTEM
+   ========================================================= */
+
+/* Latin / English */
+@font-face {
+   font-family: "Noto Sans Local";
+   src: url("../assets/fonts/NotoSans-Regular.ttf") format("truetype");
+   font-weight: 400;
+   font-style: normal;
+   font-display: swap;
+   unicode-range: U+0000-00FF, U+0100-024F;
+}
+
+/* Hindi / Devanagari */
+@font-face {
+   font-family: "Noto Sans Local";
+   src: url("../assets/fonts/NotoSansDevanagari-Regular.ttf") format("truetype");
+   font-weight: 400;
+   font-style: normal;
+   font-display: swap;
+   unicode-range: U+0900-097F;
+}
+
+/* Tamil / தமிழ் */
+@font-face {
+   font-family: "Noto Sans Local";
+   src: url("../assets/fonts/NotoSansTamil-Regular.ttf") format("truetype");
+   font-weight: 400;
+   font-style: normal;
+   font-display: swap;
+   unicode-range: U+0B80-0BFF;
+}
+
+
+/* =========================================================
+   EklavyaX — GLOBAL DESIGN TOKENS
+   ========================================================= */
+
+:root {
+
+   /* -------------------------------------------------------
+     BACKGROUNDS
+     ------------------------------------------------------- */
+
+   /* Main deep forest background */
+   --main-bg: #0b281d;
+
+   /* Slightly lighter forest surface */
+   --main-bg-light: #123629;
+
+   /* Navigation dark green */
+   --sidebar-bg: #14503a;
+
+   /* Main primary green */
+   --primary-bg: #103e2d;
+
+
+   /* -------------------------------------------------------
+     CARDS
+     ------------------------------------------------------- */
+
+   /* Cream / paper card */
+   --card-bg: #f5efdc;
+
+   /* Softer cream */
+   --card-bg-soft: #ebe2cb;
+
+   /* Dark glass card */
+   --card-dark: #14382a;
+
+   /* Glass surface */
+   --glass-bg: rgba(255, 255, 255, 0.055);
+
+
+   /* -------------------------------------------------------
+     TEXT
+     ------------------------------------------------------- */
+
+   /* Main light text */
+   --text: #eef0df;
+
+   /* Dark text for cream cards */
+   --text-dark: #29382f;
+
+   /* Secondary text */
+   --text-muted: #aebcaf;
+
+   /* Navigation text */
+   --nav-text: #f5f1df;
+
+
+   /* -------------------------------------------------------
+     EklavyaX ACCENTS
+     ------------------------------------------------------- */
+
+   /* Main saffron / golden color */
+   --accent-gold: #f4ae25;
+
+   /* Bright gold for hover */
+   --accent-gold-light: #ffc653;
+
+   /* Teacher accent */
+   --accent-yellow: #f5b52c;
+
+   /* Student accent */
+   --accent-coral: #dd7658;
+
+   /* Existing blue accent */
+   --accent-blue: #5a77df;
+
+
+   /* -------------------------------------------------------
+     LINKS
+     ------------------------------------------------------- */
+
+   --sidebar-link: #e7ebff;
+
+   --sidebar-link-hover: #ffffff;
+
+
+   /* -------------------------------------------------------
+     BORDERS
+     ------------------------------------------------------- */
+
+   --border-light: rgba(255, 255, 255, 0.13);
+
+   --border-soft: rgba(255, 255, 255, 0.08);
+
+   --border-cream: rgba(70, 65, 48, 0.14);
+
+
+   /* -------------------------------------------------------
+     RADIUS
+     ------------------------------------------------------- */
+
+   --card-radius: 20px;
+
+   --input-radius: 11px;
+
+   --button-radius: 12px;
+
+   --sidebar-radius: 0 20px 20px 0;
+
+
+   /* -------------------------------------------------------
+     SHADOWS
+     ------------------------------------------------------- */
+
+   --shadow:
+      0 20px 60px rgba(0, 0, 0, 0.25);
+
+   --shadow-soft:
+      0 10px 30px rgba(0, 0, 0, 0.16);
+
+   --shadow-gold:
+      0 12px 30px rgba(244, 174, 37, 0.20);
+
+
+   /* -------------------------------------------------------
+     SPECIAL COLORS
+     ------------------------------------------------------- */
+
+   --accent-light: #e7eefd;
+
+   --profile-blue: #91a8ed;
+
+   --item: #cac8c8;
+
+
+   /* -------------------------------------------------------
+     FONTS
+     ------------------------------------------------------- */
+
+   --font-ui:
+      "Noto Sans Local",
+      "Noto Sans",
+      system-ui,
+      sans-serif;
+
+   --font-display:
+      "Noto Sans Local",
+      "Noto Sans",
+      system-ui,
+      sans-serif;
+
+
+   /* -------------------------------------------------------
+     FONT WEIGHTS
+     ------------------------------------------------------- */
+
+   --weight-regular: 400;
+
+   --weight-semibold: 600;
+
+   --weight-bold: 700;
+
+   --weight-heavy: 800;
+
+
+   /* -------------------------------------------------------
+     TRANSITIONS
+     ------------------------------------------------------- */
+
+   --transition-fast:
+      0.2s ease;
+
+   --transition:
+      0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+   --transition-slow:
+      0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* =========================================================
+   GLOBAL FONT SETTINGS
+   ========================================================= */
+
+html,
+body {
+   font-family: var(--font-ui);
+}
+
+body {
+   font-weight: var(--weight-regular);
+   color: var(--text);
+}
+
+
+/* Better rendering */
+
+body,
+button,
+input,
+select,
+textarea {
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}

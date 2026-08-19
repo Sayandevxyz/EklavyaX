@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Dashboard - My Class</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=2026.1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="../css/global.css?v=2026.1" />
+  <link rel="stylesheet" href="../css/teacher_myclass.css?v=2026.1" />
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a class="active" href="myclass.html"><i class="fas fa-users" aria-hidden="true"></i> My Class</a>
+        <a href="student_progress.html"><i class="fas fa-chart-line" aria-hidden="true"></i> Student Progress</a>
+        <a href="doubts.html"><i class="fas fa-question" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul" aria-hidden="true"></i> Assignments</a>
+        <a href="content_library.html"><i class="fas fa-book" aria-hidden="true"></i> Content Library</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Teacher's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+    <main class="content-area" role="main" aria-label="Main content area of teacher dashboard">
+      <header class="header">
+        <h1>My Class</h1>
+        <p>Manage your students, lessons, and classroom activities in one place</p>
+      </header>
+
+      <!-- Stats -->
+      <section class="stats">
+        <div class="stat-card">
+          <i class="fas fa-user-graduate stat-icon"></i>
+          <h2>45</h2>
+          <p>Total Students</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-calendar-check stat-icon"></i>
+          <h2>92%</h2>
+          <p>Avg Attendance</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-star stat-icon"></i>
+          <h2>4.7/5</h2>
+          <p>Class Rating</p>
+        </div>
+      </section>
+
+      <!-- Doubts -->
+      <section class="doubts">
+        <h3>Top Doubts This Week</h3>
+
+        <div class="doubt-card">
+          <p class="question">How to solve quadratic equations?</p>
+          <div class="actions">
+            <button class="btn blue">Answer Doubt</button>
+            <span class="students red-text">8 students</span>
+          </div>
+        </div>
+
+        <div class="doubt-card">
+          <p class="question">Difference between velocity and acceleration?</p>
+          <div class="actions">
+            <button class="btn blue">Answer Doubt</button>
+            <span class="students yellow-text">5 students</span>
+          </div>
+        </div>
+
+        <div class="doubt-card">
+          <p class="question">How to write a good essay introduction?</p>
+          <div class="actions">
+            <button class="btn blue">Answer Doubt</button>
+            <span class="students blue-text">4 students</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Student List -->
+      <section class="student-list">
+        <div class="list-header">
+          <h3>Student List</h3>
+          <div class="list-controls">
+            <button>All subjects ▼</button>
+            <button>Add students +</button>
+          </div>
+        </div>
+
+        <div class="students">
+
+          <!-- Student Card 1 -->
+          <div class="student-card">
+            <div class="top-row">
+              <i class="fas fa-user-circle student-icon"></i>
+              <div class="info">
+                <h4>Aditya Mishra</h4>
+                <p class="roll">Roll: 001</p>
+              </div>
+            </div>
+            <div class="stats-row"><span>Attendance</span><span>96%</span></div>
+            <div class="stats-row"><span>Avg Score</span><span>92%</span></div>
+            <div class="card-actions">
+              <button>Message</button>
+              <button>Assign</button>
+            </div>
+          </div>
+
+          <!-- Student Card 2 -->
+          <div class="student-card">
+            <div class="top-row">
+              <i class="fas fa-user-circle student-icon"></i>
+              <div class="info">
+                <h4>Sumita Tiwari</h4>
+                <p class="roll">Roll: 002</p>
+              </div>
+            </div>
+            <div class="stats-row"><span>Attendance</span><span>95%</span></div>
+            <div class="stats-row"><span>Avg Score</span><span>89%</span></div>
+            <div class="card-actions">
+              <button>Message</button>
+              <button>Assign</button>
+            </div>
+          </div>
+
+          <!-- Student Card 3 -->
+          <div class="student-card">
+            <div class="top-row">
+              <i class="fas fa-user-circle student-icon"></i>
+              <div class="info">
+                <h4>Dev Singh</h4>
+                <p class="roll">Roll: 003</p>
+              </div>
+            </div>
+            <div class="stats-row"><span>Attendance</span><span>55%</span></div>
+            <div class="stats-row"><span>Avg Score</span><span>59%</span></div>
+            <div class="card-actions">
+              <button>Message</button>
+              <button>Assign</button>
+            </div>
+          </div>
+
+          <!-- Student Card 4 -->
+          <div class="student-card">
+            <div class="top-row">
+              <i class="fas fa-user-circle student-icon"></i>
+              <div class="info">
+                <h4>Neha Sharma</h4>
+                <p class="roll">Roll: 004</p>
+              </div>
+            </div>
+            <div class="stats-row"><span>Attendance</span><span>70%</span></div>
+            <div class="stats-row"><span>Avg Score</span><span>78%</span></div>
+            <div class="card-actions">
+              <button>Message</button>
+              <button>Assign</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script>initPage("teacher", "login.html");</script>
+  <script src="../js/chatbot.js?v=2.1"></script>
+</body>
+
+</html>

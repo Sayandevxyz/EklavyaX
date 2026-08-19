@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard - My Enrolled Courses | EklavyaX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css?v=3.0" />
+  <link rel="stylesheet" href="../css/student_my_courses.css?v=3.0" />
+  <link rel="stylesheet" href="../css/app_pages.css?v=3.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a class="active" href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab Simulations</a>
+        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> GRAVITY AI</a>
+        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> Assignments</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Sayan Mondal</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+
+      <!-- My Enrolled Courses Section -->
+      <section class="courses">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:8px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <h2>My Enrolled Courses</h2>
+              <span class="badge badge-cs" id="enrolledCountBadge">Active</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.95rem; margin-top:4px;">
+              Track your learning progress, resume modules, and access your course syllabi.
+            </p>
+          </div>
+          
+          <a href="explore_courses.html" class="btn-primary" style="padding:10px 20px; font-size:0.9rem; text-decoration:none;">
+            <i class="fas fa-plus-circle"></i> Explore & Enroll in More Courses
+          </a>
+        </div>
+
+        <!-- Dynamic Enrolled Courses Grid -->
+        <div class="courses-grid" id="enrolledCoursesGrid">
+          <!-- Rendered dynamically by student_courses.js -->
+        </div>
+      </section>
+
+      <!-- Banner Link to Catalog -->
+      <section class="catalog-section" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding:24px 30px;">
+        <div>
+          <h3 style="font-family:var(--font-heading); font-size:1.3rem; font-weight:700; color:var(--text-main);">
+            Want to expand your knowledge with new subjects?
+          </h3>
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-top:4px;">
+            Explore our catalog of 10+ STEM courses including Advanced Physics, Organic Chemistry, Robotics, and AI.
+          </p>
+        </div>
+        <a href="explore_courses.html" class="btn-secondary" style="text-decoration:none; padding:10px 22px; font-weight:700;">
+          <i class="fas fa-compass" style="color:var(--primary-gold);"></i> Browse Course Catalog &rarr;
+        </a>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Lesson Player Modal (Continue Learning) -->
+  <div class="app-modal" id="lessonModal">
+    <div class="modal-card" style="max-width:680px;">
+      <div class="modal-header">
+        <div>
+          <span class="badge badge-cs" id="lessonNumberBadge">Lesson 18</span>
+          <h2 id="lessonCourseTitle" style="margin-top:4px;">Mathematics</h2>
+        </div>
+        <button class="close-modal" onclick="closeLessonModal()">&times;</button>
+      </div>
+      
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <h3 id="lessonTitle" style="color:var(--chalk); font-size:1.15rem; font-weight:700;"></h3>
+          <p id="lessonSummary" style="color:var(--chalk-dim); font-size:0.92rem; margin-top:6px; line-height:1.5;"></p>
+        </div>
+
+        <div style="background:rgba(10,24,18,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px;">
+          <h4 style="color:var(--primary-gold); font-size:0.95rem; margin-bottom:10px;"><i class="fas fa-lightbulb"></i> Key Concepts & Takeaways</h4>
+          <ul id="lessonKeyPoints" style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:0.88rem; color:var(--text-main);"></ul>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.12);">
+          <span id="lessonCourseProgress" style="font-size:0.85rem; color:var(--text-muted);"></span>
+          <div style="display:flex; gap:10px;">
+            <button id="lessonLabBtn" class="btn-secondary" style="display:none;"><i class="fas fa-vials"></i> Practice in Lab</button>
+            <button class="btn-primary" onclick="completeCurrentLesson()"><i class="fas fa-check-circle"></i> Complete Lesson (+20 XP)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Details & Syllabus Modal (View Details) -->
+  <div class="app-modal" id="courseDetailsModal">
+    <div class="modal-card" style="max-width:720px; max-height:90vh; overflow-y:auto;">
+      <div class="modal-header">
+        <div>
+          <h2 id="detailCourseTitle">Course Details & Syllabus</h2>
+          <p id="detailTeacher" style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;"></p>
+        </div>
+        <button class="close-modal" onclick="closeDetailsModal()">&times;</button>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(245,176,39,0.1); border:1px solid rgba(245,176,39,0.25); padding:14px 18px; border-radius:12px;">
+          <div>
+            <strong style="color:var(--primary-gold); font-size:0.95rem;">Overall Course Status</strong>
+            <div id="detailStats" style="font-size:0.85rem; color:var(--text-main); margin-top:2px;"></div>
+          </div>
+          <button id="detailResumeBtn" class="btn-primary" style="padding:8px 16px; font-size:0.88rem;"><i class="fas fa-play"></i> Resume</button>
+        </div>
+
+        <div>
+          <h4 style="color:var(--text-main); margin-bottom:12px; font-size:1.05rem;"><i class="fas fa-book-open" style="color:var(--primary-gold); margin-right:6px;"></i> Chapter Syllabus & Modules</h4>
+          <div id="detailChapterList" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/app_pages.js"></script>
+  <script src="../js/student_courses.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+    });
+  </script>
+  <script src="../js/chatbot.js?v=3.0"></script>
+</body>
+
+</html>

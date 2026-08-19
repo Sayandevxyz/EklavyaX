@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Lab Simulations</title>
+    <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/global.css?v=3.0">
+    <link rel="stylesheet" href="../css/student_lab_simulation.css?v=3.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+            <div class="logo">
+                <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+                <span class="logo-text">EklavyaX</span>
+            </div>
+            <nav class="menu" aria-label="Primary">
+                <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+                <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
+                <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
+                <a class="active" href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab
+                    Simulations</a>
+                <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> GRAVITY AI</a>
+                <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> Doubts</a>
+                <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> Assignments</a>
+                <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+                <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+            </nav>
+
+            <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+                <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon" />
+                <div class="profile-info">
+                    <strong id="profileName">Sayan Mondal</strong>
+                    <span id="profileAction">Log out</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="header">
+                <h1>Lab Simulations</h1>
+                <p>Practice experiments in a safe, interactive virtual environment</p>
+            </header>
+            <!-- Physics Section -->
+            <div class="section">
+
+
+                <h3>Physics</h3>
+                <h4 class="subheading">Explore the laws of motion, forces, and energy through interactive labs.</h4>
+                <div class="carousel">
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics-420.png">
+                        <h3>Forces and Motion: Basics</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_en.html')">Start
+                            Lab</button>
+                    </div>
+                    <!-- Add 5 more Physics labs here -->
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/buoyancy-basics/latest/buoyancy-basics-420.png">
+                        <h3>Buoyancy: Basics</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/buoyancy-basics/latest/buoyancy-basics_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/geometric-optics-basics/latest/geometric-optics-basics-420.png">
+                        <h3>Geometric Optics: Basics</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/geometric-optics-basics/latest/geometric-optics-basics_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/faradays-law/latest/faradays-law-420.png">
+                        <h3>Faraday's Law</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/faradays-law/latest/faradays-law_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity-600.png">
+                        <h3>Balloons and Static Electricity</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_en.html')">Start
+                            Lab</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chemistry Section -->
+            <div class="section">
+                <h3>Chemistry</h3>
+                <h4 class="subheading">Understand reactions, molecules, and atomic structure with hands-on simulations.
+                </h4>
+                <div class="carousel">
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics-420.png">
+                        <h3>States of Matter: Basics</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_en.html')">Start
+                            Lab</button>
+                    </div>
+                    <!-- Add 5 more Chemistry labs here -->
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/reactants-products-and-leftovers/latest/reactants-products-and-leftovers-420.png">
+                        <h3>Reactants, Products and Leftovers</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/reactants-products-and-leftovers/latest/reactants-products-and-leftovers_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/concentration/latest/concentration-600.png">
+                        <h3>Concentration</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/concentration/latest/concentration_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom-600.png">
+                        <h3>Build an Atom</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/balancing-chemical-equations/latest/balancing-chemical-equations-600.png">
+                        <h3>Balancing Chemical Equations</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/balancing-chemical-equations/latest/balancing-chemical-equations_en.html')">Start
+                            Lab</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathematics Section -->
+            <div class="section">
+                <h3>Mathematics</h3>
+                <h4 class="subheading">Visualize equations, graphs, and problem-solving concepts interactively.</h4>
+                <div class="carousel">
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/mean-share-and-balance/latest/mean-share-and-balance-420.png">
+                        <h3>Mean: Share and Balance</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/mean-share-and-balance/latest/mean-share-and-balance_en.html')">Start
+                            Lab</button>
+                    </div>
+                    <!-- Add 5 more Maths labs here -->
+
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/ratio-and-proportion/latest/ratio-and-proportion-420.png">
+                        <h3>Ratio and Proportion</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/ratio-and-proportion/latest/ratio-and-proportion_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics-600.png"
+                            alt="Graphing Quadratics">
+                        <h3>Graphing Quadratics</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/center-and-variability/latest/center-and-variability-420.png">
+                        <h3>Center and Variability</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/center-and-variability/latest/center-and-variability_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral-600.png">
+                        <h3>Quadrilateral</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral_en.html')">Start
+                            Lab</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biology Section -->
+            <div class="section">
+                <h3>Biology</h3>
+                <h4 class="subheading">Dive into the study of cells, organisms, and ecosystems with virtual experiments.
+                </h4>
+                <div class="carousel">
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection-420.png">
+                        <h3>Natural Selection</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_en.html')">Start
+                            Lab</button>
+                    </div>
+                    <!-- Add 5 more Biology labs here -->
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/gene-expression-essentials/latest/gene-expression-essentials-420.png">
+                        <h3>Gene Expression Essentials</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/gene-expression-essentials/latest/gene-expression-essentials_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/neuron/latest/neuron-420.png">
+                        <h3>Neuron</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/neuron/latest/neuron_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/color-vision/latest/color-vision-420.png">
+                        <h3>Color Vision</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/color-vision/latest/color-vision_en.html')">Start
+                            Lab</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earth & Space Section -->
+            <div class="section">
+                <h3>Earth & Space</h3>
+                <h4 class="subheading">Explore planets, stars, and Earth’s systems through engaging simulations.</h4>
+                <div class="carousel">
+                    <div class="lab-card">
+                        <img src="https://phet.colorado.edu/sims/html/my-solar-system/latest/my-solar-system-420.png">
+                        <h3>My Solar System</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/my-solar-system/latest/my-solar-system_en.html')">Start
+                            Lab</button>
+                    </div>
+                    <!-- Add 5 more Earth & Space labs here -->
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/greenhouse-effect/latest/greenhouse-effect-420.png">
+                        <h3>Greenhouse Effect</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/greenhouse-effect/latest/greenhouse-effect_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/blackbody-spectrum/latest/blackbody-spectrum-420.png">
+                        <h3>Blackbody Spectrum</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/blackbody-spectrum/latest/blackbody-spectrum_en.html')">Start
+                            Lab</button>
+                    </div>
+
+                    <div class="lab-card">
+                        <img
+                            src="https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits-420.png">
+                        <h3>Gravity and Orbits</h3>
+                        <button
+                            onclick="openLab('https://phet.colorado.edu/sims/html/gravity-and-orbits/latest/gravity-and-orbits_en.html')">Start
+                            Lab</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Simulation Player Modal -->
+    <div id="labModal" class="modal" role="dialog" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-bar">
+                <div class="modal-title-wrap">
+                    <i class="fas fa-flask" style="color: var(--marigold);"></i>
+                    <h2 id="labModalTitle">Interactive STEM Lab Simulation</h2>
+                </div>
+                <div class="modal-controls">
+                    <a id="labExternalLink" href="#" target="_blank" class="modal-btn" title="Open in full browser window">
+                        <i class="fas fa-external-link-alt"></i> Fullscreen Tab
+                    </a>
+                    <button class="close-btn" onclick="closeLab()" title="Close Simulation">&times;</button>
+                </div>
+            </div>
+            <div class="modal-content">
+                <iframe id="labFrame" src="" allowfullscreen allow="autoplay; fullscreen"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../js/api.js"></script>
+    <script src="../js/page_init.js"></script>
+    <script>initPage("student", "student_login.html");</script>
+    <script src="../js/student_lab_simulation.js"></script>
+    <script src="../js/chatbot.js?v=2.1"></script>
+</body>
+
+</html>

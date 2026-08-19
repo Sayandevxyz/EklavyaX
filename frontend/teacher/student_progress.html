@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Dashboard - Student Progress</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=2026.1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="../css/global.css?v=2026.1" />
+  <link rel="stylesheet" href="../css/teacher_student_progress.css?v=2026.1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="myclass.html"><i class="fas fa-users" aria-hidden="true"></i> My Class</a>
+        <a class="active" href="student_progress.html"><i class="fas fa-chart-line" aria-hidden="true"></i> Student
+          Progress</a>
+        <a href="doubts.html"><i class="fas fa-question" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul" aria-hidden="true"></i> Assignments</a>
+        <a href="content_library.html"><i class="fas fa-book" aria-hidden="true"></i> Content Library</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Teacher's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="content-area" role="main" aria-label="Main content area of teacher dashboard">
+      <header class="header">
+        <h1>Student Progress</h1>
+        <p>Track your learning progress across all subjects</p>
+      </header>
+
+      <!-- Top section -->
+      <div class="charts">
+        <div class="chart-card">
+          <h3>Overall Class Performance</h3>
+          <canvas id="overallChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Attendance Trend</h3>
+          <canvas id="attendanceChart" height="235"></canvas>
+        </div>
+      </div>
+
+      <!-- Individual Progress -->
+      <section class="individual">
+        <div class="header">
+          <h3>Individual Progress</h3>
+          <select>
+            <option>Aditya Mishra</option>
+            <option>Ishita Singh</option>
+            <option>Prachi Mondal</option>
+          </select>
+
+          <button class="export">Export report</button>
+        </div>
+
+
+      </section>
+
+      <!-- Circular stats -->
+
+      <div class="circle-stats" aria-label="Individual quick stats">
+        <div class="circle-stat" role="group" aria-label="Overall score 92 percent">
+          <div class="ring" data-target="92" aria-hidden="true">
+            <div class="ring-inner">
+              <div class="ring-value">0%</div>
+            </div>
+          </div>
+          <div class="stat-label">Overall Score</div>
+        </div>
+
+        <div class="circle-stat" role="group" aria-label="Attendance 96 percent">
+          <div class="ring" data-target="96" aria-hidden="true">
+            <div class="ring-inner">
+              <div class="ring-value">0%</div>
+            </div>
+          </div>
+          <div class="stat-label">Attendance</div>
+        </div>
+
+        <div class="circle-stat" role="group" aria-label="Assignments 85 percent">
+          <div class="ring" data-target="85" aria-hidden="true">
+            <div class="ring-inner">
+              <div class="ring-value">0%</div>
+            </div>
+          </div>
+          <div class="stat-label">Assignments</div>
+        </div>
+
+        <div class="circle-stat" role="group" aria-label="Participation 88 percent">
+          <div class="ring" data-target="88" aria-hidden="true">
+            <div class="ring-inner">
+              <div class="ring-value">0%</div>
+            </div>
+          </div>
+          <div class="stat-label">Participation</div>
+        </div>
+      </div>
+      <!-- END: circle-stats -->
+
+
+      <!-- Subject progress bars -->
+      <div class="bars">
+        <p>Physics <span>95%</span></p>
+        <div class="bar">
+          <div class="fill blue" style="width:95%"></div>
+        </div>
+
+        <p>Chemistry <span>88%</span></p>
+        <div class="bar">
+          <div class="fill blue" style="width:88%"></div>
+        </div>
+
+        <p>Mathematics <span>90%</span></p>
+        <div class="bar">
+          <div class="fill blue" style="width:92%"></div>
+        </div>
+
+        <p>Biology <span>75%</span></p>
+        <div class="bar">
+          <div class="fill blue" style="width:95%"></div>
+        </div>
+
+        <p>Computer <span>88%</span></p>
+        <div class="bar">
+          <div class="fill blue" style="width:95%"></div>
+        </div>
+
+        <p>English <span>95%</span></p>
+        <div class="bar">
+          <div class="fill blue" style="width:95%"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script>initPage("teacher", "login.html");</script>
+  <script src="../js/teacher_student_progress.js"></script>
+  <script src="../js/chatbot.js?v=2.1"></script>
+</body>
+
+</html>

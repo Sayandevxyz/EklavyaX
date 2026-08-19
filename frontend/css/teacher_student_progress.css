@@ -1,0 +1,276 @@
+/* =========================================================
+   EklavyaX — TEACHER STUDENT PROGRESS
+   Modern Dark Green Glassmorphic UI
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 80% 5%, rgba(52, 105, 76, 0.18), transparent 34%),
+    linear-gradient(135deg, #091f17 0%, #0d2b20 48%, #081e16 100%);
+  color: var(--text, #eef0df);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-weight: 600;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar,
+aside.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 235px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #14503a 0%, #0f3d2c 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 12px 0 40px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+aside .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 22px 24px 25px;
+}
+
+.logo img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.logo-text {
+  color: #fff8e8;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.sidebar-nav,
+nav.menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+}
+
+.sidebar-nav a,
+nav.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  margin: 2px 0 2px 16px;
+  border-radius: 14px 0 0 14px;
+  color: rgba(238, 240, 255, 0.82);
+  font-size: 14px;
+  font-weight: 650;
+  transition: all 0.25s ease;
+}
+
+.sidebar-nav a i,
+nav.menu a i {
+  width: 21px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.sidebar-nav a:hover,
+nav.menu a:hover {
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.sidebar-nav a.active,
+nav.menu a.active {
+  background: linear-gradient(90deg, #0d2b20, #12392a);
+  color: #f7efdc;
+  box-shadow: inset 3px 0 0 var(--accent-gold, #f4ae25), 0 8px 25px rgba(0, 0, 0, 0.14);
+}
+
+.sidebar-nav a.active i,
+nav.menu a.active i {
+  color: var(--accent-gold, #f4ae25);
+}
+
+aside .profile {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 20px 14px 18px;
+  padding: 12px;
+  background: rgba(8, 28, 20, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  color: #f5efdc;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+aside .profile:hover {
+  transform: translateY(-3px);
+}
+
+aside .profile img {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(245, 174, 37, 0.65);
+  object-fit: cover;
+}
+
+aside .profile .profile-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+aside .profile .profile-info strong {
+  color: #f7efdc;
+  font-size: 0.94rem;
+  font-weight: 750;
+}
+
+aside .profile .profile-info span {
+  font-size: 0.78rem;
+  color: #a0b8a6;
+}
+
+/* Main Content */
+main.content-area {
+  flex-grow: 1;
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 235px;
+  padding: 30px 30px 45px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.header h1 {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #f5efdc;
+  margin-bottom: 4px;
+}
+
+.header p {
+  color: #a0b8a6;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+/* Progress Grid */
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.progress-card {
+  background: linear-gradient(145deg, rgba(20, 56, 42, 0.65), rgba(15, 45, 33, 0.50));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.progress-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.28);
+}
+
+.student-info-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.student-info-row img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(244, 174, 37, 0.6);
+  object-fit: cover;
+}
+
+.student-name-meta strong {
+  font-size: 1.05rem;
+  color: #f5efdc;
+  display: block;
+}
+
+.student-name-meta span {
+  font-size: 0.8rem;
+  color: #a0b8a6;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2ecc71, #f4ae25);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.score-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  color: #d4e5d8;
+}
+
+.score-stats strong {
+  color: #2ecc71;
+}
+
+@media (max-width: 768px) {
+  .sidebar, aside.sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  main.content-area {
+    margin-left: 0;
+    padding: 16px;
+  }
+}

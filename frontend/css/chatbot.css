@@ -1,0 +1,297 @@
+/* =========================================================
+   EklavyaX — EklavyaXCHATBOT WIDGET
+   Dark Green & Chalkboard Aesthetic
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+#eklavya-chat-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  font-family: 'Work Sans', system-ui, sans-serif;
+}
+
+/* Floating Trigger Button */
+.eklavya-chat-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #163d2e 0%, #0d2218 100%);
+  border: 2px solid #eeb43e;
+  color: #eeb43e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(238, 180, 62, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eklavya-chat-btn:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(238, 180, 62, 0.55);
+}
+
+/* Chat Popup Window */
+.eklavya-chat-window {
+  display: none;
+  position: fixed;
+  bottom: 94px;
+  right: 24px;
+  width: 390px;
+  max-width: calc(100vw - 32px);
+  height: 580px;
+  max-height: calc(100vh - 120px);
+  background: #0d1e17;
+  border: 1.5px dashed rgba(245, 240, 226, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  flex-direction: column;
+  overflow: hidden;
+  animation: eklavyaChatReveal 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.eklavya-chat-window.open {
+  display: flex;
+}
+
+@keyframes eklavyaChatReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Chat Header */
+.eklavya-chat-header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #11221a 0%, #173829 100%);
+  border-bottom: 1.5px solid rgba(238, 180, 62, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #f5f0e2;
+}
+
+.eklavya-chat-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eklavya-chat-header-title .bot-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(238, 180, 62, 0.15);
+  border: 1.5px solid #eeb43e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #eeb43e;
+  font-size: 18px;
+}
+
+.eklavya-chat-header-title h3 {
+  margin: 0;
+  font-family: 'Kalam', cursive;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f5f0e2;
+  line-height: 1.1;
+}
+
+.eklavya-chat-header-title .status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  margin-left: 4px;
+}
+
+.eklavya-chat-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.eklavya-chat-header-btn {
+  background: transparent;
+  border: none;
+  color: #a9bdae;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.eklavya-chat-header-btn:hover {
+  color: #f5f0e2;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Chat Messages */
+.eklavya-chat-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(52, 105, 76, 0.15), transparent 40%),
+    #0c1a14;
+}
+
+/* Scrollbar */
+.eklavya-chat-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.eklavya-chat-body::-webkit-scrollbar-thumb {
+  background: rgba(245, 240, 226, 0.15);
+  border-radius: 999px;
+}
+
+/* Message Bubbles */
+.eklavya-msg {
+  max-width: 85%;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  animation: eklavyaMsgFade 0.25s ease both;
+}
+
+@keyframes eklavyaMsgFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.eklavya-msg.bot {
+  align-self: flex-start;
+  background: linear-gradient(145deg, #f3ead4, #eae0c8);
+  color: #2a3b4d;
+  padding: 12px 16px;
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.eklavya-msg.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #eeb43e, #d97a5c);
+  color: #ffffff;
+  padding: 11px 16px;
+  border-radius: 18px 18px 4px 18px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(217, 122, 92, 0.3);
+}
+
+/* Quick Suggestion Chips */
+.eklavya-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.eklavya-chip {
+  align-self: flex-start;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px dashed rgba(238, 180, 62, 0.4);
+  color: #f5f0e2;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.eklavya-chip:hover {
+  background: rgba(238, 180, 62, 0.2);
+  border-color: #eeb43e;
+  color: #eeb43e;
+  transform: translateX(4px);
+}
+
+/* Input Area */
+.eklavya-chat-footer {
+  padding: 12px 16px;
+  background: #11221a;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.eklavya-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #173326;
+  border: 1.5px solid rgba(245, 240, 226, 0.18);
+  border-radius: 999px;
+  padding: 4px 6px 4px 16px;
+}
+
+.eklavya-input-row:focus-within {
+  border-color: #eeb43e;
+  box-shadow: 0 0 0 3px rgba(238, 180, 62, 0.2);
+}
+
+.eklavya-input-row input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #f5f0e2;
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.eklavya-input-row input::placeholder {
+  color: #a9bdae;
+  font-size: 0.82rem;
+}
+
+.eklavya-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #eeb43e, #d97a5c);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.eklavya-send-btn:hover {
+  transform: scale(1.08);
+}
+
+.eklavya-footer-credit {
+  text-align: center;
+  font-size: 0.68rem;
+  color: #708a7b;
+  margin-top: 8px;
+}

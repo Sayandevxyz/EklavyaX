@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Settings | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=2026.1">
+  <link rel="stylesheet" href="../css/global.css?v=2026.1">
+  <link rel="stylesheet" href="../css/teacher_dashboard.css?v=2026.1">
+  <link rel="stylesheet" href="../css/app_pages.css?v=2026.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+  <div class="container" style="display:flex;">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="myclass.html"><i class="fas fa-users" aria-hidden="true"></i> My Class</a>
+        <a href="student_progress.html"><i class="fas fa-chart-line" aria-hidden="true"></i> Student Progress</a>
+        <a href="doubts.html"><i class="fas fa-question" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul" aria-hidden="true"></i> Assignments</a>
+        <a href="content_library.html"><i class="fas fa-book" aria-hidden="true"></i> Content Library</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a class="active" href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Teacher's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area" role="main">
+      <header class="page-header">
+        <div class="page-title">
+          <h1><i class="fas fa-cog" style="color: var(--marigold);"></i> Teacher Profile & Settings</h1>
+          <p>Manage teacher avatar, department details, office hours, and account security.</p>
+        </div>
+      </header>
+
+      <!-- Settings Layout -->
+      <section class="settings-container">
+        <div class="settings-nav">
+          <button type="button" class="settings-nav-btn active" data-target="panelProfile"><i class="fas fa-user-tie"></i> Teacher Profile</button>
+          <button type="button" class="settings-nav-btn" data-target="panelNotifs"><i class="fas fa-bell"></i> Notifications</button>
+          <button type="button" class="settings-nav-btn" data-target="panelSecurity"><i class="fas fa-lock"></i> Security & Password</button>
+        </div>
+
+        <div class="settings-panel">
+          <!-- Profile Panel -->
+          <form id="profileSettingsForm" class="settings-panel-tab" data-panel="panelProfile" style="display:flex; flex-direction:column; gap:18px;">
+            <div class="form-group">
+              <label>Choose Teacher Avatar</label>
+              <div class="avatar-picker">
+                <img src="../assets/img/teacher_male.jpg" class="avatar-option selected" alt="Male Teacher Avatar" data-avatar="teacher_male.jpg" data-gender="male" title="Male Teacher">
+                <img src="../assets/img/teacher_female.jpg" class="avatar-option" alt="Female Teacher Avatar" data-avatar="teacher_female.jpg" data-gender="female" title="Female Teacher">
+              </div>
+              <span style="font-size: 0.8rem; color: var(--chalk-dim);">Selecting an avatar updates your profile icon across all pages instantly.</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+              <div class="form-group">
+                <label>Full Display Name</label>
+                <input type="text" id="settingName" class="form-control" placeholder="e.g. Mr. Aarav Singh" required>
+              </div>
+
+              <div class="form-group">
+                <label>Teacher Email Address</label>
+                <input type="email" id="settingEmail" class="form-control" placeholder="aaravsingh@eklavyax.edu" required>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px;">
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="settingPhone" class="form-control" placeholder="+91 98123 45678">
+              </div>
+
+              <div class="form-group">
+                <label>Gender</label>
+                <select id="settingGender" class="form-control">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Faculty ID</label>
+                <input type="text" id="settingRoll" class="form-control" placeholder="FAC-PHYS-2026">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+              <div class="form-group">
+                <label>Subject / Specialization</label>
+                <input type="text" id="settingGrade" class="form-control" placeholder="Senior Physics & Mechanics Specialist">
+              </div>
+
+              <div class="form-group">
+                <label>Department / Office Hours</label>
+                <input type="text" id="settingSchool" class="form-control" placeholder="Department of Physics (Mon-Fri 3-5 PM)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Teacher Bio / Experience Statement</label>
+              <textarea id="settingBio" class="form-control" placeholder="Senior Physics Educator with 10+ years experience in STEM & Board exam mentoring."></textarea>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end;">
+              <button type="submit" class="btn-primary" id="saveProfileBtn"><i class="fas fa-save"></i> Save Settings</button>
+            </div>
+          </form>
+
+          <!-- Notifications Panel -->
+          <form id="notifSettingsForm" class="settings-panel-tab" data-panel="panelNotifs" style="display:none; flex-direction:column; gap:16px;">
+            <h3 style="color: var(--marigold); font-size:1.1rem;"><i class="fas fa-bell"></i> Notification Preferences</h3>
+            
+            <div class="form-group" style="flex-direction:row; align-items:center; justify-content:space-between; background:rgba(10,24,18,0.6); padding:14px; border-radius:10px;">
+              <div>
+                <strong style="color:var(--chalk);">New Student Doubt Alerts</strong>
+                <p style="font-size:0.82rem; color:var(--chalk-dim);">Get notified instantly when students submit new physics/math doubts.</p>
+              </div>
+              <input type="checkbox" id="notifDoubt" checked style="width:20px; height:20px;">
+            </div>
+
+            <div class="form-group" style="flex-direction:row; align-items:center; justify-content:space-between; background:rgba(10,24,18,0.6); padding:14px; border-radius:10px;">
+              <div>
+                <strong style="color:var(--chalk);">Assignment Submission Alerts</strong>
+                <p style="font-size:0.82rem; color:var(--chalk-dim);">Notify when students submit homework or lab reports.</p>
+              </div>
+              <input type="checkbox" id="notifAssign" checked style="width:20px; height:20px;">
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+              <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save Notification Settings</button>
+            </div>
+          </form>
+
+          <!-- Security Panel -->
+          <form id="securitySettingsForm" class="settings-panel-tab" data-panel="panelSecurity" style="display:none; flex-direction:column; gap:16px;">
+            <h3 style="color: var(--marigold); font-size:1.1rem;"><i class="fas fa-lock"></i> Security & Password</h3>
+            
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" id="currPass" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="newPass" class="form-control" placeholder="Enter at least 6 characters" required>
+            </div>
+
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" id="confirmPass" class="form-control" placeholder="Re-enter new password" required>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; margin-top:10px;">
+              <button type="submit" class="btn-primary"><i class="fas fa-key"></i> Update Password</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/app_pages.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("teacher", "login.html");
+      EklavyaXPages.initSettingsPage("teacher");
+    });
+  </script>
+</body>
+
+</html>

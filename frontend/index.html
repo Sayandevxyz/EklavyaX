@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EklavyaX</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png?v=2026.1">
+  <link rel="stylesheet" href="css/global.css?v=2026.1">
+  <link rel="stylesheet" href="css/home.css?v=2026.1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <style>
+    :root {
+      --board: #1d352a;
+      --board-dark: #12211a;
+      --chalk: #f5f0e2;
+      --chalk-dim: #a9bdae;
+      --marigold: #eeb43e;
+      --terracotta: #d97a5c;
+      --paper: #f3ead4;
+      --paper-line: rgba(60, 45, 20, 0.12);
+      --paper-margin: rgba(196, 84, 70, 0.55);
+      --ink: #2a3b4d;
+      --ink-soft: #5a6b78;
+      --font-hand: 'Kalam', cursive;
+      --font-body: 'Work Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(1200px 700px at 50% -10%, rgba(255, 255, 255, 0.05), transparent 60%),
+        radial-gradient(900px 600px at 90% 100%, rgba(0, 0, 0, 0.25), transparent 60%),
+        var(--board);
+      background-blend-mode: normal;
+      color: var(--chalk);
+      font-family: var(--font-body);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* faint chalk-dust grain over the board */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+      background-image:
+        repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 3px);
+    }
+
+    .navbar {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      width: 100%;
+      padding: 18px 5vw 12px;
+      position: relative;
+      z-index: 10;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    .logo-text {
+      font-family: var(--font-hand);
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--marigold);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 0.9rem;
+      color: var(--chalk-dim);
+      margin-left: auto;
+    }
+
+    .lang,
+    .settings {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding-bottom: 2px;
+      border-bottom: 1px dashed transparent;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .lang:hover,
+    .settings:hover {
+      color: var(--marigold);
+      border-color: rgba(238, 180, 62, 0.5);
+    }
+
+    .lang i,
+    .settings i {
+      font-size: 0.78rem;
+    }
+
+    /* ---------- Hero ---------- */
+    .main {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 5vh 6vw 4vh;
+    }
+
+    .main h1 {
+      font-family: var(--font-hand);
+      font-weight: 700;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      line-height: 1.15;
+      margin: 6px 0 4px;
+      max-width: 16ch;
+    }
+
+    .main h1 .highlight {
+      color: var(--marigold);
+      position: relative;
+      display: inline-block;
+    }
+
+    .main h1 .highlight svg {
+      position: absolute;
+      left: -4%;
+      right: -4%;
+      bottom: -0.12em;
+      width: 108%;
+      height: 0.3em;
+    }
+
+    .main p.lede {
+      max-width: 44ch;
+      color: var(--chalk-dim);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      margin: 18px 0 6px;
+    }
+
+    /* ---------- Bow & path artwork ---------- */
+    .aim-art {
+      width: 100%;
+      max-width: 640px;
+      margin: 8px auto -10px;
+    }
+
+    .aim-art svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .aim-line {
+      fill: none;
+      stroke: var(--chalk);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-dasharray: 5 8;
+      opacity: 0.55;
+      stroke-dashoffset: 500;
+      animation: draw 1.8s ease-out 0.3s forwards;
+    }
+
+    .aim-target {
+      fill: none;
+      stroke-width: 1.4;
+    }
+
+    .aim-target.gold {
+      stroke: var(--marigold);
+      opacity: 0.9;
+    }
+
+    .aim-target.terra {
+      stroke: var(--terracotta);
+      opacity: 0.9;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .aim-line {
+        animation: none;
+        stroke-dashoffset: 0;
+      }
+    }
+
+    /* ---------- Portal cards: chalkboard vs notebook ---------- */
+    .login-buttons {
+      display: flex;
+      gap: 44px;
+      width: 100%;
+      max-width: 780px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .login-buttons a {
+      flex: 1 1 300px;
+      max-width: 340px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 4px;
+      padding: 30px 26px 26px;
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .login-buttons a:hover {
+      transform: translateY(-5px) rotate(0deg) !important;
+    }
+
+    /* teacher = chalk slate, tilted like a board propped up */
+    .login-buttons a.teacher {
+      background: linear-gradient(165deg, #24402f, #16281f);
+      border: 2px dashed rgba(245, 240, 226, 0.35);
+      border-radius: 6px;
+      color: var(--chalk);
+      transform: rotate(-1.4deg);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    /* student = a torn notebook page */
+    .login-buttons a.student {
+      background:
+        repeating-linear-gradient(var(--paper) 0px, var(--paper) 27px, var(--paper-line) 28px),
+        var(--paper);
+      border-radius: 3px;
+      color: var(--ink);
+      transform: rotate(1.2deg);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+      border-left: 3px solid var(--paper-margin);
+    }
+
+    .login-buttons a i.icon {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+    }
+
+    .login-buttons a.teacher i.icon {
+      color: var(--marigold);
+    }
+
+    .login-buttons a.student i.icon {
+      color: var(--terracotta);
+    }
+
+    .login-buttons a h3 {
+      font-family: var(--font-hand);
+      font-weight: 700;
+      font-size: 1.35rem;
+      margin: 0;
+    }
+
+    .login-buttons a.student h3 {
+      color: var(--ink);
+    }
+
+    .login-buttons a p {
+      margin: 2px 0 0;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .login-buttons a.teacher p {
+      color: var(--chalk-dim);
+    }
+
+    .login-buttons a.student p {
+      color: var(--ink-soft);
+    }
+
+    .login-buttons a .go {
+      margin-top: 18px;
+      font-family: var(--font-hand);
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .login-buttons a.teacher .go {
+      color: var(--marigold);
+    }
+
+    .login-buttons a.student .go {
+      color: var(--terracotta);
+    }
+
+    .login-buttons a .go i {
+      transition: transform 0.2s ease;
+    }
+
+    .login-buttons a:hover .go i {
+      transform: translateX(4px);
+    }
+
+    /* chalk dust corner on teacher card */
+    .login-buttons a.teacher::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      width: 46px;
+      height: 10px;
+      background: rgba(245, 240, 226, 0.18);
+      filter: blur(3px);
+      border-radius: 50%;
+    }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 26px 6vw 30px;
+      color: var(--chalk-dim);
+      font-family: var(--font-hand);
+      font-size: 0.95rem;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 640px) {
+
+      .lang span,
+      .settings span {
+        display: none;
+      }
+
+      .login-buttons {
+        gap: 30px;
+        margin-top: 26px;
+      }
+
+      .login-buttons a.teacher,
+      .login-buttons a.student {
+        transform: none;
+      }
+
+      .aim-art {
+        max-width: 420px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="assets/img/logo.png?v=2026.1" alt="EklavyaX Logo" width="42" height="42"
+        style="width: 42px; height: 42px; object-fit: contain;">
+      <span class="logo-text">EklavyaX</span>
+    </div>
+    <div class="nav-right">
+      <div class="lang"><i class="fas fa-globe"></i> <span>EN</span> <i class="fas fa-chevron-down"></i></div>
+      <div class="settings"><i class="fas fa-cog"></i> <span>Settings</span></div>
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <main class="main">
+    <h1>Welcome to
+      <span class="highlight">EklavyaX
+        <svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M2 12 C 40 4, 70 18, 100 10 S 160 2, 198 10" fill="none" stroke="currentColor" stroke-width="3"
+            stroke-linecap="round" />
+        </svg>
+      </span>
+    </h1>
+    <p class="lede">
+      Like Eklavya, who taught himself archery before a clay teacher — a digital bridge
+      connecting rural students and real teachers through gamified STEM learning.
+    </p>
+
+    <!-- Signature artwork: one aim, two paths -->
+    <div class="aim-art" aria-hidden="true">
+      <svg viewBox="0 0 640 160">
+        <path class="aim-line" d="M 320 10 C 250 55, 150 55, 90 130" />
+        <path class="aim-line" d="M 320 10 C 390 55, 490 55, 550 130" />
+        <circle class="aim-target gold" cx="90" cy="132" r="14" />
+        <circle class="aim-target gold" cx="90" cy="132" r="6" />
+        <circle class="aim-target terra" cx="550" cy="132" r="14" />
+        <circle class="aim-target terra" cx="550" cy="132" r="6" />
+      </svg>
+    </div>
+
+    <div class="login-buttons">
+      <a href="teacher/login.html?role=teacher" class="teacher">
+        <i class="fas fa-chalkboard-teacher icon"></i>
+        <h3>I'm a Teacher</h3>
+        <p>Teacher Login</p>
+        <span class="go">Enter as teacher <i class="fas fa-arrow-right"></i></span>
+      </a>
+      <a href="student/student_login.html?role=student" class="student">
+        <i class="fas fa-user-graduate icon"></i>
+        <h3>I'm a Student</h3>
+        <p>Student Login</p>
+        <span class="go">Enter as student <i class="fas fa-arrow-right"></i></span>
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© EklavyaX — made for Smart India Hackathon 2026 by Team GravityX</p>
+  </footer>
+
+  <script src="js/chatbot.js?v=2.1"></script>
+</body>
+
+</html>

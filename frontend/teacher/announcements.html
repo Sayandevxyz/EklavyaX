@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Announcements | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=2026.1">
+  <link rel="stylesheet" href="../css/global.css?v=2026.1">
+  <link rel="stylesheet" href="../css/teacher_dashboard.css?v=2026.1">
+  <link rel="stylesheet" href="../css/app_pages.css?v=2026.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+  <div class="container" style="display:flex;">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="myclass.html"><i class="fas fa-users" aria-hidden="true"></i> My Class</a>
+        <a href="student_progress.html"><i class="fas fa-chart-line" aria-hidden="true"></i> Student Progress</a>
+        <a href="doubts.html"><i class="fas fa-question" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul" aria-hidden="true"></i> Assignments</a>
+        <a href="content_library.html"><i class="fas fa-book" aria-hidden="true"></i> Content Library</a>
+        <a class="active" href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Teacher's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area" role="main">
+      <header class="page-header">
+        <div class="page-title">
+          <h1><i class="fas fa-bullhorn" style="color: var(--marigold);"></i> Post Class Announcements</h1>
+          <p>Broadcast exam alerts, schedule changes, and event notices to your students.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-primary" onclick="EklavyaXPages.openModal('postAnnouncementModal')">
+            <i class="fas fa-plus"></i> Post Announcement
+          </button>
+        </div>
+      </header>
+
+      <!-- Announcements Feed -->
+      <section class="announcements-feed" id="announcementsFeed">
+        <!-- Rendered by app_pages.js -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Post Announcement Modal -->
+  <div class="app-modal" id="postAnnouncementModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><i class="fas fa-bullhorn"></i> New Class Announcement</h2>
+        <button class="close-modal" onclick="EklavyaXPages.closeModal('postAnnouncementModal')">&times;</button>
+      </div>
+      <form id="postAnnouncementForm" style="display:flex; flex-direction:column; gap:14px;">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="annCategory" class="form-control">
+            <option value="academic">Academic Notice</option>
+            <option value="events">Event / Competition</option>
+            <option value="general">General Broadcast</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="annTitle" class="form-control" placeholder="e.g. Physics Lab Practical Exam Instructions" required>
+        </div>
+        <div class="form-group">
+          <label>Message Content</label>
+          <textarea id="annContent" class="form-control" placeholder="Write full announcement details..." required></textarea>
+        </div>
+        <div class="form-group" style="flex-direction:row; align-items:center; gap:8px;">
+          <input type="checkbox" id="annPinned" style="width:18px; height:18px;">
+          <label for="annPinned" style="cursor:pointer; margin:0;">Pin to top of student feed</label>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+          <button type="button" class="btn-secondary" onclick="EklavyaXPages.closeModal('postAnnouncementModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Broadcast Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/app_pages.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("teacher", "login.html");
+      EklavyaXPages.initAnnouncementsPage("teacher");
+    });
+  </script>
+</body>
+
+</html>

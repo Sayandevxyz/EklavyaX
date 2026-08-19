@@ -1,0 +1,1168 @@
+/* =========================================================
+   EklavyaX — STUDENT LOGIN
+   Reference Design: Dark Green + Royal Blue + Gold
+   ========================================================= */
+
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+:root {
+  --bg-dark: #062c22;
+  --bg-dark-2: #08382b;
+  --bg-green: #0a3b2d;
+
+  --header-blue: #405ba7;
+  --header-blue-dark: #354f98;
+
+  --gold: #f5a817;
+  --gold-light: #ffbd32;
+  --gold-dark: #d98b00;
+
+  --cream: #fff8e6;
+  --white: #ffffff;
+
+  --text: #e9eadf;
+  --text-muted: #aab8ad;
+  --text-dark: #20352d;
+
+  --border: rgba(255, 255, 255, 0.16);
+  --glass: rgba(255, 255, 255, 0.09);
+  --glass-strong: rgba(255, 255, 255, 0.12);
+
+  --shadow: rgba(0, 0, 0, 0.28);
+
+  --font-ui:
+    "Inter",
+    "Poppins",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  --weight-regular: 400;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+
+  font-family: var(--font-ui);
+  font-weight: var(--weight-regular);
+
+  color: var(--text);
+
+  background:
+    radial-gradient(circle at 50% 45%,
+      rgba(75, 120, 66, 0.22),
+      transparent 30%),
+    radial-gradient(circle at 80% 30%,
+      rgba(104, 126, 47, 0.16),
+      transparent 28%),
+    radial-gradient(circle at 15% 80%,
+      rgba(20, 88, 64, 0.35),
+      transparent 35%),
+    linear-gradient(135deg,
+      #041f19 0%,
+      #062d22 45%,
+      #07372a 100%);
+
+  overflow-x: hidden;
+  position: relative;
+}
+
+
+/* Subtle background grid */
+
+body::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+  z-index: -2;
+
+  opacity: 0.16;
+
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px);
+
+  background-size: 48px 48px;
+}
+
+
+/* Soft green glow */
+
+body::after {
+  content: "";
+
+  position: fixed;
+
+  width: 520px;
+  height: 520px;
+
+  top: 25%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: rgba(94, 133, 55, 0.10);
+
+  filter: blur(100px);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+  width: 100%;
+  height: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 6%;
+
+  /* Transparent — removes blue background */
+  background: transparent;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: none;
+
+  position: relative;
+  z-index: 10;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  animation: fadeDown 0.6s ease both;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+
+  transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.logo-text {
+  font-family: 'Kalam', cursive;
+  color: #eeb43e;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   RIGHT NAVIGATION
+   ========================================================= */
+
+.nav-right {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  animation: fadeDown 0.7s ease both;
+}
+
+.nav-right>div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.nav-right>div:hover {
+  color: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.nav-right i {
+  margin-right: 0;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main {
+  width: 100%;
+  min-height: calc(100vh - 90px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  padding: 105px 20px 90px;
+
+  position: relative;
+}
+
+
+/* =========================================================
+   MAIN HEADING
+   ========================================================= */
+
+.main h1 {
+  font-size: clamp(42px, 5vw, 70px);
+
+  line-height: 1.08;
+
+  font-weight: 900;
+
+  letter-spacing: -2px;
+
+  color: var(--cream);
+
+  margin-bottom: 18px;
+
+  text-shadow:
+    0 4px 25px rgba(0, 0, 0, 0.20);
+
+  animation: fadeUp 0.7s ease both;
+}
+
+
+/* Optional emoji/icon after heading */
+
+.main h1::after {
+  content: "";
+
+  display: block;
+
+  width: 58px;
+  height: 4px;
+
+  margin: 18px auto 0;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(90deg,
+      var(--gold),
+      var(--gold-light));
+
+  box-shadow:
+    0 0 15px rgba(245, 168, 23, 0.28);
+
+  animation: expandLine 0.8s ease 0.25s both;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.main>p {
+  max-width: 700px;
+
+  color: #aebdb2;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+
+  margin: 0 auto 34px;
+
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+
+
+/* =========================================================
+   FORM SECTION
+   ========================================================= */
+
+.form-section {
+  width: 100%;
+  max-width: 485px;
+
+  animation: formAppear 0.8s ease 0.15s both;
+}
+
+
+/* =========================================================
+   LOGIN / SIGNUP TOGGLE
+   ========================================================= */
+
+.toggle-buttons {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+
+  margin: 0 auto 32px;
+
+  padding: 5px;
+
+  gap: 4px;
+
+  background:
+    rgba(7, 31, 24, 0.72);
+
+  border: 1px solid rgba(255, 255, 255, 0.20);
+
+  border-radius: 50px;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+
+/* Toggle buttons */
+
+.toggle-buttons button {
+  min-width: 105px;
+
+  padding: 11px 23px;
+
+  border: none;
+  border-radius: 30px;
+
+  background: transparent;
+
+  color: #b8c2b9;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+
+.toggle-buttons button:hover {
+  color: var(--cream);
+}
+
+.toggle-buttons button:active {
+  transform: scale(0.96);
+}
+
+
+/* Active toggle */
+
+.toggle-buttons button.active {
+  color: #18281f;
+
+  background:
+    linear-gradient(135deg,
+      var(--gold-light),
+      var(--gold));
+
+  box-shadow:
+    0 5px 16px rgba(245, 168, 23, 0.30);
+}
+
+
+/* =========================================================
+   FORM CARD
+   ========================================================= */
+
+.form-box {
+  width: 100%;
+
+  padding: 38px 37px;
+
+  text-align: left;
+
+  background:
+    linear-gradient(145deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.065));
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  border-radius: 23px;
+
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  position: relative;
+
+  overflow: hidden;
+
+  animation: cardEnter 0.5s ease both;
+}
+
+
+/* Golden top highlight */
+
+.form-box::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background:
+    linear-gradient(90deg,
+      transparent,
+      var(--gold),
+      var(--gold-light),
+      transparent);
+
+  opacity: 0.9;
+}
+
+
+/* Soft card glow */
+
+.form-box::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -110px;
+  right: -70px;
+
+  border-radius: 50%;
+
+  background: rgba(245, 168, 23, 0.08);
+
+  filter: blur(25px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CARD HEADING
+   ========================================================= */
+
+.form-box h2 {
+  text-align: center;
+
+  font-size: 25px;
+
+  font-weight: 850;
+
+  color: var(--cream);
+
+  margin-bottom: 29px;
+
+  letter-spacing: -0.5px;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.form-box label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #d7dfd8;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-box input,
+.form-box select {
+  width: 100%;
+
+  height: 51px;
+
+  padding: 0 16px;
+
+  margin-bottom: 19px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  border-radius: 12px;
+
+  outline: none;
+
+  background:
+    rgba(3, 30, 23, 0.48);
+
+  color: #f1f4ed;
+
+  font-size: 13px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.2s ease;
+}
+
+.form-box input::placeholder {
+  color: #829389;
+}
+
+
+/* Select */
+
+.form-box select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+
+  background-image:
+    linear-gradient(45deg,
+      transparent 50%,
+      #aab8ad 50%),
+    linear-gradient(135deg,
+      #aab8ad 50%,
+      transparent 50%);
+
+  background-position:
+    calc(100% - 18px) 22px,
+    calc(100% - 13px) 22px;
+
+  background-size: 5px 5px;
+
+  background-repeat: no-repeat;
+}
+
+
+/* Focus */
+
+.form-box input:focus,
+.form-box select:focus {
+  border-color: var(--gold);
+
+  background:
+    rgba(4, 37, 28, 0.72);
+
+  box-shadow:
+    0 0 0 3px rgba(245, 168, 23, 0.12),
+    0 5px 18px rgba(0, 0, 0, 0.12);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LOGIN OPTIONS
+   ========================================================= */
+
+.form-options {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 0 0 21px;
+
+  font-size: 12px;
+}
+
+
+/* Remember */
+
+.remember {
+  display: flex !important;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin: 0 !important;
+
+  width: auto !important;
+
+  white-space: nowrap;
+
+  color: #aab7ae !important;
+
+  font-size: 12px !important;
+
+  font-weight: 500 !important;
+
+  cursor: pointer;
+}
+
+.remember input {
+  width: 15px !important;
+  height: 15px !important;
+
+  margin: 0 !important;
+
+  padding: 0;
+
+  accent-color: var(--gold);
+
+  cursor: pointer;
+
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+
+/* Forgot password */
+
+.form-options a {
+  width: auto;
+
+  margin: 0;
+
+  color: var(--gold-light);
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.form-options a:hover {
+  color: #ffd36a;
+
+  text-decoration: none;
+
+  transform: translateX(2px);
+}
+
+
+/* =========================================================
+   NAME FIELDS
+   ========================================================= */
+
+.name-fields {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+}
+
+.name-fields div {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.submit-btn {
+  width: 100%;
+
+  height: 51px;
+
+  padding: 0 18px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(135deg,
+      var(--gold-light),
+      var(--gold));
+
+  color: #1b2c22;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.2px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px rgba(245, 168, 23, 0.20);
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+
+/* Button shine */
+
+.submit-btn::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 70%;
+  height: 100%;
+
+  background:
+    linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.35),
+      transparent);
+
+  transform: skewX(-20deg);
+
+  transition: left 0.6s ease;
+}
+
+.submit-btn:hover::before {
+  left: 140%;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 32px rgba(245, 168, 23, 0.28);
+
+  filter: brightness(1.06);
+}
+
+.submit-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+
+/* =========================================================
+   HIDDEN FORM
+   ========================================================= */
+
+.hidden {
+  display: none;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+  position: relative;
+  z-index: 10;
+
+  width: 100%;
+
+  padding: 13px 20px;
+
+  /* EklavyaX dark green */
+  background: #062c22;
+
+  color: #aab8ad;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: none;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes formAppear {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes expandLine {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    width: 58px;
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .navbar {
+    height: 70px;
+    padding: 0 20px;
+  }
+
+  .logo img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .nav-right {
+    gap: 13px;
+    font-size: 12px;
+  }
+
+  .nav-right .settings {
+    display: none;
+  }
+
+  .main {
+    min-height: calc(100vh - 70px);
+
+    padding: 65px 16px 70px;
+  }
+
+  .main h1 {
+    font-size: 42px;
+  }
+
+  .main>p {
+    font-size: 14px;
+    max-width: 500px;
+  }
+
+  .form-section {
+    max-width: 450px;
+  }
+
+  .form-box {
+    padding: 31px 26px;
+    border-radius: 21px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .navbar {
+    height: 64px;
+    padding: 0 15px;
+  }
+
+  .logo {
+    gap: 8px;
+  }
+
+  .logo img {
+    width: 31px;
+    height: 31px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .nav-right {
+    gap: 9px;
+    font-size: 11px;
+  }
+
+  .main {
+    padding: 48px 13px 60px;
+  }
+
+  .main h1 {
+    font-size: 32px;
+
+    letter-spacing: -1px;
+  }
+
+  .main h1::after {
+    margin-top: 14px;
+  }
+
+  .main>p {
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+  }
+
+  .toggle-buttons {
+    margin-bottom: 20px;
+  }
+
+  .toggle-buttons button {
+    min-width: 95px;
+
+    padding: 9px 18px;
+
+    font-size: 12px;
+  }
+
+  .form-box {
+    padding: 27px 19px;
+
+    border-radius: 19px;
+  }
+
+  .form-box h2 {
+    font-size: 21px;
+
+    margin-bottom: 23px;
+  }
+
+  .name-fields {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .form-box input,
+  .form-box select {
+    height: 47px;
+
+    font-size: 12px;
+  }
+
+  .form-options {
+    font-size: 11px;
+  }
+
+  .remember {
+    font-size: 11px !important;
+  }
+
+  .form-options a {
+    font-size: 11px;
+  }
+
+  .submit-btn {
+    height: 47px;
+
+    font-size: 13px;
+  }
+
+  .footer {
+    font-size: 9px;
+
+    padding: 14px 10px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .nav-right {
+    font-size: 10px;
+  }
+
+  .main h1 {
+    font-size: 28px;
+  }
+
+  .form-box {
+    padding: 24px 15px;
+  }
+
+  .form-options {
+    gap: 8px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(245, 168, 23, 0.45);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+    scroll-behavior: auto !important;
+  }
+}

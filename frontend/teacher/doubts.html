@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Doubts | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=2026.1">
+  <link rel="stylesheet" href="../css/global.css?v=2026.1">
+  <link rel="stylesheet" href="../css/teacher_dashboard.css?v=2026.1">
+  <link rel="stylesheet" href="../css/app_pages.css?v=2026.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+  <div class="container" style="display:flex;">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="myclass.html"><i class="fas fa-users" aria-hidden="true"></i> My Class</a>
+        <a href="student_progress.html"><i class="fas fa-chart-line" aria-hidden="true"></i> Student Progress</a>
+        <a class="active" href="doubts.html"><i class="fas fa-question" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul" aria-hidden="true"></i> Assignments</a>
+        <a href="content_library.html"><i class="fas fa-book" aria-hidden="true"></i> Content Library</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Teacher's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area" role="main">
+      <header class="page-header">
+        <div class="page-title">
+          <h1><i class="fas fa-question-circle" style="color: var(--marigold);"></i> Student Doubts & Enquiries</h1>
+          <p>Answer student doubts, verify peer answers, and award EduCoins for great questions.</p>
+        </div>
+      </header>
+
+      <!-- Stats Grid -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-inbox"></i></div>
+          <div class="stat-info">
+            <div class="stat-num" id="statTotalDoubts">3</div>
+            <div class="stat-label">Total Student Doubts</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="color: #fde047; background: rgba(253, 224, 71, 0.15);"><i class="fas fa-hourglass-half"></i></div>
+          <div class="stat-info">
+            <div class="stat-num" id="statPendingDoubts">1</div>
+            <div class="stat-label">Awaiting Your Answer</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="color: #4ade80; background: rgba(74, 222, 128, 0.15);"><i class="fas fa-check-double"></i></div>
+          <div class="stat-info">
+            <div class="stat-num" id="statResolvedDoubts">2</div>
+            <div class="stat-label">Answered / Resolved</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter Bar -->
+      <section class="filter-bar">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="doubtSearch" placeholder="Search student doubts...">
+        </div>
+        <div class="tab-group">
+          <button class="tab-btn active" data-tab="all">All Doubts</button>
+          <button class="tab-btn" data-tab="pending">Needs Answer</button>
+          <button class="tab-btn" data-tab="resolved">Answered</button>
+        </div>
+      </section>
+
+      <!-- Doubts List -->
+      <section class="doubts-list" id="doubtsList">
+        <!-- Rendered by app_pages.js -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Answer Doubt Modal -->
+  <div class="app-modal" id="answerDoubtModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><i class="fas fa-reply"></i> Answer Student Doubt</h2>
+        <button class="close-modal" onclick="EklavyaXPages.closeModal('answerDoubtModal')">&times;</button>
+      </div>
+      <form onsubmit="event.preventDefault(); EklavyaXPages.submitTeacherAnswer();" style="display:flex; flex-direction:column; gap:14px;">
+        <input type="hidden" id="targetDoubtId">
+        <div class="form-group">
+          <label>Your Teacher Explanation / Solution</label>
+          <textarea id="teacherAnswerText" class="form-control" placeholder="Provide step-by-step guidance, formula explanation, or solution link..." required></textarea>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+          <button type="button" class="btn-secondary" onclick="EklavyaXPages.closeModal('answerDoubtModal')">Cancel</button>
+          <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Publish Answer (+25 Coins)</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/app_pages.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("teacher", "login.html");
+      EklavyaXPages.initDoubtsPage("teacher");
+    });
+  </script>
+</body>
+
+</html>

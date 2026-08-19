@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments & Tests | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.0">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.0">
+  <link rel="stylesheet" href="../css/app_pages.css?v=3.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab Simulations</a>
+        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> GRAVITY AI</a>
+        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> Doubts</a>
+        <a class="active" href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> Assignments</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon">
+        <div class="profile-info">
+          <strong id="profileName">Sayan Mondal</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <header class="page-header">
+        <div class="page-title">
+          <h1><i class="fas fa-tasks" style="color: var(--marigold);"></i> Course Assignments</h1>
+          <p>Track your homework, lab submissions, due dates, and earned grades.</p>
+        </div>
+      </header>
+
+      <!-- Filter Bar -->
+      <section class="filter-bar">
+        <div class="tab-group">
+          <button class="tab-btn active" data-tab="all">All Assignments</button>
+          <button class="tab-btn" data-tab="pending">Pending</button>
+          <button class="tab-btn" data-tab="submitted">Submitted</button>
+          <button class="tab-btn" data-tab="graded">Graded</button>
+        </div>
+      </section>
+
+      <!-- Assignments Grid -->
+      <section class="assignments-grid" id="assignmentsGrid">
+        <!-- Rendered by app_pages.js -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Submit Assignment Modal -->
+  <div class="app-modal" id="submitAssignmentModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><i class="fas fa-file-upload"></i> Submit Solution</h2>
+        <button class="close-modal" onclick="EklavyaXPages.closeModal('submitAssignmentModal')">&times;</button>
+      </div>
+      <form onsubmit="event.preventDefault(); EklavyaXPages.submitAssignmentWork();" style="display:flex; flex-direction:column; gap:14px;">
+        <input type="hidden" id="submitAssignId">
+        <div class="form-group">
+          <label>Your Work / Answer Notes</label>
+          <textarea id="submissionText" class="form-control" placeholder="Write your solution, formulas, or link to Google Drive / GitHub..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Attach File (PDF, Image, DOCX)</label>
+          <input type="file" class="form-control" style="background:transparent; border:1px dashed rgba(255,255,255,0.2);">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+          <button type="button" class="btn-secondary" onclick="EklavyaXPages.closeModal('submitAssignmentModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Submit Solution</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/app_pages.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      EklavyaXPages.initAssignmentsPage("student");
+    });
+  </script>
+</body>
+
+</html>

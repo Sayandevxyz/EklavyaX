@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teacher Dashboard</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=2026.1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css?v=2026.1">
+  <link rel="stylesheet" href="../css/teacher_dashboard.css?v=2026.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a class="active" href="dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="myclass.html"><i class="fas fa-users" aria-hidden="true"></i> My Class</a>
+        <a href="student_progress.html"><i class="fas fa-chart-line" aria-hidden="true"></i> Student Progress</a>
+        <a href="doubts.html"><i class="fas fa-question" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul" aria-hidden="true"></i> Assignments</a>
+        <a href="content_library.html"><i class="fas fa-book" aria-hidden="true"></i> Content Library</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Teacher's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+    <main class="content-area" role="main" aria-label="Main content area of teacher dashboard">
+      <section class="top-bar" aria-labelledby="welcome-heading">
+        <div class="welcome-text">
+          <h1 id="welcome-heading"><strong>Welcome back, <span id="welcomeName">Mr. Aarav</span>! 👋🏻</strong></h1>
+          <h2>Another day to shape bright minds! ✨</h2>
+        </div>
+        <div class="performance-chart-container" aria-label="Class Performance chart and description">
+          <strong>Class Performance</strong>
+          <canvas id="classPerformanceChart" width="220" height="80" role="img"
+            aria-label="Line graph showing class performance trend over last 7 days"></canvas>
+
+        </div>
+      </section>
+      <section class="stats-container" aria-label="Summary statistics">
+        <div class="stat-box" tabindex="0">
+          <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-users"></i></div>
+          <div class="value">45</div>
+          <div class="label">Total Students</div>
+        </div>
+        <div class="stat-box" tabindex="0">
+          <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-chart-line"></i></div>
+          <div class="value">82%</div>
+          <div class="label">Avg Performance</div>
+        </div>
+        <div class="stat-box" tabindex="0">
+          <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-question"></i></div>
+          <div class="value">12</div>
+          <div class="label">Pending Doubts</div>
+        </div>
+        <div class="stat-box" tabindex="0">
+          <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-list-ul"></i></div>
+          <div class="value">3</div>
+          <div class="label">Assignments Due</div>
+        </div>
+      </section>
+      <section class="bottom-section">
+        <div class="box recent-activity" aria-labelledby="recent-activity-heading">
+          <h3 id="recent-activity-heading">Recent Activity</h3>
+          <article class="activity-item" tabindex="0">
+            <div class="icon-wrapper icon-blue"><i class="fas fa-question"></i></div>
+            <div class="content">
+              <p class="desc"><strong>Prachi</strong> asked a doubt in Physics</p>
+              <p class="time">2 minutes ago</p>
+            </div>
+          </article>
+          <article class="activity-item" tabindex="0">
+            <div class="icon-wrapper icon-green"><i class="fas fa-file-alt"></i></div>
+            <div class="content">
+              <p class="desc"><strong>Anchal</strong> submitted Math Assignment</p>
+              <p class="time">5 minutes ago</p>
+            </div>
+          </article>
+          <article class="activity-item" tabindex="0">
+            <div class="icon-wrapper icon-yellow"><i class="fas fa-award"></i></div>
+            <div class="content">
+              <p class="desc"><strong>Ishita achieved "Quiz Master" badge</strong> </p>
+              <p class="time">11 minutes ago</p>
+            </div>
+          </article>
+          <article class="activity-item" tabindex="0">
+            <div class="icon-wrapper icon-purple"><i class="fas fa-question"></i></div>
+            <div class="content">
+              <p class="desc"><strong>Priya</strong> asked a doubt in Sanskrit</p>
+              <p class="time">20 minutes ago</p>
+            </div>
+          </article>
+          <article class="activity-item" tabindex="0">
+            <div class="icon-wrapper icon-blue"><i class="fas fa-question"></i></div>
+            <div class="content">
+              <p class="desc"><strong>Prachi</strong> asked a doubt in Physics</p>
+              <p class="time">27 minutes ago</p>
+            </div>
+          </article>
+        </div>
+        <div class="box upcoming-tasks" aria-labelledby="upcoming-tasks-heading">
+          <h3 id="upcoming-tasks-heading">Upcoming Tasks</h3>
+          <div class="task-item" tabindex="0">
+            <div class="task-header-container">
+              <div class="task-header">
+                <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-calendar-alt"></i></div>
+                Math Quiz - Algebra
+              </div>
+              <span class="status-pill due-soon" aria-label="Task is due soon">Due soon</span>
+            </div>
+            <div class="task-date-time" aria-label="Task scheduled date and time">10th September | 10:00 AM</div>
+          </div>
+          <div class="task-item" tabindex="0">
+            <div class="task-header-container">
+              <div class="task-header">
+                <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
+                English Assignment
+              </div>
+              <span class="status-pill scheduled" aria-label="Task is scheduled">Scheduled</span>
+            </div>
+            <div class="task-date-time" aria-label="Task scheduled date and time">12th September | 2:00 PM</div>
+          </div>
+          <div class="task-item" tabindex="0">
+            <div class="task-header-container">
+              <div class="task-header">
+                <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-flask"></i></div>
+                Science Lab Report
+              </div>
+              <span class="status-pill upcoming" aria-label="Task is upcoming">Upcoming</span>
+            </div>
+            <div class="task-date-time" aria-label="Task scheduled date and time">15th September | 11:30 AM</div>
+          </div>
+          <div class="task-item" tabindex="0">
+            <div class="task-header-container">
+              <div class="task-header">
+                <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-chart-line"></i></div>
+                Monthly Reports
+              </div>
+              <span class="status-pill review" aria-label="Task pending review">Review</span>
+            </div>
+            <div class="task-date-time" aria-label="Task scheduled date and time">18th September | 9:00 AM</div>
+          </div>
+        </div>
+        <div class="box leaderboard" aria-labelledby="leaderboard-heading">
+          <h3 id="leaderboard-heading">Leaderboard</h3>
+          <div class="leaderboard-item" tabindex="0">
+            <div class="icon-wrapper medal gold" aria-hidden="true"><i class="fas fa-medal"></i></div>
+            <div class="name">Prachi Mondal</div>
+            <div class="points">964 pts <span aria-label="Starred user" role="img" class="star"><i
+                  class="fas fa-star"></i></span></div>
+          </div>
+          <div class="leaderboard-item" tabindex="0">
+            <div class="icon-wrapper medal silver" aria-hidden="true"><i class="fas fa-medal"></i></div>
+            <div class="name">Anchal Vishwakarma</div>
+            <div class="points">950 pts <span aria-label="Starred user" role="img" class="star"><i
+                  class="fas fa-star"></i></span></div>
+          </div>
+          <div class="leaderboard-item" tabindex="0">
+            <div class="icon-wrapper medal bronze" aria-hidden="true"><i class="fas fa-medal"></i></div>
+            <div class="name">Ishita Singh</div>
+            <div class="points">943 pts <span aria-label="Starred user" role="img" class="star"><i
+                  class="fas fa-star"></i></span></div>
+          </div>
+          <div class="leaderboard-item" tabindex="0">
+            <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-user"></i></div>
+            <div class="name">Aditya Yadav</div>
+            <div class="points">932 pts <span aria-label="Starred user" role="img" class="star"><i
+                  class="far fa-star"></i></span></div>
+          </div>
+          <div class="leaderboard-item" tabindex="0">
+            <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-user"></i></div>
+            <div class="name">Priya Devi</div>
+            <div class="points">900 pts <span aria-label="Starred user" role="img" class="star"><i
+                  class="far fa-star"></i></span></div>
+          </div>
+      </section>
+    </main>
+  </div>
+  <script src="../js/api.js"></script>
+  <script src="../js/teacher_dashboard.js"></script>
+  <script src="../js/chatbot.js?v=2.1"></script>
+</body>
+
+</html>

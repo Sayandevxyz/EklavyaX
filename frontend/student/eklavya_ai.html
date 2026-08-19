@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard - GRAVITY AI</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css?v=3.0">
+  <link rel="stylesheet" href="../css/eklavya_ai.css?v=3.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=2026.1" alt="EklavyaX Logo" width="36" height="36" style="width: 36px; height: 36px; object-fit: contain;">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab Simulations</a>
+        <a class="active" href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> GRAVITY AI</a>
+        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> Assignments</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon" width="42" height="42" style="width: 42px; height: 42px; object-fit: cover; border-radius: 50%;" />
+        <div class="profile-info">
+          <strong id="profileName">Sayan Mondal</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <section class="ai-hero-card">
+        <div>
+          <h1>Gravity.AI — Intelligent AI Tutor</h1>
+          <p>Get concept explanations in your language, guided by friendly step-by-step analogies.</p>
+        </div>
+        <div class="ai-balance-badge">
+          <span>🪙 Balance:</span>
+          <span id="walletCoins">--</span>
+          <span>EduCoins</span>
+        </div>
+      </section>
+
+      <div class="ai-grid">
+        <!-- AI Ask Card -->
+        <section class="ai-card">
+          <h3><i class="fas fa-magic" style="color:#f4ae25;"></i> Ask for an Explanation</h3>
+          <p style="font-size:0.84rem; color:#6d756b; margin-bottom:14px;">
+            Highlight text or type any concept you want simplified. Costs 10 EduCoins (earn back 5 coins if you
+            understand it!).
+          </p>
+
+          <form id="explainForm">
+            <div class="ai-input-group">
+              <label for="explainText">Concept / Question / Problem</label>
+              <textarea id="explainText" rows="4"
+                placeholder="e.g. Explain Newton's Third Law with a real-life cricket example or quadratic equation formula..."
+                required></textarea>
+            </div>
+
+            <div class="ai-input-group">
+              <label for="explainLang">Target Language</label>
+              <select id="explainLang">
+                <option value="English" selected>English</option>
+                <option value="Hindi">Hindi (हिंदी)</option>
+                <option value="Tamil">Tamil (தமிழ்)</option>
+              </select>
+            </div>
+
+            <button type="submit" id="explainBtn" class="ai-btn-submit">
+              <i class="fas fa-sparkles"></i> Explain with Gravity AI (🪙 10)
+            </button>
+          </form>
+
+          <div id="aiResponseBox" class="ai-response-box">
+            <h4><i class="fas fa-lightbulb"></i> Explanation</h4>
+            <div id="aiResponseContent" class="ai-response-content"></div>
+            <div style="margin-top:14px; display:flex; gap:10px; align-items:center;">
+              <button id="goodStudentBtn" class="ai-refund-btn">
+                <i class="fas fa-check-circle"></i> I Understood! (Claim 5 Coin Refund)
+              </button>
+              <span id="refundMsg" style="font-size:0.8rem; color:#aebcaf;"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- History Card -->
+        <section class="ai-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <h3 style="margin:0;"><i class="fas fa-history" style="color:#4059a5;"></i> Recent Explanations</h3>
+            <button id="clearHistoryBtn" type="button" style="
+              background: rgba(248,113,113,0.15);
+              color: #f87171;
+              border: 1px solid rgba(248,113,113,0.3);
+              padding: 5px 14px;
+              border-radius: 8px;
+              font-size: 0.78rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.2s ease;
+              display: flex;
+              align-items: center;
+              gap: 5px;
+            " onmouseover="this.style.background='rgba(248,113,113,0.3)'" onmouseout="this.style.background='rgba(248,113,113,0.15)'">
+              <i class="fas fa-trash-alt"></i> Clear All
+            </button>
+          </div>
+          <div id="historyList" class="history-list">
+            <p style="color:#70786d; font-size:0.85rem;">Loading past sessions...</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script>
+    let currentLogId = null;
+
+    async function loadWallet() {
+      try {
+        const wallet = await EklavyaXAPI.wallet();
+        const el = document.getElementById("walletCoins");
+        if (el) el.textContent = wallet.balance.toLocaleString();
+      } catch (err) {
+        console.warn("Wallet fetch failed:", err);
+      }
+    }
+
+    async function loadHistory() {
+      const container = document.getElementById("historyList");
+      try {
+        const history = await EklavyaXAPI.tutorHistory();
+        if (!history || history.length === 0) {
+          container.innerHTML = '<p style="color:#70786d; font-size:0.85rem;">No past explanations yet. Try asking your first question!</p>';
+          return;
+        }
+        container.innerHTML = history.map(item => `
+          <div class="history-item" onclick="showHistoryItem(${JSON.stringify(item.highlighted_text).replace(/"/g, '&quot;')})">
+            <div class="history-item-title">${item.highlighted_text}</div>
+            <div class="history-item-meta">
+              <span>🌐 ${item.target_language}</span>
+              <span>🪙 ${item.cost_coins} coins ${item.refunded ? '(Refunded ✅)' : ''}</span>
+            </div>
+          </div>
+        `).join("");
+      } catch (err) {
+        container.innerHTML = '<p style="color:#70786d; font-size:0.85rem;">Could not load history.</p>';
+      }
+    }
+
+    function formatMarkdown(text) {
+      if (!text) return "";
+      let html = text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      // Bold **text**
+      html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#ffffff;">$1</strong>');
+      // Headings
+      html = html.replace(/^### (.*$)/gim, '<h5 style="margin:14px 0 6px 0; color:#eeb43e; font-size:1rem;">$1</h5>');
+      html = html.replace(/^## (.*$)/gim, '<h4 style="margin:16px 0 8px 0; color:#eeb43e; font-size:1.1rem;">$1</h4>');
+      html = html.replace(/^# (.*$)/gim, '<h3 style="margin:18px 0 10px 0; color:#eeb43e; font-size:1.2rem;">$1</h3>');
+      // Bullet points
+      html = html.replace(/^\s*[\-\*]\s+(.*$)/gim, '<div style="margin-left:14px; margin-bottom:4px;">• $1</div>');
+      // Numbered lists
+      html = html.replace(/^\s*(\d+\.)\s+(.*$)/gim, '<div style="margin-top:10px; margin-bottom:4px;"><strong style="color:#eeb43e;">$1</strong> $2</div>');
+      // Line breaks
+      html = html.replace(/\n\n/g, '<div style="height:10px;"></div>').replace(/\n/g, '<br/>');
+      return html;
+    }
+
+    function showHistoryItem(text) {
+      document.getElementById("explainText").value = text;
+    }
+
+    document.getElementById("explainForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = document.getElementById("explainText").value.trim();
+      const lang = document.getElementById("explainLang").value;
+      const btn = document.getElementById("explainBtn");
+      const box = document.getElementById("aiResponseBox");
+      const content = document.getElementById("aiResponseContent");
+      const refundMsg = document.getElementById("refundMsg");
+
+      if (!text) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Explanation...';
+      refundMsg.textContent = "";
+
+      try {
+        const res = await EklavyaXAPI.tutorExplain(text, lang);
+        currentLogId = res.explanation_log_id;
+        content.innerHTML = formatMarkdown(res.explanation);
+        box.classList.add("visible");
+        loadWallet();
+        loadHistory();
+      } catch (err) {
+        alert(err.message || "Failed to generate explanation. Check your coin balance or API settings.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sparkles"></i> Explain with Synapse AI (🪙 10)';
+      }
+    });
+
+    document.getElementById("goodStudentBtn").addEventListener("click", async () => {
+      if (!currentLogId) return;
+      const refundMsg = document.getElementById("refundMsg");
+      try {
+        const res = await EklavyaXAPI.tutorFeedback(currentLogId, true);
+        refundMsg.textContent = res.message;
+        refundMsg.style.color = "#4ade80";
+        loadWallet();
+        loadHistory();
+      } catch (err) {
+        refundMsg.textContent = err.message || "Refund failed.";
+        refundMsg.style.color = "#f87171";
+      }
+    });
+
+    // Page initialization
+    initPage("student", "student_login.html");
+    loadWallet();
+    loadHistory();
+
+    // Clear history button
+    document.getElementById("clearHistoryBtn").addEventListener("click", async () => {
+      if (!confirm("Clear all recent explanations? This cannot be undone.")) return;
+      const btn = document.getElementById("clearHistoryBtn");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Clearing...';
+      try {
+        await EklavyaXAPI.tutorClearHistory();
+        loadHistory();
+      } catch (err) {
+        alert(err.message || "Failed to clear history.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-trash-alt"></i> Clear All';
+      }
+    });
+  </script>
+  <script src="../js/chatbot.js?v=2.1"></script>
+</body>
+
+</html>

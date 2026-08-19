@@ -1,0 +1,737 @@
+/* =========================================================
+   EklavyaX — STUDENT DASHBOARD
+   Chalkboard & Gamified STEM Learning Aesthetic
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --board: #162c22;
+  --board-dark: #0f1d16;
+  --board-surface: #1a3327;
+  --chalk: #f5f0e2;
+  --chalk-dim: #a9bdae;
+  --marigold: #eeb43e;
+  --marigold-dark: #d4982a;
+  --terracotta: #d97a5c;
+  --paper: #f3ead4;
+  --paper-soft: #eae0c8;
+  --paper-line: rgba(60, 45, 20, 0.08);
+  --ink: #2a3b4d;
+  --ink-soft: #5a6b78;
+  --accent-blue: #4059a5;
+  --accent-green: #22c55e;
+  --font-hand: 'Kalam', cursive;
+  --font-body: 'Work Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(255, 255, 255, 0.04), transparent 60%),
+    radial-gradient(900px 600px at 90% 100%, rgba(0, 0, 0, 0.35), transparent 60%),
+    linear-gradient(135deg, #0d1e17 0%, #152b21 50%, #0c1c15 100%);
+  color: var(--chalk);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* Chalkboard grid pattern */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(to bottom, black, transparent 95%);
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar,
+aside.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 240px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #11221a 0%, #0d1a14 100%);
+  border-right: 1.5px dashed rgba(245, 240, 226, 0.15);
+  box-shadow: 10px 0 35px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.sidebar .logo,
+aside .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 26px 22px 20px;
+}
+
+.logo img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+}
+
+.logo-text {
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--marigold);
+  letter-spacing: 0.5px;
+}
+
+nav.menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+}
+
+nav.menu a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  color: var(--chalk-dim);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+nav.menu a i {
+  width: 20px;
+  text-align: center;
+  font-size: 1.05rem;
+  opacity: 0.85;
+}
+
+nav.menu a:hover {
+  background: rgba(245, 240, 226, 0.07);
+  color: var(--chalk);
+  transform: translateX(4px);
+}
+
+nav.menu a.active {
+  background: linear-gradient(135deg, var(--paper) 0%, var(--paper-soft) 100%);
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+nav.menu a.active i {
+  color: var(--terracotta);
+  opacity: 1;
+}
+
+aside .profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 12px 20px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(245, 240, 226, 0.18);
+  border-radius: 14px;
+  color: var(--chalk);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+aside .profile:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+aside .profile img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--marigold);
+  background: var(--paper);
+}
+
+aside .profile .profile-info strong {
+  display: block;
+  font-family: var(--font-hand);
+  font-size: 1.05rem;
+  color: var(--chalk);
+}
+
+aside .profile .profile-info span {
+  font-size: 0.78rem;
+  color: var(--terracotta);
+  font-weight: 600;
+}
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.content {
+  flex-grow: 1;
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 240px;
+  padding: 28px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* =========================================================
+   TOP BANNER — Lined Notebook Look
+   ========================================================= */
+
+.top-bar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 30px;
+  background:
+    repeating-linear-gradient(transparent,
+      transparent 27px,
+      var(--paper-line) 28px),
+    linear-gradient(135deg, var(--paper) 0%, var(--paper-soft) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+/* Red notebook margin line on left */
+.top-bar::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(217, 122, 92, 0.35);
+}
+
+.welcome-text {
+  padding-left: 14px;
+}
+
+.welcome-text h1 {
+  font-family: var(--font-hand);
+  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.welcome-text h2 {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-section img {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 3px solid var(--marigold);
+  background: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--marigold), var(--terracotta));
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(217, 122, 92, 0.3);
+}
+
+/* =========================================================
+   STATS GRID
+   ========================================================= */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background:
+    repeating-linear-gradient(transparent,
+      transparent 23px,
+      var(--paper-line) 24px),
+    linear-gradient(145deg, var(--paper), var(--paper-soft));
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+}
+
+.stat-card i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  font-size: 1.15rem;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.stat-card h3 {
+  font-family: var(--font-hand);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.stat-card p {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* Stat color variants with dashed borders */
+.stat-card.stat-orange {
+  border: 2px dashed var(--terracotta);
+}
+
+.stat-card.stat-orange i {
+  background: linear-gradient(135deg, #f97316, var(--terracotta));
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.stat-card.stat-gold {
+  border: 2px dashed var(--marigold);
+}
+
+.stat-card.stat-gold i {
+  background: linear-gradient(135deg, #eab308, var(--marigold-dark));
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+}
+
+.stat-card.stat-green {
+  border: 2px dashed var(--accent-green);
+}
+
+.stat-card.stat-green i {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.stat-card.stat-blue {
+  border: 2px dashed #3b82f6;
+}
+
+.stat-card.stat-blue i {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* =========================================================
+   MAIN GRID (Continue Learning + Side Widgets)
+   ========================================================= */
+
+.main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(290px, 1fr);
+  gap: 20px;
+}
+
+.continue-learning,
+.weekly-progress,
+.leaderboard,
+.lab-sim {
+  background:
+    repeating-linear-gradient(transparent,
+      transparent 27px,
+      var(--paper-line) 28px),
+    linear-gradient(145deg, var(--paper), var(--paper-soft));
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  padding: 22px 24px;
+}
+
+.continue-learning h3,
+.weekly-progress h2,
+.leaderboard h3,
+.lab-sim h2 {
+  font-family: var(--font-hand);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+/* =========================================================
+   SUBJECT CARDS (Chalkboard mini-cards)
+   ========================================================= */
+
+.subject-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #13281f 0%, #0d1e17 100%);
+  border: 1px dashed rgba(245, 240, 226, 0.18);
+  border-radius: 14px;
+  color: var(--chalk);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.subject-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.subject-card i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(238, 180, 62, 0.15);
+  color: var(--marigold);
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.subject-card .details {
+  flex: 1;
+  min-width: 0;
+}
+
+.subject-card h3 {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--chalk);
+  margin: 0 0 2px;
+}
+
+.subject-card p {
+  font-size: 0.78rem;
+  color: var(--chalk-dim);
+  margin-bottom: 8px;
+}
+
+.subject-card .bar {
+  width: 100%;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.subject-card .fill.blue {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 999px;
+}
+
+.subject-card span {
+  font-size: 0.72rem;
+  color: var(--chalk-dim);
+}
+
+/* =========================================================
+   SIDE WIDGETS
+   ========================================================= */
+
+.side-widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.weekly-progress {
+  text-align: center;
+}
+
+.weekly-progress canvas {
+  margin: 10px auto;
+  max-width: 130px;
+  max-height: 130px;
+}
+
+.weekly-progress p {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+
+/* Leaderboard */
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(42, 59, 77, 0.08);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: transform 0.2s ease;
+}
+
+.leaderboard-item:hover {
+  transform: translateX(3px);
+}
+
+.leaderboard-item .icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 0.85rem;
+}
+
+.leaderboard-item .name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboard-item .points {
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* =========================================================
+   LAB SIMULATION SECTION
+   ========================================================= */
+
+.lab-sim {
+  margin-top: 4px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.tabs button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(42, 59, 77, 0.08);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tabs button:hover {
+  background: rgba(42, 59, 77, 0.14);
+  color: var(--ink);
+}
+
+.tabs button.active {
+  background: linear-gradient(135deg, var(--marigold), var(--terracotta));
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(217, 122, 92, 0.25);
+}
+
+.lab-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.lab-card {
+  padding: 14px;
+  background: linear-gradient(135deg, #13281f 0%, #0d1e17 100%);
+  border: 1px dashed rgba(245, 240, 226, 0.18);
+  border-radius: 16px;
+  text-align: center;
+  color: var(--chalk);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s ease;
+}
+
+.lab-card:hover {
+  transform: translateY(-5px);
+}
+
+.lab-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.lab-card h3 {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--chalk);
+  margin-bottom: 4px;
+}
+
+.lab-card p {
+  font-size: 0.74rem;
+  color: var(--chalk-dim);
+  margin-bottom: 12px;
+}
+
+.lab-card button {
+  width: 100%;
+  padding: 9px 0;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--marigold), var(--terracotta));
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+.lab-card button:hover {
+  filter: brightness(1.08);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 20, 15, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.close {
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  z-index: 1100;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .sidebar,
+  aside.sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 16px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-cards {
+    grid-template-columns: 1fr;
+  }
+}

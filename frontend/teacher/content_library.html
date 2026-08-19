@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Library | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=2026.1">
+  <link rel="stylesheet" href="../css/global.css?v=2026.1">
+  <link rel="stylesheet" href="../css/teacher_dashboard.css?v=2026.1">
+  <link rel="stylesheet" href="../css/app_pages.css?v=2026.1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+  <div class="container" style="display:flex;">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="myclass.html"><i class="fas fa-users" aria-hidden="true"></i> My Class</a>
+        <a href="student_progress.html"><i class="fas fa-chart-line" aria-hidden="true"></i> Student Progress</a>
+        <a href="doubts.html"><i class="fas fa-question" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul" aria-hidden="true"></i> Assignments</a>
+        <a class="active" href="content_library.html"><i class="fas fa-book" aria-hidden="true"></i> Content Library</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Teacher's profile icon" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area" role="main">
+      <header class="page-header">
+        <div class="page-title">
+          <h1><i class="fas fa-book" style="color: var(--marigold);"></i> Resource & Content Library</h1>
+          <p>Share lecture notes, lab manuals, and revision guides with your students.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-primary" onclick="EklavyaXPages.openModal('uploadResourceModal')">
+            <i class="fas fa-upload"></i> Upload Resource
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Library Grid -->
+      <section class="library-grid" id="libraryGrid">
+        <!-- Rendered by app_pages.js -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Upload Resource Modal -->
+  <div class="app-modal" id="uploadResourceModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><i class="fas fa-file-pdf"></i> Upload Study Material</h2>
+        <button class="close-modal" onclick="EklavyaXPages.closeModal('uploadResourceModal')">&times;</button>
+      </div>
+      <form id="uploadResourceForm" style="display:flex; flex-direction:column; gap:14px;">
+        <div class="form-group">
+          <label>Resource Title</label>
+          <input type="text" id="resTitle" class="form-control" placeholder="e.g. Thermodynamics Concept Mindmap" required>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <div class="form-group">
+            <label>Subject</label>
+            <select id="resSubject" class="form-control">
+              <option value="physics">Physics</option>
+              <option value="chemistry">Chemistry</option>
+              <option value="math">Mathematics</option>
+              <option value="biology">Biology</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="resCategory" class="form-control">
+              <option value="notes">Lecture Notes</option>
+              <option value="lab">Lab Manual</option>
+              <option value="cheatsheet">Formula Sheet</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Select File</label>
+          <input type="file" class="form-control" style="background:transparent; border:1px dashed rgba(255,255,255,0.2);">
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+          <button type="button" class="btn-secondary" onclick="EklavyaXPages.closeModal('uploadResourceModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Upload & Publish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/app_pages.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("teacher", "login.html");
+      EklavyaXPages.initContentLibraryPage();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,590 @@
+/* =========================================================
+   EklavyaX HOME PAGE
+   Modern dark educational landing page
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #102f25;
+  font-family: var(--font-ui);
+  color: #f4f1df;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  position: relative;
+  min-height: calc(100vh - 48px);
+  padding: 70px 20px 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  background:
+    radial-gradient(circle at 50% 20%,
+      rgba(58, 105, 78, 0.20),
+      transparent 38%),
+    linear-gradient(135deg,
+      #102f25 0%,
+      #173b2e 50%,
+      #102f25 100%);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   SUBTLE BACKGROUND EFFECT
+   ========================================================= */
+
+.main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px);
+
+  background-size: 35px 35px;
+
+  mask-image: linear-gradient(to bottom,
+      black,
+      transparent 85%);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.main h1 {
+  position: relative;
+  z-index: 2;
+
+  margin: 0;
+  max-width: 800px;
+
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 0.98;
+  font-weight: 900;
+  letter-spacing: -2px;
+
+  color: #f5f0df;
+
+  animation: heroFadeDown 0.8s ease both;
+}
+
+.main h1::after {
+  content: "";
+  display: block;
+
+  width: 210px;
+  height: 4px;
+
+  margin: 18px auto 0;
+
+  background: #f6b323;
+  border-radius: 999px;
+
+  transform: rotate(-1deg);
+
+  box-shadow: 0 0 18px rgba(246, 179, 35, 0.25);
+
+  animation: lineReveal 1s ease 0.3s both;
+}
+
+
+/* Highlighted EklavyaX text */
+
+.highlight {
+  display: block;
+
+  margin-top: 12px;
+
+  color: #f6b323;
+
+  font-weight: 900;
+
+  text-shadow:
+    0 4px 25px rgba(246, 179, 35, 0.12);
+
+  animation: highlightGlow 3s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.main>p {
+  position: relative;
+  z-index: 2;
+
+  max-width: 650px;
+
+  margin: 30px auto 0;
+
+  color: #aebfb4;
+
+  font-size: 17px;
+  line-height: 1.8;
+  font-weight: 600;
+
+  animation: heroFadeUp 0.9s ease 0.2s both;
+}
+
+
+/* =========================================================
+   LOGIN / ROLE CARDS
+   ========================================================= */
+
+.login-buttons {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+  gap: 32px;
+
+  width: 100%;
+  max-width: 850px;
+
+  margin-top: 75px;
+
+  animation: cardsReveal 0.9s ease 0.4s both;
+}
+
+
+/* Connecting branch line */
+
+.login-buttons::before {
+  content: "";
+
+  position: absolute;
+
+  width: 52%;
+  height: 85px;
+
+  left: 24%;
+  top: -70px;
+
+  border-top: 2px dashed rgba(218, 218, 196, 0.55);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+/* Small connection dots */
+
+.login-buttons::after {
+  content: "";
+
+  position: absolute;
+
+  width: 10px;
+  height: 10px;
+
+  top: -74px;
+  left: 49.5%;
+
+  border: 2px solid #f6b323;
+  border-radius: 50%;
+
+  background: #102f25;
+
+  box-shadow:
+    -200px 70px 0 -2px #102f25,
+    -200px 70px 0 0 #f6b323,
+    200px 70px 0 -2px #102f25,
+    200px 70px 0 0 #e87958;
+}
+
+
+/* =========================================================
+   ROLE CARDS
+   ========================================================= */
+
+.login-buttons a {
+  position: relative;
+
+  width: 350px;
+  min-height: 190px;
+
+  padding: 27px 28px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  text-align: left;
+
+  border-radius: 8px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.35s cubic-bezier(.2, .8, .2, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+
+/* =========================================================
+   TEACHER CARD
+   ========================================================= */
+
+.teacher {
+  background:
+    linear-gradient(145deg,
+      rgba(35, 70, 55, 0.98),
+      rgba(19, 48, 37, 0.98));
+
+  border: 2px dashed rgba(196, 205, 184, 0.45);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.20);
+
+  transform: rotate(-1deg);
+}
+
+.teacher:hover {
+  transform:
+    translateY(-10px) rotate(-1deg);
+
+  border-color: #f6b323;
+
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.35),
+    0 0 30px rgba(246, 179, 35, 0.08);
+}
+
+
+/* =========================================================
+   STUDENT CARD
+   ========================================================= */
+
+.student {
+  background:
+    repeating-linear-gradient(to bottom,
+      #f5ecd7 0px,
+      #f5ecd7 31px,
+      #ded3bc 32px,
+      #f5ecd7 33px);
+
+  color: #263a4b !important;
+
+  border-left: 4px solid #e87958;
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.22);
+
+  transform: rotate(0.8deg);
+}
+
+.student:hover {
+  transform:
+    translateY(-10px) rotate(0.8deg);
+
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.35),
+    0 0 30px rgba(232, 121, 88, 0.10);
+}
+
+
+/* =========================================================
+   CARD ICON
+   ========================================================= */
+
+.login-buttons i {
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+.teacher i {
+  color: #f6b323;
+}
+
+.student i {
+  color: #e87958;
+}
+
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.login-buttons h3 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 800;
+
+  color: #f5f1e5;
+}
+
+.student h3 {
+  color: #263a4b;
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+   ========================================================= */
+
+.login-buttons p {
+  margin: 6px 0 18px;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #aebfb4;
+}
+
+.student p {
+  color: #526171;
+}
+
+
+/* =========================================================
+   ENTER LINK
+   ========================================================= */
+
+.login-buttons a::after {
+  content: "→";
+
+  position: absolute;
+
+  right: 25px;
+  bottom: 22px;
+
+  font-size: 30px;
+  font-weight: 300;
+
+  transition:
+    transform 0.3s ease,
+    right 0.3s ease;
+}
+
+.teacher::after {
+  color: #f6b323;
+}
+
+.student::after {
+  color: #e87958;
+}
+
+.login-buttons a:hover::after {
+  right: 18px;
+  transform: translateX(5px);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+  position: relative;
+  z-index: 10;
+
+  width: 100%;
+
+  padding: 13px 20px;
+
+  /* EklavyaX dark green */
+  background: #062c22;
+
+  color: #aab8ad;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: none;
+}
+
+.footer p {
+  margin: 0;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes heroFadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardsReveal {
+  from {
+    opacity: 0;
+    transform: translateY(45px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineReveal {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    width: 210px;
+    opacity: 1;
+  }
+}
+
+@keyframes highlightGlow {
+
+  0%,
+  100% {
+    text-shadow:
+      0 4px 25px rgba(246, 179, 35, 0.08);
+  }
+
+  50% {
+    text-shadow:
+      0 4px 35px rgba(246, 179, 35, 0.28);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .main {
+    padding: 55px 18px 80px;
+  }
+
+  .main h1 {
+    font-size: 48px;
+  }
+
+  .main>p {
+    font-size: 15px;
+    max-width: 500px;
+  }
+
+  .login-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    margin-top: 65px;
+  }
+
+  .login-buttons a {
+    width: min(92vw, 380px);
+    min-height: 175px;
+  }
+
+  .login-buttons::before,
+  .login-buttons::after {
+    display: none;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .main {
+    padding-top: 45px;
+  }
+
+  .main h1 {
+    font-size: 40px;
+    letter-spacing: -1px;
+  }
+
+  .main h1::after {
+    width: 150px;
+  }
+
+  .main>p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .login-buttons {
+    margin-top: 45px;
+  }
+
+  .login-buttons a {
+    min-height: 165px;
+    padding: 22px;
+  }
+
+  .footer {
+    font-size: 10px;
+  }
+}

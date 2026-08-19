@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doubts & Discussions | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.0">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.0">
+  <link rel="stylesheet" href="../css/app_pages.css?v=3.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab Simulations</a>
+        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> GRAVITY AI</a>
+        <a class="active" href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> Assignments</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon">
+        <div class="profile-info">
+          <strong id="profileName">Sayan Mondal</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Header -->
+      <header class="page-header">
+        <div class="page-title">
+          <h1><i class="fas fa-question-circle" style="color: var(--marigold);"></i> Doubts & Q&A Hub</h1>
+          <p>Ask STEM questions, get verified teacher solutions, and discuss with peers.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-primary" onclick="EklavyaXPages.openModal('askDoubtModal')">
+            <i class="fas fa-plus"></i> Ask a Doubt
+          </button>
+        </div>
+      </header>
+
+      <!-- Stats Grid -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-question"></i></div>
+          <div class="stat-info">
+            <div class="stat-num" id="statTotalDoubts">3</div>
+            <div class="stat-label">Total Questions</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="color: #4ade80; background: rgba(74, 222, 128, 0.15);"><i class="fas fa-check-circle"></i></div>
+          <div class="stat-info">
+            <div class="stat-num" id="statResolvedDoubts">2</div>
+            <div class="stat-label">Resolved</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="color: #fde047; background: rgba(253, 224, 71, 0.15);"><i class="fas fa-hourglass-half"></i></div>
+          <div class="stat-info">
+            <div class="stat-num" id="statPendingDoubts">1</div>
+            <div class="stat-label">Pending Teacher Answer</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter Bar -->
+      <section class="filter-bar">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="doubtSearch" placeholder="Search doubts by keyword or subject...">
+        </div>
+        <div class="tab-group">
+          <button class="tab-btn active" data-tab="all">All Doubts</button>
+          <button class="tab-btn" data-tab="my">My Questions</button>
+          <button class="tab-btn" data-tab="resolved">Resolved</button>
+          <button class="tab-btn" data-tab="pending">Pending</button>
+        </div>
+      </section>
+
+      <!-- Doubts List -->
+      <section class="doubts-list" id="doubtsList">
+        <!-- Rendered by app_pages.js -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Ask Doubt Modal -->
+  <div class="app-modal" id="askDoubtModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2><i class="fas fa-edit"></i> Ask a New Doubt</h2>
+        <button class="close-modal" onclick="EklavyaXPages.closeModal('askDoubtModal')">&times;</button>
+      </div>
+      <form id="askDoubtForm" style="display:flex; flex-direction:column; gap:14px;">
+        <div class="form-group">
+          <label>Subject</label>
+          <select id="doubtSubject" class="form-control" required>
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="math">Mathematics</option>
+            <option value="biology">Biology</option>
+            <option value="cs">Computer Science</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Question Title</label>
+          <input type="text" id="doubtTitle" class="form-control" placeholder="e.g. Why is momentum conserved in inelastic collisions?" required>
+        </div>
+        <div class="form-group">
+          <label>Detailed Description</label>
+          <textarea id="doubtBody" class="form-control" placeholder="Describe where you got stuck or paste equation steps..." required></textarea>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:10px;">
+          <button type="button" class="btn-secondary" onclick="EklavyaXPages.closeModal('askDoubtModal')">Cancel</button>
+          <button type="submit" class="btn-primary">Post Doubt</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/app_pages.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      EklavyaXPages.initDoubtsPage("student");
+    });
+  </script>
+</body>
+
+</html>

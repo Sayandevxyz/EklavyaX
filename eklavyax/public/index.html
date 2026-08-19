@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EklavyaX — Your learning journey starts here</title>
+  <meta name="description"
+    content="Personalised AI tutoring, competitive challenges, and measurable progress — all in one platform designed for the modern Indian classroom." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="void-field" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7L12 3L20 7L12 11L4 7Z" fill="#0a0b12" />
+            <path d="M4 12L12 16L20 12" stroke="#0a0b12" stroke-width="2" stroke-linecap="round" />
+            <path d="M4 17L12 21L20 17" stroke="#0a0b12" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </span>
+        EklavyaX
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it Works</a>
+        <a href="#stories">Stories</a>
+      </div>
+      <div class="nav-actions" id="navActions">
+        <a href="login.html" class="nav-login">Login</a>
+        <a href="login.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header id="top" class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span>AI-Powered Learning Platform</span>
+        <h1 class="display">Your learning <span class="grad">journey starts<br />here.</span></h1>
+        <p class="lede">Personalised AI tutoring, competitive challenges, and measurable progress — all in one platform
+          designed for the modern Indian classroom.</p>
+        <div class="hero-cta">
+          <a href="login.html" class="btn btn-primary btn-lg">Get Started Free
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </a>
+          <a href="#how-it-works" class="btn btn-ghost btn-lg">Explore Demo</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat reveal"><b data-count="2.4" data-suffix="M+">0</b><span>Active Learners</span></div>
+          <div class="stat reveal"><b data-count="98" data-suffix="k+">0</b><span>Lessons Completed Daily</span></div>
+          <div class="stat reveal"><b data-count="94" data-suffix="%">0</b><span>Improvement Rate</span></div>
+          <div class="stat reveal"><b data-count="1.2" data-suffix="k+">0</b><span>Partner Institutions</span></div>
+        </div>
+      </div>
+
+      <!-- signature element: live-feeling dashboard preview -->
+      <div class="panel" id="dashPanel">
+        <div class="panel-top">
+          <div class="panel-greet">
+            <span class="hi" id="dashGreeting">Good evening</span>
+            <span class="name" id="dashName">Arjun Sharma 👋</span>
+          </div>
+          <div class="panel-badges">
+            <span class="chip coin" id="dashCoins">🪙 1,240</span>
+            <span class="chip streak" id="dashStreak">🔥 14</span>
+          </div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric">
+            <b id="dashLevel">12</b><span id="dashLevelTitle">Level · Indigo Sage</span>
+          </div>
+          <div class="metric">
+            <b id="dashXp">3,420</b><span id="dashXpNext">XP · Next: 5,000</span>
+            <div class="bar"><i data-fill="68" id="dashXpBar"></i></div>
+          </div>
+          <div class="metric accuracy">
+            <b id="dashAccuracy">91%</b><span>Accuracy</span>
+            <div class="bar"><i data-fill="91" id="dashAccuracyBar"></i></div>
+          </div>
+        </div>
+
+        <div class="continue-card">
+          <div class="eyebrow-sm">Continue learning</div>
+          <div class="title-row">
+            <b id="dashLessonTitle">Recursion &amp; Dynamic Programming</b>
+            <span id="dashLessonPct">60%</span>
+          </div>
+          <div class="progress-track"><i data-fill="60" id="dashLessonBar"></i></div>
+        </div>
+
+        <div class="tip-card">
+          <span class="glyph">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#0a0b12" />
+            </svg>
+          </span>
+          <div>
+            <b>Gravity AI</b>
+            <span id="dashTip">Tip: Review memoization before your next quiz.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ FEATURES ============ -->
+  <section id="features" class="section-pad">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Available Subjects</div>
+        <h2>Built on the ancient <span class="grad">gurukul</span> philosophy of focused, personalised learning</h2>
+        <p>Reimagined for the digital age.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(110,91,255,.15);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="url(#g1)" />
+              <defs>
+                <linearGradient id="g1" x1="2" y1="2" x2="22" y2="22">
+                  <stop stop-color="#8d7bff" />
+                  <stop offset="1" stop-color="#22d3ee" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h3>Gravity.AI Tutor</h3>
+          <p>Ask anything, get instant personalised explanations, examples, and step-by-step breakdowns — right inside
+            your lesson.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(245,166,35,.15);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M6 3L3 7L12 21L21 7L18 3H6Z" stroke="#f5a623" stroke-width="1.8" stroke-linejoin="round" />
+              <path d="M3 7H21M9 3L8 7L12 21L16 7L15 3" stroke="#f5a623" stroke-width="1.8" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3>Gamified Learning</h3>
+          <p>Earn XP, level up, maintain streaks, and collect educational coins as you complete lessons and quizzes.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(255,138,76,.15);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M8 21H16M12 17V21M5 4H19V9C19 12.866 15.866 16 12 16C8.13401 16 5 12.866 5 9V4Z" stroke="#ff8a4c"
+                stroke-width="1.8" stroke-linejoin="round" />
+              <path d="M5 6H2V8C2 10 3.5 11.5 5 11.5M19 6H22V8C22 10 20.5 11.5 19 11.5" stroke="#ff8a4c"
+                stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>1v1 Challenges</h3>
+          <p>Challenge peers to live academic battles, join faction wars, and compete on global leaderboards.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(52,211,153,.15);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M4 20V10M12 20V4M20 20V14" stroke="#34d399" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h3>Teacher Analytics</h3>
+          <p>Deep class insights, at-risk student alerts, bounty assignments, and submission grading — all in one place.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="how-it-works" class="section-pad">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Learning that <span class="grad">compounds</span></h2>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="num">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="7" stroke="#22d3ee" stroke-width="1.8" />
+              <circle cx="12" cy="12" r="2.4" fill="#22d3ee" />
+            </svg>
+          </div>
+          <h4>Set your goals</h4>
+        </div>
+        <div class="step reveal">
+          <div class="num">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="#8d7bff" />
+            </svg>
+          </div>
+          <h4>Learn with AI</h4>
+        </div>
+        <div class="step reveal">
+          <div class="num">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M8 21H16M12 17V21M5 4H19V9C19 12.866 15.866 16 12 16C8.13401 16 5 12.866 5 9V4Z" stroke="#f5a623"
+                stroke-width="1.8" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h4>Compete &amp; grow</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section id="stories" class="section-pad">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Stories</div>
+        <h2>Trusted by learners <span class="grad">and educators</span></h2>
+      </div>
+
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-top">
+            <span class="avatar" style="background:linear-gradient(135deg,#8d7bff,#22d3ee);">AR</span>
+            <div><b>Anika Rao</b><span>Class XII, Delhi</span></div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>"Gravity.AI helped me understand quantum physics in minutes. My exam scores went up a full grade this
+            term."</p>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-top">
+            <span class="avatar" style="background:linear-gradient(135deg,#22d3ee,#34d399);">RV</span>
+            <div><b>Rishi Verma</b><span>B.Tech CSE, IIT Bombay</span></div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>"The 1v1 Python challenges are addictive — in the best way. I've written more code this semester than the
+            last two combined."</p>
+        </div>
+
+        <div class="testi-card reveal">
+          <div class="testi-top">
+            <span class="avatar" style="background:linear-gradient(135deg,#f5a623,#ff8a4c);">PK</span>
+            <div><b>Prof. Kavitha</b><span>Mathematics, NIT Trichy</span></div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p>"I can finally see exactly which students need help and where. The bounty system has made assignments feel
+            like events."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section-pad">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <h2>Ready to begin your <span class="grad">learning journey?</span></h2>
+        <p>Free to start. No credit card required. Join thousands of students already learning smarter.</p>
+        <div class="cta-actions">
+          <a href="login.html" class="btn btn-primary btn-lg">Start Learning Free</a>
+          <a href="login.html" class="btn btn-ghost btn-lg">I'm a Teacher →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap footer-row">
+      <div>
+        <span class="brand">EklavyaX</span>
+        <span class="fine"> — Learn. Compete. Grow.</span>
+      </div>
+      <span class="fine">© 2026 EklavyaX. Educational platform. Virtual coins have no real monetary value.</span>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Safety</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
