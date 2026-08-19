@@ -36,19 +36,29 @@ _redis_client = None
 async def _init_redis() -> None:
     """Initialize Redis connection pool if REDIS_URL is configured."""
     global _redis_client
+
     if not settings.REDIS_URL:
         logger.info("Redis not configured (REDIS_URL not set). Skipping.")
         return
 
     try:
         import redis.asyncio as aioredis
+
         _redis_client = await aioredis.from_url(
-            settings.REDIS_URL, encoding="utf-8", decode_responses=True
+            settings.REDIS_URL,
+            encoding="utf-8",
+            decode_responses=True,
         )
+
         await _redis_client.ping()
+
         logger.info("✅ Redis connected: %s", settings.REDIS_URL)
+
     except Exception as exc:
-        logger.warning("⚠️  Could not connect to Redis: %s. Falling back to DB queries.", exc)
+        logger.warning(
+            "⚠️ Could not connect to Redis: %s. Falling back to DB queries.",
+            exc,
+        )
         _redis_client = None
 
 
@@ -62,17 +72,20 @@ def get_redis():
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator:
     """Async context manager run on startup and shutdown."""
+
     logger.info("🚀 EklavyaX Synapse Backend starting up...")
 
     # Create all database tables
     from app.db.database import Base, engine
-    from app.db import models  # noqa: F401 – import to register all models
+    from app.db import models  # noqa: F401
 
     Base.metadata.create_all(bind=engine)
+
     logger.info("✅ Database tables ensured.")
 
     # Ensure optional user profile columns exist on existing databases
     from sqlalchemy import text
+
     columns_to_ensure = [
         ("gender", "VARCHAR(20)"),
         ("phone", "VARCHAR(30)"),
@@ -82,11 +95,18 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
         ("target_exam", "VARCHAR(100)"),
         ("bio", "TEXT"),
     ]
+
     with engine.connect() as con:
         for col_name, col_type in columns_to_ensure:
             try:
-                con.execute(text(f"ALTER TABLE users ADD COLUMN {col_name} {col_type}"))
+                con.execute(
+                    text(
+                        f"ALTER TABLE users ADD COLUMN "
+                        f"{col_name} {col_type}"
+                    )
+                )
                 con.commit()
+
             except Exception:
                 con.rollback()
 
@@ -95,35 +115,83 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     from app.services.game_logic import ensure_factions_exist
 
     db = SessionLocal()
+
     try:
         ensure_factions_exist(db)
         logger.info("✅ Default factions seeded.")
+
     except Exception as exc:
         logger.error("❌ Failed to seed factions: %s", exc)
+
     finally:
         db.close()
 
     # Initialize Redis (optional)
     await _init_redis()
 
-    logger.info("🎮 Synapse Backend is ready. Docs: http://localhost:8000/docs")
-    if settings.AI_PROVIDER.lower() == "openrouter":
-        logger.info("🔑 OpenRouter configured: model=%s, key_loaded=%s (len=%d)", settings.OPENROUTER_MODEL, bool(settings.OPENROUTER_API_KEY), len(settings.OPENROUTER_API_KEY))
-        print(f"[STARTUP] AI_PROVIDER = openrouter (model={settings.OPENROUTER_MODEL}, key_loaded={bool(settings.OPENROUTER_API_KEY)})")
-    elif settings.AI_PROVIDER.lower() == "gemini":
-        logger.info("🔑 Gemini configured: model=%s, key_loaded=%s (len=%d)", settings.GEMINI_MODEL, bool(settings.GEMINI_API_KEY), len(settings.GEMINI_API_KEY))
-        print(f"[STARTUP] AI_PROVIDER = gemini (model={settings.GEMINI_MODEL}, key_loaded={bool(settings.GEMINI_API_KEY)})")
-    elif settings.AI_PROVIDER.lower() == "openai":
-        logger.info("🔑 OpenAI configured: model=%s, key_loaded=%s (len=%d)", settings.OPENAI_MODEL, bool(settings.OPENAI_API_KEY), len(settings.OPENAI_API_KEY))
-        print(f"[STARTUP] AI_PROVIDER = openai (model={settings.OPENAI_MODEL}, key_loaded={bool(settings.OPENAI_API_KEY)})")
-    else:
-        logger.warning("⚠️ Unknown AI_PROVIDER: %s", settings.AI_PROVIDER)
+    logger.info(
+        "🎮 Synapse Backend is ready. Docs: http://localhost:8000/docs"
+    )
 
-    yield  # ← Application runs here
+    # AI provider logging
+    if settings.AI_PROVIDER.lower() == "openrouter":
+
+        logger.info(
+            "🔑 OpenRouter configured: model=%s, key_loaded=%s (len=%d)",
+            settings.OPENROUTER_MODEL,
+            bool(settings.OPENROUTER_API_KEY),
+            len(settings.OPENROUTER_API_KEY),
+        )
+
+        print(
+            f"[STARTUP] AI_PROVIDER = openrouter "
+            f"(model={settings.OPENROUTER_MODEL}, "
+            f"key_loaded={bool(settings.OPENROUTER_API_KEY)})"
+        )
+
+    elif settings.AI_PROVIDER.lower() == "gemini":
+
+        logger.info(
+            "🔑 Gemini configured: model=%s, key_loaded=%s (len=%d)",
+            settings.GEMINI_MODEL,
+            bool(settings.GEMINI_API_KEY),
+            len(settings.GEMINI_API_KEY),
+        )
+
+        print(
+            f"[STARTUP] AI_PROVIDER = gemini "
+            f"(model={settings.GEMINI_MODEL}, "
+            f"key_loaded={bool(settings.GEMINI_API_KEY)})"
+        )
+
+    elif settings.AI_PROVIDER.lower() == "openai":
+
+        logger.info(
+            "🔑 OpenAI configured: model=%s, key_loaded=%s (len=%d)",
+            settings.OPENAI_MODEL,
+            bool(settings.OPENAI_API_KEY),
+            len(settings.OPENAI_API_KEY),
+        )
+
+        print(
+            f"[STARTUP] AI_PROVIDER = openai "
+            f"(model={settings.OPENAI_MODEL}, "
+            f"key_loaded={bool(settings.OPENAI_API_KEY)})"
+        )
+
+    else:
+        logger.warning(
+            "⚠️ Unknown AI_PROVIDER: %s",
+            settings.AI_PROVIDER,
+        )
+
+    # Application runs here
+    yield
 
     # Shutdown
     if _redis_client:
         await _redis_client.aclose()
+
     logger.info("👋 Synapse Backend shut down gracefully.")
 
 
@@ -144,25 +212,84 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+
 # ── CORS Middleware ───────────────────────────────────────────────────────────
+#
+# IMPORTANT:
+# The frontend is deployed on Vercel:
+#
+#     https://eklavya-x.vercel.app
+#
+# The backend is deployed on Render.
+#
+#     https://eklavya.onrender.com
+#
+# Therefore the Vercel origin MUST be explicitly allowed here.
+#
+
+try:
+    configured_origins = settings.get_cors_origins()
+except Exception:
+    configured_origins = []
+
+# Make sure configured_origins is always a list
+if isinstance(configured_origins, str):
+    configured_origins = [
+        origin.strip()
+        for origin in configured_origins.split(",")
+        if origin.strip()
+    ]
+
+cors_origins = list(configured_origins)
+
+# Production frontend
+if "https://eklavya-x.vercel.app" not in cors_origins:
+    cors_origins.append("https://eklavya-x.vercel.app")
+
+# Local development
+for local_origin in [
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]:
+    if local_origin not in cors_origins:
+        cors_origins.append(local_origin)
+
+logger.info("🌐 CORS allowed origins: %s", cors_origins)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.get_cors_origins(),
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 # ── Global Exception Handlers ─────────────────────────────────────────────────
 
 @app.exception_handler(Exception)
-async def global_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+async def global_exception_handler(
+    request: Request,
+    exc: Exception,
+) -> JSONResponse:
     """Catch-all for unhandled exceptions – return consistent JSON error."""
-    logger.exception("Unhandled exception on %s %s", request.method, request.url.path)
+
+    logger.exception(
+        "Unhandled exception on %s %s",
+        request.method,
+        request.url.path,
+    )
+
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        content={"detail": "An internal server error occurred. Please try again later."},
+        content={
+            "detail": (
+                "An internal server error occurred. "
+                "Please try again later."
+            )
+        },
     )
 
 
@@ -178,9 +305,14 @@ app.include_router(tutor.router)
 
 # ── Root Endpoint ─────────────────────────────────────────────────────────────
 
-@app.get("/api/status", tags=["Health"], summary="Health check")
+@app.get(
+    "/api/status",
+    tags=["Health"],
+    summary="Health check",
+)
 async def root():
-    """API status endpoint – confirms the server is running. (`/` serves the frontend UI.)"""
+    """API status endpoint – confirms the server is running."""
+
     return {
         "message": "EklavyaX Synapse Backend is running",
         "version": settings.APP_VERSION,
@@ -197,15 +329,24 @@ async def root():
     }
 
 
-@app.get("/health", tags=["Health"], summary="Detailed health check")
+@app.get(
+    "/health",
+    tags=["Health"],
+    summary="Detailed health check",
+)
 async def health_check():
     """Check connectivity to DB and Redis."""
-    checks = {"api": "ok", "redis": "disabled"}
+
+    checks = {
+        "api": "ok",
+        "redis": "disabled",
+    }
 
     if _redis_client:
         try:
             await _redis_client.ping()
             checks["redis"] = "ok"
+
         except Exception:
             checks["redis"] = "error"
 
@@ -213,11 +354,29 @@ async def health_check():
 
 
 # ── Static Frontend ───────────────────────────────────────────────────────────
-# Mounted LAST so it never shadows the API routes above (Starlette matches
-# routes in registration order). Serves the plain HTML/CSS/JS frontend and
-# falls back to index.html for unknown paths so the app runs from one port
-# with zero CORS/config hassle: `uvicorn app.main:app` → http://localhost:8000
+#
+# Mounted LAST so it never shadows API routes above.
+#
+# Starlette matches routes in registration order.
+#
+# Serves the plain HTML/CSS/JS frontend and allows the app to run from one
+# process/port during local development.
+#
+
 if FRONTEND_DIR.is_dir():
-    app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
+
+    app.mount(
+        "/",
+        StaticFiles(
+            directory=str(FRONTEND_DIR),
+            html=True,
+        ),
+        name="frontend",
+    )
+
 else:
-    logger.warning("Frontend directory not found at %s — API-only mode.", FRONTEND_DIR)
+
+    logger.warning(
+        "Frontend directory not found at %s — API-only mode.",
+        FRONTEND_DIR,
+    )
