@@ -626,14 +626,186 @@ aside .profile-info span {
 }
 
 /* =========================================================
+   CATALOG / EXPLORE COURSES FILTER BAR & TABS
+   ========================================================= */
+
+.catalog-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 22px;
+  width: 100%;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 14px;
+  color: var(--chalk-dim);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 11px 16px 11px 40px;
+  background: rgba(16, 39, 29, 0.9);
+  border: 1px solid rgba(245, 240, 226, 0.18);
+  border-radius: 12px;
+  color: var(--chalk);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--marigold);
+  box-shadow: 0 0 0 3px rgba(238, 180, 62, 0.2);
+  background: rgba(16, 39, 29, 1);
+}
+
+.search-box input::placeholder {
+  color: var(--chalk-dim);
+  opacity: 0.7;
+}
+
+.catalog-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.catalog-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  background: rgba(16, 39, 29, 0.85);
+  border: 1px solid rgba(245, 240, 226, 0.15);
+  border-radius: 10px;
+  color: var(--chalk-dim);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.catalog-tab:hover {
+  background: rgba(16, 39, 29, 0.98);
+  color: var(--chalk);
+  border-color: rgba(238, 180, 62, 0.35);
+}
+
+.catalog-tab.active {
+  background: linear-gradient(135deg, var(--marigold), var(--terracotta));
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(238, 180, 62, 0.25);
+}
+
+/* =========================================================
+   COURSE CARD RICH HEADER & ACTIONS
+   ========================================================= */
+
+.course-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.course-icon-wrap {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(238, 180, 62, 0.2), rgba(217, 122, 92, 0.15));
+  border: 1px solid rgba(238, 180, 62, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--marigold);
+  font-size: 1.2rem;
+}
+
+.course-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--marigold);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.course-desc {
+  color: var(--chalk-dim);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 6px 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.course-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.course-actions .btn-primary,
+.course-actions .btn-secondary {
+  margin-top: 0;
+  padding: 9px 12px;
+  font-size: 0.8rem;
+}
+
+.enrolled-btn {
+  border-color: #4ade80 !important;
+  color: #4ade80 !important;
+  background: rgba(34, 197, 94, 0.12) !important;
+}
+
+.enrolled-btn:hover {
+  background: rgba(34, 197, 94, 0.22) !important;
+}
+
+/* Badges for subjects */
+.badge-math { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.35); }
+.badge-physics { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.35); }
+.badge-chemistry { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.35); }
+.badge-biology { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.35); }
+.badge-humanities { background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.35); }
+
+/* =========================================================
    CATALOG SECTION
    ========================================================= */
 
 .catalog-section {
   width: 100%;
-
   min-width: 0;
-
   background:
     linear-gradient(
       145deg,
@@ -763,20 +935,6 @@ aside .profile-info span {
   cursor: pointer;
 }
 
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 1100px) {
-
-  .content {
-    padding: 24px;
-  }
-
-  .courses-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
 /* =========================================================
    RESPONSIVE DESIGN (DESKTOP & TABLET)
    ========================================================= */
@@ -938,6 +1096,37 @@ aside .profile-info span {
   }
 
   /* -----------------------------
+     CATALOG FILTER BAR & TABS ON MOBILE
+     ----------------------------- */
+
+  .catalog-filter-bar {
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .search-box {
+    max-width: 100% !important;
+  }
+
+  .catalog-tabs {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 4px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .catalog-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .catalog-tab {
+    flex-shrink: 0 !important;
+    padding: 7px 12px !important;
+    font-size: 0.76rem !important;
+  }
+
+  /* -----------------------------
      COURSES & GRID
      ----------------------------- */
 
@@ -945,7 +1134,7 @@ aside .profile-info span {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    padding: 16px !important;
+    padding: 16px 14px !important;
     border-radius: 16px !important;
   }
 
@@ -963,7 +1152,7 @@ aside .profile-info span {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    padding: 14px !important;
+    padding: 16px !important;
     border-radius: 14px !important;
   }
 
@@ -975,25 +1164,8 @@ aside .profile-info span {
     font-size: 0.76rem !important;
   }
 
-  /* -----------------------------
-     CATALOG BANNER
-     ----------------------------- */
-
-  .catalog-section {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    padding: 16px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 12px !important;
-    border-radius: 16px !important;
-  }
-
-  .catalog-section a {
-    width: 100% !important;
-    justify-content: center !important;
+  .course-actions {
+    grid-template-columns: 1fr auto !important;
   }
 
   /* -----------------------------
@@ -1029,11 +1201,15 @@ aside .profile-info span {
   }
 
   .courses {
-    padding: 12px !important;
+    padding: 14px 10px !important;
   }
 
   .courses h1,
   .page-title-row h1 {
     font-size: 1.3rem !important;
+  }
+
+  .course-actions {
+    grid-template-columns: 1fr !important;
   }
 }
