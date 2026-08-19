@@ -476,38 +476,41 @@ function filterCatalog() {
 
   catalogGrid.innerHTML = filtered.map(c => {
     const isEnrolled = enrolledIds.includes(c.id);
-    const badgeCategory = `badge-${c.category === 'tech' ? 'cs' : (c.category === 'humanities' ? 'math' : c.category)}`;
+    const badgeCategory = `badge-${c.category === 'tech' ? 'cs' : (c.category === 'humanities' ? 'humanities' : c.category)}`;
 
     return `
-      <div class="catalog-card">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div class="catalog-icon"><i class="fas ${c.icon || 'fa-book'}"></i></div>
-            <div>
-              <span class="badge ${badgeCategory}">${c.category}</span>
-              <h4 style="color:var(--chalk); font-size:1.05rem; font-weight:700; margin-top:4px;">${c.title}</h4>
-            </div>
+      <div class="course-card">
+        <div class="course-card-top">
+          <div class="course-icon-wrap">
+            <i class="fas ${c.icon || 'fa-book'}"></i>
+          </div>
+          <div class="course-card-head">
+            <span class="badge ${badgeCategory}">${c.category}</span>
+            <div class="course-rating"><i class="fas fa-star"></i> ${c.rating}</div>
           </div>
         </div>
-        
-        <p style="font-size:0.85rem; color:var(--chalk-dim); line-height:1.5; margin:12px 0;">${c.description}</p>
-        
-        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--marigold); margin-bottom:14px;">
+
+        <h3>${c.title}</h3>
+        <p class="course-desc">${c.description}</p>
+
+        <div class="course-meta">
           <span><i class="fas fa-chalkboard-teacher"></i> ${c.teacher}</span>
           <span><i class="fas fa-video"></i> ${c.totalLessons} Lessons</span>
-          <span><i class="fas fa-star"></i> ${c.rating}</span>
         </div>
 
-        <div>
+        <div class="course-actions">
           ${isEnrolled ? `
-            <button class="btn-secondary" style="width:100%; border-color:#4ade80; color:#4ade80;" onclick="continueLearning('${c.id}')">
+            <button class="btn-secondary enrolled-btn" onclick="continueLearning('${c.id}')">
               <i class="fas fa-check-circle"></i> Enrolled — Resume
             </button>
           ` : `
-            <button class="btn-primary" style="width:100%;" onclick="enrollInCourse('${c.id}')">
+            <button class="btn-primary" onclick="enrollInCourse('${c.id}')">
               <i class="fas fa-plus-circle"></i> Enroll in Subject
             </button>
           `}
+          <button class="btn-secondary details-btn" onclick="viewCourseDetails('${c.id}')" title="View Syllabus">
+            <i class="fas fa-list-ul"></i> Details
+          </button>
         </div>
       </div>
     `;
