@@ -327,7 +327,7 @@ class TestWalletFunctions:
 # ─────────────────────────────────────────────────────────────────────────────
 
 class TestAIPromptBuilder:
-    """Tests for the Synapse.ai prompt engineering function."""
+    """Tests for the Gravity.ai prompt engineering function."""
 
     def test_prompt_contains_highlighted_text(self):
         text = "Photosynthesis converts sunlight into glucose."
