@@ -4,334 +4,1054 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Dashboard</title>
+
+  <title>Student Dashboard | EklavyaX</title>
+
   <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
     href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
+
+  <!-- Global CSS -->
   <link rel="stylesheet" href="../css/global.css?v=2.2">
-  <link rel="stylesheet" href="../css/student_dashboard.css?v=2.2" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <!-- Dashboard CSS -->
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.0">
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+
   <div class="container">
-    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside
+      class="sidebar"
+      role="navigation"
+      aria-label="Sidebar menu"
+    >
+
+      <!-- Logo -->
       <div class="logo">
-        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <img
+          src="../assets/img/logo.png?v=3.0"
+          alt="EklavyaX Logo"
+        >
+
         <span class="logo-text">EklavyaX</span>
       </div>
-      <nav class="menu" aria-label="Primary">
-        <a class="active" href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
-        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
-        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
-        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab Simulations</a>
-        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> GRAVITY AI</a>
-        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> Doubts</a>
-        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> Assignments</a>
-        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
-        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+
+
+      <!-- Navigation -->
+      <nav
+        class="menu"
+        aria-label="Primary navigation"
+      >
+
+        <a
+          class="active"
+          href="student_dashboard.html"
+        >
+          <i class="fas fa-home" aria-hidden="true"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="student_my_courses.html">
+          <i class="fas fa-book" aria-hidden="true"></i>
+          <span>My Courses</span>
+        </a>
+
+        <a href="explore_courses.html">
+          <i class="fas fa-compass" aria-hidden="true"></i>
+          <span>Explore Courses</span>
+        </a>
+
+        <a href="lab_simulation.html">
+          <i class="fas fa-vials" aria-hidden="true"></i>
+          <span>Lab Simulations</span>
+        </a>
+
+        <a href="eklavya_ai.html">
+          <i class="fas fa-robot" aria-hidden="true"></i>
+          <span>GRAVITY AI</span>
+        </a>
+
+        <a href="doubts.html">
+          <i class="fas fa-question-circle" aria-hidden="true"></i>
+          <span>Doubts</span>
+        </a>
+
+        <a href="assignments.html">
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+          <span>Assignments</span>
+        </a>
+
+        <a href="announcements.html">
+          <i class="fas fa-bullhorn" aria-hidden="true"></i>
+          <span>Announcement</span>
+        </a>
+
+        <a
+          href="settings.html"
+          id="settingsBtn"
+        >
+          <i class="fas fa-cog" aria-hidden="true"></i>
+          <span>Settings</span>
+        </a>
+
       </nav>
 
-      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
-        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon">
+
+      <!-- Profile -->
+      <div
+        class="profile"
+        role="button"
+        tabindex="0"
+        aria-pressed="false"
+        aria-label="Edit Profile"
+      >
+
+        <img
+          id="userAvatarImg"
+          src="../assets/img/student_boy.jpg"
+          alt="Student profile icon"
+        >
+
         <div class="profile-info">
-          <strong id="profileName">Sayan Mondal</strong>
-          <span id="profileAction">Log out</span>
+
+          <strong id="profileName">
+            Sayan Mondal
+          </strong>
+
+          <span id="profileAction">
+            Log out
+          </span>
+
         </div>
+
       </div>
+
     </aside>
 
-    <!-- Main Content -->
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
     <main class="content">
-      <!-- Top Bar -->
+
+
+      <!-- ===================================================
+           TOP BAR
+           =================================================== -->
+
       <section class="top-bar">
+
         <div class="welcome-text">
-          <h1 id="welcome-heading"><strong>Welcome back, <span id="welcomeName">Sayan</span>! 👋🏻</strong></h1>
-          <h2>Level up your skills today! 🚀</h2>
+
+          <h1 id="welcome-heading">
+            <strong>
+              Welcome back,
+              <span id="welcomeName">Sayan</span>! 👋🏻
+            </strong>
+          </h1>
+
+          <h2>
+            Level up your skills today! 🚀
+          </h2>
+
         </div>
-        <!-- Right section -->
+
+
+        <!-- Profile / Streak -->
         <div class="profile-section">
-          <img id="welcomeAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon">
-          <div class="streak" id="streakBadge">🔥 Daily Streak Star</div>
+
+          <img
+            id="welcomeAvatarImg"
+            src="../assets/img/student_boy.jpg"
+            alt="Student profile icon"
+          >
+
+          <div
+            class="streak"
+            id="streakBadge"
+          >
+            🔥 Daily Streak Star
+          </div>
+
         </div>
+
       </section>
 
-      <!-- Stats -->
+
+      <!-- ===================================================
+           STATS
+           =================================================== -->
+
       <section class="stats">
+
+        <!-- Streak -->
         <div class="stat-card stat-orange">
+
           <i class="fas fa-fire"></i>
+
           <div>
-            <h3 id="statStreak">7 Days</h3>
-            <p>Long Streak</p>
+
+            <h3 id="statStreak">
+              7 Days
+            </h3>
+
+            <p>
+              Long Streak
+            </p>
+
           </div>
+
         </div>
+
+
+        <!-- EduCoins -->
         <div class="stat-card stat-gold">
+
           <i class="fas fa-star"></i>
+
           <div>
-            <h3 id="statPoints">2450</h3>
-            <p>EduCoins</p>
+
+            <h3 id="statPoints">
+              2450
+            </h3>
+
+            <p>
+              EduCoins
+            </p>
+
           </div>
+
         </div>
+
+
+        <!-- Level -->
         <div class="stat-card stat-green">
+
           <i class="fas fa-layer-group"></i>
+
           <div>
-            <h3 id="statLevel">Level 12</h3>
-            <p>Current Level</p>
+
+            <h3 id="statLevel">
+              Level 12
+            </h3>
+
+            <p>
+              Current Level
+            </p>
+
           </div>
+
         </div>
+
+
+        <!-- Tasks -->
         <div class="stat-card stat-blue">
+
           <i class="fas fa-tasks"></i>
+
           <div>
-            <h3>5</h3>
-            <p>Pending Tasks</p>
+
+            <h3>
+              5
+            </h3>
+
+            <p>
+              Pending Tasks
+            </p>
+
           </div>
+
         </div>
+
       </section>
+
+
+      <!-- ===================================================
+           MAIN GRID
+           =================================================== -->
 
       <div class="main-grid">
-        <!-- Continue Learning -->
-        <!-- Continue Learning -->
+
+
+        <!-- =================================================
+             CONTINUE LEARNING
+             ================================================= -->
+
         <section class="continue-learning">
-          <h3>Continue Learning</h3>
 
+          <h3>
+            Continue Learning
+          </h3>
+
+
+          <!-- Mathematics -->
           <div class="subject-card">
+
             <i class="fas fa-square-root-alt"></i>
+
             <div class="details">
-              <h3>Mathematics</h3>
-              <p>Chapter 5: Quadratic Equations</p>
+
+              <h3>
+                Mathematics
+              </h3>
+
+              <p>
+                Chapter 5: Quadratic Equations
+              </p>
+
               <div class="bar">
-                <div class="fill blue" style="width:75%"></div>
+
+                <div
+                  class="fill blue"
+                  style="width: 75%;"
+                ></div>
+
               </div>
-              <span>75% Complete</span>
+
+              <span>
+                75% Complete
+              </span>
+
             </div>
+
           </div>
 
+
+          <!-- Physics -->
           <div class="subject-card">
+
             <i class="fas fa-atom"></i>
+
             <div class="details">
-              <h3>Physics</h3>
-              <p>Chapter 3: Motion and Force</p>
+
+              <h3>
+                Physics
+              </h3>
+
+              <p>
+                Chapter 3: Motion and Force
+              </p>
+
               <div class="bar">
-                <div class="fill blue" style="width:60%"></div>
+
+                <div
+                  class="fill blue"
+                  style="width: 60%;"
+                ></div>
+
               </div>
-              <span>60% Complete</span>
+
+              <span>
+                60% Complete
+              </span>
+
             </div>
+
           </div>
 
+
+          <!-- Chemistry -->
           <div class="subject-card">
+
             <i class="fas fa-flask"></i>
+
             <div class="details">
-              <h3>Chemistry</h3>
-              <p>Chapter 2: Chemical Reactions</p>
+
+              <h3>
+                Chemistry
+              </h3>
+
+              <p>
+                Chapter 2: Chemical Reactions
+              </p>
+
               <div class="bar">
-                <div class="fill blue" style="width:45%"></div>
+
+                <div
+                  class="fill blue"
+                  style="width: 45%;"
+                ></div>
+
               </div>
-              <span>45% Complete</span>
+
+              <span>
+                45% Complete
+              </span>
+
             </div>
+
           </div>
 
+
+          <!-- Chemistry Lab -->
           <div class="subject-card">
+
             <i class="fas fa-vials"></i>
+
             <div class="details">
-              <h3>Lab Simulation</h3>
-              <p>Chemistry: Balancing Chemical Equations</p>
+
+              <h3>
+                Lab Simulation
+              </h3>
+
+              <p>
+                Chemistry: Balancing Chemical Equations
+              </p>
+
               <div class="bar">
-                <div class="fill blue" style="width:80%"></div>
+
+                <div
+                  class="fill blue"
+                  style="width: 80%;"
+                ></div>
+
               </div>
-              <span>80% Complete</span>
+
+              <span>
+                80% Complete
+              </span>
+
             </div>
+
           </div>
 
+
+          <!-- Physics Lab -->
           <div class="subject-card">
+
             <i class="fas fa-vials"></i>
+
             <div class="details">
-              <h3>Lab Simulation</h3>
-              <p>Physics: Gravity Force Lab - Basics</p>
+
+              <h3>
+                Lab Simulation
+              </h3>
+
+              <p>
+                Physics: Gravity Force Lab - Basics
+              </p>
+
               <div class="bar">
-                <div class="fill blue" style="width:50%"></div>
+
+                <div
+                  class="fill blue"
+                  style="width: 50%;"
+                ></div>
+
               </div>
-              <span>50% Complete</span>
+
+              <span>
+                50% Complete
+              </span>
+
             </div>
+
           </div>
+
         </section>
 
 
-        <!-- Weekly Progress + Leaderboard -->
+        <!-- =================================================
+             SIDE WIDGETS
+             ================================================= -->
+
         <section class="side-widgets">
+
+
+          <!-- Weekly Progress -->
           <div class="weekly-progress">
-            <h2>Weekly Learning Progress</h2>
-            <canvas id="progressChart"></canvas>
-            <p>You've completed 65% of your lessons this week!</p>
+
+            <h2>
+              Weekly Learning Progress
+            </h2>
+
+            <canvas
+              id="progressChart"
+            ></canvas>
+
+            <p>
+              You've completed 65% of your lessons this week!
+            </p>
+
           </div>
-          <div class="box leaderboard" aria-labelledby="leaderboard-heading">
-            <h3 id="leaderboard-heading">Leaderboard</h3>
-            <div class="leaderboard-item" tabindex="0">
-              <div class="icon-wrapper medal gold" aria-hidden="true"><i class="fas fa-medal"></i></div>
-              <div class="name">Prachi Mondal</div>
-              <div class="points">964 pts <span aria-label="Starred user" role="img" class="star"><i
-                    class="fas fa-star"></i></span></div>
-            </div>
-            <div class="leaderboard-item" tabindex="0">
-              <div class="icon-wrapper medal silver" aria-hidden="true"><i class="fas fa-medal"></i></div>
-              <div class="name">Anchal Vishwakarma</div>
-              <div class="points">950 pts <span aria-label="Starred user" role="img" class="star"><i
-                    class="fas fa-star"></i></span></div>
-            </div>
-            <div class="leaderboard-item" tabindex="0">
-              <div class="icon-wrapper medal bronze" aria-hidden="true"><i class="fas fa-medal"></i></div>
-              <div class="name">Ishita Singh</div>
-              <div class="points">943 pts <span aria-label="Starred user" role="img" class="star"><i
-                    class="fas fa-star"></i></span></div>
-            </div>
-            <div class="leaderboard-item" tabindex="0">
-              <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-user"></i></div>
-              <div class="name">Aditya Yadav</div>
-              <div class="points">932 pts <span aria-label="Starred user" role="img" class="star"><i
-                    class="far fa-star"></i></span></div>
-            </div>
-            <div class="leaderboard-item" tabindex="0">
-              <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-user"></i></div>
-              <div class="name">Priya Devi</div>
-              <div class="points">900 pts <span aria-label="Starred user" role="img" class="star"><i
-                    class="far fa-star"></i></span></div>
+
+
+          <!-- Leaderboard -->
+          <div
+            class="box leaderboard"
+            aria-labelledby="leaderboard-heading"
+          >
+
+            <h3 id="leaderboard-heading">
+              Leaderboard
+            </h3>
+
+
+            <!-- 1 -->
+            <div
+              class="leaderboard-item"
+              tabindex="0"
+            >
+
+              <div
+                class="icon-wrapper medal gold"
+                aria-hidden="true"
+              >
+                <i class="fas fa-medal"></i>
+              </div>
+
+              <div class="name">
+                Prachi Mondal
+              </div>
+
+              <div class="points">
+
+                964 pts
+
+                <span
+                  aria-label="Starred user"
+                  role="img"
+                  class="star"
+                >
+                  <i class="fas fa-star"></i>
+                </span>
+
+              </div>
+
             </div>
 
+
+            <!-- 2 -->
+            <div
+              class="leaderboard-item"
+              tabindex="0"
+            >
+
+              <div
+                class="icon-wrapper medal silver"
+                aria-hidden="true"
+              >
+                <i class="fas fa-medal"></i>
+              </div>
+
+              <div class="name">
+                Anchal Vishwakarma
+              </div>
+
+              <div class="points">
+
+                950 pts
+
+                <span
+                  aria-label="Starred user"
+                  role="img"
+                  class="star"
+                >
+                  <i class="fas fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- 3 -->
+            <div
+              class="leaderboard-item"
+              tabindex="0"
+            >
+
+              <div
+                class="icon-wrapper medal bronze"
+                aria-hidden="true"
+              >
+                <i class="fas fa-medal"></i>
+              </div>
+
+              <div class="name">
+                Ishita Singh
+              </div>
+
+              <div class="points">
+
+                943 pts
+
+                <span
+                  aria-label="Starred user"
+                  role="img"
+                  class="star"
+                >
+                  <i class="fas fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- 4 -->
+            <div
+              class="leaderboard-item"
+              tabindex="0"
+            >
+
+              <div
+                class="icon-wrapper"
+                aria-hidden="true"
+              >
+                <i class="fas fa-user"></i>
+              </div>
+
+              <div class="name">
+                Aditya Yadav
+              </div>
+
+              <div class="points">
+
+                932 pts
+
+                <span
+                  aria-label="Starred user"
+                  role="img"
+                  class="star"
+                >
+                  <i class="far fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- 5 -->
+            <div
+              class="leaderboard-item"
+              tabindex="0"
+            >
+
+              <div
+                class="icon-wrapper"
+                aria-hidden="true"
+              >
+                <i class="fas fa-user"></i>
+              </div>
+
+              <div class="name">
+                Priya Devi
+              </div>
+
+              <div class="points">
+
+                900 pts
+
+                <span
+                  aria-label="Starred user"
+                  role="img"
+                  class="star"
+                >
+                  <i class="far fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
 
         </section>
+
       </div>
 
-      <!-- Lab Simulation -->
+
+      <!-- ===================================================
+           LAB SIMULATION
+           =================================================== -->
+
       <section class="lab-sim">
-        <h2>Lab Simulation</h2>
+
+        <h2>
+          Lab Simulation
+        </h2>
+
+
+        <!-- Tabs -->
         <div class="tabs">
-          <button class="active" onclick="showSection('physics', this)">Physics</button>
-          <button onclick="showSection('chemistry', this)">Chemistry</button>
-          <button onclick="showSection('maths', this)">Mathematics</button>
+
+          <button
+            class="active"
+            type="button"
+            onclick="showSection('physics', this)"
+          >
+            Physics
+          </button>
+
+          <button
+            type="button"
+            onclick="showSection('chemistry', this)"
+          >
+            Chemistry
+          </button>
+
+          <button
+            type="button"
+            onclick="showSection('maths', this)"
+          >
+            Mathematics
+          </button>
+
         </div>
 
 
-        <div id="physics" class="lab-cards active">
+        <!-- =================================================
+             PHYSICS
+             ================================================= -->
+
+        <div
+          id="physics"
+          class="lab-cards active"
+        >
+
+          <!-- Balloons -->
           <div class="lab-card">
+
             <img
-              src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity-420.png">
-            <h3>Balloons and Static Electricity</h3>
-            <p>Explore how static charges work with balloons and walls.</p>
+              src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity-420.png"
+              alt="Balloons and Static Electricity"
+              loading="lazy"
+            >
+
+            <h3>
+              Balloons and Static Electricity
+            </h3>
+
+            <p>
+              Explore how static charges work with balloons and walls.
+            </p>
+
             <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_en.html')">Start
-              Lab</button>
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_en.html')"
+            >
+              Start Lab
+            </button>
+
           </div>
+
+
+          <!-- Faraday -->
           <div class="lab-card">
+
             <img
               src="https://phet.colorado.edu/sims/html/faradays-electromagnetic-lab/latest/faradays-electromagnetic-lab-420.png"
-              alt="Faraday's Electromagnetic Lab">
-            <h3>Faraday's Electromagnetic Lab</h3>
-            <p>Experiment with coils and magnetic fields.</p>
+              alt="Faraday's Electromagnetic Lab"
+              loading="lazy"
+            >
+
+            <h3>
+              Faraday's Electromagnetic Lab
+            </h3>
+
+            <p>
+              Experiment with coils and magnetic fields.
+            </p>
+
             <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/faradays-electromagnetic-lab/latest/faradays-electromagnetic-lab_en.html')">Start
-              Lab</button>
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/faradays-electromagnetic-lab/latest/faradays-electromagnetic-lab_en.html')"
+            >
+              Start Lab
+            </button>
+
           </div>
+
+
+          <!-- Gravity -->
           <div class="lab-card">
 
             <img
-              src="https://phet.colorado.edu/sims/html/gravity-force-lab-basics/latest/gravity-force-lab-basics-420.png">
-            <h3>Gravity Force Lab: Basics</h3>
-            <p>Visualize gravitational forces between objects in space.</p>
+              src="https://phet.colorado.edu/sims/html/gravity-force-lab-basics/latest/gravity-force-lab-basics-420.png"
+              alt="Gravity Force Lab Basics"
+              loading="lazy"
+            >
+
+            <h3>
+              Gravity Force Lab: Basics
+            </h3>
+
+            <p>
+              Visualize gravitational forces between objects in space.
+            </p>
+
             <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/gravity-force-lab-basics/latest/gravity-force-lab-basics_en.html')">Start
-              Lab</button>
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/gravity-force-lab-basics/latest/gravity-force-lab-basics_en.html')"
+            >
+              Start Lab
+            </button>
+
           </div>
+
         </div>
 
-        <div id="chemistry" class="lab-cards" style="display:none;">
+
+        <!-- =================================================
+             CHEMISTRY
+             ================================================= -->
+
+        <div
+          id="chemistry"
+          class="lab-cards"
+          style="display: none;"
+        >
+
+          <!-- Balancing Equations -->
           <div class="lab-card">
+
             <img
               src="https://phet.colorado.edu/sims/html/balancing-chemical-equations/latest/balancing-chemical-equations-600.png"
-              alt="Balancing Chemical Equations">
-            <h3>Balancing Chemical Equations</h3>
-            <p>Practice balancing chemical reactions step by step.</p>
+              alt="Balancing Chemical Equations"
+              loading="lazy"
+            >
+
+            <h3>
+              Balancing Chemical Equations
+            </h3>
+
+            <p>
+              Practice balancing chemical reactions step by step.
+            </p>
+
             <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/balancing-chemical-equations/latest/balancing-chemical-equations_en.html')">Start
-              Lab</button>
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/balancing-chemical-equations/latest/balancing-chemical-equations_en.html')"
+            >
+              Start Lab
+            </button>
+
           </div>
-          <div class="lab-card">
-            <img src="https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom-600.png"
-              alt="Build an Atom">
-            <h3>Build an Atom</h3>
-            <p>Create atoms with protons, neutrons, and electrons.</p>
-            <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html')">Start
-              Lab</button>
-          </div>
+
+
+          <!-- Build an Atom -->
           <div class="lab-card">
 
-            <img src="https://phet.colorado.edu/sims/html/concentration/latest/concentration-600.png"
-              alt="Concentration">
-            <h3>Concentration</h3>
-            <p>Explore how solute and solvent affect concentration.</p>
+            <img
+              src="https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom-600.png"
+              alt="Build an Atom"
+              loading="lazy"
+            >
+
+            <h3>
+              Build an Atom
+            </h3>
+
+            <p>
+              Create atoms with protons, neutrons, and electrons.
+            </p>
+
             <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/concentration/latest/concentration_en.html')">Start
-              Lab</button>
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html')"
+            >
+              Start Lab
+            </button>
+
           </div>
+
+
+          <!-- Concentration -->
+          <div class="lab-card">
+
+            <img
+              src="https://phet.colorado.edu/sims/html/concentration/latest/concentration-600.png"
+              alt="Concentration"
+              loading="lazy"
+            >
+
+            <h3>
+              Concentration
+            </h3>
+
+            <p>
+              Explore how solute and solvent affect concentration.
+            </p>
+
+            <button
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/concentration/latest/concentration_en.html')"
+            >
+              Start Lab
+            </button>
+
+          </div>
+
         </div>
 
-        <div id="maths" class="lab-cards" style="display:none;">
+
+        <!-- =================================================
+             MATHEMATICS
+             ================================================= -->
+
+        <div
+          id="maths"
+          class="lab-cards"
+          style="display: none;"
+        >
+
+          <!-- Quadrilateral -->
           <div class="lab-card">
-            <img src="https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral-600.png"
-              alt="Quadrilateral">
-            <h3>Quadrilateral</h3>
-            <p>Experiment with properties of quadrilaterals.</p>
+
+            <img
+              src="https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral-600.png"
+              alt="Quadrilateral"
+              loading="lazy"
+            >
+
+            <h3>
+              Quadrilateral
+            </h3>
+
+            <p>
+              Experiment with properties of quadrilaterals.
+            </p>
+
             <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral_en.html')">Start
-              Lab</button>
-          </div>
-          <div class="lab-card">
-            <img src="https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics-600.png"
-              alt="Graphing Quadratics">
-            <h3>Graphing Quadratics</h3>
-            <p>Visualize and interact with quadratic functions.</p>
-            <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics_en.html')">Start
-              Lab</button>
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral_en.html')"
+            >
+              Start Lab
+            </button>
+
           </div>
 
+
+          <!-- Graphing Quadratics -->
           <div class="lab-card">
+
+            <img
+              src="https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics-600.png"
+              alt="Graphing Quadratics"
+              loading="lazy"
+            >
+
+            <h3>
+              Graphing Quadratics
+            </h3>
+
+            <p>
+              Visualize and interact with quadratic functions.
+            </p>
+
+            <button
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics_en.html')"
+            >
+              Start Lab
+            </button>
+
+          </div>
+
+
+          <!-- Equality Explorer -->
+          <div class="lab-card">
+
             <img
               src="https://phet.colorado.edu/sims/html/equality-explorer-two-variables/latest/equality-explorer-two-variables-600.png"
-              alt="Equality Explorer Basics">
-            <h3>Equality Explorer: Two Variables</h3>
-            <p>Understand equations using balance models.</p>
+              alt="Equality Explorer Two Variables"
+              loading="lazy"
+            >
+
+            <h3>
+              Equality Explorer: Two Variables
+            </h3>
+
+            <p>
+              Understand equations using balance models.
+            </p>
+
             <button
-              onclick="openLab('https://phet.colorado.edu/sims/html/equality-explorer-two-variables/latest/equality-explorer-two-variables_en.html')">Start
-              Lab</button>
+              type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/equality-explorer-two-variables/latest/equality-explorer-two-variables_en.html')"
+            >
+              Start Lab
+            </button>
 
           </div>
+
         </div>
+
       </section>
+
     </main>
 
   </div>
 
 
-  </section>
+  <!-- =====================================================
+       LAB MODAL
+       ===================================================== -->
 
+  <div
+    id="labModal"
+    class="modal"
+    aria-hidden="true"
+  >
 
-  </main>
-  </div>
-
-  <!-- Modal -->
-  <div id="labModal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeLab()">&times;</span>
-      <iframe id="labFrame" src=""></iframe>
+
+      <span
+        class="close"
+        onclick="closeLab()"
+        role="button"
+        tabindex="0"
+        aria-label="Close laboratory"
+      >
+        &times;
+      </span>
+
+      <iframe
+        id="labFrame"
+        src=""
+        title="Interactive Lab Simulation"
+        allowfullscreen
+      ></iframe>
+
     </div>
+
   </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
   <script src="../js/api.js"></script>
+
   <script src="../js/student_dashboard.js"></script>
+
   <script src="../js/chatbot.js?v=2.1"></script>
+
 </body>
 
 </html>
