@@ -1,7 +1,7 @@
 """
 app/services/ai_service.py
 ──────────────────────────
-Synapse.ai – the AI explanation microservice engine.
+Gravity.ai – the AI explanation microservice engine.
 
 Supports OpenRouter, Google Gemini, and OpenAI as interchangeable backends.
 Prompt engineering ensures the AI acts as an empathetic tutor, NOT
@@ -39,6 +39,13 @@ TUTORING GUIDELINES:
    - Write your complete response in {target_language}. (If "Simple English" or "English", use clean, clear English).
 5. ENCOURAGING CLOSING:
    - Conclude with a brief, motivating remark.
+6. MATH & FORMULA FORMATTING (CRITICAL):
+   - ALWAYS write mathematical formulas, equations, and symbols using LaTeX notation wrapped in dollar-sign delimiters.
+   - For inline math (within a sentence), use single dollar signs: $F = ma$, $E = mc^2$, $\\neg(A \\land B)$
+   - For display math (standalone equation on its own line), use double dollar signs: $$F = ma$$
+   - Use proper LaTeX commands for symbols: $\\cap$ for intersection, $\\cup$ for union, $\\neg$ for negation, $\\land$ for AND, $\\lor$ for OR, $\\iff$ for if and only if, $\\implies$ for implies, $\\frac{a}{b}$ for fractions, $\\sqrt{x}$ for square root, $\\int$ for integral, $\\sum$ for summation, etc.
+   - NEVER write raw LaTeX commands as plain text. Always wrap them in $ delimiters so they render as beautiful formatted math.
+   - Example: Write $A^c \\cup B^c$ NOT "A^c \\cup B^c" without dollar signs.
 
 Student Question / Topic:
 \"\"\"
