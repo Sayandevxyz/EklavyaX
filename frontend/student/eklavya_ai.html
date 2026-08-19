@@ -14,13 +14,19 @@
   <link rel="stylesheet" href="../css/global.css?v=3.0">
   <link rel="stylesheet" href="../css/eklavya_ai.css?v=3.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <!-- KaTeX for modern LaTeX mathematical formula rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div class="container">
     <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
       <div class="logo">
-        <img src="../assets/img/logo.png?v=2026.1" alt="EklavyaX Logo" width="36" height="36" style="width: 36px; height: 36px; object-fit: contain;">
+        <img src="../assets/img/logo.png?v=2026.1" alt="EklavyaX Logo" width="36" height="36"
+          style="width: 36px; height: 36px; object-fit: contain;">
         <span class="logo-text">EklavyaX</span>
       </div>
       <nav class="menu" aria-label="Primary">
@@ -36,7 +42,8 @@
       </nav>
 
       <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
-        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon" width="42" height="42" style="width: 42px; height: 42px; object-fit: cover; border-radius: 50%;" />
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon" width="42" height="42"
+          style="width: 42px; height: 42px; object-fit: cover; border-radius: 50%;" />
         <div class="profile-info">
           <strong id="profileName">Sayan Mondal</strong>
           <span id="profileAction">Log out</span>
@@ -118,7 +125,8 @@
               display: flex;
               align-items: center;
               gap: 5px;
-            " onmouseover="this.style.background='rgba(248,113,113,0.3)'" onmouseout="this.style.background='rgba(248,113,113,0.15)'">
+            " onmouseover="this.style.background='rgba(248,113,113,0.3)'"
+              onmouseout="this.style.background='rgba(248,113,113,0.15)'">
               <i class="fas fa-trash-alt"></i> Clear All
             </button>
           </div>
@@ -169,10 +177,38 @@
 
     function formatMarkdown(text) {
       if (!text) return "";
-      let html = text
+
+      // 1. Extract and protect LaTeX math blocks from markdown processing
+      const mathBlocks = [];
+      let processed = text;
+
+      // Protect display math: $$...$$ and \[...\]
+      processed = processed.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+        mathBlocks.push(match);
+        return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
+      });
+      processed = processed.replace(/\\\[([\s\S]*?)\\\]/g, (match) => {
+        mathBlocks.push(match);
+        return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
+      });
+
+      // Protect inline math: $...$ and \(...\)
+      processed = processed.replace(/\$([^\$\n]+?)\$/g, (match) => {
+        mathBlocks.push(match);
+        return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
+      });
+      processed = processed.replace(/\\\((.*?)\\\)/g, (match) => {
+        mathBlocks.push(match);
+        return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
+      });
+
+      // 2. Standard HTML escaping (only on non-math text now)
+      let html = processed
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
+
+      // 3. Markdown formatting
       // Bold **text**
       html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#ffffff;">$1</strong>');
       // Headings
@@ -185,7 +221,47 @@
       html = html.replace(/^\s*(\d+\.)\s+(.*$)/gim, '<div style="margin-top:10px; margin-bottom:4px;"><strong style="color:#eeb43e;">$1</strong> $2</div>');
       // Line breaks
       html = html.replace(/\n\n/g, '<div style="height:10px;"></div>').replace(/\n/g, '<br/>');
+
+      // 4. Restore math blocks (unescaped, so KaTeX can parse them)
+      for (let i = 0; i < mathBlocks.length; i++) {
+        html = html.replace(`%%MATH_BLOCK_${i}%%`, mathBlocks[i]);
+      }
+
       return html;
+    }
+
+    function renderExplanation(element, markdownText) {
+      element.innerHTML = formatMarkdown(markdownText);
+      function applyKatex() {
+        if (typeof renderMathInElement === "function") {
+          try {
+            renderMathInElement(element, {
+              delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '\\[', right: '\\]', display: true },
+                { left: '$', right: '$', display: false },
+                { left: '\\(', right: '\\)', display: false }
+              ],
+              throwOnError: false,
+              errorColor: '#f87171'
+            });
+          } catch (err) {
+            console.warn("KaTeX render error:", err);
+          }
+        }
+      }
+      if (typeof renderMathInElement === "function") {
+        applyKatex();
+      } else {
+        // If KaTeX script is still loading in background
+        const checkKatex = setInterval(() => {
+          if (typeof renderMathInElement === "function") {
+            clearInterval(checkKatex);
+            applyKatex();
+          }
+        }, 100);
+        setTimeout(() => clearInterval(checkKatex), 3000);
+      }
     }
 
     function showHistoryItem(text) {
@@ -210,7 +286,7 @@
       try {
         const res = await EklavyaXAPI.tutorExplain(text, lang);
         currentLogId = res.explanation_log_id;
-        content.innerHTML = formatMarkdown(res.explanation);
+        renderExplanation(content, res.explanation);
         box.classList.add("visible");
         loadWallet();
         loadHistory();
