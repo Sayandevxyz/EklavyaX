@@ -336,6 +336,26 @@ aside .profile .profile-info span {
   white-space: pre-wrap;
 }
 
+/* KaTeX math formula styling for dark chalkboard theme */
+.ai-response-content .katex {
+  color: #f5e6c8;
+  font-size: 1.05em;
+}
+
+.ai-response-content .katex-display {
+  margin: 16px 0;
+  padding: 14px 18px;
+  background: rgba(238, 180, 62, 0.06);
+  border-left: 3px solid var(--marigold);
+  border-radius: 0 10px 10px 0;
+  overflow-x: auto;
+}
+
+.ai-response-content .katex-display > .katex {
+  color: #eeb43e;
+  font-size: 1.15em;
+}
+
 .ai-refund-btn {
   margin-top: 14px;
   padding: 9px 16px;
