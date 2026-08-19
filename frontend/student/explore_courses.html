@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Explore & Enroll in Courses | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -48,40 +49,47 @@
     <!-- Main Content -->
     <main class="content">
 
-      <!-- Hero Header & Filter Bar -->
-      <section class="catalog-section">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
-          <div>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <div class="catalog-icon" style="width:40px; height:40px; font-size:1.1rem;"><i class="fas fa-compass"></i></div>
-              <h1 style="color:var(--text-main); font-family:var(--font-heading); font-size:1.8rem; font-weight:800; letter-spacing:-0.5px;">Explore & Enroll in Courses</h1>
-            </div>
-            <p style="color:var(--text-muted); font-size:0.95rem; margin-top:6px;">
-              Discover STEM masterclasses, interactive lab-linked curricula, and competitive exam tracks. Enroll in any subject with 1-click.
-            </p>
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="page-header-text">
+          <div class="page-title-row">
+            <h1>Explore Courses</h1>
+            <span class="badge badge-cs" id="catalogCountBadge">10+ Masterclasses</span>
           </div>
-          
-          <div class="search-box" style="min-width:280px; max-width:360px;">
+          <p>
+            Discover STEM masterclasses, interactive lab-linked curricula, and competitive exam tracks. Enroll in any subject with 1-click.
+          </p>
+        </div>
+
+        <a href="student_my_courses.html" class="btn-primary explore-more-btn">
+          <i class="fas fa-book-open"></i>
+          <span>My Courses</span>
+        </a>
+      </section>
+
+      <!-- Courses Parchment Container Section -->
+      <section class="courses">
+        <div class="catalog-filter-bar">
+          <div class="search-box">
             <i class="fas fa-search"></i>
             <input type="text" id="catalogSearch" placeholder="Search subjects, topics, or faculty..." />
           </div>
+
+          <div class="catalog-tabs">
+            <button class="catalog-tab active" data-cat="all"><i class="fas fa-th-large"></i> All Subjects</button>
+            <button class="catalog-tab" data-cat="physics"><i class="fas fa-atom"></i> Physics & Space</button>
+            <button class="catalog-tab" data-cat="chemistry"><i class="fas fa-vial"></i> Chemistry</button>
+            <button class="catalog-tab" data-cat="biology"><i class="fas fa-dna"></i> Biology & Genetics</button>
+            <button class="catalog-tab" data-cat="math"><i class="fas fa-calculator"></i> Mathematics</button>
+            <button class="catalog-tab" data-cat="tech"><i class="fas fa-laptop-code"></i> AI & Tech</button>
+            <button class="catalog-tab" data-cat="humanities"><i class="fas fa-book"></i> Humanities</button>
+          </div>
         </div>
 
-        <!-- Filter Category Tabs -->
-        <div class="catalog-tabs">
-          <button class="catalog-tab active" data-cat="all"><i class="fas fa-th-large"></i> All Subjects</button>
-          <button class="catalog-tab" data-cat="physics"><i class="fas fa-atom"></i> Physics & Space</button>
-          <button class="catalog-tab" data-cat="chemistry"><i class="fas fa-vial"></i> Chemistry</button>
-          <button class="catalog-tab" data-cat="biology"><i class="fas fa-dna"></i> Biology & Genetics</button>
-          <button class="catalog-tab" data-cat="math"><i class="fas fa-calculator"></i> Mathematics</button>
-          <button class="catalog-tab" data-cat="tech"><i class="fas fa-laptop-code"></i> AI, Python & Robotics</button>
+        <div class="courses-grid" id="catalogCoursesGrid">
+          <!-- Rendered dynamically by student_courses.js -->
         </div>
       </section>
-
-      <!-- Catalog Grid Section -->
-      <div class="catalog-grid" id="catalogCoursesGrid">
-        <!-- Rendered dynamically by student_courses.js -->
-      </div>
 
     </main>
   </div>
