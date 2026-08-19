@@ -1365,7 +1365,6 @@ main > img,
 .container > img {
   display: none !important;
 }
-
 /* Prevent any unwanted full-screen logo/banner */
 .logo-splash,
 .splash-logo,
