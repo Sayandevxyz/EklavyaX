@@ -443,21 +443,193 @@ aside .profile .profile-info span {
   display: block;
 }
 
-/* Responsive */
+/* =========================================================
+   RESPONSIVE DESIGN (PHONES: <= 768px)
+   ========================================================= */
+
 @media (max-width: 992px) {
-  .content {
-    margin-left: 0;
-    padding: 16px;
+  .sim-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .container {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .sidebar,
   aside.sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+    border-right: none !important;
+    border-bottom: 1.5px dashed rgba(245, 240, 226, 0.15) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  aside .logo {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    padding: 14px 16px 10px !important;
+  }
+
+  .logo img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .logo-text {
+    font-size: 1.35rem !important;
+  }
+
+  nav.menu {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 8px !important;
+    padding: 4px 12px 12px !important;
+    flex: none !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  nav.menu::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  nav.menu a {
+    width: auto !important;
+    min-width: max-content !important;
+    padding: 8px 14px !important;
+    gap: 7px !important;
+    font-size: 0.76rem !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    transform: none !important;
+  }
+
+  nav.menu a i {
+    width: auto !important;
+    min-width: auto !important;
+    font-size: 0.85rem !important;
+  }
+
+  aside .profile {
+    display: none !important;
+  }
+
+  .content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 16px 14px 40px !important;
+    gap: 16px !important;
+    overflow-x: hidden !important;
+  }
+
+  .hero-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 18px 16px !important;
+  }
+
+  .hero-card h1 {
+    font-size: 1.4rem !important;
+  }
+
+  .filter-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .filter-tabs {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 4px !important;
+    scrollbar-width: none !important;
+  }
+
+  .filter-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .filter-tab {
+    flex-shrink: 0 !important;
+    padding: 7px 12px !important;
+    font-size: 0.78rem !important;
+  }
+
+  .search-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .sim-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .sim-card {
+    padding: 14px !important;
+    border-radius: 16px !important;
   }
 
   .modal-dialog {
-    height: 95vh;
+    width: 98vw !important;
+    height: 90vh !important;
+    border-radius: 12px !important;
+  }
+
+  .modal-bar {
+    padding: 10px 14px !important;
+  }
+
+  .modal-title-wrap h2 {
+    font-size: 0.95rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: 12px 10px 35px !important;
+  }
+
+  .hero-card {
+    padding: 14px 12px !important;
+  }
+
+  .sim-card {
+    padding: 12px !important;
   }
 }
