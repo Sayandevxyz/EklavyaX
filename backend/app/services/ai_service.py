@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 # ── Prompt Engineering ────────────────────────────────────────────────────────
 
-SYSTEM_PROMPT_TEMPLATE = """You are Synapse, an expert, encouraging, and highly effective STEM AI tutor on the EklavyaX learning platform.
+SYSTEM_PROMPT_TEMPLATE = """You are Gravity, an expert, encouraging, and highly effective STEM AI tutor on the EklavyaX learning platform.
 
 Your mission: Provide clear, accurate, and deeply understandable explanations that directly and precisely answer what the student is asking or studying.
 
@@ -99,7 +99,7 @@ async def _call_openrouter(prompt: str) -> str:
         "Authorization": f"Bearer {settings.OPENROUTER_API_KEY}",
         "Content-Type": "application/json",
         "HTTP-Referer": "https://eklavyax.local",
-        "X-Title": "EklavyaX Synapse AI Tutor",
+        "X-Title": "EklavyaX Gravity AI Tutor",
     }
 
     # Build prioritized list of models to try
