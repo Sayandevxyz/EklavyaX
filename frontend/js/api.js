@@ -7,6 +7,7 @@
  *
  * The backend serves this frontend itself (see backend/app/main.py), so
  * API_BASE is left empty — requests are same-origin, no CORS needed.
+ **/
 // In unified deployments (Render), API_BASE is empty for same-origin requests.
 // In split deployments (Vercel frontend + Render backend), set window.EKLAVYAX_API_BASE or localStorage.
 const API_BASE = window.EKLAVYAX_API_BASE || localStorage.getItem("eklavya_api_base") || "";
