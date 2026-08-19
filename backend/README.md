@@ -1,8 +1,8 @@
-# 🎓 EklavyaX — Synapse Backend
+# 🎓 EklavyaX — Backend
 
 > **EklavyaX** is a gamified learning platform inspired by the legendary self-taught archer of Indian mythology. The `X` signals a cutting-edge, tech-enabled evolution of self-learning.
 >
-> Powered by **Synapse.ai** — a custom-prompted AI explanation engine that acts as an empathetic tutor, never just an answer machine.
+> Powered by **Gravity.ai** — a custom-prompted AI explanation engine that acts as an empathetic tutor, never just an answer machine.
 
 ---
 
@@ -24,7 +24,7 @@
 ## 🏗️ Project Structure
 
 ```
-synapse-backend/
+backend/
 ├── app/
 │   ├── api/
 │   │   └── routes/
@@ -61,8 +61,8 @@ synapse-backend/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-org/EklavyaX-synapse-backend.git
-cd EklavyaX-synapse-backend/synapse-backend
+git clone https://github.com/your-org/EklavyaX-backend.git
+cd -backend
 ```
 
 ### 2. Create a virtual environment
@@ -287,4 +287,4 @@ Actions that SPEND coins:
 
 ## 📄 License
 
-MIT License — built for EklavyaX (SIH 2024 Hackathon)
+MIT License 
