@@ -75,17 +75,82 @@
         <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
         <span class="logo-text">EklavyaX</span>
       </div>
-      <nav class="menu">
-        <a href="student_dashboard.html"><i class="fas fa-home"></i> Home</a>
-        <a href="leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a>
-        <a href="quiz.html"><i class="fas fa-brain"></i> Daily Quiz</a>
-        <a class="active" href="live_battle.html"><i class="fas fa-bolt"></i> Live Duel</a>
-        <a href="flashcards.html"><i class="fas fa-layer-group"></i> Flashcards</a>
-        <a href="study_planner.html"><i class="fas fa-calendar-alt"></i> Study Planner</a>
-        <a href="study_groups.html"><i class="fas fa-users"></i> Study Groups</a>
-        <a href="chat_threads.html"><i class="fas fa-comments"></i> Doubts Chat</a>
-        <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
-        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> <span>Home</span></a>
+        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> <span>My Courses</span></a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> <span>Explore Courses</span></a>
+        <a href="quiz.html"><i class="fas fa-brain" aria-hidden="true"></i> <span>Daily Quiz</span></a>
+        <a href="faction_wars.html"><i class="fas fa-shield-alt" aria-hidden="true"></i> <span>Faction Wars</span></a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> <span>Lab Simulations</span></a>
+        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> <span>GRAVITY AI</span></a>
+        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> <span>Doubts</span></a>
+        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> <span>Assignments</span></a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> <span>Announcement</span></a>
+
+        <!-- Advance Features Group -->
+        <div class="menu-group advance-features-group" id="advanceFeaturesGroup">
+          <button type="button" class="menu-group-toggle" id="advanceFeaturesToggle" onclick="toggleAdvanceFeatures()" aria-expanded="false" aria-controls="advanceFeaturesSubitems">
+            <div class="toggle-title">
+              <i class="fas fa-layer-group" style="color: var(--marigold, #eeb43e);" aria-hidden="true"></i>
+              <span>Advance Features</span>
+            </div>
+            <span class="toggle-badge">12</span>
+            <i class="fas fa-chevron-down toggle-arrow" id="advanceFeaturesArrow" aria-hidden="true"></i>
+          </button>
+
+          <div class="menu-subitems" id="advanceFeaturesSubitems">
+            <a href="leaderboard.html">
+              <i class="fas fa-trophy" style="color: #fbbf24;" aria-hidden="true"></i>
+              <span>Leaderboard</span>
+            </a>
+            <a class="active" href="live_battle.html">
+              <i class="fas fa-bolt" style="color: #f59e0b;" aria-hidden="true"></i>
+              <span>Live Duel 1v1</span>
+            </a>
+            <a href="flashcards.html">
+              <i class="fas fa-layer-group" style="color: #34d399;" aria-hidden="true"></i>
+              <span>Flashcards</span>
+            </a>
+            <a href="study_planner.html">
+              <i class="fas fa-calendar-alt" style="color: #60a5fa;" aria-hidden="true"></i>
+              <span>Study Planner</span>
+            </a>
+            <a href="study_groups.html">
+              <i class="fas fa-users" style="color: #818cf8;" aria-hidden="true"></i>
+              <span>Study Groups</span>
+            </a>
+            <a href="chat_threads.html">
+              <i class="fas fa-comments" style="color: #a78bfa;" aria-hidden="true"></i>
+              <span>Doubts Chat</span>
+            </a>
+            <a href="certificates.html">
+              <i class="fas fa-certificate" style="color: #f472b6;" aria-hidden="true"></i>
+              <span>Certificates</span>
+            </a>
+            <a href="eklavyalens.html">
+              <i class="fas fa-globe-asia" style="color: #38bdf8;" aria-hidden="true"></i>
+              <span>EklavyaLens (Maps)</span>
+            </a>
+            <a href="pyq_arena.html">
+              <i class="fas fa-stopwatch" style="color: #fbbf24;" aria-hidden="true"></i>
+              <span>PYQ Arena (JEE/NEET)</span>
+            </a>
+            <a href="mindmaps.html">
+              <i class="fas fa-project-diagram" style="color: #c084fc;" aria-hidden="true"></i>
+              <span>Concept Mind Maps</span>
+            </a>
+            <a href="bookmarks.html">
+              <i class="fas fa-bookmark" style="color: #f43f5e;" aria-hidden="true"></i>
+              <span>Revision Bookmarks</span>
+            </a>
+            <a href="parent_dashboard.html">
+              <i class="fas fa-user-shield" style="color: #fb923c;" aria-hidden="true"></i>
+              <span>Parent Portal</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> <span>Settings</span></a>
       </nav>
       <div class="profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
