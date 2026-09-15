@@ -161,7 +161,7 @@
       return;
     }
 
-    // 2. Try Synapse AI Tutor endpoint if authenticated
+    // 2. Try GRAVITY AI Tutor endpoint if authenticated
     try {
       if (window.EklavyaXAPI && typeof window.EklavyaXAPI.tutorExplain === "function" && window.EklavyaXAPI.isLoggedIn()) {
         const res = await window.EklavyaXAPI.tutorExplain(query, "English");

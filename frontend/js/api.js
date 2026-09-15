@@ -1,7 +1,7 @@
 /**
  * js/api.js
  * ─────────
- * Shared helper for talking to the Synapse (FastAPI) backend and for
+ * Shared helper for talking to the GRAVITY (FastAPI) backend and for
  * managing the logged-in session in localStorage. Loaded by every page
  * that needs auth or live data (login pages, dashboards).
  *
@@ -16,8 +16,8 @@ const API_BASE =
   (window.location.hostname.includes("vercel.app")
     ? "https://eklavyax.onrender.com"
     : (window.location.port && window.location.port !== "8000" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-       ? `http://${window.location.hostname}:8000`
-       : ""));
+      ? `http://${window.location.hostname}:8000`
+      : ""));
 
 
 const EklavyaXAPI = (() => {
@@ -172,7 +172,7 @@ const EklavyaXAPI = (() => {
 
   }
 
-  // ── Synapse AI Tutor ─────────────────────────────────────────────────────
+  // ── GRAVITY AI Tutor ─────────────────────────────────────────────────────
 
   /**
    * Ask the AI tutor to explain highlighted text.

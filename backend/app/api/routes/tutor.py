@@ -18,14 +18,14 @@ from app.schemas.tutor_sch import (
 from app.services.ai_service import get_explanation
 from app.services.game_logic import earn_coins_and_xp, refund_coins, spend_coins
 
-router = APIRouter(prefix="/tutor", tags=["Synapse.ai Tutor"])
+router = APIRouter(prefix="/tutor", tags=["GRAVITY.ai Tutor"])
 
 
 
 @router.post(
     "/explain",
     response_model=ExplainResponse,
-    summary="Synapse.ai: Get an AI explanation for highlighted text",
+    summary="GRAVITY.ai: Get an AI explanation for highlighted text",
 )
 async def explain_text(
     payload: ExplainRequest,
@@ -109,7 +109,7 @@ async def explain_text(
 @router.post(
     "/answer-feedback",
     response_model=FeedbackResponse,
-    summary="Synapse.ai: Record answer feedback – refund coins on correct answer",
+    summary="GRAVITY.ai: Record answer feedback – refund coins on correct answer",
 )
 def answer_feedback(
     payload: AnswerFeedback,

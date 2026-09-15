@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
    
     APP_ENV: str = "development"
-    APP_TITLE: str = "Synapse Backend for EklavyaX"
+    APP_TITLE: str = "GRAVITY Backend for EklavyaX"
     APP_VERSION: str = "1.0.0"
 
   

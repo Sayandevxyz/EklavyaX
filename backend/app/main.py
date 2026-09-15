@@ -67,7 +67,7 @@ def get_redis():
 async def lifespan(app: FastAPI) -> AsyncGenerator:
     """Async context manager run on startup and shutdown."""
 
-    logger.info("🚀 EklavyaX Synapse Backend starting up...")
+    logger.info("🚀 EklavyaX GRAVITY Backend starting up...")
 
   
     from app.db.database import Base, engine
@@ -199,7 +199,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     await _init_redis()
 
     logger.info(
-        "🎮 Synapse Backend is ready. Docs: http://localhost:8000/docs"
+        "🎮 GRAVITY Backend is ready. Docs: http://localhost:8000/docs"
     )
 
    
@@ -276,7 +276,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
     if _redis_client:
         await _redis_client.aclose()
 
-    logger.info("👋 Synapse Backend shut down gracefully.")
+    logger.info("👋 GRAVITY Backend shut down gracefully.")
 
 
 
@@ -432,7 +432,7 @@ async def root():
     """API status endpoint – confirms the server is running."""
 
     return {
-        "message": "EklavyaX Synapse Backend is running",
+        "message": "EklavyaX GRAVITY Backend is running",
         "version": settings.APP_VERSION,
         "docs": "/docs",
         "status": "healthy",

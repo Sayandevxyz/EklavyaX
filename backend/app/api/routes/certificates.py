@@ -60,7 +60,7 @@ def generate_certificate_pdf(cert: models.Certificate, student_name: str) -> io.
 
     c.setFont("Helvetica", 11)
     c.setFillColor(colors.HexColor("#9CA3AF"))
-    c.drawCentredString(width / 2.0, height - 105, "SYNAPSE GAMIFIED LEARNING PLATFORM • OFFICIAL VERIFICATION")
+    c.drawCentredString(width / 2.0, height - 105, "GRAVITY GAMIFIED LEARNING PLATFORM • OFFICIAL VERIFICATION")
 
     # 6. Certificate Title
     c.setFont("Times-BoldItalic", 34)

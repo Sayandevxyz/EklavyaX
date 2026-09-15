@@ -2,7 +2,7 @@ function toggleSidebar() {
   document.querySelector('.sidebar').classList.toggle('active');
 }
 
-// ── Auth guard + live profile data from the Synapse backend ────────────────
+// ── Auth guard + live profile data from the GRAVITY backend ────────────────
 (async function initTeacherDashboard() {
   const user = EklavyaXAPI.requireAuth("teacher", "login.html");
   if (!user) return; // already redirecting to login
@@ -23,7 +23,7 @@ function toggleSidebar() {
         if (welcomeEl) welcomeEl.textContent = `Mr./Ms. ${EklavyaXAPI.displayName(freshUser).split(" ")[0] || freshUser.username}`;
         if (EklavyaXAPI.applyUserAvatar) EklavyaXAPI.applyUserAvatar(freshUser);
       }
-    }).catch(() => {});
+    }).catch(() => { });
   }
 
   const logoutEl = document.getElementById("profileAction");

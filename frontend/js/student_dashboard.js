@@ -1,4 +1,4 @@
-// ── Auth guard + live data from the Synapse backend ──────────────────────
+// ── Auth guard + live data from the GRAVITY backend ──────────────────────
 (async function initStudentDashboard() {
   const user = EklavyaXAPI.requireAuth("student", "student_login.html");
   if (!user) return; // already redirecting to login
@@ -19,7 +19,7 @@
         if (welcomeEl) welcomeEl.textContent = EklavyaXAPI.displayName(freshUser).split(" ")[0] || freshUser.username;
         if (EklavyaXAPI.applyUserAvatar) EklavyaXAPI.applyUserAvatar(freshUser);
       }
-    }).catch(() => {});
+    }).catch(() => { });
   }
 
   const logoutEl = document.getElementById("profileAction");

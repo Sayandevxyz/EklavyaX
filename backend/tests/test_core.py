@@ -1,7 +1,7 @@
 """
 tests/test_core.py
 ──────────────────
-Unit tests for core EklavyaX/Synapse backend functions.
+Unit tests for core EklavyaX/GRAVITY backend functions.
 
 Uses:
 - SQLite in-memory database (no PostgreSQL needed for tests)

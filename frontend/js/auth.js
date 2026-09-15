@@ -2,7 +2,7 @@
  * js/auth.js
  * ──────────
  * Drives both the login/signup "blade" toggle animation and the real
- * calls to the Synapse backend for the student & teacher login pages.
+ * calls to the GRAVITY backend for the student & teacher login pages.
  * The page just needs a #authRoot element with data-role + data-redirect.
  */
 (function () {
