@@ -224,7 +224,8 @@
     }
 
     /* ---------- Portal cards: chalkboard vs notebook ---------- */
-    .login-buttons {
+    .login-buttons,
+    .modal-portal-grid {
       display: flex;
       gap: 22px;
       width: 100%;
@@ -234,7 +235,8 @@
       margin-top: 20px;
     }
 
-    .login-buttons a {
+    .login-buttons a,
+    .modal-portal-grid a {
       flex: 1 1 220px;
       max-width: 250px;
       min-width: 210px;
@@ -249,12 +251,14 @@
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    .login-buttons a:hover {
+    .login-buttons a:hover,
+    .modal-portal-grid a:hover {
       transform: translateY(-5px) rotate(0deg) !important;
     }
 
     /* teacher = chalk slate, tilted like a board propped up */
-    .login-buttons a.teacher {
+    .login-buttons a.teacher,
+    .modal-portal-grid a.teacher {
       background: linear-gradient(165deg, #24402f, #16281f);
       border: 2px dashed rgba(245, 240, 226, 0.35);
       border-radius: 6px;
@@ -264,7 +268,8 @@
     }
 
     /* student = a torn notebook page */
-    .login-buttons a.student {
+    .login-buttons a.student,
+    .modal-portal-grid a.student {
       background:
         repeating-linear-gradient(var(--paper) 0px, var(--paper) 27px, var(--paper-line) 28px),
         var(--paper);
@@ -276,7 +281,8 @@
     }
 
     /* principal = royal institutional slate */
-    .login-buttons a.principal {
+    .login-buttons a.principal,
+    .modal-portal-grid a.principal {
       background: linear-gradient(165deg, #1e1b4b, #0f172a);
       border: 2px solid rgba(251, 191, 36, 0.5);
       border-radius: 6px;
@@ -286,7 +292,8 @@
     }
 
     /* parent = warm protective parchment */
-    .login-buttons a.parent {
+    .login-buttons a.parent,
+    .modal-portal-grid a.parent {
       background: linear-gradient(165deg, #fef3c7, #fde68a);
       border: 2px dashed rgba(217, 119, 6, 0.5);
       border-radius: 5px;
@@ -295,77 +302,94 @@
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
     }
 
-    .login-buttons a i.icon {
+    .login-buttons a i.icon,
+    .modal-portal-grid a i.icon {
       font-size: 1.5rem;
       margin-bottom: 14px;
     }
 
-    .login-buttons a.teacher i.icon {
+    .login-buttons a.teacher i.icon,
+    .modal-portal-grid a.teacher i.icon {
       color: var(--marigold);
     }
 
-    .login-buttons a.student i.icon {
+    .login-buttons a.student i.icon,
+    .modal-portal-grid a.student i.icon {
       color: var(--terracotta);
     }
 
-    .login-buttons a.principal i.icon {
+    .login-buttons a.principal i.icon,
+    .modal-portal-grid a.principal i.icon {
       color: #fbbf24;
     }
 
-    .login-buttons a.parent i.icon {
+    .login-buttons a.parent i.icon,
+    .modal-portal-grid a.parent i.icon {
       color: #d97706;
     }
 
-    .login-buttons a.principal h3 {
+    .login-buttons a.principal h3,
+    .modal-portal-grid a.principal h3 {
       color: #fbbf24;
     }
 
-    .login-buttons a.parent h3 {
+    .login-buttons a.parent h3,
+    .modal-portal-grid a.parent h3 {
       color: #92400e;
     }
 
-    .login-buttons a.principal p {
+    .login-buttons a.principal p,
+    .modal-portal-grid a.principal p {
       color: #94a3b8;
     }
 
-    .login-buttons a.parent p {
+    .login-buttons a.parent p,
+    .modal-portal-grid a.parent p {
       color: #78350f;
     }
 
-    .login-buttons a.principal .go {
+    .login-buttons a.principal .go,
+    .modal-portal-grid a.principal .go {
       color: #fbbf24;
     }
 
-    .login-buttons a.parent .go {
+    .login-buttons a.parent .go,
+    .modal-portal-grid a.parent .go {
       color: #b45309;
     }
 
-    .login-buttons a h3 {
+    .login-buttons a h3,
+    .modal-portal-grid a h3 {
       font-family: var(--font-hand);
       font-weight: 700;
       font-size: 1.35rem;
       margin: 0;
     }
 
-    .login-buttons a.student h3 {
+    .login-buttons a.student h3,
+    .modal-portal-grid a.student h3 {
       color: var(--ink);
     }
 
-    .login-buttons a p {
+    .login-buttons a p,
+    .modal-portal-grid a p {
       margin: 2px 0 0;
       font-size: 0.92rem;
       line-height: 1.5;
     }
 
-    .login-buttons a.teacher p {
+    .login-buttons a.teacher p,
+    .modal-portal-grid a.teacher p {
       color: var(--chalk-dim);
     }
 
-    .login-buttons a.student p {
+    .login-buttons a.student p,
+    .modal-portal-grid a.student p {
       color: var(--ink-soft);
     }
 
-    .login-buttons a .go {
+    .login-buttons a .go,
+    .modal-portal-grid a .go {
       margin-top: 18px;
       font-family: var(--font-hand);
       font-size: 0.95rem;
@@ -374,24 +398,29 @@
       gap: 6px;
     }
 
-    .login-buttons a.teacher .go {
+    .login-buttons a.teacher .go,
+    .modal-portal-grid a.teacher .go {
       color: var(--marigold);
     }
 
-    .login-buttons a.student .go {
+    .login-buttons a.student .go,
+    .modal-portal-grid a.student .go {
       color: var(--terracotta);
     }
 
-    .login-buttons a .go i {
+    .login-buttons a .go i,
+    .modal-portal-grid a .go i {
       transition: transform 0.2s ease;
     }
 
-    .login-buttons a:hover .go i {
+    .login-buttons a:hover .go i,
+    .modal-portal-grid a:hover .go i {
       transform: translateX(4px);
     }
 
     /* chalk dust corner on teacher card */
-    .login-buttons a.teacher::after {
+    .login-buttons a.teacher::after,
+    .modal-portal-grid a.teacher::after {
       content: '';
       position: absolute;
       right: 14px;
@@ -401,6 +430,271 @@
       background: rgba(245, 240, 226, 0.18);
       filter: blur(3px);
       border-radius: 50%;
+    }
+
+    /* ---------- Hero Login / Sign Up CTA ---------- */
+    .hero-cta-wrapper {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      z-index: 5;
+    }
+
+    .hero-auth-btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 42px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #eeb43e 0%, #f59e0b 55%, #d97706 100%);
+      color: #122219;
+      font-family: var(--font-hand);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 12px 32px rgba(238, 180, 62, 0.38), 0 4px 12px rgba(0, 0, 0, 0.35);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-auth-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: rotate(25deg);
+      transition: left 0.65s ease;
+    }
+
+    .hero-auth-btn:hover::before {
+      left: 130%;
+    }
+
+    .hero-auth-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 18px 42px rgba(238, 180, 62, 0.52), 0 6px 16px rgba(0, 0, 0, 0.45);
+      color: #0a1710;
+    }
+
+    .hero-auth-btn:active {
+      transform: translateY(-1px) scale(0.99);
+    }
+
+    .hero-auth-btn .auth-icon {
+      font-size: 1.35rem;
+    }
+
+    .hero-auth-btn .arrow-icon {
+      font-size: 1.1rem;
+      transition: transform 0.25s ease;
+    }
+
+    .hero-auth-btn:hover .arrow-icon {
+      transform: translateX(6px);
+    }
+
+    .hero-portals-preview {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .portal-tag {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.86rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--chalk);
+    }
+
+    .portal-tag.student-tag {
+      border-color: rgba(217, 122, 92, 0.4);
+      background: rgba(217, 122, 92, 0.12);
+      color: #fca5a5;
+    }
+
+    .portal-tag.teacher-tag {
+      border-color: rgba(238, 180, 62, 0.4);
+      background: rgba(238, 180, 62, 0.12);
+      color: var(--marigold);
+    }
+
+    .portal-tag.principal-tag {
+      border-color: rgba(167, 139, 250, 0.4);
+      background: rgba(167, 139, 250, 0.12);
+      color: #c4b5fd;
+    }
+
+    .portal-tag.parent-tag {
+      border-color: rgba(251, 191, 36, 0.4);
+      background: rgba(251, 191, 36, 0.12);
+      color: #fde68a;
+    }
+
+    .portal-tag:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-cta-hint {
+      margin: 2px 0 0;
+      color: var(--chalk-dim);
+      font-size: 0.95rem;
+      font-family: var(--font-hand);
+      opacity: 0.85;
+    }
+
+    /* Navbar Login Button */
+    .nav-auth-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: rgba(238, 180, 62, 0.14);
+      border: 1px solid rgba(238, 180, 62, 0.45);
+      border-radius: 24px;
+      color: var(--marigold);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-auth-btn:hover {
+      background: var(--marigold);
+      color: #122219;
+      box-shadow: 0 4px 14px rgba(238, 180, 62, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- Modal Overlay & Popup ---------- */
+    .auth-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .auth-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .auth-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 18, 13, 0.84);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .auth-modal-container {
+      position: relative;
+      z-index: 10001;
+      width: 100%;
+      max-width: 1060px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: radial-gradient(1000px 500px at 50% -10%, rgba(255, 255, 255, 0.06), transparent 60%), #14271e;
+      border: 2px solid rgba(238, 180, 62, 0.35);
+      border-radius: 20px;
+      padding: 38px 32px 38px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65), 0 0 50px rgba(238, 180, 62, 0.15);
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      box-sizing: border-box;
+    }
+
+    .auth-modal-overlay.active .auth-modal-container {
+      transform: scale(1) translateY(0);
+    }
+
+    .auth-modal-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--chalk);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .auth-modal-close:hover {
+      background: rgba(217, 122, 92, 0.3);
+      color: #fff;
+      border-color: var(--terracotta);
+      transform: rotate(90deg);
+    }
+
+    .auth-modal-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-badge {
+      background: rgba(238, 180, 62, 0.15);
+      color: var(--marigold);
+      border: 1px solid rgba(238, 180, 62, 0.4);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .auth-modal-header h2 {
+      font-family: var(--font-hand);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin: 0 0 6px;
+      color: var(--chalk);
+      font-weight: 700;
+    }
+
+    .auth-modal-header p {
+      color: var(--chalk-dim);
+      font-size: 1.02rem;
+      margin: 0;
     }
 
     /* ---------- Footer ---------- */
@@ -425,18 +719,30 @@
         display: none;
       }
 
-      .login-buttons {
-        gap: 30px;
-        margin-top: 26px;
+      .auth-modal-container {
+        padding: 28px 16px 28px;
       }
 
-      .login-buttons a.teacher,
-      .login-buttons a.student {
-        transform: none;
+      .modal-portal-grid {
+        gap: 18px;
+      }
+
+      .modal-portal-grid a.teacher,
+      .modal-portal-grid a.student,
+      .modal-portal-grid a.principal,
+      .modal-portal-grid a.parent {
+        transform: none !important;
+        max-width: 100%;
+        width: 100%;
       }
 
       .aim-art {
         max-width: 420px;
+      }
+
+      .hero-auth-btn {
+        padding: 14px 28px;
+        font-size: 1.22rem;
       }
     }
   </style>
@@ -454,6 +760,9 @@
     <div class="nav-right">
       <div class="lang"><i class="fas fa-globe"></i> <span>EN</span> <i class="fas fa-chevron-down"></i></div>
       <div class="settings"><i class="fas fa-cog"></i> <span>Settings</span></div>
+      <button type="button" class="nav-auth-btn" onclick="openAuthModal()" aria-label="Open Login or Sign Up Portal">
+        <i class="fas fa-sign-in-alt"></i> <span>Login / Sign Up</span>
+      </button>
     </div>
   </header>
 
@@ -484,39 +793,103 @@
       </svg>
     </div>
 
-    <div class="login-buttons">
-      <a href="student/student_login.html?role=student" class="student">
-        <i class="fas fa-user-graduate icon"></i>
-        <h3>I'm a Student</h3>
-        <p>Student Portal & Daily Labs</p>
-        <span class="go">Enter as student <i class="fas fa-arrow-right"></i></span>
-      </a>
-      <a href="teacher/login.html?role=teacher" class="teacher">
-        <i class="fas fa-chalkboard-teacher icon"></i>
-        <h3>I'm a Teacher</h3>
-        <p>Faculty & Mentorship Hub</p>
-        <span class="go">Enter as teacher <i class="fas fa-arrow-right"></i></span>
-      </a>
-      <a href="teacher/principal_login.html" class="principal">
-        <i class="fas fa-crown icon"></i>
-        <h3>I'm a Principal</h3>
-        <p>Institutional Command & Registry</p>
-        <span class="go">Enter as principal <i class="fas fa-arrow-right"></i></span>
-      </a>
-      <a href="student/parent_login.html" class="parent">
-        <i class="fas fa-user-shield icon"></i>
-        <h3>I'm a Parent</h3>
-        <p>Guardian Progress Portal</p>
-        <span class="go">Enter as parent <i class="fas fa-arrow-right"></i></span>
-      </a>
+    <!-- Login / Sign Up Trigger in place of the 4 standalone cards -->
+    <div class="hero-cta-wrapper">
+      <button type="button" id="openAuthModalBtn" class="hero-auth-btn" onclick="openAuthModal()" aria-label="Login or Sign Up">
+        <i class="fas fa-user-circle auth-icon"></i>
+        <span>Login / Sign Up</span>
+        <i class="fas fa-arrow-right arrow-icon"></i>
+      </button>
+      <div class="hero-portals-preview">
+        <button type="button" class="portal-tag student-tag" onclick="openAuthModal()"><i class="fas fa-user-graduate"></i> Student</button>
+        <button type="button" class="portal-tag teacher-tag" onclick="openAuthModal()"><i class="fas fa-chalkboard-teacher"></i> Teacher</button>
+        <button type="button" class="portal-tag principal-tag" onclick="openAuthModal()"><i class="fas fa-crown"></i> Principal</button>
+        <button type="button" class="portal-tag parent-tag" onclick="openAuthModal()"><i class="fas fa-user-shield"></i> Parent</button>
+      </div>
+      <p class="hero-cta-hint">Click above to open portals for Students, Teachers, Principals &amp; Parents</p>
     </div>
   </main>
+
+  <!-- Portal Selection Modal (Opens with 4 login portals) -->
+  <div id="authModal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" aria-hidden="true" style="display: none;">
+    <div class="auth-modal-backdrop" onclick="closeAuthModal()"></div>
+    <div class="auth-modal-container">
+      <button type="button" class="auth-modal-close" onclick="closeAuthModal()" aria-label="Close portal dialog">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="auth-modal-header">
+        <div class="modal-badge"><i class="fas fa-graduation-cap"></i> Portal Gateway</div>
+        <h2 id="authModalTitle">Select Your Portal</h2>
+        <p>Choose your role to log in or register your account</p>
+      </div>
+
+      <div class="modal-portal-grid">
+        <a href="student/student_login.html?role=student" class="student">
+          <i class="fas fa-user-graduate icon"></i>
+          <h3>I'm a Student</h3>
+          <p>Student Portal &amp; Daily Labs</p>
+          <span class="go">Enter as student <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="teacher/login.html?role=teacher" class="teacher">
+          <i class="fas fa-chalkboard-teacher icon"></i>
+          <h3>I'm a Teacher</h3>
+          <p>Faculty &amp; Mentorship Hub</p>
+          <span class="go">Enter as teacher <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="teacher/principal_login.html" class="principal">
+          <i class="fas fa-crown icon"></i>
+          <h3>I'm a Principal</h3>
+          <p>Institutional Command &amp; Registry</p>
+          <span class="go">Enter as principal <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="student/parent_login.html" class="parent">
+          <i class="fas fa-user-shield icon"></i>
+          <h3>I'm a Parent</h3>
+          <p>Guardian Progress Portal</p>
+          <span class="go">Enter as parent <i class="fas fa-arrow-right"></i></span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
     <p>© EklavyaX — Gamified STEM Learning Platform</p>
   </footer>
 
+  <script>
+    function openAuthModal() {
+      const modal = document.getElementById('authModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(() => {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('authModal');
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 250);
+      }
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeAuthModal();
+      }
+    });
+  </script>
   <script src="js/chatbot.js?v=2.1"></script>
 </body>
 
