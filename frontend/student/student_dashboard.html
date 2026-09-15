@@ -101,65 +101,79 @@
           <span>Announcement</span>
         </a>
 
-        <a href="leaderboard.html">
-          <i class="fas fa-trophy" aria-hidden="true"></i>
-          <span>Leaderboard</span>
-        </a>
+        <!-- Advance Features Group -->
+        <div class="menu-group advance-features-group" id="advanceFeaturesGroup">
+          <button type="button" class="menu-group-toggle" id="advanceFeaturesToggle" onclick="toggleAdvanceFeatures()" aria-expanded="false" aria-controls="advanceFeaturesSubitems">
+            <div class="toggle-title">
+              <i class="fas fa-layer-group" style="color: var(--marigold, #eeb43e);" aria-hidden="true"></i>
+              <span>Advance Features</span>
+            </div>
+            <span class="toggle-badge">12</span>
+            <i class="fas fa-chevron-down toggle-arrow" id="advanceFeaturesArrow" aria-hidden="true"></i>
+          </button>
 
-        <a href="live_battle.html">
-          <i class="fas fa-bolt" aria-hidden="true"></i>
-          <span>Live Duel 1v1</span>
-        </a>
+          <div class="menu-subitems" id="advanceFeaturesSubitems">
+            <a href="leaderboard.html">
+              <i class="fas fa-trophy" style="color: #fbbf24;" aria-hidden="true"></i>
+              <span>Leaderboard</span>
+            </a>
 
-        <a href="flashcards.html">
-          <i class="fas fa-layer-group" aria-hidden="true"></i>
-          <span>Flashcards</span>
-        </a>
+            <a href="live_battle.html">
+              <i class="fas fa-bolt" style="color: #f59e0b;" aria-hidden="true"></i>
+              <span>Live Duel 1v1</span>
+            </a>
 
-        <a href="study_planner.html">
-          <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-          <span>Study Planner</span>
-        </a>
+            <a href="flashcards.html">
+              <i class="fas fa-layer-group" style="color: #34d399;" aria-hidden="true"></i>
+              <span>Flashcards</span>
+            </a>
 
-        <a href="study_groups.html">
-          <i class="fas fa-users" aria-hidden="true"></i>
-          <span>Study Groups</span>
-        </a>
+            <a href="study_planner.html">
+              <i class="fas fa-calendar-alt" style="color: #60a5fa;" aria-hidden="true"></i>
+              <span>Study Planner</span>
+            </a>
 
-        <a href="chat_threads.html">
-          <i class="fas fa-comments" aria-hidden="true"></i>
-          <span>Doubts Chat</span>
-        </a>
+            <a href="study_groups.html">
+              <i class="fas fa-users" style="color: #818cf8;" aria-hidden="true"></i>
+              <span>Study Groups</span>
+            </a>
 
-        <a href="certificates.html">
-          <i class="fas fa-certificate" aria-hidden="true"></i>
-          <span>Certificates</span>
-        </a>
+            <a href="chat_threads.html">
+              <i class="fas fa-comments" style="color: #a78bfa;" aria-hidden="true"></i>
+              <span>Doubts Chat</span>
+            </a>
 
-        <a href="eklavyalens.html">
-          <i class="fas fa-globe-asia" style="color: #38bdf8;" aria-hidden="true"></i>
-          <span>EklavyaLens (Maps)</span>
-        </a>
+            <a href="certificates.html">
+              <i class="fas fa-certificate" style="color: #f472b6;" aria-hidden="true"></i>
+              <span>Certificates</span>
+            </a>
 
-        <a href="pyq_arena.html">
-          <i class="fas fa-stopwatch" style="color: var(--accent-gold);" aria-hidden="true"></i>
-          <span>PYQ Arena (JEE/NEET)</span>
-        </a>
+            <a href="eklavyalens.html">
+              <i class="fas fa-globe-asia" style="color: #38bdf8;" aria-hidden="true"></i>
+              <span>EklavyaLens (Maps)</span>
+            </a>
 
-        <a href="mindmaps.html">
-          <i class="fas fa-project-diagram" style="color: #a78bfa;" aria-hidden="true"></i>
-          <span>Concept Mind Maps</span>
-        </a>
+            <a href="pyq_arena.html">
+              <i class="fas fa-stopwatch" style="color: #fbbf24;" aria-hidden="true"></i>
+              <span>PYQ Arena (JEE/NEET)</span>
+            </a>
 
-        <a href="bookmarks.html">
-          <i class="fas fa-bookmark" style="color: #f472b6;" aria-hidden="true"></i>
-          <span>Revision Bookmarks</span>
-        </a>
+            <a href="mindmaps.html">
+              <i class="fas fa-project-diagram" style="color: #c084fc;" aria-hidden="true"></i>
+              <span>Concept Mind Maps</span>
+            </a>
 
-        <a href="parent_dashboard.html">
-          <i class="fas fa-user-shield" aria-hidden="true"></i>
-          <span>Parent Portal</span>
-        </a>
+            <a href="bookmarks.html">
+              <i class="fas fa-bookmark" style="color: #f43f5e;" aria-hidden="true"></i>
+              <span>Revision Bookmarks</span>
+            </a>
+
+            <a href="parent_dashboard.html">
+              <i class="fas fa-user-shield" style="color: #fb923c;" aria-hidden="true"></i>
+              <span>Parent Portal</span>
+            </a>
+          </div>
+        </div>
 
         <a href="settings.html" id="settingsBtn">
           <i class="fas fa-cog" aria-hidden="true"></i>
@@ -322,155 +336,8 @@
 
       </section>
 
-      <!-- ===================================================
-           ADVANCED PEDAGOGY & MASTERY CONTROLS
-           =================================================== -->
-      <section style="margin-bottom: 24px;">
 
-        <!-- Silently Struggling Detector Alert Banner -->
-        <div
-          style="background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(185,28,28,0.25)); border: 1px solid rgba(239,68,68,0.4); border-radius: 14px; padding: 16px 20px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-          <div style="display: flex; align-items: center; gap: 14px;">
-            <div
-              style="width: 42px; height: 42px; border-radius: 50%; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
-              <i class="fas fa-search-location"></i>
-            </div>
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <strong style="color: #fff; font-size: 15px;">Silently Struggling Concept Detected!</strong>
-                <span
-                  style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(239,68,68,0.3); color: #fca5a5; font-weight: 700;">Repeated
-                  Mistake Pattern</span>
-              </div>
-              <p style="margin: 3px 0 0 0; font-size: 13px; color: #fecaca;">
-                Physics Mechanics: You repeatedly set <strong>N = mg</strong> on inclines instead of <strong>N = mg cos
-                  θ</strong> across 3 separate quizzes.
-              </p>
-            </div>
-          </div>
-          <button onclick="window.location.href='quiz.html'"
-            style="background: #ef4444; color: #fff; border: none; padding: 9px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-            <i class="fas fa-crosshairs"></i> Fix This Micro-Concept
-          </button>
-        </div>
 
-        <!-- 3-Column Pedagogical Grid: Revision Radar, Weak Area Improvement Bonus, and Innovation Shortcuts -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
-
-          <!-- Revision Radar (Ebbinghaus Spaced Intervals) -->
-          <div
-            style="background: var(--card-dark, #14382a); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h3 style="margin: 0; font-size: 16px; color: #fff; font-family: 'Outfit', sans-serif;">
-                <i class="fas fa-radar" style="color: #38bdf8;"></i> Revision Radar (Forgetting Curve)
-              </h3>
-              <span
-                style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(56,189,248,0.15); color: #38bdf8; font-weight: 700;">
-                Memory Index: 82%
-              </span>
-            </div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
-              Locks topics into memory at Day 1 (24h), Day 7 (1 week), and Day 30 (1 month) checkpoints:
-            </p>
-
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;">
-              <div
-                style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 10px; border-left: 3px solid #f4ae25;">
-                <div>
-                  <strong style="font-size: 13px; color: #fff;">Newton's Laws & Friction</strong>
-                  <div style="font-size: 11px; color: #f4ae25;">⏰ Day 1 Checkpoint • Due Today!</div>
-                </div>
-                <button onclick="window.location.href='quiz.html'"
-                  style="background: #f4ae25; color: #071510; border: none; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;">
-                  Revise Now (+15 🪙)
-                </button>
-              </div>
-
-              <div
-                style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 10px; border-left: 3px solid #10b981;">
-                <div>
-                  <strong style="font-size: 13px; color: #fff;">Chemical Bonding & VSEPR</strong>
-                  <div style="font-size: 11px; color: #34d399;">📅 Day 7 Checkpoint • Due in 2 Days</div>
-                </div>
-                <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-check"></i> Queued</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Weak Area Improvement Reward Tile -->
-          <div
-            style="background: var(--card-dark, #14382a); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h3 style="margin: 0; font-size: 16px; color: #fff; font-family: 'Outfit', sans-serif;">
-                  <i class="fas fa-chart-line" style="color: var(--accent-gold);"></i> Weak Area Turnaround Bonus
-                </h3>
-                <span
-                  style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(244,174,37,0.2); color: #f4ae25; font-weight: 700;">
-                  Outcome Reward
-                </span>
-              </div>
-              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-                Retest flagged weak areas. Improving your score earns <strong>proportional Bonus EduCoins</strong>!
-              </p>
-
-              <div
-                style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 12px; margin-bottom: 14px; border-left: 3px solid #ef4444;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px;">
-                  <strong style="color: #fff;">Chemical Reactions & Catalysis</strong>
-                  <span style="color: #f87171; font-weight: 700;">Initial: 40%</span>
-                </div>
-                <div style="font-size: 11px; color: #fef08a; margin-top: 4px;">
-                  Potential Bonus: <strong>+60 EduCoins</strong> for achieving ≥80% on retest!
-                </div>
-              </div>
-            </div>
-
-            <button onclick="window.location.href='quiz.html'"
-              style="background: #10b981; color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
-              <i class="fas fa-redo"></i> Retest Weak Area & Earn Bonus Coins
-            </button>
-          </div>
-
-          <!-- Quick Innovation Shortcuts -->
-          <div
-            style="background: var(--card-dark, #14382a); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
-            <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #fff; font-family: 'Outfit', sans-serif;">
-              <i class="fas fa-compass" style="color: #a78bfa;"></i> Learning Superpowers
-            </h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <a href="eklavyalens.html"
-                style="text-decoration: none; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
-                <i class="fas fa-globe-asia" style="font-size: 20px; color: #38bdf8; margin-bottom: 6px;"></i>
-                <div style="font-size: 12px; font-weight: 700; color: #fff;">EklavyaLens</div>
-                <span style="font-size: 10px; color: #94a3b8;">Physical Maps</span>
-              </a>
-
-              <a href="pyq_arena.html"
-                style="text-decoration: none; background: rgba(244,174,37,0.1); border: 1px solid rgba(244,174,37,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
-                <i class="fas fa-stopwatch" style="font-size: 20px; color: #f4ae25; margin-bottom: 6px;"></i>
-                <div style="font-size: 12px; font-weight: 700; color: #fff;">PYQ Arena</div>
-                <span style="font-size: 10px; color: #94a3b8;">JEE/NEET Papers</span>
-              </a>
-
-              <a href="mindmaps.html"
-                style="text-decoration: none; background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
-                <i class="fas fa-project-diagram" style="font-size: 20px; color: #a78bfa; margin-bottom: 6px;"></i>
-                <div style="font-size: 12px; font-weight: 700; color: #fff;">Mind Maps</div>
-                <span style="font-size: 10px; color: #94a3b8;">Concept Prereqs</span>
-              </a>
-
-              <a href="bookmarks.html"
-                style="text-decoration: none; background: rgba(244,114,182,0.1); border: 1px solid rgba(244,114,182,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
-                <i class="fas fa-bookmark" style="font-size: 20px; color: #f472b6; margin-bottom: 6px;"></i>
-                <div style="font-size: 12px; font-weight: 700; color: #fff;">Bookmarks</div>
-                <span style="font-size: 10px; color: #94a3b8;">Tricky Questions</span>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </section>
 
       <!-- ===================================================
            MAIN GRID

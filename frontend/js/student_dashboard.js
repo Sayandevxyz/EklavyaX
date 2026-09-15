@@ -196,3 +196,39 @@ window.onclick = function (event) {
     closeLab();
   }
 };
+
+// ── Advance Features Collapsible Menu ───────────────────────────────────────
+function toggleAdvanceFeatures(forceOpen) {
+  const group = document.getElementById('advanceFeaturesGroup');
+  const toggle = document.getElementById('advanceFeaturesToggle');
+  if (!group) return;
+
+  const isOpen = forceOpen !== undefined ? forceOpen : !group.classList.contains('open');
+  if (isOpen) {
+    group.classList.add('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    try { localStorage.setItem('eklavya_advance_features_open', 'true'); } catch (_) { }
+  } else {
+    group.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    try { localStorage.setItem('eklavya_advance_features_open', 'false'); } catch (_) { }
+  }
+}
+
+// Restore state or auto-open on advance feature pages
+document.addEventListener('DOMContentLoaded', () => {
+  const currentPath = window.location.pathname;
+  const advancePages = [
+    'leaderboard.html', 'live_battle.html', 'flashcards.html', 'study_planner.html',
+    'study_groups.html', 'chat_threads.html', 'certificates.html', 'eklavyalens.html',
+    'pyq_arena.html', 'mindmaps.html', 'bookmarks.html', 'parent_dashboard.html'
+  ];
+  const isOnAdvancePage = advancePages.some(page => currentPath.includes(page));
+  let savedState = null;
+  try { savedState = localStorage.getItem('eklavya_advance_features_open'); } catch (_) { }
+
+  if (isOnAdvancePage || savedState === 'true') {
+    toggleAdvanceFeatures(true);
+  }
+});
+

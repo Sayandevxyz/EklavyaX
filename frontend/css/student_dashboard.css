@@ -148,8 +148,7 @@ aside.sidebar {
   box-shadow:
     10px 0 35px rgba(0, 0, 0, 0.35);
 
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 
   flex-shrink: 0;
 }
@@ -212,6 +211,25 @@ nav.menu {
   padding: 10px 12px;
 
   min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+nav.menu::-webkit-scrollbar {
+  width: 5px;
+}
+
+nav.menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+nav.menu::-webkit-scrollbar-thumb {
+  background: rgba(238, 180, 62, 0.25);
+  border-radius: 6px;
+}
+
+nav.menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(238, 180, 62, 0.45);
 }
 
 nav.menu a {
@@ -284,6 +302,117 @@ nav.menu a.active i {
 }
 
 /* =========================================================
+   ADVANCE FEATURES GROUP
+   ========================================================= */
+
+.menu-group.advance-features-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.menu-group-toggle {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: rgba(238, 180, 62, 0.09);
+  border: 1px solid rgba(238, 180, 62, 0.28);
+  border-radius: 12px;
+  color: var(--marigold);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.menu-group-toggle:hover {
+  background: rgba(238, 180, 62, 0.18);
+  border-color: rgba(238, 180, 62, 0.5);
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.menu-group-toggle .toggle-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.menu-group-toggle .toggle-title i {
+  width: 20px;
+  min-width: 20px;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.toggle-badge {
+  background: rgba(238, 180, 62, 0.25);
+  color: var(--marigold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: 8px;
+  letter-spacing: 0.02em;
+}
+
+.menu-group-toggle .toggle-arrow {
+  font-size: 0.8rem;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.85;
+}
+
+.menu-group.open .menu-group-toggle {
+  background: rgba(238, 180, 62, 0.22);
+  border-color: rgba(238, 180, 62, 0.55);
+  color: #fff;
+}
+
+.menu-group.open .menu-group-toggle .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+.menu-subitems {
+  max-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 4px;
+  margin-left: 14px;
+  padding-left: 10px;
+  border-left: 2px dashed rgba(238, 180, 62, 0.3);
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.25s ease;
+}
+
+.menu-group.open .menu-subitems {
+  max-height: 750px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.menu-subitems a {
+  padding: 8px 12px !important;
+  font-size: 0.86rem !important;
+  border-radius: 8px !important;
+  gap: 10px !important;
+}
+
+.menu-subitems a:hover {
+  background: rgba(245, 240, 226, 0.09) !important;
+}
+
+/* =========================================================
    PROFILE
    ========================================================= */
 
@@ -293,7 +422,7 @@ aside .profile {
 
   gap: 12px;
 
-  margin: 16px 12px 20px;
+  margin: 12px 12px 16px;
 
   padding: 12px 14px;
 
@@ -314,6 +443,7 @@ aside .profile {
   cursor: pointer;
 
   flex-shrink: 0;
+  margin-top: auto;
 }
 
 aside .profile img {
