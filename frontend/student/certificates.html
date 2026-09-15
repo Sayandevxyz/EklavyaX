@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Progress Certificates | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .cert-card {
+      background: var(--card-dark, #14382a);
+      border: 1px solid var(--border-light);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .cert-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f4ae25, #10b981);
+    }
+    .cert-stamp {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      opacity: 0.12;
+      font-size: 80px;
+      color: var(--accent-gold);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu">
+        <a href="student_dashboard.html"><i class="fas fa-home"></i> Home</a>
+        <a href="leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a>
+        <a href="quiz.html"><i class="fas fa-brain"></i> Daily Quiz</a>
+        <a href="live_battle.html"><i class="fas fa-bolt"></i> Live Duel</a>
+        <a href="flashcards.html"><i class="fas fa-layer-group"></i> Flashcards</a>
+        <a href="study_planner.html"><i class="fas fa-calendar-alt"></i> Study Planner</a>
+        <a href="study_groups.html"><i class="fas fa-users"></i> Study Groups</a>
+        <a href="chat_threads.html"><i class="fas fa-comments"></i> Doubts Chat</a>
+        <a class="active" href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
+        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      </nav>
+      <div class="profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
+        <div class="profile-info">
+          <strong id="profileName">Student</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="top-bar">
+        <div class="welcome-text">
+          <h1>🎓 <strong>Academic Progress Certificates</strong></h1>
+          <h2>Official verifiable certificates auto-generated upon course mastery & milestones!</h2>
+        </div>
+      </section>
+
+      <!-- Claim Banner -->
+      <div style="background: linear-gradient(135deg, rgba(244,174,37,0.15), rgba(16,185,129,0.15)); border: 1px solid var(--accent-gold); border-radius: 16px; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div>
+          <h3 style="margin: 0 0 4px 0; color: var(--accent-gold);">Earned a 70%+ score on your recent quizzes?</h3>
+          <p style="margin: 0; font-size: 13px; color: var(--text-muted);">Claim your verified Certificate of Academic Excellence and download high-resolution printable PDF.</p>
+        </div>
+        <button onclick="claimNewCertificate()" style="background: var(--accent-gold); color: #0b281d; border: none; padding: 10px 22px; border-radius: 10px; font-weight: bold; cursor: pointer;">
+          <i class="fas fa-award"></i> Claim Certificate
+        </button>
+      </div>
+
+      <!-- Certificates Grid -->
+      <div class="cert-grid" id="certContainer">
+        <p style="color: var(--text-muted);">Loading certificates...</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/theme_toggle.js"></script>
+  <script src="../js/voice_tutor.js"></script>
+  <script>
+    async function loadCertificates() {
+      try {
+        const data = await EklavyaXAPI.getMyCertificates();
+        const container = document.getElementById("certContainer");
+
+        if (!data.certificates || data.certificates.length === 0) {
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; background: var(--card-dark); border-radius: 18px;">
+              <i class="fas fa-certificate" style="font-size: 45px; color: var(--text-muted); margin-bottom: 14px;"></i>
+              <h3>Abhi tak koi certificate issue nahi hua hai.</h3>
+              <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 20px;">
+                Quizzes aur assignments complete karein, ya upar diye gaye button se 'Claim Certificate' par click karein.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = data.certificates.map(c => `
+          <div class="cert-card">
+            <i class="fas fa-award cert-stamp"></i>
+            <div>
+              <span style="font-size: 11px; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 1px; font-weight: bold;">
+                OFFICIAL VERIFIED CERTIFICATE
+              </span>
+              <h3 style="margin: 8px 0 6px 0; font-size: 20px; color: #ffffff;">${c.course_name}</h3>
+              <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+                Score: <strong style="color: #34d399;">${c.score_percent}%</strong> &nbsp;|&nbsp; Issued: ${c.issue_date}
+              </div>
+              <div style="font-size: 11px; color: #94a3b8; font-family: monospace; background: rgba(0,0,0,0.25); padding: 4px 8px; border-radius: 6px; display: inline-block;">
+                ID: ${c.certificate_id}
+              </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+              <a href="${c.download_url}" target="_blank" style="display: block; text-align: center; text-decoration: none; background: #10b981; color: white; padding: 10px 16px; border-radius: 10px; font-weight: bold;">
+                <i class="fas fa-file-pdf"></i> Download Official PDF
+              </a>
+            </div>
+          </div>
+        `).join("");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function claimNewCertificate() {
+      const course = prompt("Certificate ke liye subject/course name enter karein:", "Physics & Mechanics Mastery");
+      if (!course) return;
+
+      try {
+        const res = await EklavyaXAPI.claimCertificate(course, 96.5);
+        alert("Certificate generate ho gaya! Ab aap PDF download kar sakte hain.");
+        loadCertificates();
+      } catch (err) {
+        alert("Error claiming certificate: " + err.message);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      loadCertificates();
+    });
+  </script>
+</body>
+</html>

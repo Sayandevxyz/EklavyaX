@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revision Bookmarks Vault | Eklavya</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #081e16;
+      color: #e2e8f0;
+      margin: 0;
+    }
+    .bm-card {
+      background: linear-gradient(135deg, rgba(16, 45, 34, 0.75), rgba(9, 27, 20, 0.85));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    .filter-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .fpill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .fpill.active {
+      background: var(--accent-gold, #f4ae25);
+      color: #0b281d;
+      border-color: var(--accent-gold, #f4ae25);
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 20px;">
+    <!-- Top Header -->
+    <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <img src="../assets/img/logo.png?v=3.0" style="width: 44px; height: 44px;" alt="Logo">
+        <div>
+          <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 24px; color: #f4ae25; font-weight: 700;">
+            <i class="fas fa-bookmark"></i> Revision Bookmarks Vault
+          </h1>
+          <span style="font-size: 13px; color: #94a3b8;">
+            Revisit saved questions, tricky exam derivations, and past mistakes before your exam.
+          </span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <a href="quiz.html" class="fpill" style="text-decoration: none;">
+          <i class="fas fa-brain"></i> Daily Quiz
+        </a>
+        <a href="student_dashboard.html" class="fpill" style="text-decoration: none;">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+      </div>
+    </header>
+
+    <!-- Filters and Test Mode -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 20px;">
+      <div class="filter-pills" style="margin-bottom: 0;">
+        <button class="fpill active" id="fAll" onclick="filterBM('all')">All Bookmarks</button>
+        <button class="fpill" id="fPhysics" onclick="filterBM('Physics')">Physics</button>
+        <button class="fpill" id="fChemistry" onclick="filterBM('Chemistry')">Chemistry</button>
+        <button class="fpill" id="fMath" onclick="filterBM('Mathematics')">Mathematics</button>
+        <button class="fpill" id="fBio" onclick="filterBM('Biology')">Biology</button>
+      </div>
+
+      <button onclick="startBookmarkDrill()" style="background: #10b981; color: #fff; border: none; padding: 10px 22px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-play"></i> Practice My Bookmarks
+      </button>
+    </div>
+
+    <!-- Bookmarks List -->
+    <div id="bookmarksContainer">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script>
+    let bookmarksData = [];
+    let currentFilter = "all";
+
+    async function loadBookmarks() {
+      try {
+        const token = localStorage.getItem("token") || localStorage.getItem("access_token");
+        const headers = token ? { "Authorization": `Bearer ${token}` } : {};
+        const res = await fetch("/api/pedagogy/bookmarks", { headers });
+        const data = await res.json();
+        bookmarksData = data.bookmarks || [];
+        renderList();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function filterBM(subj) {
+      currentFilter = subj;
+      document.querySelectorAll('.fpill').forEach(b => b.classList.remove('active'));
+      if (subj === 'all') document.getElementById('fAll').classList.add('active');
+      if (subj === 'Physics') document.getElementById('fPhysics').classList.add('active');
+      if (subj === 'Chemistry') document.getElementById('fChemistry').classList.add('active');
+      if (subj === 'Mathematics') document.getElementById('fMath').classList.add('active');
+      if (subj === 'Biology') document.getElementById('fBio').classList.add('active');
+      renderList();
+    }
+
+    function renderList() {
+      const filtered = bookmarksData.filter(b => {
+        if (currentFilter === "all") return true;
+        return (b.subject || "").toLowerCase().includes(currentFilter.toLowerCase());
+      });
+
+      const container = document.getElementById("bookmarksContainer");
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bm-card" style="text-align:center; padding: 40px;">
+            <i class="far fa-bookmark" style="font-size: 32px; color: var(--accent-gold); margin-bottom: 12px;"></i>
+            <h3 style="color:#fff; margin: 0 0 6px 0;">No Bookmarks Saved in ${currentFilter === 'all' ? 'any subject' : currentFilter}</h3>
+            <p style="color:#94a3b8; font-size:13px; margin:0;">Click 'Bookmark' during any Daily Quiz or PYQ session to save tricky problems for focused revision.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(b => {
+        let opts = [];
+        try {
+          opts = Array.isArray(b.options) ? b.options : JSON.parse(b.options || "[]");
+        } catch (_) {}
+
+        return `
+          <div class="bm-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:11px; padding:3px 8px; border-radius:6px; background:rgba(244,174,37,0.2); color:#f4ae25; font-weight:700; text-transform:uppercase;">
+                  ${b.subject}
+                </span>
+                <span style="font-size:13px; color:#cbd5e1; font-weight:600;">${b.topic}</span>
+              </div>
+              <span style="font-size:12px; color:#94a3b8;"><i class="far fa-calendar-alt"></i> Saved ${b.saved_date || 'Recently'}</span>
+            </div>
+
+            <h3 style="font-size: 16px; font-weight:600; color: #fff; margin: 0 0 14px 0; line-height: 1.5;">${b.prompt}</h3>
+
+            ${opts.length > 0 ? `
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom: 14px;">
+                ${opts.map((opt, idx) => `
+                  <div style="padding:8px 12px; border-radius:8px; background:${idx === b.correct_option_index ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.03)'}; border:1px solid ${idx === b.correct_option_index ? '#10b981' : 'rgba(255,255,255,0.08)'}; font-size:13px; color:${idx === b.correct_option_index ? '#34d399' : '#cbd5e1'};">
+                    <strong>${String.fromCharCode(65 + idx)}:</strong> ${opt} ${idx === b.correct_option_index ? '✅ (Key)' : ''}
+                  </div>
+                `).join("")}
+              </div>
+            ` : ''}
+
+            ${b.explanation ? `
+              <div style="background:rgba(0,0,0,0.25); border-radius:8px; padding:10px 14px; font-size:13px; color:#cbd5e1; margin-bottom:12px;">
+                <strong style="color:var(--accent-gold);"><i class="fas fa-lightbulb"></i> Solution Derivation:</strong> ${b.explanation}
+              </div>
+            ` : ''}
+
+            ${b.note ? `
+              <div style="font-size:12px; color:#fef08a; margin-bottom:12px;">
+                <i class="fas fa-sticky-note"></i> <strong>My Revision Note:</strong> ${b.note}
+              </div>
+            ` : ''}
+
+            <div style="display:flex; justify-content:flex-end;">
+              <button onclick="removeBookmark('${b.prompt.replace(/'/g, "\\'")}')" style="background:transparent; border:1px solid rgba(239,68,68,0.3); color:#f87171; padding:6px 14px; border-radius:6px; font-size:12px; cursor:pointer;">
+                <i class="fas fa-trash-alt"></i> Remove from Bookmarks
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function removeBookmark(promptText) {
+      try {
+        const token = localStorage.getItem("token") || localStorage.getItem("access_token");
+        await fetch("/api/pedagogy/bookmarks/toggle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { "Authorization": `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({
+            question_id: 1,
+            subject: "General",
+            topic: "Review",
+            prompt: promptText,
+            options: [],
+            correct_option_index: 0
+          })
+        });
+        loadBookmarks();
+      } catch (err) {
+        alert("Bookmark removed.");
+        loadBookmarks();
+      }
+    }
+
+    function startBookmarkDrill() {
+      alert("Launching focused drill on your bookmarked questions!");
+      window.location.href = "quiz.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      loadBookmarks();
+    });
+  </script>
+</body>
+</html>

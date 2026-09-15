@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Student Dashboard | EklavyaX</title>
+
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="../css/global.css?v=2.2">
+
+  <!-- Dashboard CSS -->
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.0">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+
+      <!-- Logo -->
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+
+        <span class="logo-text">EklavyaX</span>
+      </div>
+
+
+      <!-- Navigation -->
+      <nav class="menu" aria-label="Primary navigation">
+
+        <a class="active" href="student_dashboard.html">
+          <i class="fas fa-home" aria-hidden="true"></i>
+          <span>Home</span>
+        </a>
+
+        <a href="student_my_courses.html">
+          <i class="fas fa-book" aria-hidden="true"></i>
+          <span>My Courses</span>
+        </a>
+
+        <a href="explore_courses.html">
+          <i class="fas fa-compass" aria-hidden="true"></i>
+          <span>Explore Courses</span>
+        </a>
+
+        <a href="quiz.html">
+          <i class="fas fa-brain" aria-hidden="true"></i>
+          <span>Daily Quiz</span>
+        </a>
+
+        <a href="faction_wars.html">
+          <i class="fas fa-shield-alt" aria-hidden="true"></i>
+          <span>Faction Wars</span>
+        </a>
+
+        <a href="lab_simulation.html">
+          <i class="fas fa-vials" aria-hidden="true"></i>
+          <span>Lab Simulations</span>
+        </a>
+
+        <a href="eklavya_ai.html">
+          <i class="fas fa-robot" aria-hidden="true"></i>
+          <span>GRAVITY AI</span>
+        </a>
+
+        <a href="doubts.html">
+          <i class="fas fa-question-circle" aria-hidden="true"></i>
+          <span>Doubts</span>
+        </a>
+
+        <a href="assignments.html">
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+          <span>Assignments</span>
+        </a>
+
+        <a href="announcements.html">
+          <i class="fas fa-bullhorn" aria-hidden="true"></i>
+          <span>Announcement</span>
+        </a>
+
+        <a href="leaderboard.html">
+          <i class="fas fa-trophy" aria-hidden="true"></i>
+          <span>Leaderboard</span>
+        </a>
+
+        <a href="live_battle.html">
+          <i class="fas fa-bolt" aria-hidden="true"></i>
+          <span>Live Duel 1v1</span>
+        </a>
+
+        <a href="flashcards.html">
+          <i class="fas fa-layer-group" aria-hidden="true"></i>
+          <span>Flashcards</span>
+        </a>
+
+        <a href="study_planner.html">
+          <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+          <span>Study Planner</span>
+        </a>
+
+        <a href="study_groups.html">
+          <i class="fas fa-users" aria-hidden="true"></i>
+          <span>Study Groups</span>
+        </a>
+
+        <a href="chat_threads.html">
+          <i class="fas fa-comments" aria-hidden="true"></i>
+          <span>Doubts Chat</span>
+        </a>
+
+        <a href="certificates.html">
+          <i class="fas fa-certificate" aria-hidden="true"></i>
+          <span>Certificates</span>
+        </a>
+
+        <a href="eklavyalens.html">
+          <i class="fas fa-globe-asia" style="color: #38bdf8;" aria-hidden="true"></i>
+          <span>EklavyaLens (Maps)</span>
+        </a>
+
+        <a href="pyq_arena.html">
+          <i class="fas fa-stopwatch" style="color: var(--accent-gold);" aria-hidden="true"></i>
+          <span>PYQ Arena (JEE/NEET)</span>
+        </a>
+
+        <a href="mindmaps.html">
+          <i class="fas fa-project-diagram" style="color: #a78bfa;" aria-hidden="true"></i>
+          <span>Concept Mind Maps</span>
+        </a>
+
+        <a href="bookmarks.html">
+          <i class="fas fa-bookmark" style="color: #f472b6;" aria-hidden="true"></i>
+          <span>Revision Bookmarks</span>
+        </a>
+
+        <a href="parent_dashboard.html">
+          <i class="fas fa-user-shield" aria-hidden="true"></i>
+          <span>Parent Portal</span>
+        </a>
+
+        <a href="settings.html" id="settingsBtn">
+          <i class="fas fa-cog" aria-hidden="true"></i>
+          <span>Settings</span>
+        </a>
+
+      </nav>
+
+
+
+      <!-- Profile -->
+      <div class="profile" role="button" tabindex="0" aria-pressed="false" aria-label="Edit Profile">
+
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student profile icon">
+
+        <div class="profile-info">
+
+          <strong id="profileName">
+            RISHABH RAJ
+          </strong>
+
+          <span id="profileAction">
+            Log out
+          </span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="content">
+
+
+      <!-- ===================================================
+           TOP BAR
+           =================================================== -->
+
+      <section class="top-bar">
+
+        <div class="welcome-text">
+
+          <h1 id="welcome-heading">
+            <strong>
+              Welcome back,
+              <span id="welcomeName">Sayan</span>! 👋🏻
+            </strong>
+          </h1>
+
+          <h2>
+            Level up your skills today! 🚀
+          </h2>
+
+        </div>
+
+
+        <!-- Profile / Streak -->
+        <div class="profile-section">
+
+          <img id="welcomeAvatarImg" src="../assets/img/student_boy.jpg" alt="Student profile icon">
+
+          <div class="streak" id="streakBadge">
+            🔥 Daily Streak Star
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           STATS
+           =================================================== -->
+
+      <section class="stats">
+
+        <!-- Streak -->
+        <div class="stat-card stat-orange">
+
+          <i class="fas fa-fire"></i>
+
+          <div>
+
+            <h3 id="statStreak">
+              7 Days
+            </h3>
+
+            <p>
+              Long Streak
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- EduCoins -->
+        <div class="stat-card stat-gold">
+
+          <i class="fas fa-star"></i>
+
+          <div>
+
+            <h3 id="statPoints">
+              2450
+            </h3>
+
+            <p>
+              EduCoins
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- Level -->
+        <div class="stat-card stat-green">
+
+          <i class="fas fa-layer-group"></i>
+
+          <div>
+
+            <h3 id="statLevel">
+              Level 12
+            </h3>
+
+            <p>
+              Current Level
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- Tasks -->
+        <div class="stat-card stat-blue">
+
+          <i class="fas fa-tasks"></i>
+
+          <div>
+
+            <h3>
+              5
+            </h3>
+
+            <p>
+              Pending Tasks
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           ADVANCED PEDAGOGY & MASTERY CONTROLS
+           =================================================== -->
+      <section style="margin-bottom: 24px;">
+
+        <!-- Silently Struggling Detector Alert Banner -->
+        <div
+          style="background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(185,28,28,0.25)); border: 1px solid rgba(239,68,68,0.4); border-radius: 14px; padding: 16px 20px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div
+              style="width: 42px; height: 42px; border-radius: 50%; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+              <i class="fas fa-search-location"></i>
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <strong style="color: #fff; font-size: 15px;">Silently Struggling Concept Detected!</strong>
+                <span
+                  style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(239,68,68,0.3); color: #fca5a5; font-weight: 700;">Repeated
+                  Mistake Pattern</span>
+              </div>
+              <p style="margin: 3px 0 0 0; font-size: 13px; color: #fecaca;">
+                Physics Mechanics: You repeatedly set <strong>N = mg</strong> on inclines instead of <strong>N = mg cos
+                  θ</strong> across 3 separate quizzes.
+              </p>
+            </div>
+          </div>
+          <button onclick="window.location.href='quiz.html'"
+            style="background: #ef4444; color: #fff; border: none; padding: 9px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+            <i class="fas fa-crosshairs"></i> Fix This Micro-Concept
+          </button>
+        </div>
+
+        <!-- 3-Column Pedagogical Grid: Revision Radar, Weak Area Improvement Bonus, and Innovation Shortcuts -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+
+          <!-- Revision Radar (Ebbinghaus Spaced Intervals) -->
+          <div
+            style="background: var(--card-dark, #14382a); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="margin: 0; font-size: 16px; color: #fff; font-family: 'Outfit', sans-serif;">
+                <i class="fas fa-radar" style="color: #38bdf8;"></i> Revision Radar (Forgetting Curve)
+              </h3>
+              <span
+                style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(56,189,248,0.15); color: #38bdf8; font-weight: 700;">
+                Memory Index: 82%
+              </span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+              Locks topics into memory at Day 1 (24h), Day 7 (1 week), and Day 30 (1 month) checkpoints:
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;">
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 10px; border-left: 3px solid #f4ae25;">
+                <div>
+                  <strong style="font-size: 13px; color: #fff;">Newton's Laws & Friction</strong>
+                  <div style="font-size: 11px; color: #f4ae25;">⏰ Day 1 Checkpoint • Due Today!</div>
+                </div>
+                <button onclick="window.location.href='quiz.html'"
+                  style="background: #f4ae25; color: #071510; border: none; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                  Revise Now (+15 🪙)
+                </button>
+              </div>
+
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 10px; border-left: 3px solid #10b981;">
+                <div>
+                  <strong style="font-size: 13px; color: #fff;">Chemical Bonding & VSEPR</strong>
+                  <div style="font-size: 11px; color: #34d399;">📅 Day 7 Checkpoint • Due in 2 Days</div>
+                </div>
+                <span style="font-size: 11px; color: #94a3b8;"><i class="fas fa-check"></i> Queued</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weak Area Improvement Reward Tile -->
+          <div
+            style="background: var(--card-dark, #14382a); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0; font-size: 16px; color: #fff; font-family: 'Outfit', sans-serif;">
+                  <i class="fas fa-chart-line" style="color: var(--accent-gold);"></i> Weak Area Turnaround Bonus
+                </h3>
+                <span
+                  style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(244,174,37,0.2); color: #f4ae25; font-weight: 700;">
+                  Outcome Reward
+                </span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+                Retest flagged weak areas. Improving your score earns <strong>proportional Bonus EduCoins</strong>!
+              </p>
+
+              <div
+                style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 12px; margin-bottom: 14px; border-left: 3px solid #ef4444;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                  <strong style="color: #fff;">Chemical Reactions & Catalysis</strong>
+                  <span style="color: #f87171; font-weight: 700;">Initial: 40%</span>
+                </div>
+                <div style="font-size: 11px; color: #fef08a; margin-top: 4px;">
+                  Potential Bonus: <strong>+60 EduCoins</strong> for achieving ≥80% on retest!
+                </div>
+              </div>
+            </div>
+
+            <button onclick="window.location.href='quiz.html'"
+              style="background: #10b981; color: #fff; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+              <i class="fas fa-redo"></i> Retest Weak Area & Earn Bonus Coins
+            </button>
+          </div>
+
+          <!-- Quick Innovation Shortcuts -->
+          <div
+            style="background: var(--card-dark, #14382a); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+            <h3 style="margin: 0 0 12px 0; font-size: 16px; color: #fff; font-family: 'Outfit', sans-serif;">
+              <i class="fas fa-compass" style="color: #a78bfa;"></i> Learning Superpowers
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <a href="eklavyalens.html"
+                style="text-decoration: none; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
+                <i class="fas fa-globe-asia" style="font-size: 20px; color: #38bdf8; margin-bottom: 6px;"></i>
+                <div style="font-size: 12px; font-weight: 700; color: #fff;">EklavyaLens</div>
+                <span style="font-size: 10px; color: #94a3b8;">Physical Maps</span>
+              </a>
+
+              <a href="pyq_arena.html"
+                style="text-decoration: none; background: rgba(244,174,37,0.1); border: 1px solid rgba(244,174,37,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
+                <i class="fas fa-stopwatch" style="font-size: 20px; color: #f4ae25; margin-bottom: 6px;"></i>
+                <div style="font-size: 12px; font-weight: 700; color: #fff;">PYQ Arena</div>
+                <span style="font-size: 10px; color: #94a3b8;">JEE/NEET Papers</span>
+              </a>
+
+              <a href="mindmaps.html"
+                style="text-decoration: none; background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
+                <i class="fas fa-project-diagram" style="font-size: 20px; color: #a78bfa; margin-bottom: 6px;"></i>
+                <div style="font-size: 12px; font-weight: 700; color: #fff;">Mind Maps</div>
+                <span style="font-size: 10px; color: #94a3b8;">Concept Prereqs</span>
+              </a>
+
+              <a href="bookmarks.html"
+                style="text-decoration: none; background: rgba(244,114,182,0.1); border: 1px solid rgba(244,114,182,0.3); border-radius: 10px; padding: 12px; text-align: center; color: #e2e8f0; transition: transform 0.2s;">
+                <i class="fas fa-bookmark" style="font-size: 20px; color: #f472b6; margin-bottom: 6px;"></i>
+                <div style="font-size: 12px; font-weight: 700; color: #fff;">Bookmarks</div>
+                <span style="font-size: 10px; color: #94a3b8;">Tricky Questions</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ===================================================
+           MAIN GRID
+           =================================================== -->
+
+      <div class="main-grid">
+
+
+        <!-- =================================================
+             CONTINUE LEARNING
+             ================================================= -->
+
+        <section class="continue-learning">
+
+          <h3>
+            Continue Learning
+          </h3>
+
+
+          <!-- Mathematics -->
+          <div class="subject-card">
+
+            <i class="fas fa-square-root-alt"></i>
+
+            <div class="details">
+
+              <h3>
+                Mathematics
+              </h3>
+
+              <p>
+                Chapter 5: Quadratic Equations
+              </p>
+
+              <div class="bar">
+
+                <div class="fill blue" style="width: 75%;"></div>
+
+              </div>
+
+              <span>
+                75% Complete
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- Physics -->
+          <div class="subject-card">
+
+            <i class="fas fa-atom"></i>
+
+            <div class="details">
+
+              <h3>
+                Physics
+              </h3>
+
+              <p>
+                Chapter 3: Motion and Force
+              </p>
+
+              <div class="bar">
+
+                <div class="fill blue" style="width: 60%;"></div>
+
+              </div>
+
+              <span>
+                60% Complete
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- Chemistry -->
+          <div class="subject-card">
+
+            <i class="fas fa-flask"></i>
+
+            <div class="details">
+
+              <h3>
+                Chemistry
+              </h3>
+
+              <p>
+                Chapter 2: Chemical Reactions
+              </p>
+
+              <div class="bar">
+
+                <div class="fill blue" style="width: 45%;"></div>
+
+              </div>
+
+              <span>
+                45% Complete
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- Chemistry Lab -->
+          <div class="subject-card">
+
+            <i class="fas fa-vials"></i>
+
+            <div class="details">
+
+              <h3>
+                Lab Simulation
+              </h3>
+
+              <p>
+                Chemistry: Balancing Chemical Equations
+              </p>
+
+              <div class="bar">
+
+                <div class="fill blue" style="width: 80%;"></div>
+
+              </div>
+
+              <span>
+                80% Complete
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- Physics Lab -->
+          <div class="subject-card">
+
+            <i class="fas fa-vials"></i>
+
+            <div class="details">
+
+              <h3>
+                Lab Simulation
+              </h3>
+
+              <p>
+                Physics: Gravity Force Lab - Basics
+              </p>
+
+              <div class="bar">
+
+                <div class="fill blue" style="width: 50%;"></div>
+
+              </div>
+
+              <span>
+                50% Complete
+              </span>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SIDE WIDGETS
+             ================================================= -->
+
+        <section class="side-widgets">
+
+
+          <!-- Weekly Progress -->
+          <div class="weekly-progress">
+
+            <h2>
+              Weekly Learning Progress
+            </h2>
+
+            <canvas id="progressChart"></canvas>
+
+            <p>
+              You've completed 65% of your lessons this week!
+            </p>
+
+          </div>
+
+
+          <!-- Leaderboard -->
+          <div class="box leaderboard" aria-labelledby="leaderboard-heading">
+
+            <h3 id="leaderboard-heading">
+              Leaderboard
+            </h3>
+
+
+            <!-- 1 -->
+            <div class="leaderboard-item" tabindex="0">
+
+              <div class="icon-wrapper medal gold" aria-hidden="true">
+                <i class="fas fa-medal"></i>
+              </div>
+
+              <div class="name">
+                Prachi Mondal
+              </div>
+
+              <div class="points">
+
+                964 pts
+
+                <span aria-label="Starred user" role="img" class="star">
+                  <i class="fas fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- 2 -->
+            <div class="leaderboard-item" tabindex="0">
+
+              <div class="icon-wrapper medal silver" aria-hidden="true">
+                <i class="fas fa-medal"></i>
+              </div>
+
+              <div class="name">
+                Anchal Vishwakarma
+              </div>
+
+              <div class="points">
+
+                950 pts
+
+                <span aria-label="Starred user" role="img" class="star">
+                  <i class="fas fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- 3 -->
+            <div class="leaderboard-item" tabindex="0">
+
+              <div class="icon-wrapper medal bronze" aria-hidden="true">
+                <i class="fas fa-medal"></i>
+              </div>
+
+              <div class="name">
+                Ishita Singh
+              </div>
+
+              <div class="points">
+
+                943 pts
+
+                <span aria-label="Starred user" role="img" class="star">
+                  <i class="fas fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- 4 -->
+            <div class="leaderboard-item" tabindex="0">
+
+              <div class="icon-wrapper" aria-hidden="true">
+                <i class="fas fa-user"></i>
+              </div>
+
+              <div class="name">
+                Aditya Yadav
+              </div>
+
+              <div class="points">
+
+                932 pts
+
+                <span aria-label="Starred user" role="img" class="star">
+                  <i class="far fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- 5 -->
+            <div class="leaderboard-item" tabindex="0">
+
+              <div class="icon-wrapper" aria-hidden="true">
+                <i class="fas fa-user"></i>
+              </div>
+
+              <div class="name">
+                Priya Devi
+              </div>
+
+              <div class="points">
+
+                900 pts
+
+                <span aria-label="Starred user" role="img" class="star">
+                  <i class="far fa-star"></i>
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+
+      <!-- ===================================================
+           LAB SIMULATION
+           =================================================== -->
+
+      <section class="lab-sim">
+
+        <h2>
+          Lab Simulation
+        </h2>
+
+
+        <!-- Tabs -->
+        <div class="tabs">
+
+          <button class="active" type="button" onclick="showSection('physics', this)">
+            Physics
+          </button>
+
+          <button type="button" onclick="showSection('chemistry', this)">
+            Chemistry
+          </button>
+
+          <button type="button" onclick="showSection('maths', this)">
+            Mathematics
+          </button>
+
+        </div>
+
+
+        <!-- =================================================
+             PHYSICS
+             ================================================= -->
+
+        <div id="physics" class="lab-cards active">
+
+          <!-- Balloons -->
+          <div class="lab-card">
+
+            <img
+              src="https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity-420.png"
+              alt="Balloons and Static Electricity" loading="lazy">
+
+            <h3>
+              Balloons and Static Electricity
+            </h3>
+
+            <p>
+              Explore how static charges work with balloons and walls.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+
+          <!-- Faraday -->
+          <div class="lab-card">
+
+            <img
+              src="https://phet.colorado.edu/sims/html/faradays-electromagnetic-lab/latest/faradays-electromagnetic-lab-420.png"
+              alt="Faraday's Electromagnetic Lab" loading="lazy">
+
+            <h3>
+              Faraday's Electromagnetic Lab
+            </h3>
+
+            <p>
+              Experiment with coils and magnetic fields.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/faradays-electromagnetic-lab/latest/faradays-electromagnetic-lab_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+
+          <!-- Gravity -->
+          <div class="lab-card">
+
+            <img
+              src="https://phet.colorado.edu/sims/html/gravity-force-lab-basics/latest/gravity-force-lab-basics-420.png"
+              alt="Gravity Force Lab Basics" loading="lazy">
+
+            <h3>
+              Gravity Force Lab: Basics
+            </h3>
+
+            <p>
+              Visualize gravitational forces between objects in space.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/gravity-force-lab-basics/latest/gravity-force-lab-basics_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CHEMISTRY
+             ================================================= -->
+
+        <div id="chemistry" class="lab-cards" style="display: none;">
+
+          <!-- Balancing Equations -->
+          <div class="lab-card">
+
+            <img
+              src="https://phet.colorado.edu/sims/html/balancing-chemical-equations/latest/balancing-chemical-equations-600.png"
+              alt="Balancing Chemical Equations" loading="lazy">
+
+            <h3>
+              Balancing Chemical Equations
+            </h3>
+
+            <p>
+              Practice balancing chemical reactions step by step.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/balancing-chemical-equations/latest/balancing-chemical-equations_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+
+          <!-- Build an Atom -->
+          <div class="lab-card">
+
+            <img src="https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom-600.png"
+              alt="Build an Atom" loading="lazy">
+
+            <h3>
+              Build an Atom
+            </h3>
+
+            <p>
+              Create atoms with protons, neutrons, and electrons.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+
+          <!-- Concentration -->
+          <div class="lab-card">
+
+            <img src="https://phet.colorado.edu/sims/html/concentration/latest/concentration-600.png"
+              alt="Concentration" loading="lazy">
+
+            <h3>
+              Concentration
+            </h3>
+
+            <p>
+              Explore how solute and solvent affect concentration.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/concentration/latest/concentration_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MATHEMATICS
+             ================================================= -->
+
+        <div id="maths" class="lab-cards" style="display: none;">
+
+          <!-- Quadrilateral -->
+          <div class="lab-card">
+
+            <img src="https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral-600.png"
+              alt="Quadrilateral" loading="lazy">
+
+            <h3>
+              Quadrilateral
+            </h3>
+
+            <p>
+              Experiment with properties of quadrilaterals.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/quadrilateral/latest/quadrilateral_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+
+          <!-- Graphing Quadratics -->
+          <div class="lab-card">
+
+            <img src="https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics-600.png"
+              alt="Graphing Quadratics" loading="lazy">
+
+            <h3>
+              Graphing Quadratics
+            </h3>
+
+            <p>
+              Visualize and interact with quadratic functions.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/graphing-quadratics/latest/graphing-quadratics_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+
+          <!-- Equality Explorer -->
+          <div class="lab-card">
+
+            <img
+              src="https://phet.colorado.edu/sims/html/equality-explorer-two-variables/latest/equality-explorer-two-variables-600.png"
+              alt="Equality Explorer Two Variables" loading="lazy">
+
+            <h3>
+              Equality Explorer: Two Variables
+            </h3>
+
+            <p>
+              Understand equations using balance models.
+            </p>
+
+            <button type="button"
+              onclick="openLab('https://phet.colorado.edu/sims/html/equality-explorer-two-variables/latest/equality-explorer-two-variables_en.html')">
+              Start Lab
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================================
+       LAB MODAL
+       ===================================================== -->
+
+  <div id="labModal" class="modal" aria-hidden="true">
+
+    <div class="modal-content">
+
+      <span class="close" onclick="closeLab()" role="button" tabindex="0" aria-label="Close laboratory">
+        &times;
+      </span>
+
+      <iframe id="labFrame" src="" title="Interactive Lab Simulation" allowfullscreen></iframe>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script src="../js/api.js"></script>
+
+  <script src="../js/theme_toggle.js"></script>
+
+  <script src="../js/voice_tutor.js"></script>
+
+  <script src="../js/student_dashboard.js"></script>
+
+  <script src="../js/chatbot.js?v=2.1"></script>
+
+</body>
+
+</html>

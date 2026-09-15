@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faction Wars Battle Arena | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="../css/faction_wars.css?v=2.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
+        <a href="quiz.html"><i class="fas fa-brain" aria-hidden="true"></i> Daily Quiz</a>
+        <a class="active" href="faction_wars.html"><i class="fas fa-shield-alt" aria-hidden="true"></i> Faction Wars</a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab Simulations</a>
+        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> GRAVITY AI</a>
+        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> Assignments</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> Settings</a>
+      </nav>
+
+      <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon">
+        <div class="profile-info">
+          <strong id="profileName">RISHABH RAJ</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content">
+      <section class="top-bar" style="margin-bottom: 16px;">
+        <div class="welcome-text">
+          <h1>
+            <strong><i class="fas fa-shield-alt" style="color: var(--marigold, #f4ae25);"></i> Faction Wars Battle
+              Arena</strong>
+          </h1>
+          <h2>Compete for your House! All verified STEM quiz & challenge rewards contribute directly to your faction's
+            standing.</h2>
+        </div>
+      </section>
+
+      <div class="battle-container">
+
+        <!-- User House & Standing Status Strip -->
+        <div class="fw-user-status-strip" id="userStatusStrip">
+          <div class="fw-status-item">
+            <i class="fas fa-shield-alt" id="userHouseIcon"></i>
+            <div>
+              <span
+                style="font-size: 0.76rem; color: var(--text-muted); display: block; text-transform: uppercase;">Your
+                Allegiance</span>
+              <strong id="userHouseName">House Vayu</strong>
+            </div>
+          </div>
+          <div class="fw-status-item">
+            <i class="fas fa-medal"></i>
+            <div>
+              <span
+                style="font-size: 0.76rem; color: var(--text-muted); display: block; text-transform: uppercase;">Your
+                House Rank</span>
+              <strong id="userHouseRank">#1 Contributor</strong>
+            </div>
+          </div>
+          <div class="fw-status-item">
+            <i class="fas fa-fire"></i>
+            <div>
+              <span
+                style="font-size: 0.76rem; color: var(--text-muted); display: block; text-transform: uppercase;">Live
+                Battle Contribution</span>
+              <strong id="userBattleXp" style="color: #6ee7b7;">+0 XP</strong>
+            </div>
+          </div>
+          <button class="quiz-btn quiz-btn-primary" onclick="EklavyaXFactionWars.openQuickQuizModal()"
+            style="padding: 6px 14px; font-size: 0.84rem;">
+            <i class="fas fa-bolt"></i> Earn Points Now
+          </button>
+        </div>
+
+        <!-- Navigation Tabs Bar -->
+        <div class="fw-tabs-bar" role="tablist">
+          <button class="fw-tab-btn active" id="tabBtnArena" onclick="EklavyaXFactionWars.switchTab('arena')">
+            <i class="fas fa-crosshairs"></i> Live Battle Arena
+          </button>
+          <button class="fw-tab-btn" id="tabBtnHouses" onclick="EklavyaXFactionWars.switchTab('houses')">
+            <i class="fas fa-university"></i> The Great Houses & Lore
+          </button>
+          <button class="fw-tab-btn" id="tabBtnStandings" onclick="EklavyaXFactionWars.switchTab('standings')">
+            <i class="fas fa-trophy"></i> Seasonal Standings
+          </button>
+          <button class="fw-tab-btn" id="tabBtnArchive" onclick="EklavyaXFactionWars.switchTab('archive')">
+            <i class="fas fa-history"></i> Battle Archive
+          </button>
+          <button class="fw-tab-btn" id="tabBtnRules" onclick="EklavyaXFactionWars.switchTab('rules')">
+            <i class="fas fa-info-circle"></i> Rules & Safeguards
+          </button>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- TAB 1: LIVE BATTLE ARENA -->
+        <!-- =================================================================== -->
+        <div class="fw-tab-view active" id="tabViewArena">
+          <!-- Active Battle Hero -->
+          <div id="activeBattleSection">
+            <div class="battle-hero-card">
+              <div class="battle-header">
+                <div class="battle-title-area">
+                  <span class="battle-live-tag" id="battleStatusTag"><i class="fas fa-circle"></i> Live Battle</span>
+                  <h2 id="battleTitle">Faction Wars STEM Showdown</h2>
+                </div>
+                <div class="battle-header-controls">
+                  <button class="fw-refresh-btn" id="manualRefreshBtn" title="Refresh Live Scores"
+                    onclick="EklavyaXFactionWars.refreshLiveBattle()">
+                    <i class="fas fa-sync-alt"></i>
+                  </button>
+                  <div class="battle-timer-box">
+                    <span>Battle Ends In</span>
+                    <strong id="battleRemainingTimer">--:--:--</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Multi-Segment Distribution Bar -->
+              <div class="vs-bar-container">
+                <div class="vs-bar-title">
+                  <span><i class="fas fa-chart-bar"></i> Live House Standing Distribution</span>
+                  <span>Polling Every 5s</span>
+                </div>
+                <div class="vs-multi-bar" id="vsMultiBar">
+                  <!-- Injected dynamically -->
+                </div>
+              </div>
+
+              <!-- Interactive Clickable Faction Cards -->
+              <div class="vs-arena-split" id="factionCardsGrid">
+                <!-- Injected dynamically with click handlers -->
+              </div>
+            </div>
+
+            <!-- Lower Grid: Leaderboard + Actions & Rewards -->
+            <div class="battle-lower-grid">
+              <!-- Left: Contribution Leaderboard -->
+              <div class="battle-box">
+                <div class="battle-box-title">
+                  <span>
+                    <i class="fas fa-trophy" style="color: var(--accent-gold);"></i>
+                    <span id="leaderboardHouseName">Your House</span> Contribution Leaderboard
+                  </span>
+                  <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">
+                    Top 20 Verified
+                  </span>
+                </div>
+
+                <!-- House Filter Pills -->
+                <div class="fw-filter-pills" id="houseFilterPills">
+                  <button class="fw-filter-pill active" data-faction-id="my"
+                    onclick="EklavyaXFactionWars.filterLeaderboard('my')">
+                    ⭐ My House
+                  </button>
+                  <button class="fw-filter-pill" data-faction-id="1" onclick="EklavyaXFactionWars.filterLeaderboard(1)">
+                    ⚡ House Vidyut
+                  </button>
+                  <button class="fw-filter-pill" data-faction-id="2" onclick="EklavyaXFactionWars.filterLeaderboard(2)">
+                    🔥 House Agni
+                  </button>
+                  <button class="fw-filter-pill" data-faction-id="3" onclick="EklavyaXFactionWars.filterLeaderboard(3)">
+                    🍃 House Vayu
+                  </button>
+                  <button class="fw-filter-pill" data-faction-id="4" onclick="EklavyaXFactionWars.filterLeaderboard(4)">
+                    ⛰️ House Prithvi
+                  </button>
+                </div>
+
+                <div style="overflow-x: auto;">
+                  <table class="contribution-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 50px;">Rank</th>
+                        <th>Student</th>
+                        <th>XP Added</th>
+                        <th>Questions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="contributionTableBody">
+                      <tr>
+                        <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">
+                          <i class="fas fa-spinner fa-spin"></i> Loading live contributions...
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Right: Rewards & Actions -->
+              <div class="battle-box">
+                <h3 class="battle-box-title">
+                  <span><i class="fas fa-gift" style="color: var(--accent-gold);"></i> Battle Reward Split</span>
+                  <button onclick="EklavyaXFactionWars.openRulesModal()"
+                    style="background: none; border: none; color: var(--accent-gold); font-size: 0.82rem; cursor: pointer; text-decoration: underline;">
+                    Details
+                  </button>
+                </h3>
+
+                <div class="reward-breakdown-card">
+                  <div class="reward-row">
+                    <span class="reward-row-label">🏆 Winning House Bonus</span>
+                    <span class="reward-row-val" style="color: #6ee7b7;">+50 Coins • +100 XP</span>
+                  </div>
+                  <div class="reward-row">
+                    <span class="reward-row-label">🛡️ Participation Reward</span>
+                    <span class="reward-row-val" style="color: var(--accent-gold);">+15 Coins • +25 XP</span>
+                  </div>
+                  <div class="reward-row">
+                    <span class="reward-row-label">🔒 Anti-Gaming Gating</span>
+                    <span class="reward-row-val" style="color: #93c5fd;">Server Verified</span>
+                  </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <button class="quiz-btn quiz-btn-primary" onclick="EklavyaXFactionWars.openQuickQuizModal()"
+                    style="justify-content: center; width: 100%;">
+                    <i class="fas fa-bolt"></i> Earn Points for My House
+                  </button>
+                  <button class="quiz-btn quiz-btn-secondary" onclick="EklavyaXFactionWars.openPeerChallengeModal()"
+                    style="justify-content: center; width: 100%;">
+                    <i class="fas fa-fist-raised"></i> Issue Peer Challenge
+                  </button>
+                  <button class="quiz-btn quiz-btn-secondary" onclick="EklavyaXFactionWars.openRulesModal()"
+                    style="justify-content: center; width: 100%;">
+                    <i class="fas fa-book-open"></i> Scoring & Safeguards Guide
+                  </button>
+                  <a href="student_dashboard.html" class="quiz-btn quiz-btn-secondary"
+                    style="justify-content: center; width: 100%; text-decoration: none;">
+                    <i class="fas fa-home"></i> Back to Dashboard
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fallback / Concluded State -->
+          <div id="noBattleState" style="display: none;">
+            <div class="no-battle-banner">
+              <i class="fas fa-hourglass-half"></i>
+              <h2 style="color: var(--text); margin-bottom: 8px;">No Active Faction Battle</h2>
+              <p id="noBattleMessage" style="color: var(--text-muted); max-width: 500px; margin: 0 auto 24px;">
+                The current faction battle window has concluded. Prepare your House by taking daily STEM quizzes and
+                building your streaks!
+              </p>
+              <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button class="quiz-btn quiz-btn-primary" onclick="EklavyaXFactionWars.triggerNewBattle()">
+                  <i class="fas fa-play"></i> Start New Battle Showdown
+                </button>
+                <a href="quiz.html" class="quiz-btn quiz-btn-secondary" style="text-decoration: none;">
+                  <i class="fas fa-brain"></i> Practice in Quiz Arena
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- TAB 2: THE GREAT HOUSES & LORE -->
+        <!-- =================================================================== -->
+        <div class="fw-tab-view" id="tabViewHouses">
+          <div style="margin-bottom: 20px;">
+            <h2 style="color: var(--text); font-size: 1.4rem; margin-bottom: 4px;">The Four Great Houses of EklavyaX
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Every student belongs to one of the ancient Houses. Master your discipline to bring honor and victory to
+              your faction.
+            </p>
+          </div>
+          <div class="houses-showcase-grid" id="housesShowcaseGrid">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- TAB 3: SEASONAL HOUSE STANDINGS -->
+        <!-- =================================================================== -->
+        <div class="fw-tab-view" id="tabViewStandings">
+          <div style="margin-bottom: 20px;">
+            <h2 style="color: var(--text); font-size: 1.4rem; margin-bottom: 4px;">Grand Season Leaderboard</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Cumulative season rankings derived from all verified STEM quiz completions and peer battle wins.
+            </p>
+          </div>
+          <div class="season-podium-grid" id="seasonPodiumGrid">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- TAB 4: BATTLE ARCHIVE -->
+        <!-- =================================================================== -->
+        <div class="fw-tab-view" id="tabViewArchive">
+          <div style="margin-bottom: 20px;">
+            <h2 style="color: var(--text); font-size: 1.4rem; margin-bottom: 4px;">Battle Showdown Archive</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Review past Faction War battle outcomes, victorious houses, and historical XP yields.
+            </p>
+          </div>
+          <div class="history-timeline" id="battleHistoryList">
+            <!-- Injected dynamically -->
+          </div>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- TAB 5: RULES & SAFEGUARDS FAQ -->
+        <!-- =================================================================== -->
+        <div class="fw-tab-view" id="tabViewRules">
+          <div class="battle-box" style="max-width: 850px; margin: 0 auto;">
+            <h2 style="color: var(--accent-gold); font-size: 1.4rem; margin-bottom: 16px;">
+              <i class="fas fa-shield-alt"></i> Faction Wars Rules & Anti-Gaming Integrity
+            </h2>
+
+            <div style="display: flex; flex-direction: column; gap: 20px; color: var(--text); line-height: 1.6;">
+              <div>
+                <h3 style="color: var(--text); font-size: 1.1rem; margin-bottom: 6px;">
+                  1. How are House Points Earned?
+                </h3>
+                <p style="color: var(--text-muted); font-size: 0.92rem;">
+                  Every verified STEM Quiz question answered correctly contributes its full XP value directly to your
+                  House's live battle tally. Wagered 1v1 Peer Challenges award bonus XP to the victor's faction.
+                </p>
+              </div>
+
+              <div>
+                <h3 style="color: var(--text); font-size: 1.1rem; margin-bottom: 6px;">
+                  2. Anti-Gaming Server Verification
+                </h3>
+                <p style="color: var(--text-muted); font-size: 0.92rem;">
+                  All scores are recorded and validated server-side. Correct answers submitted faster than the minimum
+                  human reading threshold (&lt; 2s cooldown) or exceeding daily earn caps receive 0 XP and write to the
+                  security audit log without contributing to the battle.
+                </p>
+              </div>
+
+              <div>
+                <h3 style="color: var(--text); font-size: 1.1rem; margin-bottom: 6px;">
+                  3. Battle Finalization & Reward Payouts
+                </h3>
+                <p style="color: var(--text-muted); font-size: 0.92rem;">
+                  When the battle timer reaches zero, the House with the highest aggregated XP is declared the Victor.
+                  Active contributors in the winning House receive <strong>+50 EduCoins & +100 XP</strong>.
+                  Contributors in all other participating Houses receive a guaranteed <strong>+15 EduCoins & +25
+                    XP</strong> participation bonus.
+                </p>
+              </div>
+
+              <div>
+                <h3 style="color: var(--text); font-size: 1.1rem; margin-bottom: 6px;">
+                  4. House Balancing
+                </h3>
+                <p style="color: var(--text-muted); font-size: 0.92rem;">
+                  New students are dynamically sorted into houses with the fewest active members to ensure balanced
+                  competition across all four Houses.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- MODAL: House Detail & Champions Modal -->
+  <!-- =================================================================== -->
+  <div class="fw-modal" id="houseDetailModal">
+    <div class="fw-modal-backdrop" onclick="EklavyaXFactionWars.closeModal('houseDetailModal')"></div>
+    <div class="fw-modal-content">
+      <div class="fw-modal-header">
+        <h3 id="modalHouseTitle"><i class="fas fa-shield-alt"></i> House Details</h3>
+        <button class="fw-modal-close" onclick="EklavyaXFactionWars.closeModal('houseDetailModal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="fw-modal-body" id="modalHouseBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- MODAL: Quick Launch STEM Quiz Modal -->
+  <!-- =================================================================== -->
+  <div class="fw-modal" id="quickQuizModal">
+    <div class="fw-modal-backdrop" onclick="EklavyaXFactionWars.closeModal('quickQuizModal')"></div>
+    <div class="fw-modal-content">
+      <div class="fw-modal-header">
+        <h3><i class="fas fa-brain" style="color: var(--accent-gold);"></i> Choose STEM Subject</h3>
+        <button class="fw-modal-close" onclick="EklavyaXFactionWars.closeModal('quickQuizModal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="fw-modal-body">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Select a domain subject to practice verified questions. All earned XP will be credited to your House!
+        </p>
+
+        <div class="quiz-subject-grid">
+          <div class="quiz-subject-card" onclick="EklavyaXFactionWars.startQuizForTopic('Physics')">
+            <i class="fas fa-atom" style="color: #3b82f6;"></i>
+            <strong>Physics</strong>
+            <span>House Vidyut</span>
+          </div>
+          <div class="quiz-subject-card" onclick="EklavyaXFactionWars.startQuizForTopic('Chemistry')">
+            <i class="fas fa-flask" style="color: #ef4444;"></i>
+            <strong>Chemistry</strong>
+            <span>House Agni</span>
+          </div>
+          <div class="quiz-subject-card" onclick="EklavyaXFactionWars.startQuizForTopic('Mathematics')">
+            <i class="fas fa-calculator" style="color: #10b981;"></i>
+            <strong>Mathematics</strong>
+            <span>House Vayu</span>
+          </div>
+          <div class="quiz-subject-card" onclick="EklavyaXFactionWars.startQuizForTopic('Biology')">
+            <i class="fas fa-dna" style="color: #f59e0b;"></i>
+            <strong>Biology</strong>
+            <span>House Prithvi</span>
+          </div>
+          <div class="quiz-subject-card" onclick="EklavyaXFactionWars.startQuizForTopic('Computer Science')">
+            <i class="fas fa-laptop-code" style="color: #a855f7;"></i>
+            <strong>Comp Sci</strong>
+            <span>House Vayu</span>
+          </div>
+          <div class="quiz-subject-card" onclick="EklavyaXFactionWars.startQuizForTopic('')">
+            <i class="fas fa-random" style="color: #f4ae25;"></i>
+            <strong>All STEM</strong>
+            <span>Random Mix</span>
+          </div>
+        </div>
+
+        <button class="quiz-btn quiz-btn-primary" onclick="EklavyaXFactionWars.startQuizForTopic('')"
+          style="width: 100%; justify-content: center;">
+          <i class="fas fa-play"></i> Start General 10-Question Quiz
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- MODAL: Peer Challenge Modal -->
+  <!-- =================================================================== -->
+  <div class="fw-modal" id="peerChallengeModal">
+    <div class="fw-modal-backdrop" onclick="EklavyaXFactionWars.closeModal('peerChallengeModal')"></div>
+    <div class="fw-modal-content">
+      <div class="fw-modal-header">
+        <h3><i class="fas fa-fist-raised" style="color: var(--accent-gold);"></i> 1v1 Peer Challenge</h3>
+        <button class="fw-modal-close" onclick="EklavyaXFactionWars.closeModal('peerChallengeModal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="fw-modal-body">
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">
+          Wager your EduCoins in a 1v1 STEM challenge. The victor earns the wager pot plus +50 bonus XP for their House!
+        </p>
+
+        <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">Select STEM
+          Topic:</label>
+        <select id="challengeSubjectSelect"
+          style="width: 100%; padding: 12px; border-radius: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); color: var(--text); font-size: 0.95rem; margin-bottom: 16px;">
+          <option value="Physics">Physics & Circuits</option>
+          <option value="Chemistry">Chemistry & Reactions</option>
+          <option value="Mathematics">Mathematics & Calculus</option>
+          <option value="Computer Science">Computer Science & Algorithms</option>
+          <option value="Biology">Biology & Life Sciences</option>
+        </select>
+
+        <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">EduCoin Wager
+          Amount:</label>
+        <div class="wager-btn-group" id="wagerBtnGroup">
+          <button type="button" class="wager-btn selected" onclick="EklavyaXFactionWars.selectWager(5, this)">5
+            🪙</button>
+          <button type="button" class="wager-btn" onclick="EklavyaXFactionWars.selectWager(10, this)">10 🪙</button>
+          <button type="button" class="wager-btn" onclick="EklavyaXFactionWars.selectWager(20, this)">20 🪙</button>
+          <button type="button" class="wager-btn" onclick="EklavyaXFactionWars.selectWager(50, this)">50 🪙</button>
+        </div>
+
+        <button class="quiz-btn quiz-btn-primary" id="createChallengeBtn"
+          onclick="EklavyaXFactionWars.createPeerChallenge()" style="width: 100%; justify-content: center;">
+          <i class="fas fa-check-circle"></i> Create Open Challenge
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================================================================== -->
+  <!-- MODAL: Battle Rules Details Modal -->
+  <!-- =================================================================== -->
+  <div class="fw-modal" id="battleRulesModal">
+    <div class="fw-modal-backdrop" onclick="EklavyaXFactionWars.closeModal('battleRulesModal')"></div>
+    <div class="fw-modal-content">
+      <div class="fw-modal-header">
+        <h3><i class="fas fa-book-open" style="color: var(--accent-gold);"></i> Faction Wars Rules & Safeguards</h3>
+        <button class="fw-modal-close" onclick="EklavyaXFactionWars.closeModal('battleRulesModal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="fw-modal-body" style="font-size: 0.92rem; color: var(--text); line-height: 1.6;">
+        <p style="margin-bottom: 12px;">
+          <strong>🛡️ Real-Time Score Aggregation:</strong> Only verified rewards from server-evaluated quiz submissions
+          contribute to the battle score.
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>⏱️ Minimum 2s Cooldown:</strong> Fast answers under 2 seconds are rejected by the anti-bot safeguard
+          to maintain fair play.
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>🏆 Winner Bonuses:</strong> The winning House at the end of the 24h cycle receives +50 EduCoins and
+          +100 XP for all active contributors.
+        </p>
+        <p style="margin-bottom: 18px;">
+          <strong>🛡️ Guaranteed Participation:</strong> Contributors in runner-up houses receive +15 EduCoins and +25
+          XP.
+        </p>
+        <button class="quiz-btn quiz-btn-primary" onclick="EklavyaXFactionWars.closeModal('battleRulesModal')"
+          style="width: 100%; justify-content: center;">
+          Got It, Let's Battle!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js?v=2026.11"></script>
+  <script src="../js/page_init.js?v=2026.11"></script>
+  <script src="../js/faction_wars.js?v=2026.11"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      EklavyaXFactionWars.init();
+    });
+  </script>
+</body>
+
+</html>

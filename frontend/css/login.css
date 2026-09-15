@@ -1,0 +1,1293 @@
+/* =========================================================
+   EklavyaX — MODERN EDUCATION UI
+   Dark Forest • Cream • Saffron • Premium Handcrafted Feel
+   ========================================================= */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --main-bg: #0d2b20;
+  --main-bg-light: #12382a;
+  --sidebar-bg: #4059a5;
+
+  --card-bg: #f6f0df;
+  --card-bg-soft: #eee7d3;
+
+  --text: #eef0df;
+  --text-dark: #26352d;
+  --text-muted: #aebcaf;
+
+  --primary-bg: #f5ad24;
+  --primary-hover: #ffc34b;
+  --accent-red: #df7355;
+
+  --border: rgba(246, 240, 223, 0.25);
+  --glass: rgba(255, 255, 255, 0.055);
+
+  --shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25);
+
+  --font-ui:
+    Inter,
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+  --font-display:
+    "Trebuchet MS",
+    "Segoe UI",
+    sans-serif;
+
+  --weight-semibold: 600;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 50% 15%,
+      rgba(58, 111, 82, 0.22),
+      transparent 40%),
+    linear-gradient(135deg,
+      #0a241b 0%,
+      #0e3023 45%,
+      #092218 100%);
+
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-weight: var(--weight-semibold);
+
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.015) 1px,
+      transparent 1px);
+
+  background-size: 40px 40px;
+
+  mask-image: linear-gradient(to bottom,
+      black,
+      transparent 90%);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   NAVBAR — TRANSPARENT
+   ========================================================= */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 72px;
+  padding: 12px 6vw;
+
+  background: transparent;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: none;
+
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  animation: navbarDrop 0.7s ease both;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.logo:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.logo img {
+  width: 38px;
+  height: 38px;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text {
+  font-family: 'Kalam', cursive;
+
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  color: #eeb43e;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  color: #f4efd9;
+  font-size: 14px;
+}
+
+.nav-right>* {
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.nav-right>*:hover {
+  color: #ffd66b;
+  transform: translateY(-1px);
+}
+
+.nav-right i {
+  margin-right: 6px;
+}
+
+
+/* =========================================================
+   MAIN HERO SECTION
+   ========================================================= */
+
+.main {
+  position: relative;
+
+  width: min(1200px, 92%);
+  margin: 0 auto;
+
+  text-align: center;
+
+  padding:
+    clamp(55px, 8vw, 95px) 20px 100px;
+
+  animation: heroFade 0.9s ease both;
+}
+
+
+/* Decorative glow */
+
+.main::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: 20px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background:
+    radial-gradient(circle,
+      rgba(245, 173, 36, 0.10),
+      transparent 68%);
+
+  filter: blur(10px);
+
+  pointer-events: none;
+}
+
+
+/* Heading */
+
+.main h1 {
+  position: relative;
+
+  max-width: 800px;
+
+  margin:
+    0 auto 20px;
+
+  font-family: var(--font-display);
+
+  font-size: clamp(42px, 7vw, 78px);
+
+  line-height: 0.98;
+
+  font-weight: 900;
+
+  letter-spacing: -3px;
+
+  color: #f8f0dc;
+
+  text-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.22);
+
+  animation:
+    titleReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+/* Highlight if you use span inside heading */
+
+.main h1 span {
+  color: var(--primary-bg);
+
+  display: inline-block;
+
+  position: relative;
+}
+
+.main h1 span::after {
+  content: "";
+
+  position: absolute;
+
+  height: 4px;
+
+  left: 5%;
+  right: 5%;
+
+  bottom: -10px;
+
+  background: var(--primary-bg);
+
+  border-radius: 100%;
+
+  transform: rotate(-1deg);
+
+  box-shadow:
+    0 0 14px rgba(245, 173, 36, 0.35);
+
+  animation: underlineReveal 1.1s 0.4s ease both;
+}
+
+
+.main p {
+  position: relative;
+
+  max-width: 720px;
+
+  margin: 0 auto 55px;
+
+  color: #aebcaf;
+
+  font-size: clamp(15px, 2vw, 18px);
+
+  line-height: 1.8;
+
+  font-weight: 600;
+
+  animation:
+    paragraphReveal 1s 0.2s ease both;
+}
+
+
+/* =========================================================
+   TOGGLE BUTTONS
+   ========================================================= */
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 28px;
+
+  padding: 5px;
+
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+
+  background: rgba(0, 0, 0, 0.18);
+
+  border: 1px solid var(--border);
+
+  border-radius: 999px;
+
+  backdrop-filter: blur(15px);
+}
+
+.toggle-buttons button {
+  position: relative;
+
+  padding: 10px 22px;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  background: transparent;
+
+  color: #c6d0c2;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toggle-buttons button:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.toggle-buttons button.active {
+  color: #26352d;
+
+  background:
+    linear-gradient(135deg,
+      #f8bc38,
+      #e99c19);
+
+  box-shadow:
+    0 5px 18px rgba(245, 173, 36, 0.25);
+}
+
+.toggle-buttons button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   ROLE / FORM CARDS
+   ========================================================= */
+
+.form-box {
+  position: relative;
+
+  width: min(430px, 100%);
+
+  margin: 30px auto;
+
+  padding: 32px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.035));
+
+  border:
+    1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.25);
+
+  backdrop-filter: blur(20px);
+
+  text-align: left;
+
+  overflow: hidden;
+
+  animation:
+    cardReveal 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+/* Card glow */
+
+.form-box::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -90px;
+  right: -90px;
+
+  background:
+    radial-gradient(circle,
+      rgba(245, 173, 36, 0.18),
+      transparent 70%);
+
+  pointer-events: none;
+}
+
+.form-box h2 {
+  position: relative;
+
+  margin-bottom: 25px;
+
+  color: #f7efdc;
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.form-box label {
+  display: flex;
+
+  margin-bottom: 8px;
+
+  color: #c4d0c4;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-box input,
+.form-box select {
+  width: 100%;
+
+  padding: 13px 15px;
+
+  margin-bottom: 17px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 11px;
+
+  outline: none;
+
+  background:
+    rgba(0, 0, 0, 0.18);
+
+  color: #f5f0df;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.form-box input::placeholder {
+  color: #84988a;
+}
+
+.form-box select {
+  color: #aebcaf;
+}
+
+.form-box input:hover,
+.form-box select:hover {
+  background:
+    rgba(255, 255, 255, 0.055);
+}
+
+.form-box input:focus,
+.form-box select:focus {
+  border-color: var(--primary-bg);
+
+  background:
+    rgba(0, 0, 0, 0.24);
+
+  box-shadow:
+    0 0 0 4px rgba(245, 173, 36, 0.10),
+    0 8px 25px rgba(0, 0, 0, 0.15);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   FORM OPTIONS
+   ========================================================= */
+
+.form-options {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+
+  font-size: 12px;
+}
+
+.remember {
+  display: flex;
+
+  align-items: center;
+
+  width: auto;
+
+  margin: 0;
+
+  gap: 7px;
+
+  color: #aebcaf;
+
+  white-space: nowrap;
+}
+
+.remember input {
+  width: 15px;
+  height: 15px;
+
+  margin: 0;
+
+  accent-color: var(--primary-bg);
+
+  cursor: pointer;
+}
+
+.form-options a {
+  width: auto;
+
+  margin: 0;
+
+  color: #f4b52d;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.form-options a:hover {
+  color: #ffd66b;
+
+  text-decoration: none;
+
+  transform: translateX(2px);
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.submit-btn {
+  position: relative;
+
+  width: 100%;
+
+  padding: 14px 20px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(135deg,
+      #f6b52c,
+      #e79816);
+
+  color: #25362d;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px rgba(245, 173, 36, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+
+/* Button shine */
+
+.submit-btn::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 80%;
+  height: 100%;
+
+  background:
+    linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent);
+
+  transform: skewX(-20deg);
+
+  transition: left 0.6s ease;
+}
+
+.submit-btn:hover::before {
+  left: 140%;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 35px rgba(245, 173, 36, 0.28);
+
+  filter: brightness(1.05);
+}
+
+.submit-btn:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+
+/* =========================================================
+   NAME FIELDS
+   ========================================================= */
+
+.name-fields {
+  display: flex;
+
+  gap: 12px;
+}
+
+.name-fields div {
+  flex: 1;
+}
+
+
+/* =========================================================
+   HIDDEN
+   ========================================================= */
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================================
+   ROLE SELECTION CARDS
+   If your JSX uses these classes
+   ========================================================= */
+
+.role-cards {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(250px, 1fr));
+
+  gap: 30px;
+
+  width: min(850px, 100%);
+
+  margin: 40px auto 0;
+}
+
+.role-card {
+  position: relative;
+
+  min-height: 210px;
+
+  padding: 30px;
+
+  border-radius: 16px;
+
+  text-align: left;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+
+/* Teacher card */
+
+.teacher-card {
+  background:
+    linear-gradient(145deg,
+      #163b2c,
+      #102f22);
+
+  border:
+    1px dashed rgba(230, 224, 198, 0.45);
+
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, 0.16);
+}
+
+
+/* Student card */
+
+.student-card {
+  background:
+    repeating-linear-gradient(0deg,
+      #f5edda 0px,
+      #f5edda 32px,
+      #e7dec9 33px,
+      #f5edda 34px);
+
+  color: #293a32;
+
+  border:
+    1px solid rgba(80, 70, 50, 0.14);
+
+  transform: rotate(0.6deg);
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.20);
+}
+
+.teacher-card:hover,
+.student-card:hover {
+  transform:
+    translateY(-10px) rotate(0deg);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.30);
+}
+
+
+/* Card icon */
+
+.role-card .icon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 22px;
+
+  border-radius: 12px;
+
+  background: rgba(245, 173, 36, 0.12);
+
+  color: var(--primary-bg);
+
+  font-size: 20px;
+}
+
+
+/* Card title */
+
+.role-card h3 {
+  margin-bottom: 10px;
+
+  font-family: var(--font-display);
+
+  font-size: 24px;
+
+  font-weight: 900;
+}
+
+.teacher-card h3 {
+  color: #f5efdc;
+}
+
+.student-card h3 {
+  color: #26362e;
+}
+
+
+/* Card description */
+
+.role-card p {
+  margin: 0 0 25px;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+.teacher-card p {
+  color: #a9b8aa;
+}
+
+.student-card p {
+  color: #5c665c;
+}
+
+
+/* Card action */
+
+.role-card .action {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-weight: 800;
+
+  transition:
+    gap 0.3s ease,
+    transform 0.3s ease;
+}
+
+.teacher-card .action {
+  color: #f5b32d;
+}
+
+.student-card .action {
+  color: #d96f50;
+}
+
+.role-card:hover .action {
+  gap: 16px;
+}
+
+
+/* =========================================================
+   DECORATIVE CONNECTING LINES
+   ========================================================= */
+
+.connection-lines {
+  position: relative;
+
+  width: min(600px, 80%);
+
+  height: 100px;
+
+  margin: 0 auto -15px;
+
+  pointer-events: none;
+}
+
+.connection-lines::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 2px;
+  height: 60px;
+
+  background:
+    repeating-linear-gradient(to bottom,
+      rgba(220, 215, 191, 0.6) 0 6px,
+      transparent 6px 12px);
+
+  transform: rotate(90deg);
+
+  transform-origin: top;
+
+  opacity: 0.7;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+  position: relative;
+  z-index: 10;
+
+  width: 100%;
+
+  padding: 13px 20px;
+
+  /* EklavyaX dark green */
+  background: #062c22;
+
+  color: #aab8ad;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow: none;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* =========================================================
+   FLOATING CHATBOT
+   ========================================================= */
+
+.chatbot,
+.chat-button,
+.chatbot-button {
+  position: fixed;
+
+  right: 24px;
+  bottom: 24px;
+
+  z-index: 999;
+
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  border:
+    3px solid rgba(255, 255, 255, 0.55);
+
+  background:
+    linear-gradient(145deg,
+      #4966bd,
+      #30498e);
+
+  color: white;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.3);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.chatbot:hover,
+.chat-button:hover,
+.chatbot-button:hover {
+  transform:
+    translateY(-5px) scale(1.06);
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes navbarDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes heroFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes titleReveal {
+  from {
+    opacity: 0;
+    transform:
+      translateY(35px) scale(0.96);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+
+@keyframes paragraphReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes underlineReveal {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    width: 90%;
+    opacity: 1;
+  }
+}
+
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform:
+      translateY(40px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline:
+    3px solid rgba(245, 173, 36, 0.65);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .navbar {
+    padding: 12px 25px;
+  }
+
+  .nav-right {
+    gap: 14px;
+  }
+
+  .main {
+    padding-top: 60px;
+  }
+
+  .role-cards {
+    grid-template-columns: 1fr;
+
+    width: min(500px, 100%);
+
+    gap: 20px;
+  }
+
+  .student-card {
+    transform: rotate(0deg);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .navbar {
+    min-height: 64px;
+
+    padding:
+      10px 16px;
+  }
+
+  .logo img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .nav-right {
+    gap: 8px;
+
+    font-size: 12px;
+  }
+
+  .nav-right .settings-text {
+    display: none;
+  }
+
+  .main {
+    width: 94%;
+
+    padding:
+      55px 10px 80px;
+  }
+
+  .main h1 {
+    font-size: clamp(40px, 14vw, 58px);
+
+    letter-spacing: -2px;
+  }
+
+  .main p {
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    margin-bottom: 35px;
+  }
+
+  .toggle-buttons {
+    width: 100%;
+  }
+
+  .toggle-buttons button {
+    flex: 1;
+
+    padding:
+      10px 12px;
+
+    font-size: 13px;
+  }
+
+  .form-box {
+    padding: 24px 18px;
+
+    border-radius: 18px;
+  }
+
+  .name-fields {
+    flex-direction: column;
+
+    gap: 0;
+  }
+
+  .form-options {
+    font-size: 11px;
+  }
+
+  .role-card {
+    min-height: 190px;
+
+    padding: 24px;
+  }
+
+  .role-card h3 {
+    font-size: 21px;
+  }
+
+  .chatbot,
+  .chat-button,
+  .chatbot-button {
+    right: 16px;
+    bottom: 16px;
+
+    width: 52px;
+    height: 52px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

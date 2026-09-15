@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent & Guardian Portal | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #071510;
+      color: #e2e8f0;
+      margin: 0;
+      padding: 0;
+    }
+    .guardian-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 60px 20px;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .g-card {
+      background: linear-gradient(135deg, rgba(16, 45, 34, 0.7), rgba(9, 27, 20, 0.8));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+    }
+    .metric-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .metric-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-gold, #f4ae25);
+    }
+    .metric-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin: 4px 0;
+    }
+    .metric-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .status-badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-done {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .status-pending {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .lang-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #cbd5e1;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: #f4ae25;
+      color: #071510;
+      border-color: #f4ae25;
+    }
+    .comparison-bar-wrap {
+      margin-bottom: 14px;
+    }
+    .c-bar-bg {
+      height: 10px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 6px;
+      display: flex;
+    }
+    .c-bar-this {
+      height: 100%;
+      background: #10b981;
+      border-radius: 6px;
+    }
+    .c-bar-last {
+      height: 100%;
+      background: #64748b;
+      border-radius: 6px;
+    }
+    .chat-bubble {
+      padding: 12px 16px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      max-width: 80%;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .chat-bubble.teacher {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #e2e8f0;
+      align-self: flex-start;
+      border-top-left-radius: 2px;
+    }
+    .chat-bubble.parent {
+      background: rgba(244, 174, 37, 0.15);
+      border: 1px solid rgba(244, 174, 37, 0.3);
+      color: #fef08a;
+      align-self: flex-end;
+      margin-left: auto;
+      border-top-right-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="guardian-container">
+    <!-- Header Bar -->
+    <header class="header-bar">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <img src="../assets/img/logo.png?v=3.0" style="width: 44px; height: 44px;" alt="EklavyaX">
+        <div>
+          <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 22px; color: #f4ae25; font-weight: 700;">Eklavya — Parent & Guardian Portal</h1>
+          <span style="font-size: 13px; color: #94a3b8;">Real-time academic monitoring, teacher liaison & child progress</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <a href="../index.html" class="lang-btn" style="text-decoration: none;">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <a href="student_dashboard.html" class="lang-btn" style="text-decoration: none;">
+          <i class="fas fa-user-graduate"></i> Student Login
+        </a>
+      </div>
+    </header>
+
+    <!-- Code Input / Unlock Screen -->
+    <div class="g-card" id="lookupBox">
+      <div style="max-width: 600px; margin: 0 auto; text-align: center; padding: 20px 0;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(244,174,37,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid rgba(244,174,37,0.3);">
+          <i class="fas fa-shield-alt" style="font-size: 24px; color: #f4ae25;"></i>
+        </div>
+        <h2 style="font-family: 'Outfit', sans-serif; margin-bottom: 8px;">Parent Access Portal</h2>
+        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 24px;">
+          Apne child ke profile ka 6-digit Guardian Access Code enter karein (e.g. EK-948215) ya demo view dekhein:
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 16px;">
+          <input type="text" id="accessCodeInput" placeholder="EK-948215" value="EK-DEMO-01" style="padding: 12px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #fff; font-size: 16px; font-weight: 600; width: 220px; text-align: center; text-transform: uppercase;">
+          <button onclick="fetchGuardianProgress()" style="background: #f4ae25; color: #071510; border: none; padding: 12px 26px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+            <i class="fas fa-arrow-right"></i> View Child's Progress
+          </button>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <button onclick="document.getElementById('accessCodeInput').value='EK-DEMO-01'; fetchGuardianProgress();" style="background: transparent; border: 1px solid rgba(244,174,37,0.4); color: #f4ae25; padding: 6px 14px; border-radius: 8px; font-size: 12px; cursor: pointer;">
+            Quick Demo: Student Profile
+          </button>
+        </div>
+
+        <div id="studentCodeGeneratorSection" style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1); display: none;">
+          <p style="font-size: 13px; color: #34d399; margin-bottom: 8px;"><i class="fas fa-link"></i> Student Mode Detected</p>
+          <button onclick="generateMyGuardianCode()" style="background: #10b981; color: #fff; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">
+            Generate New Guardian Code for Parents
+          </button>
+          <div id="generatedCodeDisplay" style="margin-top: 10px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area (Shown when code loaded) -->
+    <div id="progressDisplay" style="display: none;">
+      
+      <!-- Top Child Identity Header -->
+      <div class="g-card" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; background: linear-gradient(135deg, rgba(20,56,42,0.9), rgba(11,36,26,0.95)); border-color: rgba(244,174,37,0.3);">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <img id="studentAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=student" style="width: 78px; height: 78px; border-radius: 50%; border: 3px solid #f4ae25; background: #071510;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+              <h2 id="studentName" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 26px; color: #fff;">Student Name</h2>
+              <span id="badgeTierPill" class="badge-pill" style="background: rgba(244,174,37,0.18); color: #f4ae25; border: 1px solid rgba(244,174,37,0.4);">
+                <span id="badgeIcon">⭐</span> <span id="badgeName">Gold Tier</span>
+              </span>
+            </div>
+            <div style="font-size: 14px; color: #94a3b8; display: flex; flex-wrap: wrap; gap: 14px;">
+              <span><i class="fas fa-school" style="color: #f4ae25;"></i> <span id="studentGrade">Class 10-A</span></span>
+              <span><i class="fas fa-university"></i> <span id="studentSchool">Eklavya Central Academy</span></span>
+              <span><i class="fas fa-shield-alt" style="color: #60a5fa;"></i> Faction: <strong id="studentFaction" style="color: #60a5fa;">Agni</strong></span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Language Switcher & Quick Actions -->
+        <div style="text-align: right;">
+          <div style="font-size: 12px; color: #94a3b8; margin-bottom: 8px;">Summary Language:</div>
+          <div style="display: flex; gap: 6px;">
+            <button class="lang-btn active" id="btnHinglish" onclick="setParentLang('hinglish')">Hinglish</button>
+            <button class="lang-btn" id="btnHindi" onclick="setParentLang('hindi')">हिंदी</button>
+            <button class="lang-btn" id="btnEnglish" onclick="setParentLang('english')">English</button>
+          </div>
+          <button onclick="document.getElementById('chatSection').scrollIntoView({behavior:'smooth'})" style="margin-top: 10px; background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #34d399; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer;">
+            <i class="fas fa-comments"></i> Message Teacher
+          </button>
+        </div>
+      </div>
+
+      <!-- Core 4 Stats: EduCoins, Rank, Attendance, Today Quiz -->
+      <div class="metric-grid-4" style="margin-bottom: 24px;">
+        <div class="metric-card">
+          <div class="metric-title"><i class="fas fa-coins" style="color: #f4ae25;"></i> EduCoin Balance</div>
+          <div class="metric-num" id="eduCoinVal" style="color: #f4ae25;">0</div>
+          <div style="font-size: 12px; color: #94a3b8;" id="eduCoinSub">Ranked on reward balance</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-title"><i class="fas fa-trophy" style="color: #60a5fa;"></i> School Leaderboard</div>
+          <div class="metric-num" id="leaderboardRankVal" style="color: #60a5fa;">#0</div>
+          <div style="font-size: 12px; color: #94a3b8;" id="leaderboardSub">Across 1,240 students</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-title"><i class="fas fa-calendar-check" style="color: #10b981;"></i> Attendance Record</div>
+          <div class="metric-num" id="attendanceRateVal" style="color: #34d399;">94.2%</div>
+          <div style="font-size: 12px; color: #34d399;"><i class="fas fa-check-circle"></i> Regular Attendance (>75%)</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-title"><i class="fas fa-clock" style="color: #ec4899;"></i> Today's Daily Quiz</div>
+          <div style="margin: 6px 0;" id="quizStatusWrap">
+            <span class="status-badge status-done" id="quizStatusBadge">
+              <i class="fas fa-check"></i> Attempted Today
+            </span>
+          </div>
+          <div style="font-size: 12px; color: #94a3b8;">Daily practice habit tracker</div>
+        </div>
+      </div>
+
+      <!-- AI Tutor & Virtual Lab Summary + Simple Language Mode Box -->
+      <div class="g-card" style="border-left: 5px solid #f4ae25;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <h3 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #f4ae25;">
+            <i class="fas fa-bullhorn"></i> Simple Progress Digest (Parents ke liye saral bhasha)
+          </h3>
+          <span style="font-size: 12px; color: #94a3b8;" id="lastActiveLabel">Active today</span>
+        </div>
+        <p id="simpleLangText" style="font-size: 15px; line-height: 1.7; color: #e2e8f0; margin-bottom: 16px;">
+          Student ne is hafte regular practice ki hai aur lab experiments complete kiye hain.
+        </p>
+
+        <!-- Lab & AI Doubts Quick Counters -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; background: rgba(0,0,0,0.25); padding: 14px; border-radius: 12px;">
+          <div>
+            <span style="font-size: 12px; color: #94a3b8;">🤖 AI Tutor Doubts Cleared:</span>
+            <div style="font-size: 18px; font-weight: 700; color: #38bdf8;" id="aiDoubtsCleared">14 Questions</div>
+          </div>
+          <div>
+            <span style="font-size: 12px; color: #94a3b8;">🔬 Virtual STEM Lab Time:</span>
+            <div style="font-size: 18px; font-weight: 700; color: #a78bfa;" id="virtualLabHours">5.6 Hours</div>
+          </div>
+          <div>
+            <span style="font-size: 12px; color: #94a3b8;">🔥 Daily Practice Streak:</span>
+            <div style="font-size: 18px; font-weight: 700; color: #f97316;" id="streakDaysVal">7 Days Active</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two Column Layout: Weekly Comparative Report & School Notices -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; margin-bottom: 24px;">
+        
+        <!-- Weekly Comparative Progress (This Week vs Last Week) -->
+        <div class="g-card">
+          <h3 style="margin-top: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+            <i class="fas fa-chart-line" style="color: #10b981;"></i> Weekly Performance Growth
+          </h3>
+          <p style="font-size: 13px; color: #94a3b8; margin-bottom: 18px;">
+            Comparison of student practice between <span style="color: #10b981; font-weight: 600;">This Week</span> vs <span style="color: #94a3b8;">Last Week</span>
+          </p>
+
+          <div class="comparison-bar-wrap">
+            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+              <span>Questions Solved</span>
+              <span><strong style="color: #10b981;" id="cwQuestions">58</strong> vs <span style="color: #94a3b8;" id="lwQuestions">36</span></span>
+            </div>
+            <div class="c-bar-bg">
+              <div class="c-bar-this" id="barQuestions" style="width: 62%;"></div>
+            </div>
+          </div>
+
+          <div class="comparison-bar-wrap">
+            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+              <span>Quiz Accuracy</span>
+              <span><strong style="color: #10b981;" id="cwAccuracy">86%</strong> vs <span style="color: #94a3b8;" id="lwAccuracy">76%</span></span>
+            </div>
+            <div class="c-bar-bg">
+              <div class="c-bar-this" id="barAccuracy" style="width: 86%;"></div>
+            </div>
+          </div>
+
+          <div class="comparison-bar-wrap">
+            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+              <span>Study Hours Practiced</span>
+              <span><strong style="color: #10b981;" id="cwHours">9.4 hrs</strong> vs <span style="color: #94a3b8;" id="lwHours">6.2 hrs</span></span>
+            </div>
+            <div class="c-bar-bg">
+              <div class="c-bar-this" id="barHours" style="width: 75%;"></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px; padding: 12px; background: rgba(16,185,129,0.08); border-left: 3px solid #10b981; border-radius: 8px;">
+            <strong style="font-size: 12px; color: #34d399; text-transform: uppercase;">Teacher's Recommendation:</strong>
+            <p id="teacherRecText" style="font-size: 13px; color: #cbd5e1; margin: 4px 0 0 0;">
+              Consistent practice observed. Recommend 15 minutes of daily chemistry formula review.
+            </p>
+          </div>
+        </div>
+
+        <!-- Principal & School Official Announcements -->
+        <div class="g-card">
+          <h3 style="margin-top: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+            <i class="fas fa-university" style="color: #f4ae25;"></i> Principal & School Notices
+          </h3>
+          <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">
+            Official circulars regarding holidays, PTM, and exam schedules:
+          </p>
+          <div id="announcementsList" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Tasks & Homework Section -->
+      <div class="g-card">
+        <h3 style="margin-top: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+          <i class="fas fa-tasks" style="color: #f59e0b;"></i> Pending Tasks & Assignments (Teacher Assigned)
+        </h3>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">
+          Track whether your child has completed upcoming school assignments:
+        </p>
+        <div id="tasksTableWrap" style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; color: #94a3b8; font-size: 12px; text-transform: uppercase;">
+                <th style="padding: 10px 12px;">Assignment Title</th>
+                <th style="padding: 10px 12px;">Subject</th>
+                <th style="padding: 10px 12px;">Teacher</th>
+                <th style="padding: 10px 12px;">Due Date</th>
+                <th style="padding: 10px 12px;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="pendingTasksList">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Subject & Topic Mastery Breakdown -->
+      <div class="g-card">
+        <h3 style="margin-top: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+          <i class="fas fa-book-reader" style="color: #60a5fa;"></i> Subject Mastery & Accuracy Breakdown
+        </h3>
+        <div id="topicsContainer" style="margin-top: 14px;">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <!-- Direct Parent <-> Teacher Chat Section -->
+      <div class="g-card" id="chatSection">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h3 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+              <i class="fas fa-comments" style="color: #34d399;"></i> Direct Parent-Teacher Communication
+            </h3>
+            <span style="font-size: 13px; color: #94a3b8;">Send inquiries directly to child's class teacher / academic mentor</span>
+          </div>
+          <span style="font-size: 12px; background: rgba(16,185,129,0.15); color: #34d399; padding: 4px 10px; border-radius: 12px;">
+            Class Mentor: Active
+          </span>
+        </div>
+
+        <!-- Chat Conversation Area -->
+        <div id="chatMessagesBox" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; min-height: 180px; max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; margin-bottom: 16px;">
+          <div class="chat-bubble teacher">
+            <strong>Prof. Aarav Singh (Class Teacher):</strong><br>
+            Namaste! Your child has shown commendable effort in physics practicals this week. Please ensure they complete the friction assignment by tomorrow evening.
+          </div>
+        </div>
+
+        <!-- Message Input Box -->
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="parentMsgInput" placeholder="Aapka sandesh / Inquire about marks, attendance or behavior..." style="flex: 1; padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.25); color: #fff; font-size: 14px;">
+          <button onclick="sendParentMsgToTeacher()" style="background: #10b981; color: #fff; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/theme_toggle.js"></script>
+  <script>
+    let currentData = null;
+    let currentStudentId = null;
+
+    async function fetchGuardianProgress() {
+      const code = document.getElementById("accessCodeInput").value.trim();
+      if (!code) {
+        alert("Kripya access code enter karein.");
+        return;
+      }
+
+      try {
+        const data = await EklavyaXAPI.viewParentProgress(code);
+        currentData = data;
+        currentStudentId = data.student.id;
+        renderGuardianData(data);
+        loadChatMessages(currentStudentId);
+      } catch (err) {
+        alert(err.message || "Invalid or expired guardian code.");
+      }
+    }
+
+    function setParentLang(lang) {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      if (lang === 'hinglish') document.getElementById('btnHinglish').classList.add('active');
+      if (lang === 'hindi') document.getElementById('btnHindi').classList.add('active');
+      if (lang === 'english') document.getElementById('btnEnglish').classList.add('active');
+
+      if (!currentData) return;
+      const st = currentData.student;
+      const weekly = currentData.weekly_report;
+
+      const hinglishText = `${st.name} ne iss hafte ${weekly.this_week.days_active} din lagataar padhai ki hai aur ${weekly.this_week.questions_solved} sawaal ${weekly.this_week.accuracy}% accuracy ke saath solve kiye hain. Daily streak aur lab simulations active hain!`;
+      const hindiText = `${st.name} ने इस सप्ताह ${weekly.this_week.days_active} दिन नियमित अभ्यास किया और ${weekly.this_week.questions_solved} प्रश्नों को ${weekly.this_week.accuracy}% शुद्धता के साथ हल किया। दैनिक क्विज और वर्चुअल लैब अध्ययन निरंतर जारी है।`;
+      const englishText = `${st.name} has been active for ${weekly.this_week.days_active} days this week, solving ${weekly.this_week.questions_solved} questions with ${weekly.this_week.accuracy}% accuracy. Great progress in daily STEM labs and assignments!`;
+
+      if (lang === 'hindi') {
+        document.getElementById("simpleLangText").textContent = hindiText;
+      } else if (lang === 'english') {
+        document.getElementById("simpleLangText").textContent = englishText;
+      } else {
+        document.getElementById("simpleLangText").textContent = hinglishText;
+      }
+    }
+
+    function renderGuardianData(data) {
+      document.getElementById("lookupBox").style.display = "none";
+      document.getElementById("progressDisplay").style.display = "block";
+
+      const st = data.student;
+      document.getElementById("studentName").textContent = st.name;
+      document.getElementById("studentGrade").textContent = `${st.grade || 'Class 10'}-${st.section || 'A'}`;
+      document.getElementById("studentSchool").textContent = st.school || 'Eklavya Academy';
+      document.getElementById("studentFaction").textContent = st.faction_house || 'Agni';
+      document.getElementById("studentFaction").style.color = st.faction_color || '#f97316';
+      document.getElementById("studentAvatar").src = st.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${st.name}`;
+
+      // Badge Tier & EduCoins
+      document.getElementById("eduCoinVal").textContent = (st.edu_coins || 0).toLocaleString();
+      document.getElementById("badgeName").textContent = (st.badge_tier || 'Gold') + ' Tier';
+      document.getElementById("badgeIcon").textContent = st.badge_icon || '🥇';
+
+      // Leaderboard
+      document.getElementById("leaderboardRankVal").textContent = `#${st.leaderboard_rank || 12}`;
+      document.getElementById("leaderboardSub").textContent = `Top rank across ${st.total_students_count || 1240} peers`;
+
+      // Attendance
+      document.getElementById("attendanceRateVal").textContent = `${st.attendance_rate || 94.2}%`;
+
+      // Today Quiz Status
+      const qWrap = document.getElementById("quizStatusWrap");
+      if (st.attempted_quiz_today) {
+        qWrap.innerHTML = `<span class="status-badge status-done"><i class="fas fa-check-circle"></i> Completed Today</span>`;
+      } else {
+        qWrap.innerHTML = `<span class="status-badge status-pending"><i class="fas fa-exclamation-circle"></i> Not Attempted Today</span>`;
+      }
+
+      // AI & Lab Counters
+      const ai = data.ai_lab_summary || {};
+      document.getElementById("aiDoubtsCleared").textContent = `${ai.ai_doubts_cleared || 14} Cleared`;
+      document.getElementById("virtualLabHours").textContent = `${ai.virtual_lab_hours || 5.2} Hours`;
+      document.getElementById("streakDaysVal").textContent = `${st.current_streak_days || 7} Days Active`;
+
+      // Weekly Comparison
+      const w = data.weekly_report || {};
+      const tw = w.this_week || { questions_solved: 58, accuracy: 86, study_hours: 9.4 };
+      const lw = w.last_week || { questions_solved: 36, accuracy: 76, study_hours: 6.2 };
+
+      document.getElementById("cwQuestions").textContent = tw.questions_solved;
+      document.getElementById("lwQuestions").textContent = lw.questions_solved;
+      document.getElementById("barQuestions").style.width = Math.min(100, Math.round((tw.questions_solved / 80) * 100)) + "%";
+
+      document.getElementById("cwAccuracy").textContent = `${tw.accuracy}%`;
+      document.getElementById("lwAccuracy").textContent = `${lw.accuracy}%`;
+      document.getElementById("barAccuracy").style.width = `${tw.accuracy}%`;
+
+      document.getElementById("cwHours").textContent = `${tw.study_hours} hrs`;
+      document.getElementById("lwHours").textContent = `${lw.study_hours} hrs`;
+      document.getElementById("barHours").style.width = Math.min(100, Math.round((tw.study_hours / 15) * 100)) + "%";
+
+      if (w.teacher_comment) {
+        document.getElementById("teacherRecText").textContent = w.teacher_comment;
+      }
+
+      setParentLang('hinglish');
+
+      // Announcements
+      const annList = document.getElementById("announcementsList");
+      if (data.announcements && data.announcements.length > 0) {
+        annList.innerHTML = data.announcements.map(a => `
+          <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 12px 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <strong style="font-size: 14px; color: #fff;">${a.title}</strong>
+              <span style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: ${a.priority === 'Urgent' ? 'rgba(239,68,68,0.2)' : 'rgba(244,174,37,0.2)'}; color: ${a.priority === 'Urgent' ? '#f87171' : '#fbbf24'}; font-weight: 700;">${a.priority || 'Notice'}</span>
+            </div>
+            <p style="font-size: 13px; color: #cbd5e1; margin: 0 0 6px 0;">${a.message}</p>
+            <span style="font-size: 11px; color: #94a3b8;"><i class="far fa-clock"></i> ${a.date || 'Recent'}</span>
+          </div>
+        `).join("");
+      } else {
+        annList.innerHTML = `<p style="font-size: 13px; color: #94a3b8;">No new notices published today.</p>`;
+      }
+
+      // Pending Tasks
+      const ptList = document.getElementById("pendingTasksList");
+      if (data.pending_tasks && data.pending_tasks.length > 0) {
+        ptList.innerHTML = data.pending_tasks.map(t => `
+          <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <td style="padding: 12px; font-weight: 600; color: #fff;">${t.title}</td>
+            <td style="padding: 12px; color: #f4ae25;">${t.subject}</td>
+            <td style="padding: 12px; color: #94a3b8;">${t.teacher}</td>
+            <td style="padding: 12px; color: #cbd5e1;"><i class="far fa-calendar-alt"></i> ${t.due_date}</td>
+            <td style="padding: 12px;">
+              <span class="status-badge ${t.status === 'Submitted' ? 'status-done' : 'status-pending'}">
+                ${t.status}
+              </span>
+            </td>
+          </tr>
+        `).join("");
+      } else {
+        ptList.innerHTML = `<tr><td colspan="5" style="padding: 14px; text-align: center; color: #94a3b8;">All school tasks submitted!</td></tr>`;
+      }
+
+      // Subject Mastery Topics
+      const tCont = document.getElementById("topicsContainer");
+      const topics = (data.academic_metrics && data.academic_metrics.topics) || [
+        { topic: "Physics: Mechanics & Optics", accuracy_percent: 86, questions_answered: 48 },
+        { topic: "Mathematics: Calculus & Algebra", accuracy_percent: 91, questions_answered: 62 },
+        { topic: "Chemistry: Organic Reactions", accuracy_percent: 74, questions_answered: 38 },
+        { topic: "Computer Science: Python Logic", accuracy_percent: 94, questions_answered: 40 }
+      ];
+
+      tCont.innerHTML = topics.map(t => `
+        <div style="margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <strong style="color: #e2e8f0;">${t.topic}</strong>
+            <span style="color: #94a3b8;">${t.accuracy_percent}% accuracy (${t.questions_answered} questions)</span>
+          </div>
+          <div style="height: 8px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow: hidden; margin-top: 6px;">
+            <div style="height: 100%; width: ${t.accuracy_percent}%; background: ${t.accuracy_percent >= 80 ? '#10b981' : (t.accuracy_percent >= 60 ? '#f59e0b' : '#ef4444')}; border-radius: 4px;"></div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function loadChatMessages(studentId) {
+      if (!studentId) return;
+      try {
+        const res = await EklavyaXAPI.getParentMessages(studentId);
+        const box = document.getElementById("chatMessagesBox");
+        if (res.messages && res.messages.length > 0) {
+          box.innerHTML = res.messages.map(m => `
+            <div class="chat-bubble ${m.sender_type}">
+              <strong>${m.sender_name}:</strong><br>
+              ${m.message}
+              <div style="font-size: 10px; opacity: 0.7; margin-top: 4px; text-align: right;">${m.created_at || 'Just now'}</div>
+            </div>
+          `).join("");
+          box.scrollTop = box.scrollHeight;
+        }
+      } catch (err) {
+        console.warn("Messages could not be loaded", err);
+      }
+    }
+
+    async function sendParentMsgToTeacher() {
+      const input = document.getElementById("parentMsgInput");
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const code = document.getElementById("accessCodeInput").value.trim();
+      try {
+        await EklavyaXAPI.sendParentMessage({
+          student_id: currentStudentId,
+          access_code: code,
+          message: msg
+        });
+
+        const box = document.getElementById("chatMessagesBox");
+        const newMsgDiv = document.createElement("div");
+        newMsgDiv.className = "chat-bubble parent";
+        newMsgDiv.innerHTML = `<strong>Parent / Guardian:</strong><br>${msg}<div style="font-size: 10px; opacity: 0.7; margin-top: 4px; text-align: right;">Just now</div>`;
+        box.appendChild(newMsgDiv);
+        input.value = "";
+        box.scrollTop = box.scrollHeight;
+      } catch (err) {
+        alert("Failed to send message: " + (err.message || "Network error"));
+      }
+    }
+
+    async function generateMyGuardianCode() {
+      try {
+        const res = await EklavyaXAPI.generateParentCode();
+        document.getElementById("generatedCodeDisplay").innerHTML = `
+          Access Code: <span style="font-size: 18px; color: #f4ae25; padding: 4px 10px; background: rgba(0,0,0,0.4); border-radius: 6px; font-weight: 700;">${res.access_code}</span><br>
+          <span style="font-size: 12px; color: #94a3b8;">Yeh code apne parents ko share karein.</span>
+        `;
+      } catch (err) {
+        alert("Failed to generate code: " + err.message);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (EklavyaXAPI.isLoggedIn()) {
+        document.getElementById("studentCodeGeneratorSection").style.display = "block";
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCode = urlParams.get("code");
+      if (urlCode) {
+        document.getElementById("accessCodeInput").value = urlCode;
+        fetchGuardianProgress();
+      }
+    });
+  </script>
+</body>
+</html>

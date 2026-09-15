@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EklavyaX Leaderboard — Global & Faction Rankings</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .podium-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .podium-card {
+      background: var(--card-dark, #14382a);
+      border: 1px solid var(--border-light, rgba(255,255,255,0.1));
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      flex: 1;
+      max-width: 200px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+    .podium-card:hover { transform: translateY(-5px); }
+    .podium-1 { order: 2; border-color: #f4ae25; padding-bottom: 40px; }
+    .podium-2 { order: 1; border-color: #94a3b8; }
+    .podium-3 { order: 3; border-color: #d97706; }
+    .podium-crown { font-size: 28px; margin-bottom: 6px; }
+    .podium-avatar { width: 70px; height: 70px; border-radius: 50%; border: 3px solid; margin: 0 auto 10px; }
+    .rank-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .rank-table th, .rank-table td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-soft, rgba(255,255,255,0.08));
+    }
+    .rank-table th {
+      color: var(--accent-gold);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .rank-row-me {
+      background: rgba(244, 174, 37, 0.15) !important;
+      font-weight: bold;
+      border-left: 4px solid var(--accent-gold);
+    }
+    .filter-pill {
+      background: var(--glass-bg);
+      border: 1px solid var(--border-light);
+      color: var(--text);
+      padding: 8px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .filter-pill.active {
+      background: var(--accent-gold);
+      color: #0b281d;
+      border-color: var(--accent-gold);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar" role="navigation">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu">
+        <a href="student_dashboard.html"><i class="fas fa-home"></i> Home</a>
+        <a class="active" href="leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a>
+        <a href="quiz.html"><i class="fas fa-brain"></i> Daily Quiz</a>
+        <a href="live_battle.html"><i class="fas fa-bolt"></i> Live Duel</a>
+        <a href="flashcards.html"><i class="fas fa-layer-group"></i> Flashcards</a>
+        <a href="study_planner.html"><i class="fas fa-calendar-alt"></i> Study Planner</a>
+        <a href="study_groups.html"><i class="fas fa-users"></i> Study Groups</a>
+        <a href="chat_threads.html"><i class="fas fa-comments"></i> Doubts Chat</a>
+        <a href="certificates.html"><i class="fas fa-certificate"></i> Certificates</a>
+        <a href="parent_dashboard.html"><i class="fas fa-user-shield"></i> Parent Portal</a>
+        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+      </nav>
+      <div class="profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
+        <div class="profile-info">
+          <strong id="profileName">Student</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="top-bar">
+        <div class="welcome-text">
+          <h1>🏆 <strong>Global & Faction Leaderboard</strong></h1>
+          <h2>Track your ranking, compete for the top podium, and earn Faction glory!</h2>
+        </div>
+      </section>
+
+      <!-- Filter Controls -->
+      <div style="display: flex; gap: 12px; margin-bottom: 25px; flex-wrap: wrap;">
+        <button class="filter-pill active" onclick="setSortBy('xp', this)"><i class="fas fa-star"></i> Top XP</button>
+        <button class="filter-pill" onclick="setSortBy('coins', this)"><i class="fas fa-coins"></i> Top Coins</button>
+        <button class="filter-pill" onclick="setSortBy('streak', this)"><i class="fas fa-fire"></i> Longest Streak</button>
+        <button class="filter-pill" onclick="showFactionsTab(this)"><i class="fas fa-shield-alt"></i> Faction Standings</button>
+      </div>
+
+      <!-- Podium for Top 3 -->
+      <div class="podium-container" id="podiumWrap">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Main Leaderboard Card -->
+      <div class="card" style="background: var(--card-dark); border-radius: 16px; padding: 20px; overflow-x: auto;">
+        <table class="rank-table" id="leaderboardTable">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Student</th>
+              <th>Badge Tier</th>
+              <th>Faction</th>
+              <th>Coins</th>
+              <th>XP</th>
+              <th>Streak</th>
+            </tr>
+          </thead>
+
+          <tbody id="leaderboardBody">
+            <tr><td colspan="6" style="text-align: center;">Loading rankings...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/theme_toggle.js"></script>
+  <script src="../js/voice_tutor.js"></script>
+  <script>
+    let currentSort = "xp";
+    let isFactionView = false;
+
+    async function loadLeaderboard() {
+      if (isFactionView) {
+        loadFactions();
+        return;
+      }
+      try {
+        const data = await EklavyaXAPI.getLeaderboardGlobal("all_time", currentSort);
+        renderPodium(data.rankings.slice(0, 3));
+        renderTable(data.rankings, data.my_rank);
+      } catch (err) {
+        document.getElementById("leaderboardBody").innerHTML = `<tr><td colspan="6" style="color:#ef4444;">Error loading leaderboard.</td></tr>`;
+      }
+    }
+
+    function renderPodium(top3) {
+      const wrap = document.getElementById("podiumWrap");
+      wrap.style.display = "flex";
+      if (!top3 || top3.length === 0) {
+        wrap.innerHTML = "";
+        return;
+      }
+      let html = "";
+      top3.forEach((p, idx) => {
+        const rank = p.rank;
+        const crown = rank === 1 ? "👑 1st" : (rank === 2 ? "🥈 2nd" : "🥉 3rd");
+        const bClass = `podium-${rank}`;
+        const borderCol = rank === 1 ? "#f4ae25" : (rank === 2 ? "#94a3b8" : "#d97706");
+        html += `
+          <div class="podium-card ${bClass}">
+            <div class="podium-crown">${crown}</div>
+            <img class="podium-avatar" src="${p.avatar_url}" style="border-color:${borderCol};" alt="${p.username}">
+            <h3 style="margin: 4px 0; font-size: 16px;">${p.username}</h3>
+            <div style="margin-bottom: 6px;">
+              <span style="font-size: 12px; padding: 3px 8px; border-radius: 10px; background:${p.badge_bg}; color:${p.badge_color}; border:1px solid ${p.badge_color}; font-weight:bold;">
+                ${p.badge_icon} ${p.badge_tier}
+              </span>
+            </div>
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background:${p.faction_color}22; color:${p.faction_color};">${p.faction_name}</span>
+            <div style="margin-top: 10px; font-weight: bold; color: var(--accent-gold); font-size: 15px;">
+              🪙 ${p.coins} EduCoins • ${p.xp} XP
+            </div>
+          </div>
+        `;
+      });
+      wrap.innerHTML = html;
+    }
+
+    function renderTable(rankings, myRank) {
+      const tbody = document.getElementById("leaderboardBody");
+      const currentUser = EklavyaXAPI.getUser();
+      let html = "";
+      rankings.forEach((r) => {
+        const isMe = currentUser && r.user_id === currentUser.id;
+        html += `
+          <tr class="${isMe ? 'rank-row-me' : ''}">
+            <td style="font-weight: 700; color: ${r.rank <= 3 ? 'var(--accent-gold)' : 'inherit'}">#${r.rank}</td>
+            <td style="display: flex; align-items: center; gap: 10px;">
+              <img src="${r.avatar_url}" style="width: 34px; height: 34px; border-radius: 50%;">
+              <div>
+                <strong style="color:#ffffff;">${r.username} ${isMe ? '(Aap)' : ''}</strong>
+              </div>
+            </td>
+            <td>
+              <span style="display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:12px; background:${r.badge_bg}; color:${r.badge_color}; font-weight:700; font-size:12px; border:1px solid ${r.badge_color};">
+                ${r.badge_icon} ${r.badge_tier}
+              </span>
+            </td>
+            <td><span style="color:${r.faction_color}; font-weight:600;">${r.faction_name}</span></td>
+            <td><strong style="color:#f59e0b;">🪙 ${r.coins.toLocaleString()}</strong></td>
+            <td><span style="color:#a7f3d0;">⭐ ${r.xp.toLocaleString()}</span></td>
+            <td><span style="color:#ef4444;">🔥 ${r.streak}d</span></td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+
+    async function loadFactions() {
+      document.getElementById("podiumWrap").style.display = "none";
+      try {
+        const data = await EklavyaXAPI.getLeaderboardFactions();
+        const tbody = document.getElementById("leaderboardBody");
+        document.querySelector("#leaderboardTable thead").innerHTML = `
+          <tr>
+            <th>Rank</th>
+            <th>Faction</th>
+            <th>Total Score</th>
+            <th>Active Members</th>
+            <th>Top Contributor</th>
+          </tr>
+        `;
+        let html = "";
+        data.factions.forEach((f) => {
+          html += `
+            <tr>
+              <td><strong>#${f.rank}</strong></td>
+              <td style="color:${f.color_hex}; font-weight:bold; font-size:16px;">${f.name}</td>
+              <td><span style="color:var(--accent-gold); font-size:15px; font-weight:bold;">${f.score.toLocaleString()} XP</span></td>
+              <td>${f.member_count} Students</td>
+              <td>${f.top_contributor} (${f.top_contributor_xp} XP)</td>
+            </tr>
+          `;
+        });
+        tbody.innerHTML = html;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function setSortBy(sort, btn) {
+      isFactionView = false;
+      currentSort = sort;
+      document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelector("#leaderboardTable thead").innerHTML = `
+        <tr>
+          <th>Rank</th>
+          <th>Student</th>
+          <th>Faction</th>
+          <th>XP</th>
+          <th>Coins</th>
+          <th>Streak</th>
+        </tr>
+      `;
+      loadLeaderboard();
+    }
+
+    function showFactionsTab(btn) {
+      isFactionView = true;
+      document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      loadFactions();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      loadLeaderboard();
+    });
+  </script>
+</body>
+</html>

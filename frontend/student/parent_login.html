@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent & Guardian Access Portal | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 20%, #291b0d 0%, #0d1510 70%, #030712 100%);
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .parent-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 6vw;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.15);
+      background: rgba(13, 21, 16, 0.7);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-badge img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #f59e0b;
+      letter-spacing: 0.5px;
+    }
+
+    .login-container {
+      max-width: 460px;
+      width: 90%;
+      margin: 40px auto;
+      background: linear-gradient(145deg, rgba(41, 27, 13, 0.85), rgba(15, 23, 19, 0.95));
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 158, 11, 0.1);
+      position: relative;
+    }
+
+    .shield-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: #f59e0b;
+      margin: 0 auto 16px;
+    }
+
+    .login-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin: 0 0 6px;
+    }
+
+    .login-sub {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin: 0 0 26px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .admin-input:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+
+    .btn-parent-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #071510;
+      font-weight: 800;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      margin-top: 10px;
+    }
+
+    .btn-parent-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+    }
+
+    .demo-box {
+      margin-top: 24px;
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .btn-demo {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid #f59e0b;
+      color: #f59e0b;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-demo:hover {
+      background: #f59e0b;
+      color: #071510;
+    }
+
+    .portal-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+    }
+
+    .portal-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .portal-links a:hover {
+      color: #f59e0b;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="parent-nav">
+    <a href="../index.html" class="logo-badge">
+      <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX">
+      <span class="logo-title">EklavyaX</span>
+    </a>
+    <div style="font-size: 0.85rem; color: #f59e0b; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+      <i class="fas fa-user-shield"></i> Parent & Guardian Observation Window
+    </div>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <div class="shield-icon">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <h1 class="login-title">Parent & Guardian Portal</h1>
+      <p class="login-sub">Enter your child's 6-character access code or student email to view real-time attendance,
+        test marks, and homework.</p>
+
+      <form id="parentLoginForm" onsubmit="handleParentLogin(event)">
+        <div class="form-group">
+          <label><i class="fas fa-key"></i> Student Access Code or Student Email</label>
+          <input type="text" id="parentInput" class="admin-input" placeholder="e.g. EK9921 or student@eklavya.edu"
+            required>
+        </div>
+
+        <button type="submit" class="btn-parent-login" id="parentLoginBtn">
+          <i class="fas fa-chart-line"></i> View Student Progress Dashboard
+        </button>
+      </form>
+
+      <!-- 1-Click Demo Shortcut -->
+      <div class="demo-box">
+        <div style="color: #cbd5e1;">Testing as a Parent?</div>
+        <div style="font-size: 0.78rem; color: #94a3b8; margin: 3px 0 6px;">Pre-linked with sample student RISHABH RAJ
+          (Class 10):</div>
+        <button type="button" class="btn-demo" onclick="fillDemoParent()">
+          <i class="fas fa-bolt"></i> 1-Click Demo Parent Access
+        </button>
+      </div>
+
+      <div class="portal-links">
+        <a href="../teacher/principal_login.html"><i class="fas fa-crown"></i> Principal Login</a>
+        <a href="../teacher/login.html"><i class="fas fa-chalkboard-teacher"></i> Teacher Login</a>
+        <a href="student_login.html"><i class="fas fa-user-graduate"></i> Student Login</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© EklavyaX — Guardian Transparency & Direct Teacher Communication</p>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script>
+    function handleParentLogin(e) {
+      e.preventDefault();
+      const val = document.getElementById("parentInput").value.trim();
+      if (!val) return;
+      window.location.href = `parent_dashboard.html?code=${encodeURIComponent(val)}`;
+    }
+
+    function fillDemoParent() {
+      document.getElementById("parentInput").value = "EK-101";
+      window.location.href = `parent_dashboard.html?code=EK-101`;
+    }
+  </script>
+</body>
+
+</html>

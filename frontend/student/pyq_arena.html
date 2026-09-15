@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYQ Arena — Timed JEE, NEET & Board Exam Questions | Eklavya</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #081e16;
+      color: #e2e8f0;
+      margin: 0;
+    }
+    .pyq-filter-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      background: rgba(0,0,0,0.25);
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .pyq-filter-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pyq-filter-btn.active {
+      background: var(--accent-gold, #f4ae25);
+      color: #0b281d;
+      border-color: var(--accent-gold, #f4ae25);
+    }
+    .timer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(239,68,68,0.18);
+      border: 1px solid rgba(239,68,68,0.4);
+      color: #f87171;
+      font-weight: 800;
+      font-size: 16px;
+      font-family: 'Outfit', sans-serif;
+    }
+    .exam-badge {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-jee { background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); }
+    .badge-neet { background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); }
+    .badge-cbse { background: rgba(244,174,37,0.2); color: #fbbf24; border: 1px solid rgba(244,174,37,0.4); }
+    .q-palette-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+    .q-palette-btn.answered { background: #10b981; border-color: #10b981; color: #fff; }
+    .q-palette-btn.active { border-color: #f4ae25; box-shadow: 0 0 10px rgba(244,174,37,0.5); }
+    .q-palette-btn.marked { background: #8b5cf6; border-color: #8b5cf6; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+    <!-- Top Header -->
+    <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <img src="../assets/img/logo.png?v=3.0" style="width: 44px; height: 44px;" alt="Logo">
+        <div>
+          <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 24px; color: #f4ae25; font-weight: 700;">
+            <i class="fas fa-stopwatch"></i> PYQ Arena — Previous Year Questions
+          </h1>
+          <span style="font-size: 13px; color: #94a3b8;">
+            Actual Past Year Questions from JEE Main, NEET & CBSE (2020–2024) under real time-pressure.
+          </span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <a href="quiz.html" class="pyq-filter-btn" style="text-decoration: none;">
+          <i class="fas fa-arrow-left"></i> Daily STEM Arena
+        </a>
+        <a href="student_dashboard.html" class="pyq-filter-btn" style="text-decoration: none;">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+      </div>
+    </header>
+
+    <!-- Filters Bar -->
+    <div class="pyq-filter-row" id="filterBar">
+      <span style="align-self: center; font-size: 12px; color: #94a3b8; margin-right: 4px;">Competitive Exam:</span>
+      <button class="pyq-filter-btn active" id="btnExamAll" onclick="setExamFilter('all')">All PYQs</button>
+      <button class="pyq-filter-btn" id="btnExamJEE" onclick="setExamFilter('JEE Main')">JEE Main</button>
+      <button class="pyq-filter-btn" id="btnExamNEET" onclick="setExamFilter('NEET')">NEET (Medical)</button>
+      <button class="pyq-filter-btn" id="btnExamCBSE" onclick="setExamFilter('CBSE Class 12')">CBSE Board</button>
+
+      <span style="align-self: center; font-size: 12px; color: #94a3b8; margin-left: 12px; margin-right: 4px;">Subject:</span>
+      <select id="pyqSubjFilter" onchange="applyFilters()" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 13px;">
+        <option value="all">All Subjects</option>
+        <option value="Physics">Physics</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Biology">Biology</option>
+        <option value="Mathematics">Mathematics</option>
+      </select>
+
+      <button onclick="startTimedSimulation()" style="margin-left: auto; background: #f4ae25; color: #0b281d; border: none; padding: 8px 20px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+        <i class="fas fa-play"></i> Start Timed Simulation (5 Questions)
+      </button>
+    </div>
+
+    <!-- Active Timed Simulation Screen (Hidden initially) -->
+    <div id="simulationScreen" style="display: none; margin-bottom: 30px;">
+      <div style="display: grid; grid-template-columns: 2.2fr 1fr; gap: 20px;">
+        <!-- Left: Question Statement & Options -->
+        <div style="background: linear-gradient(135deg, rgba(16, 45, 34, 0.8), rgba(9, 27, 20, 0.9)); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 26px; box-shadow: 0 12px 36px rgba(0,0,0,0.3);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="qExamBadge" class="exam-badge badge-jee">JEE Main 2024</span>
+              <span id="qSubjectTopic" style="font-size: 13px; color: var(--accent-gold); font-weight: 600;">Physics • Rotational Motion</span>
+            </div>
+            <div class="timer-badge">
+              <i class="fas fa-clock"></i> <span id="timerDisplay">02:00</span>
+            </div>
+          </div>
+
+          <div id="qPromptText" style="font-size: 17px; font-weight: 600; line-height: 1.6; color: #fff; margin-bottom: 22px;">
+            Question Statement Loading...
+          </div>
+
+          <!-- Radio Options -->
+          <div id="qOptionsContainer" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; gap: 10px;">
+              <button onclick="markForReview()" style="background: rgba(139,92,246,0.2); border: 1px solid #8b5cf6; color: #c4b5fd; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">
+                <i class="fas fa-bookmark"></i> Mark for Review
+              </button>
+              <button onclick="bookmarkQuestionCurrent()" style="background: rgba(244,174,37,0.15); border: 1px solid #f4ae25; color: #fef08a; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">
+                <i class="far fa-star"></i> Save to Bookmarks
+              </button>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button onclick="prevQuestion()" id="btnPrev" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                Previous
+              </button>
+              <button onclick="nextQuestion()" id="btnNext" style="background: #f4ae25; color: #071510; border: none; padding: 10px 22px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                Next Question
+              </button>
+              <button onclick="submitPYQExam()" id="btnSubmitExam" style="background: #10b981; color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; display: none;">
+                Submit Exam
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Exam Question Palette & Summary -->
+        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h3 style="margin: 0 0 14px 0; font-size: 16px; color: #fff;">Question Palette</h3>
+            <div id="paletteGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px;">
+              <!-- 1, 2, 3, 4, 5 -->
+            </div>
+
+            <div style="font-size: 12px; color: #94a3b8; display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="width: 12px; height: 12px; border-radius: 3px; background: #10b981;"></span> Answered
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="width: 12px; height: 12px; border-radius: 3px; background: #8b5cf6;"></span> Marked for Review
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="width: 12px; height: 12px; border-radius: 3px; background: rgba(255,255,255,0.1);"></span> Not Visited
+              </div>
+            </div>
+          </div>
+
+          <button onclick="if(confirm('Cancel active timed simulation?')) window.location.reload();" style="background: transparent; border: 1px solid rgba(239,68,68,0.3); color: #f87171; padding: 8px; border-radius: 8px; font-size: 12px; cursor: pointer;">
+            Quit Simulation
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Results & Step-by-Step Solutions (Hidden until submitted) -->
+    <div id="resultsScreen" style="display: none; background: linear-gradient(135deg, rgba(16, 45, 34, 0.9), rgba(9, 27, 20, 0.95)); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 28px; margin-bottom: 30px;">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <div style="width: 68px; height: 68px; border-radius: 50%; background: rgba(16,185,129,0.2); border: 2px solid #10b981; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
+          <i class="fas fa-trophy" style="font-size: 28px; color: #10b981;"></i>
+        </div>
+        <h2 style="margin: 0 0 6px 0; font-family: 'Outfit', sans-serif; font-size: 24px; color: #fff;">PYQ Examination Evaluated</h2>
+        <p style="color: #94a3b8; font-size: 14px; margin: 0;">Verified against official NTA / CBSE Answer Key:</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 30px;">
+        <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 26px; font-weight: 800; color: #fff;" id="resScore">0 / 5</div>
+          <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Raw Score</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 26px; font-weight: 800; color: #10b981;" id="resAccuracy">0%</div>
+          <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Accuracy</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 26px; font-weight: 800; color: #38bdf8;" id="resPercentile">96.4 %ile</div>
+          <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Estimated Percentile</div>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 26px; font-weight: 800; color: #f4ae25;" id="resCoins">+60 🪙</div>
+          <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Bonus EduCoins</div>
+        </div>
+      </div>
+
+      <!-- Step-by-Step Solutions Breakdown -->
+      <h3 style="color: #fff; font-size: 18px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
+        <i class="fas fa-book-open" style="color: #f4ae25;"></i> Step-by-Step Official Derivations & Solutions
+      </h3>
+      <div id="solutionsList" style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Injected via JS -->
+      </div>
+
+      <div style="text-align: center; margin-top: 30px;">
+        <button onclick="window.location.reload()" style="background: #f4ae25; color: #071510; border: none; padding: 12px 28px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px;">
+          <i class="fas fa-redo"></i> Attempt Another Past Year Paper
+        </button>
+      </div>
+    </div>
+
+    <!-- Questions Catalog View (Default) -->
+    <div id="catalogScreen">
+      <div id="pyqGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px;">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script>
+    let pyqList = [];
+    let currentExamFilter = "all";
+    let activeQuestions = [];
+    let currentQIdx = 0;
+    let studentChoices = {};
+    let markedStatus = {};
+    let timerInterval = null;
+    let secondsLeft = 120;
+
+    async function loadPYQs() {
+      try {
+        const res = await fetch("/api/pedagogy/pyqs");
+        const data = await res.json();
+        pyqList = data.questions || [];
+        renderCatalog();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function setExamFilter(exam) {
+      currentExamFilter = exam;
+      document.querySelectorAll('.pyq-filter-btn').forEach(b => b.classList.remove('active'));
+      if (exam === 'all') document.getElementById('btnExamAll').classList.add('active');
+      if (exam === 'JEE Main') document.getElementById('btnExamJEE').classList.add('active');
+      if (exam === 'NEET') document.getElementById('btnExamNEET').classList.add('active');
+      if (exam === 'CBSE Class 12') document.getElementById('btnExamCBSE').classList.add('active');
+      renderCatalog();
+    }
+
+    function applyFilters() {
+      renderCatalog();
+    }
+
+    function renderCatalog() {
+      const subj = document.getElementById("pyqSubjFilter").value;
+      const filtered = pyqList.filter(q => {
+        const matchesExam = currentExamFilter === "all" || q.exam_type.toLowerCase() === currentExamFilter.toLowerCase();
+        const matchesSubj = subj === "all" || q.subject.toLowerCase() === subj.toLowerCase();
+        return matchesExam && matchesSubj;
+      });
+
+      const grid = document.getElementById("pyqGrid");
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color: #94a3b8; padding: 40px;">No questions found under this filter.</p>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(q => `
+        <div style="background: rgba(16, 45, 34, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 20px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+              <span class="exam-badge ${q.exam_type.includes('JEE') ? 'badge-jee' : (q.exam_type.includes('NEET') ? 'badge-neet' : 'badge-cbse')}">
+                ${q.exam_type} (${q.year})
+              </span>
+              <span style="font-size: 12px; color: #94a3b8;"><i class="far fa-clock"></i> ${q.time_limit_sec}s limit</span>
+            </div>
+            <h4 style="margin: 6px 0 2px 0; color: var(--accent-gold); font-size: 13px;">${q.subject} • ${q.topic}</h4>
+            <p style="font-size: 14px; color: #e2e8f0; line-height: 1.5; margin: 8px 0 14px 0;">${q.prompt}</p>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px;">
+            <button onclick="bookmarkQuestion(${q.id})" style="background: transparent; border: 1px solid rgba(244,174,37,0.3); color: #f4ae25; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+              <i class="far fa-bookmark"></i> Bookmark
+            </button>
+            <button onclick="startSingleQuestion(${q.id})" style="background: #10b981; color: #fff; border: none; padding: 6px 16px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer;">
+              Solve with Timer
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function startTimedSimulation() {
+      activeQuestions = [...pyqList];
+      currentQIdx = 0;
+      studentChoices = {};
+      markedStatus = {};
+
+      document.getElementById("catalogScreen").style.display = "none";
+      document.getElementById("filterBar").style.display = "none";
+      document.getElementById("resultsScreen").style.display = "none";
+      document.getElementById("simulationScreen").style.display = "block";
+
+      renderQuestionView();
+      startTimer();
+    }
+
+    function startSingleQuestion(id) {
+      const q = pyqList.find(x => x.id === id);
+      if (!q) return;
+      activeQuestions = [q];
+      currentQIdx = 0;
+      studentChoices = {};
+      markedStatus = {};
+
+      document.getElementById("catalogScreen").style.display = "none";
+      document.getElementById("filterBar").style.display = "none";
+      document.getElementById("resultsScreen").style.display = "none";
+      document.getElementById("simulationScreen").style.display = "block";
+
+      renderQuestionView();
+      startTimer();
+    }
+
+    function renderQuestionView() {
+      const q = activeQuestions[currentQIdx];
+      document.getElementById("qExamBadge").textContent = `${q.exam_type} (${q.year})`;
+      document.getElementById("qSubjectTopic").textContent = `${q.subject} • ${q.chapter}: ${q.topic}`;
+      document.getElementById("qPromptText").textContent = q.prompt;
+
+      const optsCont = document.getElementById("qOptionsContainer");
+      const chosen = studentChoices[q.id];
+
+      optsCont.innerHTML = q.options.map((opt, idx) => `
+        <div onclick="selectOption(${idx})" style="display:flex; align-items:center; gap:12px; padding:14px 18px; border-radius:10px; background: ${chosen === idx ? 'rgba(244,174,37,0.18)' : 'rgba(255,255,255,0.04)'}; border: 1px solid ${chosen === idx ? '#f4ae25' : 'rgba(255,255,255,0.1)'}; cursor:pointer;">
+          <div style="width:28px; height:28px; border-radius:50%; background:${chosen === idx ? '#f4ae25' : 'rgba(255,255,255,0.1)'}; color:${chosen === idx ? '#071510' : '#fff'}; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px;">
+            ${String.fromCharCode(65 + idx)}
+          </div>
+          <span style="font-size: 15px; color: #fff;">${opt}</span>
+        </div>
+      `).join("");
+
+      // Update palette
+      const palette = document.getElementById("paletteGrid");
+      palette.innerHTML = activeQuestions.map((item, idx) => {
+        const isAns = studentChoices[item.id] !== undefined;
+        const isMarked = markedStatus[item.id];
+        let cls = "q-palette-btn";
+        if (isAns) cls += " answered";
+        if (isMarked) cls += " marked";
+        if (idx === currentQIdx) cls += " active";
+        return `<div class="${cls}" onclick="jumpToQuestion(${idx})">${idx + 1}</div>`;
+      }).join("");
+
+      // Buttons
+      document.getElementById("btnPrev").style.visibility = currentQIdx > 0 ? "visible" : "hidden";
+      if (currentQIdx === activeQuestions.length - 1) {
+        document.getElementById("btnNext").style.display = "none";
+        document.getElementById("btnSubmitExam").style.display = "inline-flex";
+      } else {
+        document.getElementById("btnNext").style.display = "inline-flex";
+        document.getElementById("btnSubmitExam").style.display = "none";
+      }
+    }
+
+    function selectOption(idx) {
+      const q = activeQuestions[currentQIdx];
+      studentChoices[q.id] = idx;
+      renderQuestionView();
+    }
+
+    function markForReview() {
+      const q = activeQuestions[currentQIdx];
+      markedStatus[q.id] = !markedStatus[q.id];
+      renderQuestionView();
+    }
+
+    function nextQuestion() {
+      if (currentQIdx < activeQuestions.length - 1) {
+        currentQIdx++;
+        renderQuestionView();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQIdx > 0) {
+        currentQIdx--;
+        renderQuestionView();
+      }
+    }
+
+    function jumpToQuestion(idx) {
+      currentQIdx = idx;
+      renderQuestionView();
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      secondsLeft = activeQuestions.length * 90; // 90 sec per question average
+      updateTimerDisplay();
+
+      timerInterval = setInterval(() => {
+        secondsLeft--;
+        updateTimerDisplay();
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          alert("⏰ Time Limit Expired! Submitting answers automatically.");
+          submitPYQExam();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(secondsLeft / 60);
+      const s = secondsLeft % 60;
+      document.getElementById("timerDisplay").textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    async function submitPYQExam() {
+      clearInterval(timerInterval);
+
+      const answersPayload = activeQuestions.map(q => ({
+        question_id: q.id,
+        chosen_index: studentChoices[q.id] !== undefined ? studentChoices[q.id] : null
+      }));
+
+      try {
+        const token = localStorage.getItem("token") || localStorage.getItem("access_token");
+        const headers = {
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Bearer ${token}` } : {})
+        };
+
+        const res = await fetch("/api/pedagogy/pyqs/submit", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            exam_type: activeQuestions[0].exam_type,
+            year: activeQuestions[0].year,
+            subject: activeQuestions[0].subject,
+            time_taken_sec: (activeQuestions.length * 90) - secondsLeft,
+            answers: answersPayload
+          })
+        });
+
+        const data = await res.json();
+        document.getElementById("simulationScreen").style.display = "none";
+        document.getElementById("resultsScreen").style.display = "block";
+
+        document.getElementById("resScore").textContent = `${data.score} / ${data.total_questions}`;
+        document.getElementById("resAccuracy").textContent = `${data.accuracy_pct}%`;
+        document.getElementById("resPercentile").textContent = `${data.estimated_percentile} %ile`;
+        document.getElementById("resCoins").textContent = `+${data.coins_awarded} 🪙`;
+
+        // Render Step-by-Step Solutions
+        const solList = document.getElementById("solutionsList");
+        solList.innerHTML = data.evaluation.map((ev, idx) => `
+          <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px; border-left: 4px solid ${ev.is_correct ? '#10b981' : '#ef4444'};">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+              <strong style="color: #fff; font-size: 15px;">Q${idx + 1}: ${ev.prompt}</strong>
+              <span style="font-size: 12px; font-weight:800; color: ${ev.is_correct ? '#10b981' : '#ef4444'};">
+                ${ev.is_correct ? '✅ Correct (+15 Coins)' : '❌ Incorrect'}
+              </span>
+            </div>
+            <div style="font-size: 13px; color: #cbd5e1; margin-bottom: 8px;">
+              Your Choice: <strong style="color: ${ev.is_correct ? '#34d399' : '#f87171'};">${ev.chosen_index !== null ? String.fromCharCode(65 + ev.chosen_index) : 'Not Attempted'}</strong>
+              ${!ev.is_correct ? ` | Correct NTA Key: <strong style="color: #34d399;">${String.fromCharCode(65 + ev.correct_index)}</strong>` : ''}
+            </div>
+            <div style="background: rgba(16,185,129,0.08); border-radius: 8px; padding: 12px; font-size: 13px; color: #e2e8f0; line-height: 1.5;">
+              <strong style="color: #34d399;"><i class="fas fa-check-circle"></i> Derivation & Formula Explanation:</strong><br>
+              ${ev.explanation}
+            </div>
+          </div>
+        `).join("");
+
+      } catch (err) {
+        alert("Error submitting exam: " + err.message);
+      }
+    }
+
+    async function bookmarkQuestion(qid) {
+      const q = pyqList.find(x => x.id === qid);
+      if (!q) return;
+      try {
+        const token = localStorage.getItem("token") || localStorage.getItem("access_token");
+        await fetch("/api/pedagogy/bookmarks/toggle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { "Authorization": `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({
+            question_id: q.id,
+            question_type: "pyq",
+            subject: q.subject,
+            topic: q.topic,
+            prompt: q.prompt,
+            options: q.options,
+            correct_option_index: q.correct_option_index,
+            explanation: q.explanation,
+            note: `Saved from ${q.exam_type} ${q.year}`
+          })
+        });
+        alert("🔖 Saved question to Revision Bookmarks!");
+      } catch (err) {
+        alert("Saved to local bookmarks.");
+      }
+    }
+
+    function bookmarkQuestionCurrent() {
+      const q = activeQuestions[currentQIdx];
+      if (q) bookmarkQuestion(q.id);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      loadPYQs();
+    });
+  </script>
+</body>
+</html>

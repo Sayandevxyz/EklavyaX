@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Progress Analytics | Eklavya Faculty</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="../css/global.css?v=3.2" />
+  <link rel="stylesheet" href="../css/teacher_dashboard.css?v=3.2" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #081e16;
+      color: #e2e8f0;
+      margin: 0;
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(16, 45, 34, 0.75), rgba(9, 27, 20, 0.85));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .circle-stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .stat-ring-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .ring-conic {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: conic-gradient(#10b981 85%, rgba(255, 255, 255, 0.1) 85%);
+      position: relative;
+    }
+
+    .ring-conic::before {
+      content: '';
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #0b281d;
+    }
+
+    .ring-val-text {
+      position: relative;
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .risk-badge {
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .risk-safe {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .risk-med {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .risk-high {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .subject-row {
+      margin-bottom: 14px;
+    }
+
+    .subject-bar-track {
+      height: 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .subject-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" style="display:flex;">
+    <!-- Sidebar -->
+    <aside class="sidebar" role="navigation" aria-label="Sidebar menu">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">Eklavya</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+        <a href="principal_dashboard.html"><i class="fas fa-crown" style="color: #fbbf24;"></i> Principal Command</a>
+        <a href="analytics.html"><i class="fas fa-chart-pie"></i> Analytics & Heatmap</a>
+        <a href="quiz_builder.html"><i class="fas fa-edit"></i> Quiz Builder</a>
+        <a href="myclass.html"><i class="fas fa-users"></i> My Class</a>
+        <a class="active" href="student_progress.html"><i class="fas fa-chart-line"></i> Student Progress</a>
+        <a href="doubts.html"><i class="fas fa-question"></i> Doubts</a>
+        <a href="assignments.html"><i class="fas fa-list-ul"></i> Assignments</a>
+        <a href="content_library.html"><i class="fas fa-book"></i> Content Library</a>
+        <a href="announcements.html"><i class="fas fa-bullhorn"></i> Announcement</a>
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog"></i> Settings</a>
+      </nav>
+
+      <div class="profile">
+        <img id="userAvatarImg" src="../assets/img/teacher_male.jpg" alt="Profile" />
+        <div class="profile-info">
+          <strong id="profileName">Aarav Singh</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area" role="main" style="padding: 24px 30px 60px 30px; flex: 1;">
+
+      <!-- Top Page Header -->
+      <header
+        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+        <div>
+          <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 26px; color: #fff; font-weight: 700;">
+            <i class="fas fa-chart-line" style="color: #f4ae25;"></i> Student Progress & Mastery Hub
+          </h1>
+          <p style="margin: 4px 0 0 0; font-size: 14px; color: #94a3b8;">
+            Deep-dive into individual student learning curves, diagnostic reports, and intervention alerts.
+          </p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <select id="studentSelect" onchange="loadSelectedStudent(this.value)"
+            style="background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer;">
+            <option value="sayan">RISHABH RAJ (Class 10-A) • Top Performer</option>
+            <option value="aditya">Aditya Mishra (Class 10-A) • Needs STEM Help</option>
+            <option value="ishita">Ishita Singh (Class 10-A) • Consistent</option>
+            <option value="prachi">Prachi Mondal (Class 10-B) • High Attendance</option>
+            <option value="rahul">Rahul Verma (Class 10-B) • At Risk</option>
+          </select>
+
+          <button onclick="exportProgressReport()"
+            style="background: #f4ae25; color: #071510; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-file-pdf"></i> View / Export Report
+          </button>
+        </div>
+      </header>
+
+      <!-- Active Student Highlight Card -->
+      <div class="glass-card"
+        style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 18px;">
+          <img id="curStudentAvatar" src="../assets/img/student_boy.jpg"
+            style="width: 72px; height: 72px; border-radius: 50%; border: 3px solid #f4ae25; object-fit: cover;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <h2 id="curStudentName"
+                style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 22px; color: #fff;">RISHABH RAJ</h2>
+              <span id="curRiskBadge" class="risk-badge risk-safe">Healthy Progress</span>
+            </div>
+            <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">
+              Roll: <strong id="curStudentRoll" style="color: #fff;">EK-101</strong> &nbsp;|&nbsp;
+              Target: <strong id="curStudentExam" style="color: #f4ae25;">CBSE & JEE 2026</strong> &nbsp;|&nbsp;
+              House: <span id="curStudentHouse" style="color: #60a5fa; font-weight: 600;">Agni House</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 16px;">
+          <div style="text-align: right;">
+            <span style="font-size: 12px; color: #94a3b8; text-transform: uppercase;">EduCoins Balance</span>
+            <div id="curStudentCoins"
+              style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; color: #f4ae25;">480 🪙</div>
+          </div>
+          <div style="text-align: right; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 16px;">
+            <span style="font-size: 12px; color: #94a3b8; text-transform: uppercase;">Daily Streak</span>
+            <div id="curStudentStreak"
+              style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; color: #f97316;">12 Days 🔥
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Radial Ring Metrics -->
+      <div class="circle-stats-row" style="margin-bottom: 24px;">
+        <div class="stat-ring-card">
+          <div class="ring-conic" id="ringOverall"
+            style="background: conic-gradient(#10b981 92%, rgba(255,255,255,0.08) 92%);">
+            <span class="ring-val-text" id="valOverall">92%</span>
+          </div>
+          <strong style="font-size: 13px; color: #fff;">Overall Score</strong>
+          <p style="font-size: 11px; color: #94a3b8; margin: 2px 0 0 0;">Across all quiz runs</p>
+        </div>
+
+        <div class="stat-ring-card">
+          <div class="ring-conic" id="ringAttendance"
+            style="background: conic-gradient(#38bdf8 96%, rgba(255,255,255,0.08) 96%);">
+            <span class="ring-val-text" id="valAttendance">96%</span>
+          </div>
+          <strong style="font-size: 13px; color: #fff;">Attendance Rate</strong>
+          <p style="font-size: 11px; color: #94a3b8; margin: 2px 0 0 0;">Target: >75% mandatory</p>
+        </div>
+
+        <div class="stat-ring-card">
+          <div class="ring-conic" id="ringAssignments"
+            style="background: conic-gradient(#a855f7 88%, rgba(255,255,255,0.08) 88%);">
+            <span class="ring-val-text" id="valAssignments">88%</span>
+          </div>
+          <strong style="font-size: 13px; color: #fff;">Assignments Handed In</strong>
+          <p style="font-size: 11px; color: #94a3b8; margin: 2px 0 0 0;">15 / 17 completed</p>
+        </div>
+
+        <div class="stat-ring-card">
+          <div class="ring-conic" id="ringParticipation"
+            style="background: conic-gradient(#f59e0b 90%, rgba(255,255,255,0.08) 90%);">
+            <span class="ring-val-text" id="valParticipation">90%</span>
+          </div>
+          <strong style="font-size: 13px; color: #fff;">Lab & Doubt Activity</strong>
+          <p style="font-size: 11px; color: #94a3b8; margin: 2px 0 0 0;">Active participant</p>
+        </div>
+      </div>
+
+      <!-- Main Two Column Grid: Charts & Subject Mastery -->
+      <div class="progress-grid">
+        <!-- Left: Class Performance & Attendance Charts -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div class="glass-card">
+            <h3 style="margin: 0 0 16px 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+              <i class="fas fa-chart-bar" style="color: #38bdf8;"></i> Subject-Wise Assessment Scores
+            </h3>
+            <canvas id="overallChart" height="140"></canvas>
+          </div>
+
+          <div class="glass-card">
+            <h3 style="margin: 0 0 16px 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+              <i class="fas fa-chart-area" style="color: #10b981;"></i> Weekly Attendance Trend (Last 4 Weeks)
+            </h3>
+            <canvas id="attendanceChart" height="120"></canvas>
+          </div>
+        </div>
+
+        <!-- Right: Subject Progress List & Mentor Recommendations -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div class="glass-card">
+            <h3 style="margin: 0 0 16px 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #fff;">
+              <i class="fas fa-tasks" style="color: #f4ae25;"></i> Subject Mastery Gauge
+            </h3>
+            <div id="subjectBarsList">
+              <div class="subject-row">
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                  <span>Physics</span><strong style="color: #10b981;">95%</strong>
+                </div>
+                <div class="subject-bar-track">
+                  <div class="subject-bar-fill" style="width: 95%; background: #10b981;"></div>
+                </div>
+              </div>
+
+              <div class="subject-row">
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                  <span>Mathematics</span><strong style="color: #10b981;">92%</strong>
+                </div>
+                <div class="subject-bar-track">
+                  <div class="subject-bar-fill" style="width: 92%; background: #10b981;"></div>
+                </div>
+              </div>
+
+              <div class="subject-row">
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                  <span>Chemistry</span><strong style="color: #fbbf24;">78%</strong>
+                </div>
+                <div class="subject-bar-track">
+                  <div class="subject-bar-fill" style="width: 78%; background: #f59e0b;"></div>
+                </div>
+              </div>
+
+              <div class="subject-row">
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                  <span>Biology</span><strong style="color: #10b981;">88%</strong>
+                </div>
+                <div class="subject-bar-track">
+                  <div class="subject-bar-fill" style="width: 88%; background: #10b981;"></div>
+                </div>
+              </div>
+
+              <div class="subject-row">
+                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                  <span>Computer Science</span><strong style="color: #10b981;">96%</strong>
+                </div>
+                <div class="subject-bar-track">
+                  <div class="subject-bar-fill" style="width: 96%; background: #10b981;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Teacher Intervention & Feedback Card -->
+          <div class="glass-card" style="border-left: 5px solid #10b981;">
+            <h4 style="margin: 0 0 10px 0; color: #34d399; font-size: 16px;">
+              <i class="fas fa-user-check"></i> Faculty Diagnostic Evaluation
+            </h4>
+            <p id="facultyNoteText" style="font-size: 13px; line-height: 1.6; color: #cbd5e1; margin-bottom: 14px;">
+              Student is performing excellently in Physics mechanics and coding labs. Advise extra attention to Organic
+              chemistry nomenclature and stereochemistry practice.
+            </p>
+            <button onclick="alert('Diagnostic guidance notification dispatched to student & guardian portal!')"
+              style="background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #34d399; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; width: 100%;">
+              <i class="fas fa-paper-plane"></i> Send Guardian Progress Alert
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script>
+    let overallChartInstance = null;
+    let attendanceChartInstance = null;
+
+    const studentDatabase = {
+      sayan: {
+        name: "RISHABH RAJ",
+        roll: "EK-101",
+        exam: "CBSE & JEE 2026",
+        house: "Agni House",
+        coins: 480,
+        streak: 12,
+        risk: "safe",
+        riskLabel: "Healthy Progress",
+        overall: 92,
+        attendance: 96,
+        assignments: 88,
+        participation: 90,
+        scores: [95, 78, 92, 88, 96, 90],
+        attendanceTrend: [94, 96, 95, 96],
+        note: "Excellent conceptual grasp in Physics and Math. Chemistry reactions need slight revision."
+      },
+      aditya: {
+        name: "Aditya Mishra",
+        roll: "EK-102",
+        exam: "NEET / Medical",
+        house: "Vayu House",
+        coins: 220,
+        streak: 4,
+        risk: "med",
+        riskLabel: "Moderate Risk",
+        overall: 71,
+        attendance: 78,
+        assignments: 70,
+        participation: 68,
+        scores: [68, 65, 72, 85, 80, 75],
+        attendanceTrend: [82, 80, 75, 78],
+        note: "Struggling with kinematics calculation speed. Recommended attending Friday remedial hour."
+      },
+      ishita: {
+        name: "Ishita Singh",
+        roll: "EK-103",
+        exam: "CBSE Boards",
+        house: "Jal House",
+        coins: 610,
+        streak: 18,
+        risk: "safe",
+        riskLabel: "Top Performer",
+        overall: 95,
+        attendance: 98,
+        assignments: 96,
+        participation: 94,
+        scores: [94, 92, 98, 95, 98, 92],
+        attendanceTrend: [96, 98, 97, 98],
+        note: "Top rank in class. Nominated for Inter-School Physics Olympiad."
+      },
+      prachi: {
+        name: "Prachi Mondal",
+        roll: "EK-104",
+        exam: "JEE Main",
+        house: "Prithvi House",
+        coins: 350,
+        streak: 8,
+        risk: "safe",
+        riskLabel: "Good Standing",
+        overall: 84,
+        attendance: 94,
+        assignments: 85,
+        participation: 82,
+        scores: [88, 80, 84, 82, 90, 85],
+        attendanceTrend: [90, 92, 94, 94],
+        note: "Very regular in doubt sessions. Mathematics integration formulas need practice."
+      },
+      rahul: {
+        name: "Rahul Verma",
+        roll: "EK-105",
+        exam: "CBSE Boards",
+        house: "Agni House",
+        coins: 85,
+        streak: 1,
+        risk: "high",
+        riskLabel: "High Risk (<60%)",
+        overall: 54,
+        attendance: 64,
+        assignments: 45,
+        participation: 40,
+        scores: [48, 52, 50, 60, 58, 62],
+        attendanceTrend: [70, 66, 62, 64],
+        note: "Attendance has fallen below 75% threshold. Parent notification issued. Remedial classes assigned."
+      }
+    };
+
+    function loadSelectedStudent(key) {
+      const st = studentDatabase[key] || studentDatabase.sayan;
+      document.getElementById("curStudentName").textContent = st.name;
+      document.getElementById("curStudentRoll").textContent = st.roll;
+      document.getElementById("curStudentExam").textContent = st.exam;
+      document.getElementById("curStudentHouse").textContent = st.house;
+      document.getElementById("curStudentCoins").textContent = `${st.coins} 🪙`;
+      document.getElementById("curStudentStreak").textContent = `${st.streak} Days 🔥`;
+
+      const riskEl = document.getElementById("curRiskBadge");
+      riskEl.textContent = st.riskLabel;
+      riskEl.className = `risk-badge risk-${st.risk}`;
+
+      document.getElementById("valOverall").textContent = `${st.overall}%`;
+      document.getElementById("ringOverall").style.background = `conic-gradient(#10b981 ${st.overall}%, rgba(255,255,255,0.08) ${st.overall}%)`;
+
+      document.getElementById("valAttendance").textContent = `${st.attendance}%`;
+      document.getElementById("ringAttendance").style.background = `conic-gradient(#38bdf8 ${st.attendance}%, rgba(255,255,255,0.08) ${st.attendance}%)`;
+
+      document.getElementById("valAssignments").textContent = `${st.assignments}%`;
+      document.getElementById("ringAssignments").style.background = `conic-gradient(#a855f7 ${st.assignments}%, rgba(255,255,255,0.08) ${st.assignments}%)`;
+
+      document.getElementById("valParticipation").textContent = `${st.participation}%`;
+      document.getElementById("ringParticipation").style.background = `conic-gradient(#f59e0b ${st.participation}%, rgba(255,255,255,0.08) ${st.participation}%)`;
+
+      document.getElementById("facultyNoteText").textContent = st.note;
+
+      updateCharts(st);
+    }
+
+    function updateCharts(st) {
+      if (overallChartInstance) {
+        overallChartInstance.data.datasets[0].data = st.scores;
+        overallChartInstance.update();
+      }
+      if (attendanceChartInstance) {
+        attendanceChartInstance.data.datasets[0].data = st.attendanceTrend;
+        attendanceChartInstance.update();
+      }
+    }
+
+    function initCharts() {
+      const ctx1 = document.getElementById('overallChart').getContext('2d');
+      overallChartInstance = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['Physics', 'Chemistry', 'Mathematics', 'Biology', 'Computer', 'English'],
+          datasets: [{
+            label: 'Score %',
+            data: [95, 78, 92, 88, 96, 90],
+            backgroundColor: ['#10b981', '#f59e0b', '#38bdf8', '#10b981', '#a855f7', '#38bdf8'],
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      });
+
+      const ctx2 = document.getElementById('attendanceChart').getContext('2d');
+      attendanceChartInstance = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [{
+            label: 'Attendance %',
+            data: [94, 96, 95, 96],
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.15)',
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointBackgroundColor: '#10b981'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { min: 40, max: 100, grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#94a3b8' } },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+          }
+        }
+      });
+    }
+
+    function exportProgressReport() {
+      const studentKey = document.getElementById("studentSelect").value;
+      const st = studentDatabase[studentKey] || studentDatabase.sayan;
+      // Open inline printable / viewable diagnostic report
+      window.open(`/api/quiz/teacher/submission/1/report-pdf?view=true`, '_blank');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("teacher", "login.html");
+      initCharts();
+      loadSelectedStudent("sayan");
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+# Virtual Environments
+venv/
+backend/venv/
+env/
+.venv/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment Variables & Secrets
+.env
+backend/.env
+*.env.local
+
+# Databases
+*.db
+*.sqlite3
+backend/*.db
+
+# Node / JS artifacts (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE & OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
