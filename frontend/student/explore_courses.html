@@ -28,15 +28,7 @@
       <nav class="menu" aria-label="Primary">
         <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
         <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> My Courses</a>
-        <a class="active" href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore
-          Courses</a>
-        <a href="eklavyalens.html" style="color: #38bdf8;"><i class="fas fa-globe-asia" aria-hidden="true"></i>
-          EklavyaLens Maps</a>
-        <a href="pyq_arena.html" style="color: #f4ae25;"><i class="fas fa-trophy" aria-hidden="true"></i> PYQ Arena</a>
-        <a href="mindmaps.html" style="color: #a78bfa;"><i class="fas fa-project-diagram" aria-hidden="true"></i> Mind
-          Maps</a>
-        <a href="bookmarks.html" style="color: #34d399;"><i class="fas fa-bookmark" aria-hidden="true"></i> Revision
-          Vault</a>
+        <a class="active" href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> Explore Courses</a>
         <a href="quiz.html"><i class="fas fa-brain" aria-hidden="true"></i> Daily Quiz</a>
         <a href="faction_wars.html"><i class="fas fa-shield-alt" aria-hidden="true"></i> Faction Wars</a>
         <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> Lab Simulations</a>
@@ -50,7 +42,7 @@
       <div class="profile" role="button" aria-pressed="false" aria-label="Edit Profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student's profile icon" />
         <div class="profile-info">
-          <strong id="profileName">RISHABH RAJ</strong>
+          <strong id="profileName">Sayan Mondal</strong>
           <span id="profileAction">Log out</span>
         </div>
       </div>
@@ -63,23 +55,18 @@
       <section class="page-header">
         <div class="page-header-text">
           <div class="page-title-row">
-            <h1>Explore Courses (Classes 6 – 12)</h1>
-            <span class="badge badge-cs" id="catalogCountBadge">Classes 6 to 12</span>
+            <h1>Explore Courses</h1>
+            <span class="badge badge-cs" id="catalogCountBadge">10+ Masterclasses</span>
           </div>
-          <p>Complete CBSE, ICSE & Competitive Foundation curriculum with integrated 3D simulations and historical
-            EklavyaLens maps.</p>
+          <p>
+            Discover STEM masterclasses, interactive lab-linked curricula, and competitive exam tracks. Enroll in any subject with 1-click.
+          </p>
         </div>
 
-        <div style="display: flex; gap: 10px;">
-          <a href="eklavyalens.html" class="btn-secondary"
-            style="border-color: #38bdf8; color: #38bdf8; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-            <i class="fas fa-globe-asia"></i> Open EklavyaLens
-          </a>
-          <a href="student_my_courses.html" class="btn-primary explore-more-btn">
-            <i class="fas fa-book-open"></i>
-            <span>My Courses</span>
-          </a>
-        </div>
+        <a href="student_my_courses.html" class="btn-primary explore-more-btn">
+          <i class="fas fa-book-open"></i>
+          <span>My Courses</span>
+        </a>
       </section>
 
       <!-- Courses Parchment Container Section -->
@@ -90,40 +77,8 @@
             <input type="text" id="catalogSearch" placeholder="Search subjects, topics, or faculty..." />
           </div>
 
-          <!-- Class Selection Pills (Classes 6 to 12) -->
-          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
-            <span
-              style="font-size: 12px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Grade:</span>
-            <button class="catalog-grade-btn active" data-grade="all" onclick="filterByGrade('all', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--marigold); background: var(--marigold); color: #071510; cursor: pointer;">All
-              Grades (6–12)</button>
-            <button class="catalog-grade-btn" data-grade="6" onclick="filterByGrade('6', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #cbd5e1; cursor: pointer;">Class
-              6</button>
-            <button class="catalog-grade-btn" data-grade="7" onclick="filterByGrade('7', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #cbd5e1; cursor: pointer;">Class
-              7</button>
-            <button class="catalog-grade-btn" data-grade="8" onclick="filterByGrade('8', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #cbd5e1; cursor: pointer;">Class
-              8</button>
-            <button class="catalog-grade-btn" data-grade="9" onclick="filterByGrade('9', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #cbd5e1; cursor: pointer;">Class
-              9</button>
-            <button class="catalog-grade-btn" data-grade="10" onclick="filterByGrade('10', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #cbd5e1; cursor: pointer;">Class
-              10</button>
-            <button class="catalog-grade-btn" data-grade="11" onclick="filterByGrade('11', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #cbd5e1; cursor: pointer;">Class
-              11</button>
-            <button class="catalog-grade-btn" data-grade="12" onclick="filterByGrade('12', this)"
-              style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #cbd5e1; cursor: pointer;">Class
-              12</button>
-          </div>
-
           <div class="catalog-tabs">
             <button class="catalog-tab active" data-cat="all"><i class="fas fa-th-large"></i> All Subjects</button>
-            <button class="catalog-tab" data-cat="social_science" style="color: #38bdf8; font-weight: 700;"><i
-                class="fas fa-globe-asia"></i> Social Science (EklavyaLens)</button>
             <button class="catalog-tab" data-cat="physics"><i class="fas fa-atom"></i> Physics & Space</button>
             <button class="catalog-tab" data-cat="chemistry"><i class="fas fa-vial"></i> Chemistry</button>
             <button class="catalog-tab" data-cat="biology"><i class="fas fa-dna"></i> Biology & Genetics</button>
@@ -151,30 +106,23 @@
         </div>
         <button class="close-modal" onclick="closeLessonModal()">&times;</button>
       </div>
-
+      
       <div style="display:flex; flex-direction:column; gap:16px;">
         <div>
           <h3 id="lessonTitle" style="color:var(--chalk); font-size:1.15rem; font-weight:700;"></h3>
           <p id="lessonSummary" style="color:var(--chalk-dim); font-size:0.92rem; margin-top:6px; line-height:1.5;"></p>
         </div>
 
-        <div
-          style="background:rgba(10,24,18,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px;">
-          <h4 style="color:var(--primary-gold); font-size:0.95rem; margin-bottom:10px;"><i class="fas fa-lightbulb"></i>
-            Key Concepts & Takeaways</h4>
-          <ul id="lessonKeyPoints"
-            style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:0.88rem; color:var(--text-main);">
-          </ul>
+        <div style="background:rgba(10,24,18,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:16px;">
+          <h4 style="color:var(--primary-gold); font-size:0.95rem; margin-bottom:10px;"><i class="fas fa-lightbulb"></i> Key Concepts & Takeaways</h4>
+          <ul id="lessonKeyPoints" style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:0.88rem; color:var(--text-main);"></ul>
         </div>
 
-        <div
-          style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.12);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.12);">
           <span id="lessonCourseProgress" style="font-size:0.85rem; color:var(--text-muted);"></span>
           <div style="display:flex; gap:10px;">
-            <button id="lessonLabBtn" class="btn-secondary" style="display:none;"><i class="fas fa-vials"></i> Practice
-              in Lab</button>
-            <button class="btn-primary" onclick="completeCurrentLesson()"><i class="fas fa-check-circle"></i> Complete
-              Lesson (+20 XP)</button>
+            <button id="lessonLabBtn" class="btn-secondary" style="display:none;"><i class="fas fa-vials"></i> Practice in Lab</button>
+            <button class="btn-primary" onclick="completeCurrentLesson()"><i class="fas fa-check-circle"></i> Complete Lesson (+20 XP)</button>
           </div>
         </div>
       </div>
@@ -193,19 +141,16 @@
       </div>
 
       <div style="display:flex; flex-direction:column; gap:18px;">
-        <div
-          style="display:flex; justify-content:space-between; align-items:center; background:rgba(245,176,39,0.1); border:1px solid rgba(245,176,39,0.25); padding:14px 18px; border-radius:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(245,176,39,0.1); border:1px solid rgba(245,176,39,0.25); padding:14px 18px; border-radius:12px;">
           <div>
             <strong style="color:var(--primary-gold); font-size:0.95rem;">Overall Course Status</strong>
             <div id="detailStats" style="font-size:0.85rem; color:var(--text-main); margin-top:2px;"></div>
           </div>
-          <button id="detailResumeBtn" class="btn-primary" style="padding:8px 16px; font-size:0.88rem;"><i
-              class="fas fa-play"></i> Resume</button>
+          <button id="detailResumeBtn" class="btn-primary" style="padding:8px 16px; font-size:0.88rem;"><i class="fas fa-play"></i> Resume</button>
         </div>
 
         <div>
-          <h4 style="color:var(--text-main); margin-bottom:12px; font-size:1.05rem;"><i class="fas fa-book-open"
-              style="color:var(--primary-gold); margin-right:6px;"></i> Chapter Syllabus & Modules</h4>
+          <h4 style="color:var(--text-main); margin-bottom:12px; font-size:1.05rem;"><i class="fas fa-book-open" style="color:var(--primary-gold); margin-right:6px;"></i> Chapter Syllabus & Modules</h4>
           <div id="detailChapterList" style="display:flex; flex-direction:column; gap:10px;"></div>
         </div>
       </div>
