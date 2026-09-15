@@ -196,18 +196,18 @@
         </div>
         <h2 style="font-family: 'Outfit', sans-serif; margin-bottom: 8px;">Parent Access Portal</h2>
         <p style="color: #94a3b8; font-size: 14px; margin-bottom: 24px;">
-          Apne child ke profile ka 6-digit Guardian Access Code enter karein (e.g. EK-948215) ya demo view dekhein:
+          Apne child ka 6-digit Guardian Access Code ya registered Student Email / Username enter karein:
         </p>
-        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 16px;">
-          <input type="text" id="accessCodeInput" placeholder="EK-948215" value="EK-DEMO-01" style="padding: 12px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #fff; font-size: 16px; font-weight: 600; width: 220px; text-align: center; text-transform: uppercase;">
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px;">
+          <input type="text" id="accessCodeInput" placeholder="e.g. EK-948215 or student@eklavya.edu" value="" style="padding: 12px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.3); color: #fff; font-size: 15px; font-weight: 600; width: 300px; text-align: center;">
           <button onclick="fetchGuardianProgress()" style="background: #f4ae25; color: #071510; border: none; padding: 12px 26px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
             <i class="fas fa-arrow-right"></i> View Child's Progress
           </button>
         </div>
-        <div style="display: flex; gap: 12px; justify-content: center;">
-          <button onclick="document.getElementById('accessCodeInput').value='EK-DEMO-01'; fetchGuardianProgress();" style="background: transparent; border: 1px solid rgba(244,174,37,0.4); color: #f4ae25; padding: 6px 14px; border-radius: 8px; font-size: 12px; cursor: pointer;">
-            Quick Demo: Student Profile
-          </button>
+        <div style="margin-top: 14px; font-size: 13px;">
+          <a href="parent_login.html" style="color: #94a3b8; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <i class="fas fa-user-lock" style="color: #f4ae25;"></i> Parent Account Login / Registration &rarr;
+          </a>
         </div>
 
         <div id="studentCodeGeneratorSection" style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1); display: none;">
@@ -675,12 +675,13 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      if (EklavyaXAPI.isLoggedIn()) {
+      const user = EklavyaXAPI.getUser();
+      if (EklavyaXAPI.isLoggedIn() && user && user.role === "student") {
         document.getElementById("studentCodeGeneratorSection").style.display = "block";
       }
 
       const urlParams = new URLSearchParams(window.location.search);
-      const urlCode = urlParams.get("code");
+      const urlCode = urlParams.get("code") || (user && user.role === "parent" ? localStorage.getItem("parent_linked_child") : null);
       if (urlCode) {
         document.getElementById("accessCodeInput").value = urlCode;
         fetchGuardianProgress();

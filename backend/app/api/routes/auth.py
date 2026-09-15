@@ -67,6 +67,10 @@ def register(payload: UserCreate, db: Session = Depends(get_db)):
         is_female = payload.gender in ("female", "girl")
         if payload.role.value == "teacher":
             avatar_url = "assets/img/teacher_female.jpg" if is_female else "assets/img/teacher_male.jpg"
+        elif payload.role.value == "admin":
+            avatar_url = "assets/img/logo.png"
+        elif payload.role.value == "parent":
+            avatar_url = "assets/img/logo.png"
         else:
             avatar_url = "assets/img/student_girl.jpg" if is_female else "assets/img/student_boy.jpg"
 

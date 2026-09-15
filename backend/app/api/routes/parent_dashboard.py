@@ -76,23 +76,40 @@ def view_student_progress(
     access_code: str,
     db: Session = Depends(get_db),
 ) -> Dict[str, Any]:
+    raw_code = access_code.strip()
     key = (
         db.query(models.ParentAccessKey)
-        .filter_by(access_code=access_code.strip(), is_active=True)
+        .filter(
+            func.lower(models.ParentAccessKey.access_code) == raw_code.lower(),
+            models.ParentAccessKey.is_active == True,
+        )
         .first()
     )
-    
-    # Fallback to student #1 or first student if demo access code used
+
     student = None
     if key:
         student = key.student
-    elif access_code in ["EK-DEMO", "demo", "DEMO", "EK-123456"]:
+
+    # If not matched by access key, check by student email or username
+    if not student:
+        student = (
+            db.query(models.User)
+            .filter(
+                models.User.role == models.UserRole.student,
+                (func.lower(models.User.email) == raw_code.lower())
+                | (func.lower(models.User.username) == raw_code.lower()),
+            )
+            .first()
+        )
+
+    # Demo fallback for legacy/testing keys if explicitly passed
+    if not student and raw_code.upper() in ["EK-DEMO", "DEMO", "EK-DEMO-01", "EK-123456"]:
         student = db.query(models.User).filter_by(role=models.UserRole.student).first()
 
     if not student:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Galat ya expired Guardian Code! Kripya student se naya code lein.",
+            detail="Student not found with this Guardian Code or Email. Please verify with your child.",
         )
 
     streak = student.streak
