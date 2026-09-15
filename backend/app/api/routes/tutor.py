@@ -1,8 +1,6 @@
-from __future__ import annotations
+from typing import List, Optional
 
-from typing import List
-
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile, Form
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -15,7 +13,7 @@ from app.schemas.tutor_sch import (
     ExplainResponse,
     FeedbackResponse,
 )
-from app.services.ai_service import get_explanation
+from app.services.ai_service import get_explanation, transcribe_audio_groq
 from app.services.game_logic import earn_coins_and_xp, refund_coins, spend_coins
 
 router = APIRouter(prefix="/tutor", tags=["GRAVITY.ai Tutor"])
@@ -173,6 +171,34 @@ def answer_feedback(
     )
 
 
+
+
+@router.post(
+    "/transcribe",
+    summary="GRAVITY.ai: Transcribe voice audio via Groq Cloud Whisper AI",
+)
+async def transcribe_voice(
+    file: UploadFile = File(...),
+    language: Optional[str] = Form(None),
+    current_user: models.User = Depends(get_current_user),
+):
+    """
+    Transcribe spoken question audio using Groq Cloud Whisper API (whisper-large-v3).
+    Supports English, Hindi, Tamil, and other regional languages.
+    """
+    audio_bytes = await file.read()
+    if not audio_bytes:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No audio data received.",
+        )
+
+    transcription = await transcribe_audio_groq(
+        audio_bytes=audio_bytes,
+        filename=file.filename or "recording.webm",
+        language=language,
+    )
+    return {"text": transcription}
 
 
 @router.get(

@@ -208,6 +208,32 @@ const EklavyaXAPI = (() => {
     return request("/tutor/history", { method: "DELETE" });
   }
 
+  /**
+   * Transcribe recorded audio with Groq Cloud Whisper API.
+   * @param {Blob} audioBlob
+   * @param {string} [language]
+   */
+  function tutorTranscribe(audioBlob, language = "English") {
+    const formData = new FormData();
+    formData.append("file", audioBlob, "recording.webm");
+    if (language) formData.append("language", language);
+
+    const token = getToken();
+    return fetch(`${BASE_URL}/tutor/transcribe`, {
+      method: "POST",
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    }).then(async (res) => {
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: res.statusText }));
+        throw new Error(err.detail || "Audio transcription failed");
+      }
+      return res.json();
+    });
+  }
+
   // ── Peer Challenges ──────────────────────────────────────────────────────
 
   function listChallenges(statusFilter = null) {
@@ -502,6 +528,7 @@ const EklavyaXAPI = (() => {
     tutorFeedback,
     tutorHistory,
     tutorClearHistory,
+    tutorTranscribe,
     listChallenges,
     createChallenge,
     acceptChallenge,

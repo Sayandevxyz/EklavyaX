@@ -672,8 +672,62 @@ async def generate_ai_quiz_questions(topic: str = "STEM", num_questions: int = 1
     except Exception as exc:
         logger.warning("Failed to parse AI quiz JSON: %s. Raw: %s", exc, raw_response[:200])
 
-    raise HTTPException(
-        status_code=status.HTTP_502_BAD_GATEWAY,
-        detail="AI generated an invalid question format. Please retry.",
-    )
+
+async def transcribe_audio_groq(
+    audio_bytes: bytes,
+    filename: str = "recording.webm",
+    language: Optional[str] = None,
+) -> str:
+    """
+    Transcribe speech audio to text using Groq Cloud Whisper API (whisper-large-v3).
+    Provides ultra-fast LPU audio transcription.
+    """
+    if not settings.GROQ_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Groq API key not configured. Contact the administrator or set GROQ_API_KEY.",
+        )
+
+    url = "https://api.groq.com/openai/v1/audio/transcriptions"
+    headers = {
+        "Authorization": f"Bearer {settings.GROQ_API_KEY}",
+    }
+
+    data = {
+        "model": "whisper-large-v3",
+    }
+    if language:
+        lang_map = {
+            "english": "en",
+            "hindi": "hi",
+            "tamil": "ta",
+            "telugu": "te",
+            "malayalam": "ml",
+        }
+        iso_lang = lang_map.get(language.lower().strip(), language.lower().strip()[:2])
+        if iso_lang:
+            data["language"] = iso_lang
+
+    files = {
+        "file": (filename, audio_bytes, "audio/webm"),
+    }
+
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            resp = await client.post(url, headers=headers, data=data, files=files)
+            resp.raise_for_status()
+            res_json = resp.json()
+            return res_json.get("text", "").strip()
+    except httpx.HTTPStatusError as exc:
+        logger.error("Groq Whisper HTTP error %d: %s", exc.response.status_code, exc.response.text)
+        raise HTTPException(
+            status_code=exc.response.status_code,
+            detail=f"Groq Whisper transcription failed: {exc.response.text}",
+        )
+    except Exception as exc:
+        logger.error("Groq Whisper error: %s", exc)
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Failed to transcribe audio with Groq Whisper.",
+        )
 

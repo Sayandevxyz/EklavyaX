@@ -157,6 +157,11 @@
                     <option value="Tamil">🇮🇳 Tamil (தமிழ்)</option>
                   </select>
 
+                  <!-- Voice Mic Button (Groq Cloud AI Speech) -->
+                  <button id="voiceMicBtn" class="chat-voice-btn" type="button" title="Speak to Gravity (Voice Input)">
+                    <i class="fas fa-microphone"></i>
+                  </button>
+
                   <!-- Send Button -->
                   <button id="sendBtn" class="chat-send-btn" title="Send (Enter)">
                     <i class="fas fa-arrow-up"></i>
@@ -207,6 +212,7 @@
     const welcomeStateEl = document.getElementById("welcomeState");
     const chatInputEl = document.getElementById("chatInput");
     const chatLangEl = document.getElementById("chatLang");
+    const voiceMicBtnEl = document.getElementById("voiceMicBtn");
     const sendBtnEl = document.getElementById("sendBtn");
     const walletCoinsEl = document.getElementById("walletCoins");
     const historyListEl = document.getElementById("historyList");
@@ -216,6 +222,200 @@
     const closeHistoryBtnEl = document.getElementById("closeHistoryBtn");
     const newChatTopBtnEl = document.getElementById("newChatTopBtn");
     const clearHistoryBtnEl = document.getElementById("clearHistoryBtn");
+
+    // ── Speech / Voice Language Mapping ──────────────────────────────────────────
+    const SPEECH_LANG_MAP = {
+      English: "en-IN",
+      Hindi: "hi-IN",
+      Tamil: "ta-IN",
+    };
+
+    // ── Voice Input & Groq Cloud AI Integration ──────────────────────────────────
+    let isListening = false;
+    let recognition = null;
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let audioStream = null;
+    const defaultPlaceholder = chatInputEl.getAttribute("placeholder") || "Ask Gravity anything...";
+
+    function initSpeechRecognition() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) return null;
+
+      const sr = new SpeechRec();
+      sr.continuous = false;
+      sr.interimResults = true;
+      sr.maxAlternatives = 1;
+
+      sr.onstart = () => {
+        isListening = true;
+        if (voiceMicBtnEl) {
+          voiceMicBtnEl.classList.add("listening");
+          voiceMicBtnEl.innerHTML = '<i class="fas fa-stop"></i>';
+          voiceMicBtnEl.title = "Click to stop listening";
+        }
+        const langName = chatLangEl.value;
+        chatInputEl.placeholder = `🎙️ Listening in ${langName}... Speak your question clearly`;
+      };
+
+      sr.onresult = (event) => {
+        let interimTranscript = "";
+        let finalTranscript = "";
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+
+        const currentText = finalTranscript || interimTranscript;
+        if (currentText) {
+          chatInputEl.value = currentText;
+          autoResizeTextarea();
+        }
+      };
+
+      sr.onerror = (event) => {
+        console.warn("Speech recognition error:", event.error);
+        stopVoiceInput();
+      };
+
+      sr.onend = () => {
+        const captured = chatInputEl.value.trim();
+        stopVoiceInput();
+        if (captured && !isGenerating) {
+          // Send to Groq Cloud AI
+          handleSendMessage();
+        }
+      };
+
+      return sr;
+    }
+
+    async function startVoiceInput() {
+      const chosenLang = chatLangEl.value;
+      const speechLocale = SPEECH_LANG_MAP[chosenLang] || "en-IN";
+
+      // 1. Try Browser Native Speech Recognition (Live captioning)
+      if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+        try {
+          if (!recognition) {
+            recognition = initSpeechRecognition();
+          }
+          if (recognition) {
+            recognition.lang = speechLocale;
+            chatInputEl.value = "";
+            recognition.start();
+            return;
+          }
+        } catch (err) {
+          console.warn("SpeechRecognition start failed, falling back to Groq Whisper:", err);
+        }
+      }
+
+      // 2. Fallback: Audio recording + Groq Cloud Whisper API (whisper-large-v3)
+      try {
+        audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(audioStream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) audioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstart = () => {
+          isListening = true;
+          if (voiceMicBtnEl) {
+            voiceMicBtnEl.classList.add("listening");
+            voiceMicBtnEl.innerHTML = '<i class="fas fa-stop"></i>';
+            voiceMicBtnEl.title = "Click to stop recording";
+          }
+          chatInputEl.placeholder = `🎙️ Recording... Speak now (Groq Cloud Whisper AI)`;
+        };
+
+        mediaRecorder.onstop = async () => {
+          stopVoiceMediaTracks();
+          const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+          if (audioBlob.size > 1000) {
+            if (voiceMicBtnEl) {
+              voiceMicBtnEl.classList.remove("listening");
+              voiceMicBtnEl.classList.add("processing");
+              voiceMicBtnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            }
+            chatInputEl.placeholder = "⚡ Transcribing with Groq Cloud Whisper AI...";
+
+            try {
+              const res = await EklavyaXAPI.tutorTranscribe(audioBlob, chosenLang);
+              if (res && res.text) {
+                chatInputEl.value = res.text.trim();
+                autoResizeTextarea();
+                if (chatInputEl.value.trim() && !isGenerating) {
+                  handleSendMessage();
+                }
+              }
+            } catch (transcribeErr) {
+              console.error("Groq Whisper transcription failed:", transcribeErr);
+              chatInputEl.placeholder = defaultPlaceholder;
+            } finally {
+              resetVoiceButton();
+            }
+          } else {
+            resetVoiceButton();
+          }
+        };
+
+        mediaRecorder.start();
+      } catch (micErr) {
+        console.error("Microphone access error:", micErr);
+        alert("Microphone permission is required to use voice questions.");
+        resetVoiceButton();
+      }
+    }
+
+    function stopVoiceMediaTracks() {
+      if (audioStream) {
+        audioStream.getTracks().forEach(track => track.stop());
+        audioStream = null;
+      }
+    }
+
+    function stopVoiceInput() {
+      isListening = false;
+      resetVoiceButton();
+
+      if (recognition) {
+        try { recognition.stop(); } catch (_) {}
+      }
+
+      if (mediaRecorder && mediaRecorder.state !== "inactive") {
+        try { mediaRecorder.stop(); } catch (_) {}
+      } else {
+        stopVoiceMediaTracks();
+      }
+    }
+
+    function resetVoiceButton() {
+      isListening = false;
+      if (voiceMicBtnEl) {
+        voiceMicBtnEl.classList.remove("listening");
+        voiceMicBtnEl.classList.remove("processing");
+        voiceMicBtnEl.innerHTML = '<i class="fas fa-microphone"></i>';
+        voiceMicBtnEl.title = "Speak to Gravity (Voice Input)";
+      }
+      chatInputEl.placeholder = defaultPlaceholder;
+    }
+
+    if (voiceMicBtnEl) {
+      voiceMicBtnEl.addEventListener("click", () => {
+        if (isListening) {
+          stopVoiceInput();
+        } else {
+          startVoiceInput();
+        }
+      });
+    }
 
     // ── History Drawer Open / Close Handlers ─────────────────────────────────────
     function openHistoryDrawer() {
@@ -456,26 +656,42 @@
     }
 
     function speakExplanation(btn) {
+      if (!('speechSynthesis' in window)) {
+        alert("Speech synthesis is not supported on this browser.");
+        return;
+      }
+
+      // If already speaking this, cancel/stop
+      if (btn.dataset.speaking === "true") {
+        window.speechSynthesis.cancel();
+        btn.dataset.speaking = "false";
+        btn.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
+        return;
+      }
+
+      window.speechSynthesis.cancel(); // Stop any other ongoing audio
       const bubble = btn.closest('.msg-body-wrapper').querySelector('.ai-text-content');
       const textToSpeak = bubble.innerText.replace(/[\$]/g, '');
 
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // Stop any ongoing speech
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      const chosenLang = chatLangEl.value;
+      utterance.lang = SPEECH_LANG_MAP[chosenLang] || "en-IN";
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
 
-        btn.innerHTML = '<i class="fas fa-volume-up"></i> Speaking...';
-        utterance.onend = () => {
-          btn.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
-        };
-        utterance.onerror = () => {
-          btn.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
-        };
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert("Speech synthesis is not supported on this browser.");
-      }
+      btn.dataset.speaking = "true";
+      btn.innerHTML = '<i class="fas fa-stop-circle"></i> Stop';
+
+      utterance.onend = () => {
+        btn.dataset.speaking = "false";
+        btn.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
+      };
+      utterance.onerror = () => {
+        btn.dataset.speaking = "false";
+        btn.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
+      };
+
+      window.speechSynthesis.speak(utterance);
     }
 
     async function claimRefund(btn, logId) {
