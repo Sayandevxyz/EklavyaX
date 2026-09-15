@@ -20,7 +20,10 @@
   <link rel="stylesheet" href="../css/student_my_courses.css?v=3.2">
   <link rel="stylesheet" href="../css/app_pages.css?v=3.2">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
 </head>
 
 <body>
@@ -35,13 +38,21 @@
          SIDEBAR
          =================================================== -->
 
-    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Sidebar menu">
+    <aside
+      class="sidebar"
+      id="sidebar"
+      role="navigation"
+      aria-label="Sidebar menu"
+    >
 
       <!-- Logo -->
 
       <div class="logo">
 
-        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo" />
+        <img
+          src="../assets/img/logo.png?v=3.0"
+          alt="EklavyaX Logo"
+        />
 
         <span class="logo-text">
           EklavyaX
@@ -59,7 +70,10 @@
           <span>Home</span>
         </a>
 
-        <a class="active" href="student_my_courses.html">
+        <a
+          class="active"
+          href="student_my_courses.html"
+        >
           <i class="fas fa-book" aria-hidden="true"></i>
           <span>My Courses</span>
         </a>
@@ -104,7 +118,10 @@
           <span>Announcement</span>
         </a>
 
-        <a href="settings.html" id="settingsBtn">
+        <a
+          href="settings.html"
+          id="settingsBtn"
+        >
           <i class="fas fa-cog" aria-hidden="true"></i>
           <span>Settings</span>
         </a>
@@ -114,14 +131,23 @@
 
       <!-- Profile -->
 
-      <div class="profile" role="button" tabindex="0" aria-label="Edit Profile">
+      <div
+        class="profile"
+        role="button"
+        tabindex="0"
+        aria-label="Edit Profile"
+      >
 
-        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Student profile" />
+        <img
+          id="userAvatarImg"
+          src="../assets/img/student_boy.jpg"
+          alt="Student profile"
+        />
 
         <div class="profile-info">
 
           <strong id="profileName">
-            RISHABH RAJ
+            Sayan Mondal
           </strong>
 
           <span id="profileAction">
@@ -153,7 +179,10 @@
               My Enrolled Courses
             </h1>
 
-            <span class="badge badge-cs" id="enrolledCountBadge">
+            <span
+              class="badge badge-cs"
+              id="enrolledCountBadge"
+            >
               Active
             </span>
 
@@ -167,7 +196,10 @@
         </div>
 
 
-        <a href="explore_courses.html" class="btn-primary explore-more-btn">
+        <a
+          href="explore_courses.html"
+          class="btn-primary explore-more-btn"
+        >
           <i class="fas fa-plus-circle"></i>
           <span>Explore & Enroll</span>
         </a>
@@ -181,7 +213,10 @@
 
       <section class="courses">
 
-        <div class="courses-grid" id="enrolledCoursesGrid">
+        <div
+          class="courses-grid"
+          id="enrolledCoursesGrid"
+        >
           <!--
             Courses are rendered dynamically by
             student_courses.js
@@ -212,8 +247,14 @@
         </div>
 
 
-        <a href="explore_courses.html" class="btn-secondary catalog-btn">
-          <i class="fas fa-compass" aria-hidden="true"></i>
+        <a
+          href="explore_courses.html"
+          class="btn-secondary catalog-btn"
+        >
+          <i
+            class="fas fa-compass"
+            aria-hidden="true"
+          ></i>
 
           Browse Course Catalog
 
@@ -234,7 +275,11 @@
        LESSON PLAYER MODAL
        ===================================================== -->
 
-  <div class="app-modal" id="lessonModal" aria-hidden="true">
+  <div
+    class="app-modal"
+    id="lessonModal"
+    aria-hidden="true"
+  >
 
     <div class="modal-card lesson-modal-card">
 
@@ -242,7 +287,10 @@
 
         <div>
 
-          <span class="badge badge-cs" id="lessonNumberBadge">
+          <span
+            class="badge badge-cs"
+            id="lessonNumberBadge"
+          >
             Lesson 18
           </span>
 
@@ -252,7 +300,11 @@
 
         </div>
 
-        <button class="close-modal" onclick="closeLessonModal()" aria-label="Close lesson">
+        <button
+          class="close-modal"
+          onclick="closeLessonModal()"
+          aria-label="Close lesson"
+        >
           &times;
         </button>
 
@@ -284,16 +336,26 @@
 
         <div class="lesson-footer">
 
-          <span id="lessonCourseProgress" class="lesson-progress-text"></span>
+          <span
+            id="lessonCourseProgress"
+            class="lesson-progress-text"
+          ></span>
 
           <div class="lesson-actions">
 
-            <button id="lessonLabBtn" class="btn-secondary" style="display:none;">
+            <button
+              id="lessonLabBtn"
+              class="btn-secondary"
+              style="display:none;"
+            >
               <i class="fas fa-vials"></i>
               Practice in Lab
             </button>
 
-            <button class="btn-primary" onclick="completeCurrentLesson()">
+            <button
+              class="btn-primary"
+              onclick="completeCurrentLesson()"
+            >
               <i class="fas fa-check-circle"></i>
               Complete Lesson
               <span class="xp-text">
@@ -316,7 +378,11 @@
        COURSE DETAILS MODAL
        ===================================================== -->
 
-  <div class="app-modal" id="courseDetailsModal" aria-hidden="true">
+  <div
+    class="app-modal"
+    id="courseDetailsModal"
+    aria-hidden="true"
+  >
 
     <div class="modal-card course-details-modal-card">
 
@@ -332,7 +398,11 @@
 
         </div>
 
-        <button class="close-modal" onclick="closeDetailsModal()" aria-label="Close course details">
+        <button
+          class="close-modal"
+          onclick="closeDetailsModal()"
+          aria-label="Close course details"
+        >
           &times;
         </button>
 
@@ -355,7 +425,10 @@
 
           </div>
 
-          <button id="detailResumeBtn" class="btn-primary">
+          <button
+            id="detailResumeBtn"
+            class="btn-primary"
+          >
             <i class="fas fa-play"></i>
             Resume
           </button>
@@ -369,13 +442,19 @@
 
           <h4>
 
-            <i class="fas fa-book-open" aria-hidden="true"></i>
+            <i
+              class="fas fa-book-open"
+              aria-hidden="true"
+            ></i>
 
             Chapter Syllabus & Modules
 
           </h4>
 
-          <div id="detailChapterList" class="chapter-list"></div>
+          <div
+            id="detailChapterList"
+            class="chapter-list"
+          ></div>
 
         </div>
 
