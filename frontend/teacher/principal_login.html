@@ -199,6 +199,12 @@
       box-shadow: 0 0 0 3px rgba(244, 174, 37, 0.2);
     }
 
+    .admin-input option {
+      background: #0d2b20;
+      color: #fff;
+      padding: 10px;
+    }
+
     .btn-admin-login {
       width: 100%;
       padding: 14px;
@@ -335,8 +341,32 @@
         </div>
 
         <div class="form-group">
-          <label><i class="fas fa-school"></i> School / Institution Name</label>
-          <input type="text" id="regSchoolName" class="admin-input" placeholder="e.g. Kendriya Vidyalaya, Koraput" required>
+          <label><i class="fas fa-school"></i> School / Institution Name (Pondicherry)</label>
+          <select id="regSchoolName" class="admin-input" onchange="toggleCustomSchool(this.value)" required>
+            <option value="">-- Select School in Pondicherry --</option>
+            <option value="Kendriya Vidyalaya, Pondicherry University Campus">Kendriya Vidyalaya, Pondicherry University Campus</option>
+            <option value="Kendriya Vidyalaya No. 1, JIPMER Campus, Puducherry">Kendriya Vidyalaya No. 1, JIPMER Campus, Puducherry</option>
+            <option value="Jawahar Navodaya Vidyalaya, Kalapet, Puducherry">Jawahar Navodaya Vidyalaya, Kalapet, Puducherry</option>
+            <option value="Sri Aurobindo International Centre of Education, Puducherry">Sri Aurobindo International Centre of Education, Puducherry</option>
+            <option value="Petit Seminaire Higher Secondary School, Puducherry">Petit Seminaire Higher Secondary School, Puducherry</option>
+            <option value="St. Patrick Matriculation Higher Secondary School, Puducherry">St. Patrick Matriculation Higher Secondary School, Puducherry</option>
+            <option value="Vivekananda Higher Secondary School, Lawspet, Puducherry">Vivekananda Higher Secondary School, Lawspet, Puducherry</option>
+            <option value="Achariya Siksha Mandir, Villianur, Puducherry">Achariya Siksha Mandir, Villianur, Puducherry</option>
+            <option value="Aditya Vidyashram Residential School, Poraiyur, Puducherry">Aditya Vidyashram Residential School, Poraiyur, Puducherry</option>
+            <option value="Jawahar Higher Secondary School, Puducherry">Jawahar Higher Secondary School, Puducherry</option>
+            <option value="Subramania Bharathi Government Girls Higher Secondary School, Puducherry">Subramania Bharathi Government Girls Higher Secondary School, Puducherry</option>
+            <option value="Calve College Government Higher Secondary School, Puducherry">Calve College Government Higher Secondary School, Puducherry</option>
+            <option value="Don Bosco Higher Secondary School, Lawspet, Puducherry">Don Bosco Higher Secondary School, Lawspet, Puducherry</option>
+            <option value="St. Joseph of Cluny Higher Secondary School, Puducherry">St. Joseph of Cluny Higher Secondary School, Puducherry</option>
+            <option value="Seventh-day Adventist Higher Secondary School, Puducherry">Seventh-day Adventist Higher Secondary School, Puducherry</option>
+            <option value="Kendriya Vidyalaya, Karaikal, Puducherry">Kendriya Vidyalaya, Karaikal, Puducherry</option>
+            <option value="Jawahar Navodaya Vidyalaya, Mahe, Puducherry">Jawahar Navodaya Vidyalaya, Mahe, Puducherry</option>
+            <option value="Jawahar Navodaya Vidyalaya, Yanam, Puducherry">Jawahar Navodaya Vidyalaya, Yanam, Puducherry</option>
+            <option value="Annai Sivagami Govt Girls Higher Secondary School, Puducherry">Annai Sivagami Govt Girls Higher Secondary School, Puducherry</option>
+            <option value="Thiruvalluvar Govt Higher Secondary School, Puducherry">Thiruvalluvar Govt Higher Secondary School, Puducherry</option>
+            <option value="Other">Other School / Institution (Type Custom)</option>
+          </select>
+          <input type="text" id="regSchoolNameCustom" class="admin-input" placeholder="Type custom school / institution name" style="display: none; margin-top: 8px;">
         </div>
 
         <div class="form-group">
@@ -437,6 +467,18 @@
       }
     }
 
+    function toggleCustomSchool(val) {
+      const customInput = document.getElementById("regSchoolNameCustom");
+      if (val === "Other") {
+        customInput.style.display = "block";
+        customInput.required = true;
+        customInput.focus();
+      } else {
+        customInput.style.display = "none";
+        customInput.required = false;
+      }
+    }
+
     function slugify(name, email) {
       const base = name.trim().toLowerCase().replace(/\s+/g, "_") || email.split("@")[0];
       const clean = base.replace(/[^a-z0-9_-]/g, "").slice(0, 35);
@@ -448,7 +490,9 @@
       clearError();
 
       const fullName = document.getElementById("regFullName").value.trim();
-      const schoolName = document.getElementById("regSchoolName").value.trim();
+      const schoolSelect = document.getElementById("regSchoolName");
+      const schoolCustom = document.getElementById("regSchoolNameCustom");
+      const schoolName = schoolSelect.value === "Other" ? (schoolCustom.value.trim() || "Custom Institution") : schoolSelect.value.trim();
       const email = document.getElementById("regEmail").value.trim();
       const password = document.getElementById("regPassword").value;
       const confirmPassword = document.getElementById("regConfirmPassword").value;
