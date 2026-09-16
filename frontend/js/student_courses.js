@@ -447,34 +447,39 @@ function renderCoursesPage() {
         </div>
       `;
     } else {
-      enrolledGrid.innerHTML = enrolledCourses.map(c => `
-        <div class="course-card border-blue">
-          <div class="course-header">
-            <i class="fas ${c.icon || 'fa-book'} icon"></i>
-            <div>
-              <h3>${c.title}</h3>
-              <p>${c.teacher}</p>
-              <div class="meta">
-                <span><i class="fas fa-clock"></i> ${c.totalLessons} lessons</span>
-                <span><i class="fas fa-star"></i> ${c.rating}</span>
-              </div>
+      enrolledGrid.innerHTML = enrolledCourses.map(c => {
+        const pct = c.progress || 0;
+        const statusColor = pct === 100 ? "#4ade80" : pct >= 50 ? "var(--marigold)" : "#60a5fa";
+        return `
+        <div class="course-card" style="border-color: rgba(59,130,246,0.35); position:relative;">
+          <div class="course-card-top">
+            <div class="course-icon-wrap"><i class="fas ${c.icon || 'fa-book'}"></i></div>
+            <div class="course-card-head">
+              <span class="badge badge-cs" style="font-size:0.7rem;">${c.completedLessons}/${c.totalLessons} Lessons</span>
+              <div class="course-rating"><i class="fas fa-star"></i> ${c.rating}</div>
             </div>
           </div>
-          <div class="progress-info">
-            <span>Progress: ${c.progress}%</span>
-            <span>${c.completedLessons}/${c.totalLessons} lessons completed</span>
+          <h3>${c.title}</h3>
+          <p class="course-desc" style="margin-bottom:4px;">${c.teacher}</p>
+          <div class="course-meta">
+            <span><i class="fas fa-tasks"></i> ${pct}% completed</span>
+            <span><i class="fas fa-clock"></i> ${c.totalLessons} lessons</span>
           </div>
-          <div class="progress">
-            <div class="progress-bar blue" style="width:${c.progress}%"></div>
+          <div class="progress-bar" style="margin:8px 0 14px;">
+            <div class="progress-fill" style="width:${pct}%; background:linear-gradient(90deg, ${statusColor}, ${statusColor}99);"></div>
           </div>
-          <div class="actions">
+          <div class="course-actions">
             <button class="btn-primary" onclick="continueLearning('${c.id}')"><i class="fas fa-play"></i> Continue Learning</button>
-            <button class="btn-secondary" onclick="viewCourseDetails('${c.id}')"><i class="fas fa-list-ul"></i> View Details</button>
+            <button class="btn-secondary details-btn" onclick="viewCourseDetails('${c.id}')" title="View Syllabus"><i class="fas fa-list-ul"></i> Details</button>
           </div>
         </div>
-      `).join("");
+      `; }).join("");
     }
   }
+
+  // 2. Populate the explore/catalog grid
+  filterCatalog();
+}
 
 let activeGradeFilter = "all";
 
@@ -501,6 +506,8 @@ function filterCatalog() {
   const catalogGrid = document.getElementById("catalogCoursesGrid");
   if (!catalogGrid) return;
 
+  const catalogCountEl = document.getElementById("catalogCountBadge");
+
   const enrolledIds = getEnrolledCourseIds();
   const activeFilter = document.querySelector(".catalog-tab.active")?.getAttribute("data-cat") || "all";
   const searchVal = (document.getElementById("catalogSearch")?.value || "").toLowerCase();
@@ -512,6 +519,8 @@ function filterCatalog() {
     const matchesGrade = (activeGradeFilter === "all") || (!c.grade) || (c.grade === "all") || c.grade.includes(activeGradeFilter);
     return matchesCat && matchesSearch && matchesGrade;
   });
+
+  if (catalogCountEl) catalogCountEl.textContent = `${filtered.length} Courses`;
 
   if (filtered.length === 0) {
     catalogGrid.innerHTML = `
