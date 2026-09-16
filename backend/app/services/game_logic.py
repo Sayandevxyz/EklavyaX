@@ -349,12 +349,13 @@ def get_class_leaderboard(
             models.User.id,
             models.User.username,
             models.Wallet.xp,
+            models.Wallet.balance.label("coins"),
             models.Faction.name.label("faction_name"),
         )
         .join(models.Wallet, models.Wallet.user_id == models.User.id)
         .outerjoin(models.Faction, models.Faction.id == models.User.faction_id)
         .filter(models.User.role == models.UserRole.student)
-        .order_by(desc(models.Wallet.xp))
+        .order_by(desc(models.Wallet.balance), desc(models.Wallet.xp))
         .limit(limit)
         .all()
     )
@@ -365,6 +366,7 @@ def get_class_leaderboard(
             "user_id": row.id,
             "username": row.username,
             "xp": row.xp,
+            "coins": row.coins or 0,
             "faction_name": row.faction_name,
         }
         for idx, row in enumerate(rows)

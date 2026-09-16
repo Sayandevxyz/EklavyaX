@@ -329,6 +329,8 @@ for local_origin in [
     "http://127.0.0.1:5500",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
 ]:
     if local_origin not in cors_origins:
         cors_origins.append(local_origin)

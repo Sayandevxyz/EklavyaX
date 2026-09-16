@@ -108,14 +108,14 @@ def get_global_leaderboard(
             "tier_score": b_info["tier_score"],
         })
 
-    # Sort: Higher badge tier ranks higher!
+    # Sort: Those with more coins and higher performance (XP) rank at the top!
     if sort_by == "streak":
-        annotated.sort(key=lambda x: (x["streak"], x["tier_score"], x["xp"]), reverse=True)
+        annotated.sort(key=lambda x: (x["streak"], x["coins"], x["xp"]), reverse=True)
     elif sort_by == "xp":
-        annotated.sort(key=lambda x: (x["tier_score"], x["xp"], x["coins"]), reverse=True)
+        annotated.sort(key=lambda x: (x["xp"], x["coins"], x["tier_score"]), reverse=True)
     else:
-        # Default or 'badge' or 'coins': Sort by Badge Tier first, then Coins, then XP
-        annotated.sort(key=lambda x: (x["tier_score"], x["coins"], x["xp"]), reverse=True)
+        # Default or 'coins': Highest coins first, then XP (performance), then tier
+        annotated.sort(key=lambda x: (x["coins"], x["xp"], x["tier_score"]), reverse=True)
 
     leaderboard = []
     my_rank_info = None

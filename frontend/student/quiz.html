@@ -504,6 +504,7 @@
 
   <script src="../js/api.js?v=2026.10"></script>
   <script src="../js/page_init.js?v=2026.10"></script>
+  <script src="../js/leaderboard_sync.js?v=2026.10"></script>
   <script src="../js/quiz.js?v=2026.10"></script>
   <script>
     // Tab Switching
@@ -862,6 +863,14 @@
         }
 
         lastSubmissionId = result.submission_id;
+
+        if (window.LeaderboardSync) {
+          window.LeaderboardSync.updatePerformance("sayan", {
+            scorePct: result.percentage,
+            coinsEarned: result.coins_awarded || 0,
+            streakDelta: 1
+          });
+        }
 
         document.getElementById("tqRunnerContainer").style.display = "none";
         document.getElementById("tqResultContainer").style.display = "block";

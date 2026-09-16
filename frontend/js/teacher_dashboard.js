@@ -36,12 +36,22 @@ function toggleSidebar() {
     });
   }
 
-  // ── Live leaderboard ──────────────────────────────────────────────────
+  // ── Live real-time synced leaderboard ────────────────────────────────
   try {
-    const lb = await EklavyaXAPI.classLeaderboard();
-    renderLeaderboard(lb.entries);
+    if (window.LeaderboardSync) {
+      window.LeaderboardSync.renderLeaderboardWidget("teacherLeaderboardList", 5);
+      window.LeaderboardSync.subscribe(() => {
+        window.LeaderboardSync.renderLeaderboardWidget("teacherLeaderboardList", 5);
+      });
+    } else {
+      const lb = await EklavyaXAPI.classLeaderboard();
+      renderLeaderboard(lb.entries);
+    }
   } catch (err) {
     console.warn("EklavyaX: couldn't load leaderboard —", err.message);
+    if (window.LeaderboardSync) {
+      window.LeaderboardSync.renderLeaderboardWidget("teacherLeaderboardList", 5);
+    }
   }
 
   // ── Live bounties ─────────────────────────────────────────────────────
@@ -55,29 +65,30 @@ function toggleSidebar() {
 
 // ── Leaderboard renderer ───────────────────────────────────────────────────
 function renderLeaderboard(entries) {
-  const container = document.querySelector(".leaderboard");
+  const container = document.getElementById("teacherLeaderboardList") || document.querySelector(".leaderboard");
   if (!container || !entries || entries.length === 0) return;
 
-  // Keep the heading, replace items
-  const heading = container.querySelector("h3");
   const medals = ["gold", "silver", "bronze"];
-  const medalIcons = ["🥇", "🥈", "🥉"];
 
   const items = entries.slice(0, 5).map((e, i) => {
-    const iconClass = medals[i] ? `medal ${medals[i]}` : "";
     const icon = i < 3
       ? `<div class="icon-wrapper medal ${medals[i]}" aria-hidden="true"><i class="fas fa-medal"></i></div>`
       : `<div class="icon-wrapper" aria-hidden="true"><i class="fas fa-user"></i></div>`;
-    const starIcon = i < 3 ? `<i class="fas fa-star"></i>` : `<i class="far fa-star"></i>`;
+    const starIcon = i < 3 ? `<i class="fas fa-star" style="color:#f4ae25;"></i>` : `<i class="far fa-star"></i>`;
     return `
       <div class="leaderboard-item" tabindex="0">
         ${icon}
         <div class="name">${e.username}</div>
-        <div class="points">${e.xp} XP <span class="star">${starIcon}</span></div>
+        <div class="points" style="color:#f4ae25; font-weight:700;">🪙 ${e.coins || 0} • ${e.xp} XP <span class="star">${starIcon}</span></div>
       </div>`;
   }).join("");
 
-  container.innerHTML = (heading ? heading.outerHTML : "<h3>Leaderboard</h3>") + items;
+  if (document.getElementById("teacherLeaderboardList")) {
+    container.innerHTML = items;
+  } else {
+    const heading = container.querySelector("h3");
+    container.innerHTML = (heading ? heading.outerHTML : "<h3>Leaderboard</h3>") + items;
+  }
 }
 
 // ── Bounty count badge ─────────────────────────────────────────────────────

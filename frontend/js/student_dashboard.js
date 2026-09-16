@@ -65,12 +65,22 @@
     renderProgressChart(0, 1);
   }
 
-  // ── Live class leaderboard ─────────────────────────────────────────────
+  // ── Live real-time synchronized class leaderboard ─────────────────────
   try {
-    const lb = await EklavyaXAPI.classLeaderboard();
-    renderLeaderboard(lb.entries, user.id);
+    if (window.LeaderboardSync) {
+      window.LeaderboardSync.renderLeaderboardWidget("leaderboardList", 5);
+      window.LeaderboardSync.subscribe(() => {
+        window.LeaderboardSync.renderLeaderboardWidget("leaderboardList", 5);
+      });
+    } else {
+      const lb = await EklavyaXAPI.classLeaderboard();
+      renderLeaderboard(lb.entries, user.id);
+    }
   } catch (err) {
     console.warn("EklavyaX: couldn't load leaderboard —", err.message);
+    if (window.LeaderboardSync) {
+      window.LeaderboardSync.renderLeaderboardWidget("leaderboardList", 5);
+    }
   }
 
   // ── Live bounty board ─────────────────────────────────────────────────
@@ -140,11 +150,11 @@ function renderLeaderboard(entries, currentUserId) {
   container.innerHTML = entries.slice(0, 5).map((e, i) => {
     const isMe = e.user_id === currentUserId;
     return `
-    < div class="leaderboard-item${isMe ? " is - me" : ""}" tabindex = "0" >
+      <div class="leaderboard-item${isMe ? " is-me" : ""}" tabindex="0">
         <span class="lb-rank">${medals[i] || `#${i + 1}`}</span>
         <span class="lb-name">${e.username}${isMe ? " (You)" : ""}</span>
-        <span class="lb-pts">${e.xp} XP</span>
-      </div > `;
+        <span class="lb-pts" style="color:#f4ae25; font-weight:700;">🪙 ${e.coins || 0} • ${e.xp} XP</span>
+      </div>`;
   }).join("");
 }
 
@@ -154,21 +164,21 @@ function renderBounties(bounties) {
   if (!container) return;
 
   if (!bounties || bounties.length === 0) {
-    container.innerHTML = `< p class="no-data" > No active bounties right now.Check back soon!</p > `;
+    container.innerHTML = `<p class="no-data">No active bounties right now. Check back soon!</p>`;
     return;
   }
 
   container.innerHTML = bounties.slice(0, 4).map(b => {
     const deadline = new Date(b.deadline).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
     return `
-    < div class="bounty-item" tabindex = "0" >
+      <div class="bounty-item" tabindex="0">
         <div class="bounty-title">${b.title}</div>
         <div class="bounty-meta">
           <span class="bounty-reward">🪙 ${b.reward_coins} coins</span>
           <span class="bounty-deadline">⏰ ${deadline}</span>
         </div>
         ${b.topic ? `<span class="bounty-topic">${b.topic}</span>` : ""}
-      </div > `;
+      </div>`;
   }).join("");
 }
 

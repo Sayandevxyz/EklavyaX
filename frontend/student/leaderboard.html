@@ -175,8 +175,8 @@
 
       <!-- Filter Controls -->
       <div style="display: flex; gap: 12px; margin-bottom: 25px; flex-wrap: wrap;">
-        <button class="filter-pill active" onclick="setSortBy('xp', this)"><i class="fas fa-star"></i> Top XP</button>
-        <button class="filter-pill" onclick="setSortBy('coins', this)"><i class="fas fa-coins"></i> Top Coins</button>
+        <button class="filter-pill active" onclick="setSortBy('coins', this)"><i class="fas fa-coins"></i> Top Coins & Performance</button>
+        <button class="filter-pill" onclick="setSortBy('xp', this)"><i class="fas fa-star"></i> Top XP</button>
         <button class="filter-pill" onclick="setSortBy('streak', this)"><i class="fas fa-fire"></i> Longest Streak</button>
         <button class="filter-pill" onclick="showFactionsTab(this)"><i class="fas fa-shield-alt"></i> Faction Standings</button>
       </div>
@@ -202,7 +202,7 @@
           </thead>
 
           <tbody id="leaderboardBody">
-            <tr><td colspan="6" style="text-align: center;">Loading rankings...</td></tr>
+            <tr><td colspan="7" style="text-align: center;">Loading rankings...</td></tr>
           </tbody>
         </table>
       </div>
@@ -212,8 +212,9 @@
   <script src="../js/api.js"></script>
   <script src="../js/page_init.js"></script>
   <script src="../js/theme_toggle.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script>
-    let currentSort = "xp";
+    let currentSort = "coins";
     let isFactionView = false;
 
     async function loadLeaderboard() {
@@ -222,11 +223,30 @@
         return;
       }
       try {
-        const data = await EklavyaXAPI.getLeaderboardGlobal("all_time", currentSort);
-        renderPodium(data.rankings.slice(0, 3));
-        renderTable(data.rankings, data.my_rank);
+        let rankings = null;
+        let myRank = null;
+        try {
+          const data = await EklavyaXAPI.getLeaderboardGlobal("all_time", currentSort);
+          if (data && data.rankings && data.rankings.length > 0) {
+            rankings = data.rankings;
+            myRank = data.my_rank;
+          }
+        } catch (apiErr) {
+          console.warn("Backend leaderboard API notice, syncing from local real-time DB:", apiErr);
+        }
+
+        if (!rankings && window.LeaderboardSync) {
+          rankings = window.LeaderboardSync.getSortedStudents(currentSort);
+        }
+
+        if (rankings && rankings.length > 0) {
+          renderPodium(rankings.slice(0, 3));
+          renderTable(rankings, myRank);
+        } else {
+          document.getElementById("leaderboardBody").innerHTML = `<tr><td colspan="7" style="color:#ef4444; text-align:center;">No rankings available.</td></tr>`;
+        }
       } catch (err) {
-        document.getElementById("leaderboardBody").innerHTML = `<tr><td colspan="6" style="color:#ef4444;">Error loading leaderboard.</td></tr>`;
+        document.getElementById("leaderboardBody").innerHTML = `<tr><td colspan="7" style="color:#ef4444; text-align:center;">Error loading leaderboard.</td></tr>`;
       }
     }
 
@@ -354,6 +374,14 @@
     document.addEventListener("DOMContentLoaded", () => {
       initPage("student", "student_login.html");
       loadLeaderboard();
+
+      if (window.LeaderboardSync) {
+        window.LeaderboardSync.subscribe(() => {
+          if (!isFactionView) {
+            loadLeaderboard();
+          }
+        });
+      }
     });
   </script>
 </body>

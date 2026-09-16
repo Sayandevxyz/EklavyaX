@@ -360,134 +360,73 @@
 
   <script src="../js/api.js"></script>
   <script src="../js/page_init.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script>
     let overallChartInstance = null;
     let attendanceChartInstance = null;
+    let currentStudentKey = "sayan";
 
-    const studentDatabase = {
-      sayan: {
-        name: "RISHABH RAJ",
-        roll: "EK-101",
-        exam: "CBSE & JEE 2026",
-        house: "Agni House",
-        coins: 480,
-        streak: 12,
-        risk: "safe",
-        riskLabel: "Healthy Progress",
-        overall: 92,
-        attendance: 96,
-        assignments: 88,
-        participation: 90,
-        scores: [95, 78, 92, 88, 96, 90],
-        attendanceTrend: [94, 96, 95, 96],
-        note: "Excellent conceptual grasp in Physics and Math. Chemistry reactions need slight revision."
-      },
-      aditya: {
-        name: "Aditya Mishra",
-        roll: "EK-102",
-        exam: "NEET / Medical",
-        house: "Vayu House",
-        coins: 220,
-        streak: 4,
-        risk: "med",
-        riskLabel: "Moderate Risk",
-        overall: 71,
-        attendance: 78,
-        assignments: 70,
-        participation: 68,
-        scores: [68, 65, 72, 85, 80, 75],
-        attendanceTrend: [82, 80, 75, 78],
-        note: "Struggling with kinematics calculation speed. Recommended attending Friday remedial hour."
-      },
-      ishita: {
-        name: "Ishita Singh",
-        roll: "EK-103",
-        exam: "CBSE Boards",
-        house: "Jal House",
-        coins: 610,
-        streak: 18,
-        risk: "safe",
-        riskLabel: "Top Performer",
-        overall: 95,
-        attendance: 98,
-        assignments: 96,
-        participation: 94,
-        scores: [94, 92, 98, 95, 98, 92],
-        attendanceTrend: [96, 98, 97, 98],
-        note: "Top rank in class. Nominated for Inter-School Physics Olympiad."
-      },
-      prachi: {
-        name: "Prachi Mondal",
-        roll: "EK-104",
-        exam: "JEE Main",
-        house: "Prithvi House",
-        coins: 350,
-        streak: 8,
-        risk: "safe",
-        riskLabel: "Good Standing",
-        overall: 84,
-        attendance: 94,
-        assignments: 85,
-        participation: 82,
-        scores: [88, 80, 84, 82, 90, 85],
-        attendanceTrend: [90, 92, 94, 94],
-        note: "Very regular in doubt sessions. Mathematics integration formulas need practice."
-      },
-      rahul: {
-        name: "Rahul Verma",
-        roll: "EK-105",
-        exam: "CBSE Boards",
-        house: "Agni House",
-        coins: 85,
-        streak: 1,
-        risk: "high",
-        riskLabel: "High Risk (<60%)",
-        overall: 54,
-        attendance: 64,
-        assignments: 45,
-        participation: 40,
-        scores: [48, 52, 50, 60, 58, 62],
-        attendanceTrend: [70, 66, 62, 64],
-        note: "Attendance has fallen below 75% threshold. Parent notification issued. Remedial classes assigned."
+    function getStudentData(key) {
+      if (window.LeaderboardSync) {
+        return window.LeaderboardSync.getStudentById(key);
       }
-    };
+      return null;
+    }
+
+    function populateStudentDropdown() {
+      const select = document.getElementById("studentSelect");
+      if (!select) return;
+
+      if (window.LeaderboardSync) {
+        const students = window.LeaderboardSync.getSortedStudents("coins");
+        const prevVal = select.value || currentStudentKey;
+        select.innerHTML = students.map((st) => `
+          <option value="${st.id}" ${st.id === prevVal ? "selected" : ""}>
+            #${st.rank} ${st.name} (${st.roll}) • ${st.coins} 🪙 (${st.overall}%)
+          </option>
+        `).join("");
+      }
+    }
 
     function loadSelectedStudent(key) {
-      const st = studentDatabase[key] || studentDatabase.sayan;
+      currentStudentKey = key;
+      const st = getStudentData(key);
+      if (!st) return;
+
       document.getElementById("curStudentName").textContent = st.name;
-      document.getElementById("curStudentRoll").textContent = st.roll;
-      document.getElementById("curStudentExam").textContent = st.exam;
-      document.getElementById("curStudentHouse").textContent = st.house;
-      document.getElementById("curStudentCoins").textContent = `${st.coins} 🪙`;
-      document.getElementById("curStudentStreak").textContent = `${st.streak} Days 🔥`;
+      document.getElementById("curStudentRoll").textContent = st.roll || "EK-101";
+      document.getElementById("curStudentExam").textContent = st.exam || "CBSE & JEE 2026";
+      document.getElementById("curStudentHouse").textContent = st.house || "Agni House";
+      document.getElementById("curStudentCoins").textContent = `${st.coins || 0} 🪙`;
+      document.getElementById("curStudentStreak").textContent = `${st.streak || 1} Days 🔥`;
 
       const riskEl = document.getElementById("curRiskBadge");
-      riskEl.textContent = st.riskLabel;
-      riskEl.className = `risk-badge risk-${st.risk}`;
+      riskEl.textContent = st.riskLabel || "Healthy Progress";
+      riskEl.className = `risk-badge risk-${st.risk || "safe"}`;
 
       document.getElementById("valOverall").textContent = `${st.overall}%`;
       document.getElementById("ringOverall").style.background = `conic-gradient(#10b981 ${st.overall}%, rgba(255,255,255,0.08) ${st.overall}%)`;
 
-      document.getElementById("valAttendance").textContent = `${st.attendance}%`;
-      document.getElementById("ringAttendance").style.background = `conic-gradient(#38bdf8 ${st.attendance}%, rgba(255,255,255,0.08) ${st.attendance}%)`;
+      document.getElementById("valAttendance").textContent = `${st.attendance || 90}%`;
+      document.getElementById("ringAttendance").style.background = `conic-gradient(#38bdf8 ${st.attendance || 90}%, rgba(255,255,255,0.08) ${st.attendance || 90}%)`;
 
-      document.getElementById("valAssignments").textContent = `${st.assignments}%`;
-      document.getElementById("ringAssignments").style.background = `conic-gradient(#a855f7 ${st.assignments}%, rgba(255,255,255,0.08) ${st.assignments}%)`;
+      document.getElementById("valAssignments").textContent = `${st.assignments || 85}%`;
+      document.getElementById("ringAssignments").style.background = `conic-gradient(#a855f7 ${st.assignments || 85}%, rgba(255,255,255,0.08) ${st.assignments || 85}%)`;
 
-      document.getElementById("valParticipation").textContent = `${st.participation}%`;
-      document.getElementById("ringParticipation").style.background = `conic-gradient(#f59e0b ${st.participation}%, rgba(255,255,255,0.08) ${st.participation}%)`;
+      document.getElementById("valParticipation").textContent = `${st.participation || 80}%`;
+      document.getElementById("ringParticipation").style.background = `conic-gradient(#f59e0b ${st.participation || 80}%, rgba(255,255,255,0.08) ${st.participation || 80}%)`;
 
-      document.getElementById("facultyNoteText").textContent = st.note;
+      document.getElementById("facultyNoteText").textContent = st.note || "Active learner showing steady improvement.";
 
       updateCharts(st);
     }
 
     function updateCharts(st) {
-      if (overallChartInstance) {
+      if (overallChartInstance && st.scores) {
         overallChartInstance.data.datasets[0].data = st.scores;
         overallChartInstance.update();
       }
-      if (attendanceChartInstance) {
+      if (attendanceChartInstance && st.attendanceTrend) {
         attendanceChartInstance.data.datasets[0].data = st.attendanceTrend;
         attendanceChartInstance.update();
       }
@@ -545,15 +484,22 @@
 
     function exportProgressReport() {
       const studentKey = document.getElementById("studentSelect").value;
-      const st = studentDatabase[studentKey] || studentDatabase.sayan;
-      // Open inline printable / viewable diagnostic report
       window.open(`/api/quiz/teacher/submission/1/report-pdf?view=true`, '_blank');
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       initPage("teacher", "login.html");
       initCharts();
+      populateStudentDropdown();
       loadSelectedStudent("sayan");
+
+      // Subscribe to real-time leaderboard changes
+      if (window.LeaderboardSync) {
+        window.LeaderboardSync.subscribe(() => {
+          populateStudentDropdown();
+          loadSelectedStudent(currentStudentKey);
+        });
+      }
     });
   </script>
 </body>

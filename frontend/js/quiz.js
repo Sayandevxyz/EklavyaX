@@ -400,6 +400,15 @@ const EklavyaXQuiz = (() => {
     document.getElementById("sumCoins").textContent = `+${summary.total_coins}`;
     document.getElementById("sumXp").textContent = `+${summary.total_xp}`;
 
+    // Sync in real-time across tabs & dashboards
+    if (window.LeaderboardSync) {
+      window.LeaderboardSync.updatePerformance("sayan", {
+        scorePct: summary.accuracy_pct,
+        coinsEarned: summary.total_coins,
+        streakDelta: 1
+      });
+    }
+
     // Transparency notices
     const noticeBox = document.getElementById("quizTransparencyBox");
     const noticeList = document.getElementById("quizTransparencyList");

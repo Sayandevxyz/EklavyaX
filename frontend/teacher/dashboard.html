@@ -161,42 +161,22 @@
           </div>
         </div>
         <div class="box leaderboard" aria-labelledby="leaderboard-heading">
-          <h3 id="leaderboard-heading">Leaderboard</h3>
-          <div class="leaderboard-item" tabindex="0">
-            <div class="icon-wrapper medal gold" aria-hidden="true"><i class="fas fa-medal"></i></div>
-            <div class="name">Prachi Mondal</div>
-            <div class="points">964 pts <span aria-label="Starred user" role="img" class="star"><i
-                  class="fas fa-star"></i></span></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+            <h3 id="leaderboard-heading" style="margin: 0;">Leaderboard</h3>
+            <a href="student_progress.html" style="font-size: 12px; color: var(--accent-gold, #f4ae25); text-decoration: none; font-weight: 600;">
+              Analytics <i class="fas fa-external-link-alt" style="font-size: 10px;"></i>
+            </a>
           </div>
-          <div class="leaderboard-item" tabindex="0">
-            <div class="icon-wrapper medal silver" aria-hidden="true"><i class="fas fa-medal"></i></div>
-            <div class="name">Anchal Vishwakarma</div>
-            <div class="points">950 pts <span aria-label="Starred user" role="img" class="star"><i
-                  class="fas fa-star"></i></span></div>
+          <div id="teacherLeaderboardList" class="leaderboard-items-wrap">
+            <!-- Dynamic synced real-time leaderboard items -->
           </div>
-          <div class="leaderboard-item" tabindex="0">
-            <div class="icon-wrapper medal bronze" aria-hidden="true"><i class="fas fa-medal"></i></div>
-            <div class="name">Ishita Singh</div>
-            <div class="points">943 pts <span aria-label="Starred user" role="img" class="star"><i
-                  class="fas fa-star"></i></span></div>
-          </div>
-          <div class="leaderboard-item" tabindex="0">
-            <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-user"></i></div>
-            <div class="name">Aditya Yadav</div>
-            <div class="points">932 pts <span aria-label="Starred user" role="img" class="star"><i
-                  class="far fa-star"></i></span></div>
-          </div>
-          <div class="leaderboard-item" tabindex="0">
-            <div class="icon-wrapper" aria-hidden="true"><i class="fas fa-user"></i></div>
-            <div class="name">Priya Devi</div>
-            <div class="points">900 pts <span aria-label="Starred user" role="img" class="star"><i
-                  class="far fa-star"></i></span></div>
-          </div>
+        </div>
       </section>
     </main>
   </div>
   <script src="../js/api.js"></script>
   <script src="../js/theme_toggle.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script src="../js/teacher_dashboard.js"></script>
   <script src="../js/chatbot.js?v=2.1"></script>
 </body>

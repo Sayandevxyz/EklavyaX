@@ -87,6 +87,7 @@ class LeaderboardEntry(BaseModel):
     user_id: int
     username: str
     xp: int
+    coins: Optional[int] = 0
     faction_name: Optional[str] = None
 
 
