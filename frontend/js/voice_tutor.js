@@ -1,10 +1,3 @@
-/**
- * voice_tutor.js — Voice-Based AI Tutor for EklavyaX (4 Languages: Hindi, English, Malayalam, Telugu)
- * ─────────────────────────────────────────────────────────────────────────────────────────────────────
- * Enables students to ask questions via voice in Hindi, English, Malayalam, or Telugu,
- * and listen to the AI's explanation with full Play, Pause, and Stop audio controls.
- */
-
 const VoiceTutor = (() => {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
