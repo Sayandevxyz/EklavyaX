@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const advancePages = [
     'leaderboard.html', 'live_battle.html', 'flashcards.html', 'study_planner.html',
     'study_groups.html', 'chat_threads.html', 'certificates.html', 'eklavyalens.html',
-    'pyq_arena.html', 'mindmaps.html', 'bookmarks.html', 'parent_dashboard.html'
+    'pyq_arena.html', 'mindmaps.html', 'bookmarks.html'
   ];
   const isOnAdvancePage = advancePages.some(page => currentPath.includes(page));
   let savedState = null;
