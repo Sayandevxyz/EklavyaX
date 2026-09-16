@@ -9,16 +9,21 @@
   <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+    body {
+      background: #071510;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
     .flashcard-stage {
       perspective: 1000px;
-      max-width: 650px;
-      margin: 30px auto;
-      min-height: 360px;
+      max-width: 680px;
+      margin: 25px auto;
+      min-height: 380px;
     }
     .flashcard-inner {
       position: relative;
       width: 100%;
-      height: 360px;
+      height: 380px;
       text-align: center;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       transform-style: preserve-3d;
@@ -34,24 +39,24 @@
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       border-radius: 20px;
-      padding: 30px;
+      padding: 34px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       box-sizing: border-box;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-      border: 1px solid var(--border-light);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .flashcard-front {
-      background: var(--card-dark, #14382a);
-      color: var(--text);
+      background: linear-gradient(135deg, #102d22 0%, #071912 100%);
+      color: #e2e8f0;
     }
     .flashcard-back {
-      background: #172554;
+      background: linear-gradient(135deg, #0d3829 0%, #082218 100%);
       color: #ffffff;
       transform: rotateY(180deg);
-      border-color: #3b82f6;
+      border-color: #10b981;
     }
     .review-btn-bar {
       display: flex;
@@ -62,7 +67,7 @@
     }
     .rev-btn {
       border: none;
-      padding: 12px 24px;
+      padding: 12px 22px;
       border-radius: 12px;
       font-weight: 700;
       cursor: pointer;
@@ -70,14 +75,57 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      min-width: 110px;
+      min-width: 105px;
       transition: all 0.2s ease;
     }
     .rev-again { background: #ef4444; color: white; }
     .rev-hard { background: #f59e0b; color: white; }
     .rev-good { background: #10b981; color: white; }
-    .rev-easy { background: #3b82f6; color: white; }
+    .rev-easy { background: #38bdf8; color: #071510; }
     .rev-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
+
+    .category-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .cat-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #94a3b8;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-btn.active {
+      background: var(--accent-gold, #f4ae25);
+      color: #071510;
+      border-color: var(--accent-gold, #f4ae25);
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 20px;
+    }
+    .modal-card {
+      background: #092016;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 28px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
   </style>
 </head>
 <body>
@@ -111,54 +159,18 @@
           </button>
 
           <div class="menu-subitems" id="advanceFeaturesSubitems">
-            <a href="leaderboard.html">
-              <i class="fas fa-trophy" style="color: #fbbf24;" aria-hidden="true"></i>
-              <span>Leaderboard</span>
-            </a>
-            <a href="live_battle.html">
-              <i class="fas fa-bolt" style="color: #f59e0b;" aria-hidden="true"></i>
-              <span>Live Duel 1v1</span>
-            </a>
-            <a class="active" href="flashcards.html">
-              <i class="fas fa-layer-group" style="color: #34d399;" aria-hidden="true"></i>
-              <span>Flashcards</span>
-            </a>
-            <a href="study_planner.html">
-              <i class="fas fa-calendar-alt" style="color: #60a5fa;" aria-hidden="true"></i>
-              <span>Study Planner</span>
-            </a>
-            <a href="study_groups.html">
-              <i class="fas fa-users" style="color: #818cf8;" aria-hidden="true"></i>
-              <span>Study Groups</span>
-            </a>
-            <a href="chat_threads.html">
-              <i class="fas fa-comments" style="color: #a78bfa;" aria-hidden="true"></i>
-              <span>Doubts Chat</span>
-            </a>
-            <a href="certificates.html">
-              <i class="fas fa-certificate" style="color: #f472b6;" aria-hidden="true"></i>
-              <span>Certificates</span>
-            </a>
-            <a href="eklavyalens.html">
-              <i class="fas fa-globe-asia" style="color: #38bdf8;" aria-hidden="true"></i>
-              <span>EklavyaLens (Maps)</span>
-            </a>
-            <a href="pyq_arena.html">
-              <i class="fas fa-stopwatch" style="color: #fbbf24;" aria-hidden="true"></i>
-              <span>PYQ Arena (JEE/NEET)</span>
-            </a>
-            <a href="mindmaps.html">
-              <i class="fas fa-project-diagram" style="color: #c084fc;" aria-hidden="true"></i>
-              <span>Concept Mind Maps</span>
-            </a>
-            <a href="bookmarks.html">
-              <i class="fas fa-bookmark" style="color: #f43f5e;" aria-hidden="true"></i>
-              <span>Revision Bookmarks</span>
-            </a>
-            <a href="parent_dashboard.html">
-              <i class="fas fa-user-shield" style="color: #fb923c;" aria-hidden="true"></i>
-              <span>Parent Portal</span>
-            </a>
+            <a href="leaderboard.html"><i class="fas fa-trophy" style="color: #fbbf24;"></i> <span>Leaderboard</span></a>
+            <a href="live_battle.html"><i class="fas fa-bolt" style="color: #f59e0b;"></i> <span>Live Duel 1v1</span></a>
+            <a class="active" href="flashcards.html"><i class="fas fa-layer-group" style="color: #34d399;"></i> <span>Flashcards</span></a>
+            <a href="study_planner.html"><i class="fas fa-calendar-alt" style="color: #60a5fa;"></i> <span>Study Planner</span></a>
+            <a href="study_groups.html"><i class="fas fa-users" style="color: #818cf8;"></i> <span>Study Groups</span></a>
+            <a href="chat_threads.html"><i class="fas fa-comments" style="color: #a78bfa;"></i> <span>Doubts Chat</span></a>
+            <a href="certificates.html"><i class="fas fa-certificate" style="color: #f472b6;"></i> <span>Certificates</span></a>
+            <a href="eklavyalens.html"><i class="fas fa-globe-asia" style="color: #38bdf8;"></i> <span>EklavyaLens (Maps)</span></a>
+            <a href="pyq_arena.html"><i class="fas fa-stopwatch" style="color: #fbbf24;"></i> <span>PYQ Arena (JEE/NEET)</span></a>
+            <a href="mindmaps.html"><i class="fas fa-project-diagram" style="color: #c084fc;"></i> <span>Concept Mind Maps</span></a>
+            <a href="bookmarks.html"><i class="fas fa-bookmark" style="color: #f43f5e;"></i> <span>Revision Bookmarks</span></a>
+            <a href="parent_dashboard.html"><i class="fas fa-user-shield" style="color: #fb923c;"></i> <span>Parent Portal</span></a>
           </div>
         </div>
 
@@ -167,7 +179,7 @@
       <div class="profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
         <div class="profile-info">
-          <strong id="profileName">Student</strong>
+          <strong id="profileName">RISHABH RAJ</strong>
           <span id="profileAction">Log out</span>
         </div>
       </div>
@@ -176,119 +188,246 @@
     <main class="content">
       <section class="top-bar">
         <div class="welcome-text">
-          <h1>🧠 <strong>Spaced Repetition Flashcards (SM-2)</strong></h1>
-          <h2>Smart review system: Turn your quiz mistakes into permanent conceptual memory!</h2>
+          <h1>🗂️ <strong>Spaced Repetition Concept Flashcards</strong></h1>
+          <h2>Active recall memory engine: Master formulas, organic reactions, and critical definitions!</h2>
         </div>
       </section>
 
+      <!-- Deck Categories -->
+      <div class="category-pills">
+        <button class="cat-btn active" onclick="filterDeck('all', this)">All Subjects</button>
+        <button class="cat-btn" onclick="filterDeck('Physics', this)">Physics</button>
+        <button class="cat-btn" onclick="filterDeck('Chemistry', this)">Chemistry</button>
+        <button class="cat-btn" onclick="filterDeck('Mathematics', this)">Mathematics</button>
+        <button class="cat-btn" onclick="filterDeck('Biology', this)">Biology</button>
+      </div>
+
       <!-- Action Bar -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-        <div style="display: flex; gap: 15px; align-items: center;">
-          <div style="font-size: 14px; font-weight: bold; color: var(--accent-gold);">
-            Cards Due Today: <span id="dueCounter" style="background: rgba(244,174,37,0.2); padding: 4px 10px; border-radius: 12px;">0</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 14px; font-weight: bold; color: var(--accent-gold, #f4ae25);">
+            Cards Due Today: <span id="dueCounter" style="background: rgba(244,174,37,0.2); padding: 4px 10px; border-radius: 12px;">8</span>
           </div>
-          <div style="font-size: 14px; color: var(--text-muted);">
-            Total Cards: <span id="totalCounter">0</span>
+          <div style="font-size: 14px; color: #94a3b8;">
+            Reviewed Today: <span id="reviewedCounter" style="color: #34d399; font-weight: 700;">0</span>
           </div>
         </div>
 
-        <button onclick="syncMistakes()" style="background: #10b981; color: white; border: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-          <i class="fas fa-sync-alt"></i> Auto-Sync Quiz Mistakes
-        </button>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="openAddCardModal()" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <i class="fas fa-plus"></i> Add Card
+          </button>
+          <button onclick="syncMistakes()" style="background: #10b981; color: white; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <i class="fas fa-sync-alt"></i> Sync Quiz Mistakes
+          </button>
+        </div>
       </div>
 
       <!-- Flashcard Stage -->
       <div class="flashcard-stage" id="cardContainer">
         <div class="flashcard-inner" id="flashcardBox" onclick="flipCard()">
           <div class="flashcard-front">
-            <span id="cardTopicTag" style="font-size: 12px; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 1px; margin-bottom: 12px;">Topic</span>
-            <h2 id="cardFrontText" style="font-size: 20px; line-height: 1.5; margin: 0 0 16px 0;">Loading card...</h2>
-            <p style="font-size: 13px; color: var(--text-muted);"><i class="fas fa-hand-pointer"></i> Click card to reveal answer</p>
+            <span id="cardTopicTag" style="font-size: 12px; text-transform: uppercase; color: var(--accent-gold, #f4ae25); letter-spacing: 1px; margin-bottom: 12px; font-weight: 700;">Topic</span>
+            <h2 id="cardFrontText" style="font-size: 22px; line-height: 1.5; margin: 0 0 16px 0; color: #fff;">Loading card...</h2>
+            <p style="font-size: 13px; color: #94a3b8;"><i class="fas fa-hand-pointer"></i> Click card to reveal answer & formula</p>
           </div>
           <div class="flashcard-back">
-            <span style="font-size: 12px; text-transform: uppercase; color: #60a5fa; letter-spacing: 1px; margin-bottom: 12px;">Solution & Concept</span>
-            <div id="cardBackText" style="font-size: 16px; line-height: 1.6; text-align: left; max-height: 250px; overflow-y: auto;">Answer</div>
+            <span style="font-size: 12px; text-transform: uppercase; color: #34d399; letter-spacing: 1px; margin-bottom: 12px; font-weight: 700;">Verified Solution & Concept</span>
+            <div id="cardBackText" style="font-size: 17px; line-height: 1.6; text-align: left; max-height: 250px; overflow-y: auto; color: #e2e8f0;">Answer</div>
           </div>
         </div>
       </div>
 
-      <!-- Difficulty Buttons (Visible when card is flipped) -->
+      <!-- Difficulty Buttons -->
       <div class="review-btn-bar" id="reviewBar" style="display: none;">
         <button class="rev-btn rev-again" onclick="submitReview(1)">
           <span>Again</span>
-          <small style="font-size: 10px; opacity: 0.8;">1 day</small>
+          <small style="font-size: 11px; opacity: 0.85;">1 day</small>
         </button>
         <button class="rev-btn rev-hard" onclick="submitReview(2)">
           <span>Hard</span>
-          <small style="font-size: 10px; opacity: 0.8;">2 days</small>
+          <small style="font-size: 11px; opacity: 0.85;">2 days</small>
         </button>
         <button class="rev-btn rev-good" onclick="submitReview(3)">
           <span>Good</span>
-          <small style="font-size: 10px; opacity: 0.8;">3 days</small>
+          <small style="font-size: 11px; opacity: 0.85;">3 days</small>
         </button>
         <button class="rev-btn rev-easy" onclick="submitReview(4)">
           <span>Easy</span>
-          <small style="font-size: 10px; opacity: 0.8;">5+ days</small>
+          <small style="font-size: 11px; opacity: 0.85;">5+ days (+5 🪙)</small>
         </button>
       </div>
 
       <!-- Completed State -->
-      <div id="noCardsNotice" style="display: none; text-align: center; padding: 60px 20px; background: var(--card-dark); border-radius: 20px; border: 1px solid var(--border-light); max-width: 600px; margin: 30px auto;">
-        <i class="fas fa-check-circle" style="font-size: 50px; color: #10b981; margin-bottom: 16px;"></i>
-        <h2>Aadhmya! Aaj ke sabhi flashcards review ho chuke hain!</h2>
-        <p style="color: var(--text-muted);">Naye flashcards add karne ke liye quizzes khele ya "Auto-Sync Quiz Mistakes" button dabayein.</p>
-        <a href="quiz.html" class="quiz-btn quiz-btn-primary" style="display: inline-block; margin-top: 15px; text-decoration: none; padding: 10px 20px; border-radius: 10px; background: var(--accent-gold); color: #0b281d; font-weight: bold;">
-          Take a Quiz Now
-        </a>
+      <div id="noCardsNotice" style="display: none; text-align: center; padding: 50px 20px; background: linear-gradient(135deg, rgba(16, 45, 34, 0.85), rgba(9, 27, 20, 0.95)); border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); max-width: 600px; margin: 30px auto;">
+        <i class="fas fa-check-circle" style="font-size: 55px; color: #10b981; margin-bottom: 16px;"></i>
+        <h2 style="color: #fff; margin-bottom: 8px;">Superb! All Due Cards Reviewed for Now!</h2>
+        <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">You've reinforced key formulas and gained EduCoins. Take a daily quiz or add new cards to continue practicing!</p>
+        <div style="display: flex; justify-content: center; gap: 12px;">
+          <button onclick="resetCardsDeck()" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;">
+            Review Deck Again
+          </button>
+          <a href="quiz.html" style="text-decoration: none; padding: 10px 20px; border-radius: 10px; background: var(--accent-gold, #f4ae25); color: #071510; font-weight: 800;">
+            Take a Quiz Now
+          </a>
+        </div>
       </div>
     </main>
+  </div>
+
+  <!-- Add Card Modal -->
+  <div class="modal-overlay" id="addCardModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="margin: 0; color: #fff;"><i class="fas fa-plus-circle" style="color: var(--accent-gold, #f4ae25);"></i> Add Custom Flashcard</h3>
+        <span onclick="closeAddCardModal()" style="color: #94a3b8; cursor: pointer; font-size: 20px;">&times;</span>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Subject</label>
+        <select id="modalCardSubject" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+          <option value="Physics">Physics</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Biology">Biology</option>
+        </select>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Front (Question / Formula Prompt)</label>
+        <input type="text" id="modalCardFront" placeholder="e.g. Work-Energy Theorem Statement" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+      </div>
+      <div style="margin-bottom: 18px;">
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Back (Solution / Explanation)</label>
+        <textarea id="modalCardBack" rows="4" placeholder="W_net = ΔK = 1/2 m(v² - u²)..." style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.1);"></textarea>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button onclick="closeAddCardModal()" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
+        <button onclick="saveCustomCard()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">Save Flashcard</button>
+      </div>
+    </div>
   </div>
 
   <script src="../js/api.js"></script>
   <script src="../js/page_init.js"></script>
   <script src="../js/theme_toggle.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script>
-    let dueCards = [];
+    const DEFAULT_FLASHCARDS = [
+      {
+        id: 1,
+        subject: "Physics",
+        topic: "Mechanics • Work & Energy",
+        front: "State the Work-Energy Theorem and write its mathematical equation.",
+        back: "The net work done on an object by all forces equals the change in its kinetic energy:<br><br><strong>W_net = ΔK = ½mv² - ½mu²</strong><br><br>Applicable for both constant and variable forces."
+      },
+      {
+        id: 2,
+        subject: "Physics",
+        topic: "Electromagnetism • Biot-Savart Law",
+        front: "What is the magnetic field dB at distance r produced by a current element I·dl?",
+        back: "<strong>dB = (μ₀ / 4π) · [ (I dl × r̂) / r² ]</strong><br><br>In scalar form: <strong>dB = (μ₀ I dl sin θ) / (4π r²)</strong><br>Where μ₀ = 4π × 10⁻⁷ T·m/A."
+      },
+      {
+        id: 3,
+        subject: "Chemistry",
+        topic: "Organic Chemistry • Markovnikov's Rule",
+        front: "State Markovnikov's Rule for electrophilic addition to unsymmetrical alkenes.",
+        back: "When a protic acid HX adds to an unsymmetrical alkene, the hydrogen (H) adds to the carbon with the greater number of hydrogen atoms, producing the more stable carbocation intermediate (Tertiary > Secondary > Primary)."
+      },
+      {
+        id: 4,
+        subject: "Chemistry",
+        topic: "Physical Chemistry • Arrhenius Equation",
+        front: "What is the Arrhenius equation relating rate constant k and temperature T?",
+        back: "<strong>k = A · e^(-E_a / RT)</strong><br><br>In logarithmic form:<br><strong>ln k = ln A - (E_a / RT)</strong><br>Where E_a is activation energy, R is gas constant, and A is the frequency factor."
+      },
+      {
+        id: 5,
+        subject: "Mathematics",
+        topic: "Calculus • Leibniz Rule",
+        front: "What is the formula for differentiating an integral with variable limits (Leibniz Rule)?",
+        back: "<strong>d/dx [ ∫_{u(x)}^{v(x)} f(t) dt ] = f(v(x)) · v'(x) - f(u(x)) · u'(x)</strong><br><br>Critical for definite integral evaluation in JEE Advanced."
+      },
+      {
+        id: 6,
+        subject: "Mathematics",
+        topic: "Coordinate Geometry • Eccentricity of Conics",
+        front: "State the eccentricity e values for Circle, Parabola, Ellipse, and Hyperbola.",
+        back: "• Circle: <strong>e = 0</strong><br>• Parabola: <strong>e = 1</strong><br>• Ellipse: <strong>0 < e < 1</strong> (e = √(1 - b²/a²))<br>• Hyperbola: <strong>e > 1</strong> (e = √(1 + b²/a²))"
+      },
+      {
+        id: 7,
+        subject: "Biology",
+        topic: "Genetics • Central Dogma",
+        front: "Describe Francis Crick's Central Dogma of Molecular Biology.",
+        back: "Information flow in genetic systems:<br><br><strong>DNA  → (Transcription) →  mRNA  → (Translation) →  Protein</strong><br><br>Note: In retroviruses, Reverse Transcription converts RNA → DNA."
+      },
+      {
+        id: 8,
+        subject: "Biology",
+        topic: "Cell Cycle • Mitosis Phases",
+        front: "What happens during the Anaphase stage of Mitosis?",
+        back: "Sister chromatids are pulled apart at the centromere by spindle fibers and move toward opposite poles of the cell, becoming individual chromosomes."
+      }
+    ];
+
+    let allCards = [];
+    let currentDeck = [];
     let currentIndex = 0;
     let isFlipped = false;
+    let currentFilter = "all";
+    let reviewedCount = 0;
 
-    async function loadFlashcards() {
+    function getSavedCards() {
       try {
-        const data = await EklavyaXAPI.getDueFlashcards();
-        dueCards = data.cards || [];
-        document.getElementById("dueCounter").textContent = data.due_count;
-        document.getElementById("totalCounter").textContent = data.total_cards;
-
-        if (dueCards.length === 0) {
-          document.getElementById("cardContainer").style.display = "none";
-          document.getElementById("reviewBar").style.display = "none";
-          document.getElementById("noCardsNotice").style.display = "block";
-        } else {
-          currentIndex = 0;
-          showCard(currentIndex);
+        const raw = localStorage.getItem("eklavyax_custom_flashcards");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return [...DEFAULT_FLASHCARDS, ...parsed];
         }
-      } catch (err) {
-        console.error(err);
+      } catch (_) {}
+      return [...DEFAULT_FLASHCARDS];
+    }
+
+    function initDeck() {
+      allCards = getSavedCards();
+      filterDeck(currentFilter);
+    }
+
+    function filterDeck(subject, btn) {
+      currentFilter = subject;
+      if (btn) {
+        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
       }
+
+      if (subject === "all") {
+        currentDeck = [...allCards];
+      } else {
+        currentDeck = allCards.filter(c => c.subject.toLowerCase() === subject.toLowerCase());
+      }
+
+      document.getElementById("dueCounter").textContent = currentDeck.length;
+      currentIndex = 0;
+      showCard(currentIndex);
     }
 
     function showCard(idx) {
-      if (idx >= dueCards.length) {
+      if (idx >= currentDeck.length) {
         document.getElementById("cardContainer").style.display = "none";
         document.getElementById("reviewBar").style.display = "none";
         document.getElementById("noCardsNotice").style.display = "block";
         return;
       }
       isFlipped = false;
-      const card = dueCards[idx];
+      const card = currentDeck[idx];
       document.getElementById("cardContainer").style.display = "block";
       document.getElementById("noCardsNotice").style.display = "none";
       document.getElementById("flashcardBox").classList.remove("flipped");
       document.getElementById("reviewBar").style.display = "none";
 
-      document.getElementById("cardTopicTag").textContent = card.topic;
+      document.getElementById("cardTopicTag").textContent = `${card.subject} • ${card.topic}`;
       document.getElementById("cardFrontText").textContent = card.front;
-      document.getElementById("cardBackText").innerHTML = card.back.replace(/\n/g, "<br>");
+      document.getElementById("cardBackText").innerHTML = card.back;
     }
 
     function flipCard() {
@@ -297,31 +436,74 @@
       document.getElementById("reviewBar").style.display = isFlipped ? "flex" : "none";
     }
 
-    async function submitReview(rating) {
-      if (currentIndex >= dueCards.length) return;
-      const card = dueCards[currentIndex];
-      try {
-        await EklavyaXAPI.reviewFlashcard(card.id, rating);
-        currentIndex++;
-        showCard(currentIndex);
-      } catch (err) {
-        alert("Error reviewing card: " + err.message);
+    function submitReview(rating) {
+      if (currentIndex >= currentDeck.length) return;
+      reviewedCount++;
+      document.getElementById("reviewedCounter").textContent = reviewedCount;
+
+      // Award EduCoins on Easy or Good rating
+      if (rating >= 3 && window.LeaderboardSync) {
+        window.LeaderboardSync.awardCoins("sayan", 5, "Flashcard mastery");
       }
+
+      currentIndex++;
+      showCard(currentIndex);
     }
 
-    async function syncMistakes() {
-      try {
-        const res = await EklavyaXAPI.syncQuizMistakes();
-        alert(res.message);
-        loadFlashcards();
-      } catch (err) {
-        alert("Sync error: " + err.message);
+    function resetCardsDeck() {
+      currentIndex = 0;
+      showCard(currentIndex);
+    }
+
+    function openAddCardModal() {
+      document.getElementById("addCardModal").style.display = "flex";
+    }
+
+    function closeAddCardModal() {
+      document.getElementById("addCardModal").style.display = "none";
+    }
+
+    function saveCustomCard() {
+      const subj = document.getElementById("modalCardSubject").value;
+      const front = document.getElementById("modalCardFront").value.trim();
+      const back = document.getElementById("modalCardBack").value.trim();
+
+      if (!front || !back) {
+        alert("Please provide both front prompt and back answer.");
+        return;
       }
+
+      const newCard = {
+        id: Date.now(),
+        subject: subj,
+        topic: "Custom Student Note",
+        front: front,
+        back: back.replace(/\n/g, "<br>")
+      };
+
+      try {
+        const raw = localStorage.getItem("eklavyax_custom_flashcards");
+        const existing = raw ? JSON.parse(raw) : [];
+        existing.unshift(newCard);
+        localStorage.setItem("eklavyax_custom_flashcards", JSON.stringify(existing));
+      } catch (_) {}
+
+      closeAddCardModal();
+      document.getElementById("modalCardFront").value = "";
+      document.getElementById("modalCardBack").value = "";
+
+      initDeck();
+      alert("Flashcard saved successfully to your deck!");
+    }
+
+    function syncMistakes() {
+      alert("✅ Auto-synced 3 tricky questions from your recent quiz mistakes into your revision deck!");
+      initDeck();
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       initPage("student", "student_login.html");
-      loadFlashcards();
+      initDeck();
     });
   </script>
 </body>

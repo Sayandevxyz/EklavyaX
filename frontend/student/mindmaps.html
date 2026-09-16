@@ -77,8 +77,12 @@
             Organize & connect conceptual prerequisite branches visually to build deep understanding.
           </span>
         </div>
-      </div>
-      <div style="display: flex; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <div style="background: rgba(244, 174, 37, 0.15); border: 1px solid rgba(244, 174, 37, 0.3); padding: 6px 14px; border-radius: 12px; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">🪙</span>
+          <span id="mmCoinCount" style="font-family: 'Outfit', sans-serif; font-weight: 700; color: #f4ae25; font-size: 15px;">1,450</span>
+          <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">EduCoins</span>
+        </div>
         <a href="quiz.html" class="filter-pill" style="text-decoration: none; padding: 8px 16px; border-radius: 20px; background: rgba(255,255,255,0.08); color: #fff; font-size: 13px; font-weight: 700;">
           <i class="fas fa-brain"></i> Quiz Arena
         </a>
@@ -89,9 +93,12 @@
     </header>
 
     <!-- Subject Switcher -->
-    <div style="display: flex; gap: 10px; margin-top: 20px;">
+    <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
       <button onclick="loadMindMap('physics')" id="btnPhysics" class="filter-pill active" style="padding: 8px 20px; border-radius: 10px; border: none; background: var(--accent-gold); color: #071510; font-weight: 700; cursor: pointer;">
         <i class="fas fa-atom"></i> Physics Mechanics Map
+      </button>
+      <button onclick="loadMindMap('math')" id="btnMath" class="filter-pill" style="padding: 8px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: #cbd5e1; font-weight: 700; cursor: pointer;">
+        <i class="fas fa-square-root-alt"></i> Math Calculus Flow
       </button>
       <button onclick="loadMindMap('chemistry')" id="btnChem" class="filter-pill" style="padding: 8px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: #cbd5e1; font-weight: 700; cursor: pointer;">
         <i class="fas fa-flask"></i> Organic Chemistry Flow
@@ -154,8 +161,29 @@
     </div>
   </div>
 
+  <!-- Concept Drill Modal -->
+  <div id="conceptDrillModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 16px;">
+    <div style="background: linear-gradient(135deg, #0d281e 0%, #081e16 100%); border: 1px solid rgba(244, 174, 37, 0.3); border-radius: 18px; max-width: 580px; width: 100%; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 20px;">⚡</span>
+          <div>
+            <h3 id="drillModalConceptTitle" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #f4ae25;">Concept Mastery Check</h3>
+            <span style="font-size: 12px; color: #94a3b8;">Solve to verify your conceptual branch mastery</span>
+          </div>
+        </div>
+        <button onclick="closeConceptDrill()" style="background: transparent; border: none; color: #94a3b8; font-size: 22px; cursor: pointer;">&times;</button>
+      </div>
+
+      <div id="drillModalBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
   <script src="../js/api.js"></script>
   <script src="../js/page_init.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script>
     const MAPS = {
       physics: {
@@ -166,6 +194,16 @@
           { id: "fric", title: "3. Friction Dynamics", sub: "Static (μs), Kinetic (μk), Incline", x: 300, y: 220, status: "Needs Practice", color: "#f59e0b", depends: "nlm", formulas: "f_s ≤ μs N\nf_k = μk N\nAngle of Repose = tan⁻¹(μs)", connectReason: "Friction acts as non-conservative work, modifying the Work-Energy Theorem." },
           { id: "wpe", title: "4. Work, Energy, Power", sub: "Conservative Forces, Potential Wells", x: 40, y: 220, status: "Mastered", color: "#10b981", depends: "nlm", formulas: "W = ∫ F · dr = ΔK\nU_spring = ½kx²\nPower = F · v", connectReason: "Rotational kinetic energy (½Iω²) extends linear kinetic energy." },
           { id: "rot", title: "5. Rotational Dynamics", sub: "Torque, Moment of Inertia, Angular Momentum", x: 300, y: 380, status: "Struggling", color: "#ef4444", depends: "fric", formulas: "τ = Iα = r × F\nL = Iω\nRolling: v = Rω, K = ½Mv² + ½Iω²", connectReason: "Requires rolling friction and torque balance across bodies." }
+        ]
+      },
+      math: {
+        title: "Calculus & Analysis Progression",
+        nodes: [
+          { id: "lim", title: "1. Limits & Continuity", sub: "L'Hôpital Rule, Squeeze Theorem", x: 40, y: 50, status: "Mastered", color: "#10b981", formulas: "lim (sin x)/x = 1 as x→0\nL'Hôpital: 0/0 or ∞/∞ → f'(x)/g'(x)\nLeft & Right limits match", connectReason: "The derivative is formally defined as the limit of the difference quotient as Δx → 0." },
+          { id: "diff", title: "2. Differential Calculus", sub: "Product Rule, Chain Rule, Implicit", x: 300, y: 50, status: "Mastered", color: "#10b981", depends: "lim", formulas: "d/dx(uv) = u'v + uv'\nd/dx[f(g(x))] = f'(g(x))g'(x)\nd/dx(ln x) = 1/x", connectReason: "First and second derivatives pinpoint critical points and inflection concavity." },
+          { id: "aod", title: "3. Application of Derivatives", sub: "Maxima, Minima, Tangents & Normals", x: 300, y: 220, status: "Needs Practice", color: "#f59e0b", depends: "diff", formulas: "f'(x) = 0 → Critical point\nf''(x) < 0 → Local maximum\nSlope of Normal = -1 / f'(x)", connectReason: "Optimization thresholds are inverted when calculating areas accumulated under curves." },
+          { id: "integ", title: "4. Definite Integrals", sub: "Fundamental Theorem of Calculus, By Parts", x: 40, y: 220, status: "Mastered", color: "#10b981", depends: "diff", formulas: "∫ u dv = uv - ∫ v du\nKing's Property: ∫_0^a f(x)dx = ∫_0^a f(a-x)dx\nLeibniz Rule for differentiation", connectReason: "Integration resolves rates of change into algebraic functions in differential equations." },
+          { id: "diffeq", title: "5. Differential Equations", sub: "Variable Separable, Integrating Factor", x: 300, y: 380, status: "Struggling", color: "#ef4444", depends: "integ", formulas: "dy/dx + P(x)y = Q(x)\nI.F. = e^(∫ P dx)\ny · I.F. = ∫ (Q · I.F.) dx + C", connectReason: "Governs physical laws such as radioactive decay, cooling rates, and circuit transient responses." }
         ]
       },
       chemistry: {
@@ -191,10 +229,21 @@
     let activeMapKey = "physics";
     let activeNodeId = "kine";
 
+    function syncCoinsDisplay() {
+      if (window.LeaderboardSync) {
+        const st = window.LeaderboardSync.getStudentById("sayan");
+        if (st) {
+          const el = document.getElementById("mmCoinCount");
+          if (el) el.textContent = Number(st.eduCoins || 1450).toLocaleString();
+        }
+      }
+    }
+
     function loadMindMap(key) {
       activeMapKey = key;
       document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
       if (key === 'physics') document.getElementById('btnPhysics').classList.add('active');
+      if (key === 'math') document.getElementById('btnMath').classList.add('active');
       if (key === 'chemistry') document.getElementById('btnChem').classList.add('active');
       if (key === 'social_science') document.getElementById('btnSocial').classList.add('active');
 
@@ -265,14 +314,115 @@
       pill.style.color = node.color;
     }
 
+    /* Interactive In-Page Concept Mastery Drill */
+    const CONCEPT_QUESTIONS = {
+      kine: {
+        prompt: "A particle travels half the total distance with velocity v1 and the remaining half with velocity v2. What is its average velocity over the entire journey?",
+        options: ["(v1 + v2) / 2", "2 v1 v2 / (v1 + v2)", "√(v1 v2)", "(v1² + v2²) / 2"],
+        correct_idx: 1,
+        explanation: "Total time t = (d/2)/v1 + (d/2)/v2 = d(v1 + v2)/(2 v1 v2). Average velocity = Total distance / Total time = d / [d(v1 + v2)/(2 v1 v2)] = 2 v1 v2 / (v1 + v2) (Harmonic Mean)."
+      },
+      nlm: {
+        prompt: "A lift of mass 1000 kg accelerates upwards at 2 m/s² (g = 9.8 m/s²). What is the tension T in the supporting cable?",
+        options: ["11,800 N", "7,800 N", "9,800 N", "2,000 N"],
+        correct_idx: 0,
+        explanation: "Upward equation of motion: T - mg = ma ⇒ T = m(g + a) = 1000 × (9.8 + 2) = 11,800 N."
+      },
+      rot: {
+        prompt: "A thin circular ring of mass M and radius R rotates about its central geometric axis perpendicular to its plane. What is its radius of gyration k?",
+        options: ["R", "R / √2", "R / 2", "√(2/5) R"],
+        correct_idx: 0,
+        explanation: "For a ring, I = M R². By definition I = M k² ⇒ k² = R² ⇒ k = R."
+      },
+      diff: {
+        prompt: "If y = ln(sec x + tan x), what is dy/dx?",
+        options: ["sec x", "tan x", "sec² x", "sec x tan x"],
+        correct_idx: 0,
+        explanation: "dy/dx = (1 / (sec x + tan x)) × (sec x tan x + sec² x) = sec x(tan x + sec x) / (sec x + tan x) = sec x."
+      },
+      integ: {
+        prompt: "Evaluate the definite integral ∫ from -π/2 to π/2 of (sin⁵ x + cos x) dx:",
+        options: ["2", "0", "1", "π"],
+        correct_idx: 0,
+        explanation: "sin⁵ x is an odd function (f(-x) = -f(x)), so ∫_{-π/2}^{π/2} sin⁵ x dx = 0. cos x is an even function: 2 ∫_0^{π/2} cos x dx = 2 [sin x]_0^{π/2} = 2(1 - 0) = 2."
+      }
+    };
+
     function startConceptDrill() {
-      alert(`Launching focused 5-question mastery drill on ${document.getElementById("detailTitle").textContent}!`);
-      window.location.href = "quiz.html";
+      const q = CONCEPT_QUESTIONS[activeNodeId] || {
+        prompt: `Verify your understanding of ${document.getElementById("detailTitle").textContent}:`,
+        options: ["Governed by the fundamental principle presented in the formulas.", "Inverse proportionality across boundary limits.", "Independent of coordinate frame transformation.", "Requires external zero-point calibration."],
+        correct_idx: 0,
+        explanation: "Correct! The governing formulas directly establish the rate law for this prerequisite step."
+      };
+
+      document.getElementById("drillModalConceptTitle").textContent = document.getElementById("detailTitle").textContent;
+      const body = document.getElementById("drillModalBody");
+      body.innerHTML = `
+        <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+          <p style="font-size: 15px; color: #fff; line-height: 1.5; margin: 0 0 16px 0;">${q.prompt}</p>
+          <div style="display: grid; gap: 10px;">
+            ${q.options.map((opt, idx) => `
+              <button onclick="handleConceptAnswer(${idx}, ${q.correct_idx}, '${q.explanation.replace(/'/g, "\\'")}')" id="cOptBtn_${idx}" style="text-align: left; padding: 12px 16px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; font-size: 14px; cursor: pointer;">
+                <strong style="color: #f4ae25;">${String.fromCharCode(65 + idx)}:</strong> ${opt}
+              </button>
+            `).join("")}
+          </div>
+        </div>
+        <div id="cFeedback"></div>
+      `;
+
+      document.getElementById("conceptDrillModal").style.display = "flex";
+    }
+
+    function handleConceptAnswer(chosen, correct, explanation) {
+      const isCorrect = chosen === correct;
+      document.querySelectorAll("[id^='cOptBtn_']").forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === correct) {
+          btn.style.background = "rgba(16,185,129,0.25)";
+          btn.style.borderColor = "#10b981";
+          btn.style.color = "#34d399";
+        } else if (idx === chosen) {
+          btn.style.background = "rgba(239,68,68,0.25)";
+          btn.style.borderColor = "#ef4444";
+          btn.style.color = "#f87171";
+        }
+      });
+
+      if (isCorrect && window.LeaderboardSync) {
+        const st = window.LeaderboardSync.getStudentById("sayan");
+        const newCoins = (st?.eduCoins || 1450) + 20;
+        window.LeaderboardSync.updateStudent("sayan", { eduCoins: newCoins });
+        syncCoinsDisplay();
+      }
+
+      document.getElementById("cFeedback").innerHTML = `
+        <div style="background: ${isCorrect ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)'}; border: 1px solid ${isCorrect ? '#10b981' : '#ef4444'}; border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+          <strong style="color: ${isCorrect ? '#34d399' : '#f87171'}; font-size: 14px;">
+            ${isCorrect ? '🎉 Concept Verified! +20 EduCoins Awarded' : '💡 Review the Governing Equation:'}
+          </strong>
+          <p style="font-size: 13px; color: #cbd5e1; margin: 4px 0 0 0;">${explanation}</p>
+        </div>
+        <div style="text-align: right;">
+          <button onclick="closeConceptDrill()" style="background: #f4ae25; color: #071510; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+            Done
+          </button>
+        </div>
+      `;
+    }
+
+    function closeConceptDrill() {
+      document.getElementById("conceptDrillModal").style.display = "none";
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       initPage("student", "student_login.html");
       loadMindMap("physics");
+
+      if (window.LeaderboardSync) {
+        window.LeaderboardSync.onSync(() => syncCoinsDisplay());
+      }
     });
   </script>
 </body>

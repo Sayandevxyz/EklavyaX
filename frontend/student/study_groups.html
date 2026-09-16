@@ -3,58 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Study Groups & Peer Tutoring | EklavyaX</title>
+  <title>Study Pods & Collaborative Revision | EklavyaX</title>
   <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
   <link rel="stylesheet" href="../css/global.css?v=3.2">
   <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+    body {
+      background: #071510;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
     .group-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 20px;
-      margin-top: 20px;
+      margin-bottom: 30px;
     }
     .group-card {
-      background: var(--card-dark, #14382a);
-      border: 1px solid var(--border-light);
-      border-radius: 16px;
-      padding: 20px;
+      background: linear-gradient(135deg, rgba(16, 45, 34, 0.85), rgba(9, 27, 20, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s ease;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      cursor: pointer;
     }
-    .group-card:hover { transform: translateY(-4px); }
+    .group-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-gold, #f4ae25);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .group-card.active-pod {
+      border-color: #38bdf8;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+    }
+    .join-code-badge {
+      font-size: 11px;
+      font-family: monospace;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #94a3b8;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 99999;
-      justify-content: center;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
       align-items: center;
-      backdrop-filter: blur(5px);
+      justify-content: center;
+      padding: 20px;
     }
     .modal-box {
-      background: var(--main-bg-light, #123629);
-      border: 1px solid var(--border-light);
-      border-radius: 20px;
-      padding: 24px;
-      max-width: 500px;
-      width: 90%;
-      color: var(--text);
+      background: #092016;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 28px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .modal-box label {
+      display: block;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      font-weight: 600;
     }
     .modal-box input, .modal-box textarea {
       width: 100%;
-      box-sizing: border-box;
       padding: 10px 14px;
       border-radius: 8px;
-      border: 1px solid var(--border-light);
-      background: rgba(0,0,0,0.25);
-      color: var(--text);
-      margin-top: 6px;
-      margin-bottom: 14px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      outline: none;
+    }
+    .note-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .chat-bubble {
+      padding: 10px 14px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      max-width: 80%;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .chat-bubble.mine {
+      background: #10b981;
+      color: #fff;
+      margin-left: auto;
+      border-bottom-right-radius: 2px;
+    }
+    .chat-bubble.theirs {
+      background: rgba(255,255,255,0.08);
+      color: #e2e8f0;
+      border-bottom-left-radius: 2px;
     }
   </style>
 </head>
@@ -89,54 +147,18 @@
           </button>
 
           <div class="menu-subitems" id="advanceFeaturesSubitems">
-            <a href="leaderboard.html">
-              <i class="fas fa-trophy" style="color: #fbbf24;" aria-hidden="true"></i>
-              <span>Leaderboard</span>
-            </a>
-            <a href="live_battle.html">
-              <i class="fas fa-bolt" style="color: #f59e0b;" aria-hidden="true"></i>
-              <span>Live Duel 1v1</span>
-            </a>
-            <a href="flashcards.html">
-              <i class="fas fa-layer-group" style="color: #34d399;" aria-hidden="true"></i>
-              <span>Flashcards</span>
-            </a>
-            <a href="study_planner.html">
-              <i class="fas fa-calendar-alt" style="color: #60a5fa;" aria-hidden="true"></i>
-              <span>Study Planner</span>
-            </a>
-            <a class="active" href="study_groups.html">
-              <i class="fas fa-users" style="color: #818cf8;" aria-hidden="true"></i>
-              <span>Study Groups</span>
-            </a>
-            <a href="chat_threads.html">
-              <i class="fas fa-comments" style="color: #a78bfa;" aria-hidden="true"></i>
-              <span>Doubts Chat</span>
-            </a>
-            <a href="certificates.html">
-              <i class="fas fa-certificate" style="color: #f472b6;" aria-hidden="true"></i>
-              <span>Certificates</span>
-            </a>
-            <a href="eklavyalens.html">
-              <i class="fas fa-globe-asia" style="color: #38bdf8;" aria-hidden="true"></i>
-              <span>EklavyaLens (Maps)</span>
-            </a>
-            <a href="pyq_arena.html">
-              <i class="fas fa-stopwatch" style="color: #fbbf24;" aria-hidden="true"></i>
-              <span>PYQ Arena (JEE/NEET)</span>
-            </a>
-            <a href="mindmaps.html">
-              <i class="fas fa-project-diagram" style="color: #c084fc;" aria-hidden="true"></i>
-              <span>Concept Mind Maps</span>
-            </a>
-            <a href="bookmarks.html">
-              <i class="fas fa-bookmark" style="color: #f43f5e;" aria-hidden="true"></i>
-              <span>Revision Bookmarks</span>
-            </a>
-            <a href="parent_dashboard.html">
-              <i class="fas fa-user-shield" style="color: #fb923c;" aria-hidden="true"></i>
-              <span>Parent Portal</span>
-            </a>
+            <a href="leaderboard.html"><i class="fas fa-trophy" style="color: #fbbf24;"></i> <span>Leaderboard</span></a>
+            <a href="live_battle.html"><i class="fas fa-bolt" style="color: #f59e0b;"></i> <span>Live Duel 1v1</span></a>
+            <a href="flashcards.html"><i class="fas fa-layer-group" style="color: #34d399;"></i> <span>Flashcards</span></a>
+            <a href="study_planner.html"><i class="fas fa-calendar-alt" style="color: #60a5fa;"></i> <span>Study Planner</span></a>
+            <a class="active" href="study_groups.html"><i class="fas fa-users" style="color: #818cf8;"></i> <span>Study Groups</span></a>
+            <a href="chat_threads.html"><i class="fas fa-comments" style="color: #a78bfa;"></i> <span>Doubts Chat</span></a>
+            <a href="certificates.html"><i class="fas fa-certificate" style="color: #f472b6;"></i> <span>Certificates</span></a>
+            <a href="eklavyalens.html"><i class="fas fa-globe-asia" style="color: #38bdf8;"></i> <span>EklavyaLens (Maps)</span></a>
+            <a href="pyq_arena.html"><i class="fas fa-stopwatch" style="color: #fbbf24;"></i> <span>PYQ Arena (JEE/NEET)</span></a>
+            <a href="mindmaps.html"><i class="fas fa-project-diagram" style="color: #c084fc;"></i> <span>Concept Mind Maps</span></a>
+            <a href="bookmarks.html"><i class="fas fa-bookmark" style="color: #f43f5e;"></i> <span>Revision Bookmarks</span></a>
+            <a href="parent_dashboard.html"><i class="fas fa-user-shield" style="color: #fb923c;"></i> <span>Parent Portal</span></a>
           </div>
         </div>
 
@@ -145,7 +167,7 @@
       <div class="profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
         <div class="profile-info">
-          <strong id="profileName">Student</strong>
+          <strong id="profileName">RISHABH RAJ</strong>
           <span id="profileAction">Log out</span>
         </div>
       </div>
@@ -154,36 +176,71 @@
     <main class="content">
       <section class="top-bar">
         <div class="welcome-text">
-          <h1>👥 <strong>Study Groups & Peer Collaboration</strong></h1>
-          <h2>Form study pods with friends, share revision notes, and prepare for exams together!</h2>
+          <h1>👥 <strong>Peer Study Pods & Collaborative Revision</strong></h1>
+          <h2>Form focused study groups, share derivation cheat sheets, and solve doubts together!</h2>
         </div>
       </section>
 
-      <!-- Action Buttons -->
-      <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-        <button onclick="openCreateModal()" style="background: var(--accent-gold); color: #0b281d; border: none; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer;">
-          <i class="fas fa-plus"></i> Create Study Pod
-        </button>
-        <button onclick="openJoinModal()" style="background: var(--glass-bg); color: var(--text); border: 1px solid var(--border-light); padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer;">
-          <i class="fas fa-sign-in-alt"></i> Join with Code
-        </button>
+      <!-- Action Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
+        <div style="font-size: 14px; color: #94a3b8;">
+          Active Pods Available: <strong style="color: var(--accent-gold, #f4ae25);" id="activePodsCounter">4 Pods</strong>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="openModal('joinModal')" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <i class="fas fa-sign-in-alt"></i> Join with Code
+          </button>
+          <button onclick="openModal('createModal')" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <i class="fas fa-plus"></i> Create Study Pod
+          </button>
+        </div>
       </div>
 
       <!-- Groups List -->
       <div class="group-grid" id="groupsList">
-        <p style="color: var(--text-muted);">Loading study groups...</p>
+        <!-- Rendered via JS -->
       </div>
 
-      <!-- Notes Panel (When group selected) -->
-      <div id="notesPanel" style="display: none; margin-top: 35px; background: var(--card-dark); border-radius: 16px; padding: 24px; border: 1px solid var(--border-light);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-          <h3 id="selectedGroupName" style="margin: 0; color: var(--accent-gold);">Group Notes</h3>
-          <button onclick="openAddNoteModal()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-            <i class="fas fa-sticky-note"></i> Add Note
-          </button>
+      <!-- Active Pod Detail & Collaboration Panel -->
+      <div id="notesPanel" style="display: none; margin-top: 25px; background: linear-gradient(135deg, rgba(16, 45, 34, 0.85), rgba(9, 27, 20, 0.95)); border-radius: 18px; padding: 26px; border: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px;">
+          <div>
+            <span id="selectedPodSubject" style="font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(56,189,248,0.2); color: #38bdf8; font-weight: 800; text-transform: uppercase;">Physics</span>
+            <h2 id="selectedGroupName" style="margin: 6px 0 0 0; color: #fff; font-size: 22px;">Group Name</h2>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button onclick="openAddNoteModal()" style="background: #10b981; color: white; border: none; padding: 9px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+              <i class="fas fa-sticky-note"></i> Add Note
+            </button>
+          </div>
         </div>
-        <div id="notesContentList">
-          <!-- Rendered via JS -->
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
+          <!-- Left: Shared Notes -->
+          <div>
+            <h3 style="margin: 0 0 14px 0; color: var(--accent-gold, #f4ae25); font-size: 16px;">
+              <i class="fas fa-book-open"></i> Pod Formula Cheat Sheets & Notes
+            </h3>
+            <div id="notesContentList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Right: Live Pod Discussion Feed -->
+          <div style="background: rgba(0,0,0,0.25); border-radius: 14px; padding: 18px; border: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; height: 380px;">
+            <h3 style="margin: 0 0 12px 0; color: #38bdf8; font-size: 15px;">
+              <i class="fas fa-comments"></i> Live Pod Chat
+            </h3>
+            <div id="podChatMessages" style="flex: 1; overflow-y: auto; padding-right: 6px; margin-bottom: 12px;">
+              <!-- Chat bubbles -->
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="podChatInput" placeholder="Message pod members..." style="flex: 1; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.3); color: #fff;" onkeypress="if(event.key==='Enter') sendPodMessage()">
+              <button onclick="sendPodMessage()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 800; cursor: pointer;">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -192,16 +249,16 @@
   <!-- Create Group Modal -->
   <div class="modal-backdrop" id="createModal">
     <div class="modal-box">
-      <h3 style="margin-top: 0;"><i class="fas fa-plus-circle" style="color: var(--accent-gold);"></i> Create Study Pod</h3>
+      <h3 style="margin-top: 0; color: #fff;"><i class="fas fa-plus-circle" style="color: var(--accent-gold, #f4ae25);"></i> Create Study Pod</h3>
       <label>Group Name</label>
-      <input type="text" id="grpName" placeholder="e.g. JEE Warriors 2026">
+      <input type="text" id="grpName" placeholder="e.g. JEE Advanced Mechanics Pod">
       <label>Subject / Focus</label>
       <input type="text" id="grpSubject" placeholder="e.g. Physics & Mechanics">
       <label>Description</label>
-      <textarea id="grpDesc" rows="3" placeholder="Weekly goals and revision plan..."></textarea>
+      <textarea id="grpDesc" rows="3" placeholder="Daily problem solving, formula sharing, and test review..."></textarea>
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button onclick="closeModal('createModal')" style="background: transparent; border: 1px solid var(--border-light); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
-        <button onclick="submitCreateGroup()" style="background: var(--accent-gold); color: #0b281d; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer;">Create</button>
+        <button onclick="closeModal('createModal')" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
+        <button onclick="submitCreateGroup()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 800; cursor: pointer;">Create Pod</button>
       </div>
     </div>
   </div>
@@ -209,12 +266,12 @@
   <!-- Join Group Modal -->
   <div class="modal-backdrop" id="joinModal">
     <div class="modal-box">
-      <h3 style="margin-top: 0;"><i class="fas fa-sign-in-alt" style="color: var(--accent-gold);"></i> Join Study Pod</h3>
+      <h3 style="margin-top: 0; color: #fff;"><i class="fas fa-sign-in-alt" style="color: var(--accent-gold, #f4ae25);"></i> Join Study Pod</h3>
       <label>Enter 8-digit Join Code</label>
-      <input type="text" id="joinCodeInput" placeholder="e.g. GRP-A9F4B2">
+      <input type="text" id="joinCodeInput" placeholder="e.g. GRP-JEE101">
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button onclick="closeModal('joinModal')" style="background: transparent; border: 1px solid var(--border-light); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
-        <button onclick="submitJoinGroup()" style="background: var(--accent-gold); color: #0b281d; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer;">Join</button>
+        <button onclick="closeModal('joinModal')" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
+        <button onclick="submitJoinGroup()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 800; cursor: pointer;">Join</button>
       </div>
     </div>
   </div>
@@ -222,14 +279,14 @@
   <!-- Add Note Modal -->
   <div class="modal-backdrop" id="addNoteModal">
     <div class="modal-box">
-      <h3 style="margin-top: 0;"><i class="fas fa-file-alt" style="color: #10b981;"></i> Add Shared Note</h3>
+      <h3 style="margin-top: 0; color: #fff;"><i class="fas fa-file-alt" style="color: #10b981;"></i> Add Shared Pod Note</h3>
       <label>Note Title</label>
-      <input type="text" id="noteTitle" placeholder="e.g. Thermodynamics Cheat Sheet">
-      <label>Note Content (Markdown supported)</label>
-      <textarea id="noteContent" rows="6" placeholder="Formulas, key exceptions, derivations..."></textarea>
+      <input type="text" id="noteTitle" placeholder="e.g. Moment of Inertia Formulas & Shortcuts">
+      <label>Note Content</label>
+      <textarea id="noteContent" rows="5" placeholder="Formulas, key exceptions, derivations..."></textarea>
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button onclick="closeModal('addNoteModal')" style="background: transparent; border: 1px solid var(--border-light); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
-        <button onclick="submitAddNote()" style="background: #10b981; color: white; border: none; padding: 8px 18px; border-radius: 8px; font-weight: bold; cursor: pointer;">Save Note</button>
+        <button onclick="closeModal('addNoteModal')" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
+        <button onclick="submitAddNote()" style="background: #10b981; color: white; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">Publish Note</button>
       </div>
     </div>
   </div>
@@ -237,130 +294,316 @@
   <script src="../js/api.js"></script>
   <script src="../js/page_init.js"></script>
   <script src="../js/theme_toggle.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script>
-    let activeGroupId = null;
+    const DEFAULT_PODS = [
+      {
+        id: "pod-1",
+        name: "🚀 JEE Advanced Mechanics Pod",
+        subject: "Physics",
+        join_code: "GRP-MECH",
+        member_count: 48,
+        description: "Focusing on Rotational Motion, Center of Mass, and Rigid Body dynamics. Daily PYQ discussions.",
+        notes: [
+          {
+            title: "Moment of Inertia Quick Reference",
+            author: "Ishita Singh (Rank #1)",
+            date: "Today",
+            content: "• Ring about diameter: ½MR²<br>• Disc about diameter: ¼MR²<br>• Solid Sphere: 2/5 MR²<br>• Hollow Sphere: 2/3 MR²<br>• Rod about center: 1/12 ML²"
+          },
+          {
+            title: "Rolling without Slipping Conditions",
+            author: "RISHABH RAJ",
+            date: "Yesterday",
+            content: "v_cm = Rω and a_cm = Rα. Total kinetic energy is K_rot + K_trans = ½Iω² + ½mv²."
+          }
+        ],
+        chat: [
+          { sender: "Ishita Singh", text: "Hey team, don't forget the Friday evening quiz on angular momentum!", isMine: false },
+          { sender: "Aditya Mishra", text: "Working through the HC Verma problems right now. Question 24 is tricky.", isMine: false }
+        ]
+      },
+      {
+        id: "pod-2",
+        name: "🧪 Organic Chemistry Reaction Club",
+        subject: "Chemistry",
+        join_code: "GRP-CHEM",
+        member_count: 35,
+        description: "Mastering Name Reactions, electrophilic aromatic substitutions, and synthesis pathways.",
+        notes: [
+          {
+            title: "Cannizzaro vs Aldol Summary",
+            author: "Prachi Mondal",
+            date: "2 days ago",
+            content: "Aldol requires α-hydrogen (produces β-hydroxy aldehyde). Cannizzaro occurs when NO α-hydrogen is present (self redox disproportionation to alcohol and carboxylate)."
+          }
+        ],
+        chat: [
+          { sender: "Prachi Mondal", text: "Sharing the reagent cheat sheet in notes section!", isMine: false }
+        ]
+      },
+      {
+        id: "pod-3",
+        name: "📐 Calculus & Coordinate Geometry Elite",
+        subject: "Mathematics",
+        join_code: "GRP-MATH",
+        member_count: 41,
+        description: "Limits, Continuity, Definite Integrals, and Conic Sections rigorous derivations.",
+        notes: [
+          {
+            title: "King's Rule in Definite Integration",
+            author: "Anchal Vishwakarma",
+            date: "3 days ago",
+            content: "∫_a^b f(x)dx = ∫_a^b f(a + b - x)dx. Crucial for eliminating trigonometric denominators."
+          }
+        ],
+        chat: [
+          { sender: "Anchal Vishwakarma", text: "Practiced 20 ellipse problems today, feel free to ask doubts!", isMine: false }
+        ]
+      },
+      {
+        id: "pod-4",
+        name: "🧬 NEET 2026 Biology Rapid Revision",
+        subject: "Biology",
+        join_code: "GRP-NEET",
+        member_count: 52,
+        description: "NCERT line-by-line breakdown, Genetics, Ecology, and Human Physiology milestones.",
+        notes: [
+          {
+            title: "Mendelian Dihybrid Ratio",
+            author: "Aditya Mishra",
+            date: "4 days ago",
+            content: "Phenotypic ratio is 9:3:3:1. Genotypic ratio is 1:2:2:4:1:2:1:2:1."
+          }
+        ],
+        chat: [
+          { sender: "Aditya Mishra", text: "Focusing on Plant Kingdom today.", isMine: false }
+        ]
+      }
+    ];
 
-    async function loadGroups() {
+    let studyPods = [];
+    let selectedPod = null;
+
+    function initPods() {
       try {
-        const data = await EklavyaXAPI.getMyStudyGroups();
-        const list = document.getElementById("groupsList");
-        if (!data.groups || data.groups.length === 0) {
-          list.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; background: var(--card-dark); border-radius: 16px;">
-              <i class="fas fa-users" style="font-size: 40px; color: var(--text-muted); margin-bottom: 12px;"></i>
-              <p>Aap abhi kisi bhi Study Pod ke sadasya nahi hain. Upar diye gaye buttons se naya pod banayein ya doston ke code se join karein!</p>
-            </div>
-          `;
-          return;
+        const raw = localStorage.getItem("eklavyax_study_pods");
+        if (raw) {
+          studyPods = JSON.parse(raw);
+        } else {
+          studyPods = DEFAULT_PODS;
         }
-
-        list.innerHTML = data.groups.map(g => `
-          <div class="group-card">
-            <div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <h3 style="margin: 0 0 6px 0; font-size: 18px;">${g.name}</h3>
-                <span style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(244,174,37,0.2); color: var(--accent-gold); font-weight: bold;">
-                  ${g.join_code}
-                </span>
-              </div>
-              <span style="font-size: 12px; color: #60a5fa; font-weight: 600;">${g.subject}</span>
-              <p style="font-size: 13px; color: var(--text-muted); margin: 10px 0;">${g.description || 'Shared study room for exam mastery.'}</p>
-            </div>
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
-                <span><i class="fas fa-user-friends"></i> ${g.member_count} Members</span>
-                <span><i class="fas fa-sticky-note"></i> ${g.notes_count} Notes</span>
-              </div>
-              <button onclick="viewGroupNotes(${g.id}, '${g.name}')" style="width: 100%; background: var(--accent-gold); color: #0b281d; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">
-                Open Study Notes
-              </button>
-            </div>
-          </div>
-        `).join("");
-      } catch (err) {
-        console.error(err);
+      } catch (_) {
+        studyPods = DEFAULT_PODS;
+      }
+      renderPodsList();
+      if (studyPods.length > 0) {
+        selectPod(studyPods[0].id);
       }
     }
 
-    async function viewGroupNotes(id, name) {
-      activeGroupId = id;
+    function renderPodsList() {
+      const container = document.getElementById("groupsList");
+      document.getElementById("activePodsCounter").textContent = `${studyPods.length} Pods`;
+
+      container.innerHTML = studyPods.map(pod => `
+        <div class="group-card ${selectedPod && selectedPod.id === pod.id ? 'active-pod' : ''}" onclick="selectPod('${pod.id}')">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+              <span style="font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(244,174,37,0.2); color: #f4ae25; font-weight: 700;">
+                ${pod.subject}
+              </span>
+              <span class="join-code-badge">${pod.join_code}</span>
+            </div>
+            <h3 style="margin: 0 0 8px 0; color: #fff; font-size: 18px;">${pod.name}</h3>
+            <p style="font-size: 13px; color: #94a3b8; margin: 0 0 16px 0; line-height: 1.4;">${pod.description}</p>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; font-size: 12px; color: #94a3b8;">
+            <span><i class="fas fa-users" style="color: #38bdf8;"></i> ${pod.member_count} Members</span>
+            <span style="color: var(--accent-gold, #f4ae25); font-weight: 700;"><i class="fas fa-sticky-note"></i> ${pod.notes ? pod.notes.length : 0} Notes</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function selectPod(id) {
+      selectedPod = studyPods.find(p => p.id === id) || studyPods[0];
+      renderPodsList();
+
       document.getElementById("notesPanel").style.display = "block";
-      document.getElementById("selectedGroupName").textContent = `📝 Notes for ${name}`;
+      document.getElementById("selectedGroupName").textContent = selectedPod.name;
+      document.getElementById("selectedPodSubject").textContent = selectedPod.subject;
 
-      try {
-        const data = await EklavyaXAPI.getGroupNotes(id);
-        const container = document.getElementById("notesContentList");
-        if (!data.notes || data.notes.length === 0) {
-          container.innerHTML = `<p style="color: var(--text-muted);">Is group mein abhi koi notes nahi hain. Pehla note add karein!</p>`;
-          return;
-        }
-        container.innerHTML = data.notes.map(n => `
-          <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-soft); border-radius: 12px; padding: 16px; margin-bottom: 14px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <h4 style="margin: 0; color: #34d399; font-size: 16px;">${n.title}</h4>
-              <span style="font-size: 11px; color: var(--text-muted);">By ${n.author}</span>
-            </div>
-            <div style="font-size: 14px; line-height: 1.6; color: var(--text); white-space: pre-wrap;">${n.content}</div>
-          </div>
-        `).join("");
-      } catch (err) {
-        alert("Error loading notes: " + err.message);
-      }
+      renderNotes();
+      renderChat();
     }
 
-    function openCreateModal() { document.getElementById("createModal").style.display = "flex"; }
-    function openJoinModal() { document.getElementById("joinModal").style.display = "flex"; }
-    function openAddNoteModal() { document.getElementById("addNoteModal").style.display = "flex"; }
-    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+    function renderNotes() {
+      const container = document.getElementById("notesContentList");
+      const notes = selectedPod.notes || [];
 
-    async function submitCreateGroup() {
+      if (notes.length === 0) {
+        container.innerHTML = `<p style="color: #94a3b8; font-size: 13px;">No shared notes yet. Click 'Add Note' to publish the first study guide!</p>`;
+        return;
+      }
+
+      container.innerHTML = notes.map(n => `
+        <div class="note-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: #fff; font-size: 15px;">${n.title}</strong>
+            <span style="font-size: 11px; color: #94a3b8;">${n.date}</span>
+          </div>
+          <div style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">${n.content}</div>
+          <div style="font-size: 11px; color: var(--accent-gold, #f4ae25); margin-top: 8px; font-weight: 600;">
+            <i class="fas fa-user-edit"></i> Shared by: ${n.author}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderChat() {
+      const container = document.getElementById("podChatMessages");
+      const messages = selectedPod.chat || [];
+
+      container.innerHTML = messages.map(m => `
+        <div class="chat-bubble ${m.isMine ? 'mine' : 'theirs'}">
+          ${!m.isMine ? `<div style="font-size: 11px; color: #f4ae25; font-weight: 700; margin-bottom: 2px;">${m.sender}</div>` : ''}
+          <div>${m.text}</div>
+        </div>
+      `).join("");
+
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function sendPodMessage() {
+      const input = document.getElementById("podChatInput");
+      const text = input.value.trim();
+      if (!text || !selectedPod) return;
+
+      if (!selectedPod.chat) selectedPod.chat = [];
+      selectedPod.chat.push({
+        sender: "RISHABH RAJ (You)",
+        text: text,
+        isMine: true
+      });
+
+      input.value = "";
+      savePodsState();
+      renderChat();
+
+      // Simulate a quick peer reaction
+      setTimeout(() => {
+        selectedPod.chat.push({
+          sender: "Ishita Singh",
+          text: "Noted! That aligns with the test series solution.",
+          isMine: false
+        });
+        savePodsState();
+        renderChat();
+      }, 1400);
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    function submitCreateGroup() {
       const name = document.getElementById("grpName").value.trim();
       const subject = document.getElementById("grpSubject").value.trim() || "General";
-      const desc = document.getElementById("grpDesc").value.trim();
-      if (!name) return alert("Group name is required");
+      const desc = document.getElementById("grpDesc").value.trim() || "Collaborative revision pod";
 
-      try {
-        const res = await EklavyaXAPI.createStudyGroup(name, desc, subject);
-        alert(`Study group '${res.name}' created! Code: ${res.join_code}`);
-        closeModal("createModal");
-        loadGroups();
-      } catch (err) {
-        alert(err.message);
+      if (!name) {
+        alert("Please enter a group name.");
+        return;
       }
+
+      const newPod = {
+        id: "pod-" + Date.now(),
+        name: name,
+        subject: subject,
+        join_code: "GRP-" + Math.floor(Math.random() * 899 + 100),
+        member_count: 1,
+        description: desc,
+        notes: [],
+        chat: [{ sender: "System", text: `Pod "${name}" created! Welcome!`, isMine: false }]
+      };
+
+      studyPods.unshift(newPod);
+      savePodsState();
+      closeModal("createModal");
+      document.getElementById("grpName").value = "";
+      document.getElementById("grpDesc").value = "";
+
+      selectPod(newPod.id);
+      alert(`🎉 Pod "${name}" created! Share code ${newPod.join_code} with friends.`);
     }
 
-    async function submitJoinGroup() {
-      const code = document.getElementById("joinCodeInput").value.trim();
-      if (!code) return alert("Enter join code");
+    function submitJoinGroup() {
+      const code = document.getElementById("joinCodeInput").value.trim().toUpperCase();
+      if (!code) {
+        alert("Please enter an 8-digit join code.");
+        return;
+      }
 
-      try {
-        const res = await EklavyaXAPI.joinStudyGroup(code);
-        alert(`Joined group: ${res.name}`);
+      const match = studyPods.find(p => p.join_code.toUpperCase() === code);
+      if (match) {
+        match.member_count++;
+        savePodsState();
         closeModal("joinModal");
-        loadGroups();
-      } catch (err) {
-        alert(err.message);
+        selectPod(match.id);
+        alert(`Joined ${match.name}!`);
+      } else {
+        alert("Pod code not found. Please verify with your peer.");
       }
     }
 
-    async function submitAddNote() {
-      if (!activeGroupId) return alert("Select a study pod first");
+    function openAddNoteModal() {
+      document.getElementById("addNoteModal").style.display = "flex";
+    }
+
+    function submitAddNote() {
       const title = document.getElementById("noteTitle").value.trim();
       const content = document.getElementById("noteContent").value.trim();
-      if (!title || !content) return alert("Title and content are required");
 
-      try {
-        await EklavyaXAPI.addGroupNote(activeGroupId, title, content);
-        closeModal("addNoteModal");
-        viewGroupNotes(activeGroupId, "");
-      } catch (err) {
-        alert(err.message);
+      if (!title || !content || !selectedPod) {
+        alert("Please provide both note title and content.");
+        return;
       }
+
+      if (!selectedPod.notes) selectedPod.notes = [];
+      selectedPod.notes.unshift({
+        title: title,
+        author: "RISHABH RAJ (You)",
+        date: "Just now",
+        content: content.replace(/\n/g, "<br>")
+      });
+
+      savePodsState();
+      closeModal("addNoteModal");
+      document.getElementById("noteTitle").value = "";
+      document.getElementById("noteContent").value = "";
+      renderNotes();
+      renderPodsList();
+
+      if (window.LeaderboardSync) {
+        window.LeaderboardSync.awardCoins("sayan", 10, "Shared peer study note");
+      }
+      alert("✅ Note published and shared with pod members (+10 EduCoins)!");
+    }
+
+    function savePodsState() {
+      try {
+        localStorage.setItem("eklavyax_study_pods", JSON.stringify(studyPods));
+      } catch (_) {}
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       initPage("student", "student_login.html");
-      loadGroups();
+      initPods();
     });
   </script>
 </body>

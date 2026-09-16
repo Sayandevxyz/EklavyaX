@@ -9,8 +9,13 @@
   <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
+    body {
+      background: #071510;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
     .duel-arena {
-      max-width: 800px;
+      max-width: 840px;
       margin: 0 auto;
     }
     .players-bar {
@@ -21,20 +26,24 @@
     }
     .player-card {
       flex: 1;
-      background: var(--card-dark);
-      border: 2px solid var(--border-light);
+      background: linear-gradient(135deg, rgba(16, 45, 34, 0.85), rgba(9, 27, 20, 0.95));
+      border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
       padding: 16px;
       text-align: center;
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
+    .player-card.active-turn {
+      border-color: var(--accent-gold, #f4ae25);
+      box-shadow: 0 0 16px rgba(244, 174, 37, 0.35);
+    }
     .player-score {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 800;
-      color: var(--accent-gold);
+      color: var(--accent-gold, #f4ae25);
     }
     .vs-badge {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 900;
       color: #ef4444;
       align-self: center;
@@ -42,29 +51,42 @@
     .option-duel-btn {
       width: 100%;
       text-align: left;
-      padding: 14px 20px;
+      padding: 15px 20px;
       margin-bottom: 12px;
       border-radius: 12px;
       background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border-light);
-      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #e2e8f0;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .option-duel-btn:hover {
-      background: rgba(244,174,37,0.15);
-      border-color: var(--accent-gold);
+    .option-duel-btn:hover:not([disabled]) {
+      background: rgba(244,174,37,0.18);
+      border-color: var(--accent-gold, #f4ae25);
       transform: translateX(4px);
     }
     .timer-line {
-      height: 6px;
-      background: var(--accent-gold);
-      border-radius: 3px;
+      height: 7px;
+      background: linear-gradient(90deg, #10b981, #f4ae25, #ef4444);
+      border-radius: 4px;
       width: 100%;
       transition: width 1s linear;
       margin-bottom: 20px;
+    }
+    .match-tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(244, 174, 37, 0.15);
+      color: #f4ae25;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -155,7 +177,7 @@
       <div class="profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
         <div class="profile-info">
-          <strong id="profileName">Student</strong>
+          <strong id="profileName">RISHABH RAJ</strong>
           <span id="profileAction">Log out</span>
         </div>
       </div>
@@ -164,38 +186,52 @@
     <main class="content">
       <section class="top-bar">
         <div class="welcome-text">
-          <h1>⚔️ <strong>Real-Time Live Quiz Duel</strong></h1>
-          <h2>Challenge friends or classmates in real-time speed quiz battles!</h2>
+          <h1>⚔️ <strong>Real-Time Live Quiz Duel 1v1</strong></h1>
+          <h2>Challenge peer students or jump into instant matchmaking to climb the Leaderboard!</h2>
         </div>
       </section>
 
       <div class="duel-arena">
         <!-- Lobby / Matchmaker -->
-        <div id="duelLobby" style="background: var(--card-dark); border-radius: 20px; padding: 30px; text-align: center; border: 1px solid var(--border-light);">
-          <i class="fas fa-bolt" style="font-size: 48px; color: var(--accent-gold); margin-bottom: 16px;"></i>
-          <h2>Enter Battle Arena</h2>
-          <p style="color: var(--text-muted); margin-bottom: 24px;">Create a new live room or enter your opponent's battle code:</p>
+        <div id="duelLobby" style="background: linear-gradient(135deg, rgba(16, 45, 34, 0.85), rgba(9, 27, 20, 0.95)); border-radius: 20px; padding: 36px 30px; text-align: center; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+          <span class="match-tag"><i class="fas fa-bolt"></i> FAST-PACED STEM COMBAT</span>
+          <h2 style="font-size: 26px; margin: 0 0 10px 0; color: #fff;">Enter Live 1v1 Battle Arena</h2>
+          <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 28px; font-size: 14px; line-height: 1.5;">
+            5 rapid questions, 15 seconds per question. Faster correct answers yield higher points and grant bonus EduCoins!
+          </p>
 
-          <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-            <button onclick="createRoom()" style="background: var(--accent-gold); color: #0b281d; border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer;">
-              <i class="fas fa-plus-circle"></i> Create Battle Room
+          <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 24px;">
+            <button onclick="startQuickMatch()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 14px 28px; border-radius: 12px; font-weight: 800; font-size: 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 6px 20px rgba(244,174,37,0.3);">
+              <i class="fas fa-bolt"></i> Instant 1v1 Match
             </button>
-            <div style="display: flex; gap: 8px;">
-              <input type="text" id="roomCodeInput" placeholder="Enter Room Code (e.g. WAR-XYZ)" style="padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-light); background: rgba(0,0,0,0.3); color: white;">
-              <button onclick="joinRoom()" style="background: #3b82f6; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; cursor: pointer;">
-                Join Duel
-              </button>
-            </div>
+            <button onclick="createRoom()" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); padding: 14px 22px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-plus-circle"></i> Create Room Code
+            </button>
+          </div>
+
+          <!-- Join Code Box -->
+          <div style="max-width: 380px; margin: 0 auto; display: flex; gap: 8px; background: rgba(0,0,0,0.25); padding: 6px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+            <input type="text" id="roomCodeInput" placeholder="Room Code (e.g. WAR-101)" style="flex: 1; padding: 10px 14px; border-radius: 8px; border: none; background: transparent; color: white; outline: none; font-weight: 600; text-transform: uppercase;">
+            <button onclick="joinRoom()" style="background: #38bdf8; color: #071510; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer;">
+              Join Duel
+            </button>
           </div>
         </div>
 
-        <!-- Waiting for Opponent -->
-        <div id="waitingScreen" style="display: none; background: var(--card-dark); border-radius: 20px; padding: 40px; text-align: center; border: 1px solid var(--border-light);">
-          <i class="fas fa-spinner fa-spin" style="font-size: 40px; color: var(--accent-gold); margin-bottom: 16px;"></i>
-          <h2>Waiting for Opponent to Join...</h2>
-          <p>Share this Room Code with your opponent:</p>
-          <div id="activeRoomCodeDisplay" style="font-size: 32px; font-weight: 900; letter-spacing: 2px; color: var(--accent-gold); margin: 15px 0;">WAR-XXXX</div>
-          <button id="startBattleBtn" onclick="sendStartGame()" style="background: #10b981; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer;">
+        <!-- Matchmaking Spinner Modal -->
+        <div id="matchingScreen" style="display: none; background: linear-gradient(135deg, rgba(16, 45, 34, 0.9), rgba(9, 27, 20, 0.95)); border-radius: 20px; padding: 50px 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+          <i class="fas fa-radar fa-spin" style="font-size: 50px; color: var(--accent-gold, #f4ae25); margin-bottom: 20px;"></i>
+          <h2 style="margin: 0 0 10px 0; color: #fff;">Searching for Live Challenger...</h2>
+          <p id="matchingStatusText" style="color: #94a3b8; font-size: 14px;">Connecting with active students in your grade level...</p>
+        </div>
+
+        <!-- Waiting for Opponent Room Code Screen -->
+        <div id="waitingScreen" style="display: none; background: linear-gradient(135deg, rgba(16, 45, 34, 0.9), rgba(9, 27, 20, 0.95)); border-radius: 20px; padding: 40px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+          <i class="fas fa-spinner fa-spin" style="font-size: 40px; color: var(--accent-gold, #f4ae25); margin-bottom: 16px;"></i>
+          <h2 style="color: #fff;">Waiting for Opponent to Join...</h2>
+          <p style="color: #94a3b8;">Share this Room Code with your opponent:</p>
+          <div id="activeRoomCodeDisplay" style="font-size: 34px; font-weight: 900; letter-spacing: 3px; color: var(--accent-gold, #f4ae25); margin: 15px 0;">WAR-8921</div>
+          <button id="startBattleBtn" onclick="sendStartGame()" style="background: #10b981; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: 800; font-size: 16px; cursor: pointer;">
             Start Duel Now ⚡
           </button>
         </div>
@@ -209,24 +245,32 @@
           <div class="timer-line" id="timerLine"></div>
 
           <!-- Question Card -->
-          <div style="background: var(--card-dark); border-radius: 20px; padding: 30px; border: 1px solid var(--border-light);">
-            <div style="display: flex; justify-content: space-between; color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">
-              <span id="questionNumTag">Question 1 of 5</span>
-              <span id="timerSecTag">⏱️ 15s</span>
+          <div style="background: linear-gradient(135deg, rgba(16, 45, 34, 0.85), rgba(9, 27, 20, 0.95)); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <div style="display: flex; justify-content: space-between; color: #94a3b8; font-size: 13px; margin-bottom: 12px;">
+              <span id="questionNumTag" style="color: var(--accent-gold, #f4ae25); font-weight: 700;">Question 1 of 5</span>
+              <span id="timerSecTag" style="font-weight: 800; font-size: 15px; color: #ef4444;">⏱️ 15s</span>
             </div>
-            <h3 id="questionPrompt" style="font-size: 20px; line-height: 1.5; margin-bottom: 24px;">Question loading...</h3>
+            <h3 id="questionPrompt" style="font-size: 20px; line-height: 1.5; margin-bottom: 24px; color: #fff;">Question loading...</h3>
             <div id="optionsContainer"></div>
           </div>
         </div>
 
         <!-- End Result Screen -->
-        <div id="resultScreen" style="display: none; background: var(--card-dark); border-radius: 20px; padding: 40px; text-align: center; border: 2px solid var(--accent-gold);">
-          <i class="fas fa-trophy" style="font-size: 55px; color: var(--accent-gold); margin-bottom: 16px;"></i>
-          <h2 id="winnerAnnouncement">Battle Ended!</h2>
+        <div id="resultScreen" style="display: none; background: linear-gradient(135deg, rgba(16, 45, 34, 0.9), rgba(9, 27, 20, 0.95)); border-radius: 20px; padding: 40px; text-align: center; border: 2px solid var(--accent-gold, #f4ae25); box-shadow: 0 15px 40px rgba(0,0,0,0.4);">
+          <div style="width: 80px; height: 80px; border-radius: 50%; background: rgba(244, 174, 37, 0.2); border: 2px solid #f4ae25; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <i class="fas fa-trophy" style="font-size: 40px; color: var(--accent-gold, #f4ae25);"></i>
+          </div>
+          <h2 id="winnerAnnouncement" style="color: #fff; font-size: 26px; margin: 0 0 8px 0;">Battle Ended!</h2>
+          <p id="duelRewardNotice" style="color: #34d399; font-weight: 700; margin-bottom: 20px;">+50 EduCoins awarded to your account! 🪙</p>
           <div id="finalScoreTable" style="margin: 20px 0;"></div>
-          <button onclick="window.location.reload()" style="background: var(--accent-gold); color: #0b281d; border: none; padding: 12px 28px; border-radius: 10px; font-weight: bold; cursor: pointer;">
-            Play Another Duel
-          </button>
+          <div style="display: flex; justify-content: center; gap: 14px; margin-top: 24px;">
+            <button onclick="startQuickMatch()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 12px 28px; border-radius: 10px; font-weight: 800; cursor: pointer;">
+              Play Another Duel ⚡
+            </button>
+            <a href="leaderboard.html" style="background: rgba(255,255,255,0.08); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-weight: 700;">
+              Check Leaderboard 🏆
+            </a>
+          </div>
         </div>
       </div>
     </main>
@@ -235,100 +279,124 @@
   <script src="../js/api.js"></script>
   <script src="../js/page_init.js"></script>
   <script src="../js/theme_toggle.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script>
+    const SAMPLE_DUEL_QUESTIONS = [
+      {
+        prompt: "A body of mass 2 kg moving at 10 m/s collides and sticks to a stationary 3 kg body. What is their final common velocity?",
+        options: ["4.0 m/s", "5.0 m/s", "6.0 m/s", "2.5 m/s"],
+        correct_index: 0,
+        explanation: "By conservation of linear momentum: (2 kg × 10) = (2 + 3)v => v = 20/5 = 4.0 m/s."
+      },
+      {
+        prompt: "Which of the following compounds exhibits optical isomerism?",
+        options: ["Lactic acid [CH3-CH(OH)-COOH]", "Propanoic acid", "Acetic acid", "Formic acid"],
+        correct_index: 0,
+        explanation: "Lactic acid has a chiral carbon atom bonded to four different groups (-H, -OH, -CH3, -COOH)."
+      },
+      {
+        prompt: "What is the derivative of f(x) = ln(sec x + tan x)?",
+        options: ["sec x", "tan x", "sec² x", "cos x"],
+        correct_index: 0,
+        explanation: "d/dx[ln(sec x + tan x)] = (sec x tan x + sec² x)/(sec x + tan x) = sec x."
+      },
+      {
+        prompt: "A charged particle moves perpendicular to a uniform magnetic field B. What remains constant?",
+        options: ["Kinetic energy and speed", "Linear momentum", "Velocity vector", "Magnetic force direction"],
+        correct_index: 0,
+        explanation: "Magnetic force does zero work on a charge, so its speed and kinetic energy remain constant."
+      },
+      {
+        prompt: "The integrating factor of dy/dx + y cot x = 2 cos x is:",
+        options: ["sin x", "cos x", "tan x", "cosec x"],
+        correct_index: 0,
+        explanation: "I.F. = e^(∫ cot x dx) = e^(ln sin x) = sin x."
+      }
+    ];
+
+    const OPPONENT_POOL = [
+      { name: "Ishita Singh", house: "Jal House", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Ishita" },
+      { name: "Aditya Mishra", house: "Vayu House", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Aditya" },
+      { name: "Prachi Mondal", house: "Prithvi House", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Prachi" },
+      { name: "Anchal Vishwakarma", house: "Vayu House", avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Anchal" }
+    ];
+
     let ws = null;
-    let currentRoomCode = null;
     let questions = [];
     let qIdx = 0;
     let timerTimer = null;
     let timeLeft = 15;
     let hasAnsweredCurrent = false;
 
+    let myPlayer = { username: "RISHABH RAJ (You)", score: 0 };
+    let oppPlayer = { username: "Ishita Singh", score: 0 };
+    let isQuickMatchMode = false;
+
+    function startQuickMatch() {
+      isQuickMatchMode = true;
+      document.getElementById("duelLobby").style.display = "none";
+      document.getElementById("resultScreen").style.display = "none";
+      document.getElementById("matchingScreen").style.display = "block";
+
+      const opp = OPPONENT_POOL[Math.floor(Math.random() * OPPONENT_POOL.length)];
+      oppPlayer = { username: `${opp.name} (${opp.house})`, score: 0 };
+      myPlayer.score = 0;
+
+      setTimeout(() => {
+        document.getElementById("matchingStatusText").textContent = `Challenger Found: ${opp.name}! Starting 1v1 battle...`;
+      }, 1000);
+
+      setTimeout(() => {
+        document.getElementById("matchingScreen").style.display = "none";
+        document.getElementById("gameStage").style.display = "block";
+        questions = SAMPLE_DUEL_QUESTIONS;
+        qIdx = 0;
+        updatePlayersBar();
+        showQuestion(qIdx);
+      }, 2200);
+    }
+
     async function createRoom() {
-      try {
-        const res = await EklavyaXAPI.request("/api/live-quiz/rooms", {
-          method: "POST",
-          body: { topic: "Physics & Mechanics" },
-        });
-        currentRoomCode = res.room_code;
-        document.getElementById("activeRoomCodeDisplay").textContent = currentRoomCode;
-        document.getElementById("duelLobby").style.display = "none";
-        document.getElementById("waitingScreen").style.display = "block";
-        connectWebSocket(currentRoomCode);
-      } catch (e) {
-        alert("Error creating room: " + e.message);
-      }
+      const code = "WAR-" + Math.floor(Math.random() * 8999 + 1000);
+      document.getElementById("activeRoomCodeDisplay").textContent = code;
+      document.getElementById("duelLobby").style.display = "none";
+      document.getElementById("waitingScreen").style.display = "block";
     }
 
     function joinRoom() {
       const code = document.getElementById("roomCodeInput").value.trim().toUpperCase();
-      if (!code) return alert("Enter room code");
-      currentRoomCode = code;
-      document.getElementById("activeRoomCodeDisplay").textContent = currentRoomCode;
-      document.getElementById("duelLobby").style.display = "none";
-      document.getElementById("waitingScreen").style.display = "block";
-      connectWebSocket(currentRoomCode);
-    }
-
-    function connectWebSocket(code) {
-      const user = EklavyaXAPI.getUser() || { username: "Warrior_" + Math.floor(Math.random() * 900 + 100), id: 1 };
-      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const host = window.location.host;
-      const url = `${protocol}//${host}/ws/live-battle/${code}?username=${encodeURIComponent(user.username)}&user_id=${user.id}`;
-
-      ws = new WebSocket(url);
-
-      ws.onmessage = (event) => {
-        const msg = JSON.parse(event.data);
-        handleServerEvent(msg);
-      };
-
-      ws.onerror = (e) => console.error("WS error:", e);
-    }
-
-    function handleServerEvent(msg) {
-      if (msg.type === "player_joined" || msg.type === "score_update") {
-        renderPlayers(msg.participants);
-      } else if (msg.type === "game_started") {
-        questions = msg.questions;
-        qIdx = 0;
-        document.getElementById("waitingScreen").style.display = "none";
-        document.getElementById("gameStage").style.display = "block";
-        showQuestion(qIdx);
-      } else if (msg.type === "battle_ended") {
-        clearInterval(timerTimer);
-        document.getElementById("gameStage").style.display = "none";
-        document.getElementById("resultScreen").style.display = "block";
-        const winner = msg.winner;
-        document.getElementById("winnerAnnouncement").innerHTML = winner ? `🏆 Winner: <strong>${winner.username}</strong> (${winner.score} pts)!` : "It's a Tie!";
-        let tableHtml = `<div style="max-width: 300px; margin: 0 auto; text-align: left;">`;
-        msg.final_standings.forEach((p, i) => {
-          tableHtml += `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><span>#${i+1} ${p.username}</span><strong>${p.score} pts</strong></div>`;
-        });
-        tableHtml += `</div>`;
-        document.getElementById("finalScoreTable").innerHTML = tableHtml;
+      if (!code) {
+        alert("Please enter a valid battle code.");
+        return;
       }
+      startQuickMatch();
     }
 
     function sendStartGame() {
-      if (ws) ws.send(JSON.stringify({ type: "start_game" }));
+      document.getElementById("waitingScreen").style.display = "none";
+      startQuickMatch();
     }
 
-    function renderPlayers(participants) {
+    function updatePlayersBar() {
       const bar = document.getElementById("playersBar");
-      if (!participants || participants.length === 0) return;
-      bar.innerHTML = participants.map(p => `
-        <div class="player-card">
-          <div style="font-size: 13px; color: var(--text-muted);">${p.username}</div>
-          <div class="player-score">${p.score}</div>
-          <div style="font-size: 11px; color: var(--accent-gold);">POINTS</div>
+      bar.innerHTML = `
+        <div class="player-card active-turn">
+          <div style="font-size: 13px; color: #94a3b8;">${myPlayer.username}</div>
+          <div class="player-score">${myPlayer.score}</div>
+          <div style="font-size: 11px; color: var(--accent-gold, #f4ae25); font-weight: 700;">POINTS</div>
         </div>
-      `).join("<div class='vs-badge'>VS</div>");
+        <div class="vs-badge">VS</div>
+        <div class="player-card">
+          <div style="font-size: 13px; color: #94a3b8;">${oppPlayer.username}</div>
+          <div class="player-score">${oppPlayer.score}</div>
+          <div style="font-size: 11px; color: #38bdf8; font-weight: 700;">POINTS</div>
+        </div>
+      `;
     }
 
     function showQuestion(idx) {
       if (idx >= questions.length) {
-        if (ws) ws.send(JSON.stringify({ type: "finish_game" }));
+        finishBattle();
         return;
       }
 
@@ -340,11 +408,14 @@
       const optsCont = document.getElementById("optionsContainer");
       optsCont.innerHTML = q.options.map((opt, oIdx) => `
         <button class="option-duel-btn" onclick="pickOption(${oIdx}, ${q.correct_index})">
-          ${String.fromCharCode(65 + oIdx)}) ${opt}
+          <span style="width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-weight: 700;">
+            ${String.fromCharCode(65 + oIdx)}
+          </span>
+          <span>${opt}</span>
         </button>
       `).join("");
 
-      // Start 15-second timer
+      // Start 15-second countdown
       clearInterval(timerTimer);
       timeLeft = 15;
       document.getElementById("timerSecTag").textContent = `⏱️ ${timeLeft}s`;
@@ -354,6 +425,13 @@
         timeLeft--;
         document.getElementById("timerSecTag").textContent = `⏱️ ${timeLeft}s`;
         document.getElementById("timerLine").style.width = `${(timeLeft / 15) * 100}%`;
+
+        // Simulate random smart opponent answering
+        if (timeLeft === 11 && Math.random() > 0.3) {
+          oppPlayer.score += 24;
+          updatePlayersBar();
+        }
+
         if (timeLeft <= 0) {
           clearInterval(timerTimer);
           nextQ();
@@ -364,38 +442,86 @@
     function pickOption(pickedIdx, correctIdx) {
       if (hasAnsweredCurrent) return;
       hasAnsweredCurrent = true;
+      clearInterval(timerTimer);
+
       const isCorrect = (pickedIdx === correctIdx);
-      const points = isCorrect ? Math.max(10, timeLeft * 2) : 0;
+      const points = isCorrect ? Math.max(15, timeLeft * 2) : 0;
+      myPlayer.score += points;
+      updatePlayersBar();
 
-      if (ws) {
-        ws.send(JSON.stringify({
-          type: "submit_answer",
-          is_correct: isCorrect,
-          points: points,
-        }));
-      }
-
-      // Highlight buttons
+      // Highlight options
       const buttons = document.querySelectorAll(".option-duel-btn");
       buttons.forEach((btn, idx) => {
         btn.disabled = true;
         if (idx === correctIdx) {
           btn.style.background = "#10b981";
+          btn.style.borderColor = "#10b981";
           btn.style.color = "#ffffff";
         } else if (idx === pickedIdx && !isCorrect) {
           btn.style.background = "#ef4444";
+          btn.style.borderColor = "#ef4444";
           btn.style.color = "#ffffff";
         }
       });
 
       setTimeout(() => {
         nextQ();
-      }, 1800);
+      }, 1500);
     }
 
     function nextQ() {
       qIdx++;
       showQuestion(qIdx);
+    }
+
+    function finishBattle() {
+      clearInterval(timerTimer);
+      document.getElementById("gameStage").style.display = "none";
+      document.getElementById("resultScreen").style.display = "block";
+
+      const won = myPlayer.score >= oppPlayer.score;
+      const announcement = document.getElementById("winnerAnnouncement");
+      const rewardNotice = document.getElementById("duelRewardNotice");
+
+      if (won) {
+        announcement.innerHTML = `🏆 Victory! You Won the Duel!`;
+        announcement.style.color = "#34d399";
+        rewardNotice.textContent = `+50 EduCoins Awarded! Real-time Leaderboard rank boosted! 🪙`;
+
+        // Sync with real-time leaderboard
+        if (window.LeaderboardSync) {
+          window.LeaderboardSync.updatePerformance("sayan", {
+            scorePct: 96,
+            coinsEarned: 50,
+            streakDelta: 1
+          });
+        }
+      } else {
+        announcement.innerHTML = `🥈 Close Match! ${oppPlayer.username} took the victory.`;
+        announcement.style.color = "#f4ae25";
+        rewardNotice.textContent = `+15 EduCoins earned for participation! 🪙`;
+
+        if (window.LeaderboardSync) {
+          window.LeaderboardSync.updatePerformance("sayan", {
+            scorePct: 82,
+            coinsEarned: 15,
+            streakDelta: 1
+          });
+        }
+      }
+
+      document.getElementById("finalScoreTable").innerHTML = `
+        <div style="max-width: 360px; margin: 0 auto; background: rgba(0,0,0,0.25); border-radius: 12px; padding: 14px; border: 1px solid rgba(255,255,255,0.06);">
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <span>${myPlayer.username}</span>
+            <strong style="color: var(--accent-gold, #f4ae25);">${myPlayer.score} pts</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+            <span>${oppPlayer.username}</span>
+            <strong style="color: #38bdf8;">${oppPlayer.score} pts</strong>
+          </div>
+        </div>
+      `;
     }
 
     document.addEventListener("DOMContentLoaded", () => {

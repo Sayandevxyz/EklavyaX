@@ -133,7 +133,12 @@
           </span>
         </div>
       </div>
-      <div style="display: flex; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <div style="background: rgba(244, 174, 37, 0.15); border: 1px solid rgba(244, 174, 37, 0.3); padding: 6px 14px; border-radius: 12px; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">🪙</span>
+          <span id="lensCoinCount" style="font-family: 'Outfit', sans-serif; font-weight: 700; color: #f4ae25; font-size: 15px;">1,450</span>
+          <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">EduCoins</span>
+        </div>
         <a href="explore_courses.html" class="layer-btn" style="text-decoration: none;">
           <i class="fas fa-arrow-left"></i> Explore Courses
         </a>
@@ -306,12 +311,19 @@
           <p id="checkpointQuestion" style="font-size: 13px; color: #e2e8f0; margin: 6px 0 10px 0;">
             Why were major battles like Panipat fought in the narrow gateway north of Delhi?
           </p>
+          <div id="lensAnswerRevealBox" style="display: none; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px;">
+            <strong style="color: #34d399; font-size: 12px;"><i class="fas fa-lightbulb"></i> Geographical Reasoning:</strong>
+            <p id="lensAnswerText" style="font-size: 13px; color: #cbd5e1; margin: 4px 0 10px 0;"></p>
+            <button onclick="claimMapMasteryCoins()" id="btnClaimMapCoins" style="background: #10b981; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer;">
+              <i class="fas fa-check"></i> I Understood This (+15 🪙)
+            </button>
+          </div>
           <div style="display: flex; gap: 8px;">
             <button onclick="revealAnswer()" style="background: #f4ae25; color: #071510; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;">
               Reveal Geographical Reason
             </button>
             <button onclick="nextLessonTopic()" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer;">
-              Next Region
+              Next Region &rarr;
             </button>
           </div>
         </div>
@@ -321,6 +333,7 @@
 
   <script src="../js/api.js"></script>
   <script src="../js/page_init.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
   <script>
     const PIN_DATA = {
       harappa: {
@@ -402,16 +415,52 @@
       document.getElementById("connectionBody").textContent = data.connBody;
       document.getElementById("checkpointQuestion").textContent = data.question;
 
+      // Reset reveal box
+      const revBox = document.getElementById("lensAnswerRevealBox");
+      if (revBox) revBox.style.display = "none";
+      const btnClaim = document.getElementById("btnClaimMapCoins");
+      if (btnClaim) {
+        btnClaim.disabled = false;
+        btnClaim.innerHTML = '<i class="fas fa-check"></i> I Understood This (+15 🪙)';
+      }
+
       // Animate pin in SVG
       document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
       const activeEl = document.querySelector(`.map-pin[onclick*="${key}"]`);
       if (activeEl) activeEl.classList.add('active');
     }
 
+    function syncCoinsDisplay() {
+      if (window.LeaderboardSync) {
+        const st = window.LeaderboardSync.getStudentById("sayan");
+        if (st) {
+          const el = document.getElementById("lensCoinCount");
+          if (el) el.textContent = Number(st.eduCoins || 1450).toLocaleString();
+        }
+      }
+    }
+
     function revealAnswer() {
       const data = PIN_DATA[currentPinKey];
       if (data) {
-        alert("💡 Geographical Answer:\n\n" + data.answer);
+        const revBox = document.getElementById("lensAnswerRevealBox");
+        const revText = document.getElementById("lensAnswerText");
+        revText.textContent = data.answer;
+        revBox.style.display = "block";
+      }
+    }
+
+    function claimMapMasteryCoins() {
+      if (window.LeaderboardSync) {
+        const st = window.LeaderboardSync.getStudentById("sayan");
+        const newCoins = (st?.eduCoins || 1450) + 15;
+        window.LeaderboardSync.updateStudent("sayan", { eduCoins: newCoins });
+        syncCoinsDisplay();
+      }
+      const btn = document.getElementById("btnClaimMapCoins");
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '✅ +15 EduCoins Claimed!';
       }
     }
 
@@ -455,6 +504,11 @@
     document.addEventListener("DOMContentLoaded", () => {
       initPage("student", "student_login.html");
       selectPin("harappa");
+      syncCoinsDisplay();
+
+      if (window.LeaderboardSync) {
+        window.LeaderboardSync.onSync(() => syncCoinsDisplay());
+      }
     });
   </script>
 </body>
