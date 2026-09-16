@@ -57,6 +57,32 @@
     }
   }
 
+  function getActiveStudentName() {
+    try {
+      if (typeof window !== "undefined" && window.EklavyaXAPI && window.EklavyaXAPI.getUser) {
+        const u = window.EklavyaXAPI.getUser();
+        if (u) {
+          const dn = window.EklavyaXAPI.displayName(u);
+          if (dn) return dn;
+          if (u.full_name) return u.full_name;
+          if (u.name) return u.name;
+          if (u.username) return u.username;
+        }
+      }
+      const raw = typeof localStorage !== "undefined" ? localStorage.getItem("EklavyaX_user") : null;
+      if (raw) {
+        const u = JSON.parse(raw);
+        if (u.full_name) return u.full_name;
+        if (u.name) return u.name;
+        if (u.username) {
+          if (u.username.includes(" ")) return u.username;
+          return u.username.split(/[._-]/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+        }
+      }
+    } catch (_) {}
+    return "Sayan Mondal";
+  }
+
   const DEFAULT_STUDENTS = {
     ishita: {
       id: "ishita",
@@ -79,7 +105,7 @@
     },
     sayan: {
       id: "sayan",
-      name: "RISHABH RAJ",
+      name: getActiveStudentName(),
       roll: "EK-101",
       exam: "CBSE & JEE 2026",
       house: "Agni House",
@@ -214,14 +240,25 @@
   }
 
   function getDatabase() {
+    const studentName = getActiveStudentName();
+    const defaults = { ...DEFAULT_STUDENTS };
+    if (defaults.sayan) {
+      defaults.sayan = { ...defaults.sayan, name: studentName };
+    }
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        return { ...DEFAULT_STUDENTS, ...parsed };
+        const merged = { ...defaults, ...parsed };
+        if (merged.sayan) {
+          if (!merged.sayan.name || merged.sayan.name === "RISHABH RAJ" || merged.sayan.name === "Student") {
+            merged.sayan.name = studentName;
+          }
+        }
+        return merged;
       }
     } catch (_) {}
-    return { ...DEFAULT_STUDENTS };
+    return defaults;
   }
 
   function saveDatabase(db) {
@@ -399,6 +436,26 @@
     }).join("");
   }
 
+  /**
+   * Directly update a student's attributes (coins, eduCoins, overallScore, etc.)
+   */
+  function updateStudent(studentId, updates) {
+    const db = getDatabase();
+    const targetKey = db[studentId] ? studentId : "sayan";
+    const st = db[targetKey];
+    if (st && updates) {
+      if (updates.coins !== undefined) st.coins = Number(updates.coins);
+      if (updates.eduCoins !== undefined) st.coins = Number(updates.eduCoins);
+      if (updates.overallScore !== undefined) st.overall = Number(updates.overallScore);
+      if (updates.overall !== undefined) st.overall = Number(updates.overall);
+      if (updates.streak !== undefined) st.streak = Number(updates.streak);
+      if (updates.name) st.name = updates.name;
+      saveDatabase(db);
+      return st;
+    }
+    return null;
+  }
+
   // Export API globally
   window.LeaderboardSync = {
     getDatabase,
@@ -408,7 +465,12 @@
     getEducoinBadgeTier,
     awardCoins,
     updatePerformance,
+    updateStudent,
     renderLeaderboardWidget,
+    onSync(callback) {
+      listeners.add(callback);
+      return () => listeners.delete(callback);
+    },
     subscribe(callback) {
       listeners.add(callback);
       return () => listeners.delete(callback);

@@ -16,7 +16,9 @@
     }
     .flashcard-stage {
       perspective: 1000px;
+      width: 100%;
       max-width: 680px;
+      align-self: center;
       margin: 25px auto;
       min-height: 380px;
     }
@@ -179,17 +181,28 @@
       <div class="profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
         <div class="profile-info">
-          <strong id="profileName">RISHABH RAJ</strong>
+          <strong id="profileName">Sayan Mondal</strong>
           <span id="profileAction">Log out</span>
         </div>
       </div>
     </aside>
 
     <main class="content">
-      <section class="top-bar">
-        <div class="welcome-text">
-          <h1>🗂️ <strong>Spaced Repetition Concept Flashcards</strong></h1>
-          <h2>Active recall memory engine: Master formulas, organic reactions, and critical definitions!</h2>
+      <section class="adv-top-header" style="position: relative; width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 28px; background: linear-gradient(135deg, rgba(16, 45, 34, 0.95), rgba(7, 21, 16, 0.98)); border: 1.5px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25); margin-bottom: 20px;">
+        <div>
+          <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px;">
+            <span>🗂️</span> <span>Spaced Repetition Concept Flashcards</span>
+          </h1>
+          <h2 style="margin: 6px 0 0 0; font-size: 13px; font-weight: 500; color: #94a3b8;">
+            Active recall memory engine: Master formulas, organic reactions, and critical definitions!
+          </h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="background: rgba(244,174,37,0.15); border: 1px solid rgba(244,174,37,0.3); padding: 8px 16px; border-radius: 12px; display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 18px;">🪙</span>
+            <span id="headerCoinCount" style="font-family: 'Outfit', sans-serif; font-weight: 700; color: #f4ae25; font-size: 16px;">1,450</span>
+            <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">EduCoins</span>
+          </div>
         </div>
       </section>
 
@@ -436,6 +449,16 @@
       document.getElementById("reviewBar").style.display = isFlipped ? "flex" : "none";
     }
 
+    function syncCoins() {
+      if (window.LeaderboardSync) {
+        const st = window.LeaderboardSync.getStudentById("sayan");
+        if (st) {
+          const el = document.getElementById("headerCoinCount");
+          if (el) el.textContent = Number(st.coins || 1450).toLocaleString();
+        }
+      }
+    }
+
     function submitReview(rating) {
       if (currentIndex >= currentDeck.length) return;
       reviewedCount++;
@@ -444,6 +467,7 @@
       // Award EduCoins on Easy or Good rating
       if (rating >= 3 && window.LeaderboardSync) {
         window.LeaderboardSync.awardCoins("sayan", 5, "Flashcard mastery");
+        syncCoins();
       }
 
       currentIndex++;
@@ -504,6 +528,10 @@
     document.addEventListener("DOMContentLoaded", () => {
       initPage("student", "student_login.html");
       initDeck();
+      syncCoins();
+      if (window.LeaderboardSync && window.LeaderboardSync.onSync) {
+        window.LeaderboardSync.onSync(syncCoins);
+      }
     });
   </script>
 </body>

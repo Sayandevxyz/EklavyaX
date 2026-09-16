@@ -206,7 +206,7 @@
         </div>
         <div style="display: flex; justify-content: center; gap: 14px; margin-top: 14px; font-size: 13px; flex-wrap: wrap;">
           <button type="button" onclick="loadDemoChildProgress()" style="background: rgba(16,185,129,0.18); border: 1px solid rgba(16,185,129,0.4); color: #34d399; padding: 8px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">
-            <i class="fas fa-bolt"></i> Live Demo: View Rishabh Raj (Class 10-A)
+            <i class="fas fa-bolt"></i> Live Demo: View Student Progress (Class 10-A)
           </button>
           <a href="parent_login.html" style="color: #94a3b8; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
             <i class="fas fa-user-lock" style="color: #f4ae25;"></i> Parent Account Login &rarr;
@@ -469,7 +469,7 @@
       return {
         student: {
           id: 1,
-          name: "RISHABH RAJ",
+          name: (syncStudent && syncStudent.name) || "Sayan Mondal",
           grade: "Class 10",
           section: "A",
           school: "Eklavya Central Academy",

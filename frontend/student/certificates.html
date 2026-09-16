@@ -176,17 +176,21 @@
       <div class="profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
         <div class="profile-info">
-          <strong id="profileName">RISHABH RAJ</strong>
+          <strong id="profileName">Sayan Mondal</strong>
           <span id="profileAction">Log out</span>
         </div>
       </div>
     </aside>
 
     <main class="content">
-      <section class="top-bar">
-        <div class="welcome-text">
-          <h1>🎖️ <strong>Official Verified Academic Certificates</strong></h1>
-          <h2>Cryptographically signed course mastery, streak achievements, and honors credentials!</h2>
+      <section class="adv-top-header" style="position: relative; width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 28px; background: linear-gradient(135deg, rgba(16, 45, 34, 0.95), rgba(7, 21, 16, 0.98)); border: 1.5px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25); margin-bottom: 20px;">
+        <div>
+          <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px;">
+            <span>🎖️</span> <span>Official Verified Academic Certificates</span>
+          </h1>
+          <h2 style="margin: 6px 0 0 0; font-size: 13px; font-weight: 500; color: #94a3b8;">
+            Cryptographically signed course mastery, streak achievements, and honors credentials!
+          </h2>
         </div>
       </section>
 
@@ -222,7 +226,7 @@
       <h2 style="font-family: 'Cinzel', serif; font-size: 24px; color: #fff; margin: 8px 0 16px 0;">Certificate of Academic Excellence</h2>
 
       <p style="color: #cbd5e1; font-size: 14px; margin: 0;">This is proudly awarded to</p>
-      <div class="cert-recipient" id="viewCertName">RISHABH RAJ</div>
+      <div class="cert-recipient" id="viewCertName">Sayan Mondal</div>
 
       <p style="color: #cbd5e1; font-size: 15px; max-width: 540px; margin: 0 auto 18px; line-height: 1.6;" id="viewCertDesc">
         In recognition of outstanding performance and conceptual mastery in
@@ -293,13 +297,34 @@
   <script src="../js/theme_toggle.js"></script>
   <script src="../js/leaderboard_sync.js"></script>
   <script>
+    function getLoggedInStudentName() {
+      if (window.EklavyaXAPI && EklavyaXAPI.getUser()) {
+        const u = EklavyaXAPI.getUser();
+        const dn = EklavyaXAPI.displayName(u);
+        if (dn) return dn;
+        if (u.full_name) return u.full_name;
+        if (u.name) return u.name;
+        if (u.username) return u.username;
+      }
+      try {
+        const raw = localStorage.getItem("EklavyaX_user");
+        if (raw) {
+          const u = JSON.parse(raw);
+          if (u.full_name) return u.full_name;
+          if (u.name) return u.name;
+          if (u.username) return u.username;
+        }
+      } catch (_) {}
+      return "Sayan Mondal";
+    }
+
     const DEFAULT_CERTIFICATES = [
       {
         certificate_id: "EK-CERT-PHY-8921",
         course_name: "Physics & Mechanics Mastery — Grade A+",
         score_percent: 96.5,
         issue_date: "12 September 2026",
-        recipient: "RISHABH RAJ",
+        recipient: getLoggedInStudentName(),
         description: "In recognition of outstanding mastery in Rotational Motion, Gravitation, and Harmonic Oscillations."
       },
       {
@@ -307,7 +332,7 @@
         course_name: "Organic Chemistry Reaction Pathways — Honors",
         score_percent: 94.0,
         issue_date: "05 September 2026",
-        recipient: "RISHABH RAJ",
+        recipient: getLoggedInStudentName(),
         description: "Honoring top-tier conceptual grasp of Electrophilic Additions, Named Reactions, and Stereochemistry."
       },
       {
@@ -315,7 +340,7 @@
         course_name: "EklavyaX Daily Streak & Consistency Award — 15 Days",
         score_percent: 98.0,
         issue_date: "15 September 2026",
-        recipient: "RISHABH RAJ",
+        recipient: getLoggedInStudentName(),
         description: "Awarded for demonstrating extraordinary academic discipline, zero missed daily quizzes, and peak consistency."
       }
     ];
@@ -323,15 +348,21 @@
     let userCertificates = [];
 
     function initCertificates() {
+      const studentName = getLoggedInStudentName();
       try {
         const raw = localStorage.getItem("eklavyax_user_certificates");
         if (raw) {
           userCertificates = JSON.parse(raw);
+          userCertificates.forEach(c => {
+            if (!c.recipient || c.recipient === "RISHABH RAJ" || c.recipient === "Student") {
+              c.recipient = studentName;
+            }
+          });
         } else {
-          userCertificates = DEFAULT_CERTIFICATES;
+          userCertificates = DEFAULT_CERTIFICATES.map(c => ({ ...c, recipient: studentName }));
         }
       } catch (_) {
-        userCertificates = DEFAULT_CERTIFICATES;
+        userCertificates = DEFAULT_CERTIFICATES.map(c => ({ ...c, recipient: studentName }));
       }
       renderCertificates();
     }
@@ -374,8 +405,9 @@
     }
 
     function viewCertificate(id) {
+      const studentName = getLoggedInStudentName();
       const c = userCertificates.find(item => item.certificate_id === id) || userCertificates[0];
-      document.getElementById("viewCertName").textContent = c.recipient || "RISHABH RAJ";
+      document.getElementById("viewCertName").textContent = c.recipient || studentName;
       document.getElementById("viewCertCourse").textContent = c.course_name;
       document.getElementById("viewCertScore").textContent = `${c.score_percent}%`;
       document.getElementById("viewCertDate").textContent = c.issue_date;
@@ -409,7 +441,7 @@
         course_name: course,
         score_percent: parseFloat(grade),
         issue_date: "Today",
-        recipient: "RISHABH RAJ",
+        recipient: getLoggedInStudentName(),
         description: `Successfully cleared rigorous examinations with ${grade}.`
       };
 

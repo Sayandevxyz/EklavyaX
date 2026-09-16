@@ -47,7 +47,7 @@ const EklavyaXPages = (() => {
     },
     {
       id: "d3",
-      author: "RISHABH RAJ",
+      author: "Sayan Mondal",
       authorRole: "student",
       avatar: "../assets/img/student_boy.jpg",
       subject: "math",
@@ -959,7 +959,7 @@ const EklavyaXPages = (() => {
     const examInput = document.getElementById("settingTargetExam");
     const bioInput = document.getElementById("settingBio");
 
-    if (nameInput) nameInput.value = user.username || EklavyaXAPI.displayName(user) || (userRole === "teacher" ? "Aarav Singh" : "RISHABH RAJ");
+    if (nameInput) nameInput.value = user.username || EklavyaXAPI.displayName(user) || (userRole === "teacher" ? "Aarav Singh" : "Sayan Mondal");
     if (emailInput) emailInput.value = user.email || (userRole === "teacher" ? "teacher@eklavyax.edu" : "sayanmondal@gmail.com");
     if (phoneInput) phoneInput.value = user.phone || "";
     if (genderInput) genderInput.value = (user.gender === "female" || user.gender === "girl") ? "female" : "male";

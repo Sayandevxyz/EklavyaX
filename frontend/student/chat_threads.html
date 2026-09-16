@@ -175,17 +175,21 @@
       <div class="profile">
         <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
         <div class="profile-info">
-          <strong id="profileName">RISHABH RAJ</strong>
+          <strong id="profileName">Sayan Mondal</strong>
           <span id="profileAction">Log out</span>
         </div>
       </div>
     </aside>
 
     <main class="content">
-      <section class="top-bar">
-        <div class="welcome-text">
-          <h1>💬 <strong>In-App Faculty & Peer Discussion Threads</strong></h1>
-          <h2>Deep multi-message doubt resolution with teachers and subject mentors!</h2>
+      <section class="adv-top-header" style="position: relative; width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 28px; background: linear-gradient(135deg, rgba(16, 45, 34, 0.95), rgba(7, 21, 16, 0.98)); border: 1.5px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25); margin-bottom: 20px;">
+        <div>
+          <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px;">
+            <span>💬</span> <span>In-App Faculty & Peer Discussion Threads</span>
+          </h1>
+          <h2 style="margin: 6px 0 0 0; font-size: 13px; font-weight: 500; color: #94a3b8;">
+            Deep multi-message doubt resolution with teachers and subject mentors!
+          </h2>
         </div>
       </section>
 
@@ -269,6 +273,27 @@
   <script src="../js/theme_toggle.js"></script>
   <script src="../js/leaderboard_sync.js"></script>
   <script>
+    function getLoggedInStudentName() {
+      if (window.EklavyaXAPI && EklavyaXAPI.getUser()) {
+        const u = EklavyaXAPI.getUser();
+        const dn = EklavyaXAPI.displayName(u);
+        if (dn) return dn;
+        if (u.full_name) return u.full_name;
+        if (u.name) return u.name;
+        if (u.username) return u.username;
+      }
+      try {
+        const raw = localStorage.getItem("EklavyaX_user");
+        if (raw) {
+          const u = JSON.parse(raw);
+          if (u.full_name) return u.full_name;
+          if (u.name) return u.name;
+          if (u.username) return u.username;
+        }
+      } catch (_) {}
+      return "Sayan Mondal";
+    }
+
     const DEFAULT_THREADS = [
       {
         id: 1,
@@ -277,8 +302,8 @@
         status: "active",
         last_message: "Dr. Verma: Notice that the moment of inertia determines the angular acceleration.",
         messages: [
-          { sender: "RISHABH RAJ (You)", text: "Sir, when both a solid sphere and a solid cylinder roll down an incline without slipping, why does the sphere reach the bottom first?", time: "10:15 AM", type: "me" },
-          { sender: "Dr. Verma (Physics Faculty)", text: "Great question Rishabh! For rolling without slipping, acceleration is a = g sin θ / (1 + I / mR²). A solid sphere has I = 2/5 mR² (factor 0.4), whereas a solid cylinder has I = 1/2 mR² (factor 0.5). Lower inertia factor means higher acceleration!", time: "10:20 AM", type: "teacher" },
+          { sender: `${getLoggedInStudentName()} (You)`, text: "Sir, when both a solid sphere and a solid cylinder roll down an incline without slipping, why does the sphere reach the bottom first?", time: "10:15 AM", type: "me" },
+          { sender: "Dr. Verma (Physics Faculty)", text: "Great question! For rolling without slipping, acceleration is a = g sin θ / (1 + I / mR²). A solid sphere has I = 2/5 mR² (factor 0.4), whereas a solid cylinder has I = 1/2 mR² (factor 0.5). Lower inertia factor means higher acceleration!", time: "10:20 AM", type: "teacher" },
           { sender: "Ishita Singh", text: "Yes, exactly. Sphere has a = 5/7 g sin θ ≈ 0.71 g sin θ, while cylinder has a = 2/3 g sin θ ≈ 0.67 g sin θ.", time: "10:25 AM", type: "other" }
         ]
       },
@@ -289,7 +314,7 @@
         status: "active",
         last_message: "GRAVITY AI: At 298 K, 2.303 RT/F simplifies to 0.0591.",
         messages: [
-          { sender: "RISHABH RAJ (You)", text: "How does the EMF change when we dilute the anodic compartment 10-fold?", time: "11:00 AM", type: "me" },
+          { sender: `${getLoggedInStudentName()} (You)`, text: "How does the EMF change when we dilute the anodic compartment 10-fold?", time: "11:00 AM", type: "me" },
           { sender: "GRAVITY AI Mentor", text: "In E = E° - (0.0591/n) log [Anode]/[Cathode], diluting the anode lowers [Anode] by a factor of 10. The log term decreases by 1, so the cell potential E increases by (0.0591/n) Volts.", time: "11:02 AM", type: "teacher" }
         ]
       },
@@ -310,10 +335,21 @@
     let activeThread = null;
 
     function initThreads() {
+      const studentTag = `${getLoggedInStudentName()} (You)`;
       try {
         const raw = localStorage.getItem("eklavyax_chat_threads");
         if (raw) {
           threads = JSON.parse(raw);
+          // Sanitize any previous demo names
+          threads.forEach(t => {
+            if (t.messages) {
+              t.messages.forEach(m => {
+                if (m.type === "me" || m.sender.includes("RISHABH RAJ")) {
+                  m.sender = studentTag;
+                }
+              });
+            }
+          });
         } else {
           threads = DEFAULT_THREADS;
         }
@@ -385,7 +421,7 @@
       if (!text || !activeThread) return;
 
       const newMsg = {
-        sender: "RISHABH RAJ (You)",
+        sender: `${getLoggedInStudentName()} (You)`,
         text: text,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         type: "me"
@@ -447,7 +483,7 @@
         last_message: `You: ${desc}`,
         messages: [
           {
-            sender: "RISHABH RAJ (You)",
+            sender: `${getLoggedInStudentName()} (You)`,
             text: desc,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             type: "me"

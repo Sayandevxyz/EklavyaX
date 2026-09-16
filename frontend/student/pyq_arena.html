@@ -427,7 +427,7 @@
         const st = window.LeaderboardSync.getStudentById("sayan");
         if (st) {
           const el = document.getElementById("headerCoinCount");
-          if (el) el.textContent = Number(st.eduCoins || 1450).toLocaleString();
+          if (el) el.textContent = Number(st.coins || st.eduCoins || 1450).toLocaleString();
         }
       }
     }
@@ -539,7 +539,7 @@
     function renderQuestionView() {
       const q = activeQuestions[currentQIdx];
       document.getElementById("qExamBadge").textContent = `${q.exam_type} (${q.year})`;
-      document.getElementById("qSubjectTopic").textContent = `${q.subject} • ${q.chapter}: ${q.topic}`;
+      document.getElementById("qSubjectTopic").textContent = `${q.subject} • ${q.chapter ? q.chapter + ': ' : ''}${q.topic || 'Core Concept'}`;
       document.getElementById("qPromptText").textContent = q.prompt;
 
       const optsCont = document.getElementById("qOptionsContainer");
@@ -631,113 +631,148 @@
     }
 
     async function submitPYQExam() {
-      clearInterval(timerInterval);
-
-      const answersPayload = activeQuestions.map(q => ({
-        question_id: q.id,
-        chosen_index: studentChoices[q.id] !== undefined ? studentChoices[q.id] : null
-      }));
-
-      let data = null;
-
       try {
-        const token = localStorage.getItem("token") || localStorage.getItem("access_token");
-        const headers = {
-          "Content-Type": "application/json",
-          ...(token ? { "Authorization": `Bearer ${token}` } : {})
-        };
+        clearInterval(timerInterval);
 
-        const res = await fetch("/api/pedagogy/pyqs/submit", {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            exam_type: activeQuestions[0].exam_type,
-            year: activeQuestions[0].year,
-            subject: activeQuestions[0].subject,
-            time_taken_sec: (activeQuestions.length * 90) - secondsLeft,
-            answers: answersPayload
-          })
-        });
+        const answersPayload = activeQuestions.map(q => ({
+          question_id: q.id,
+          chosen_index: studentChoices[q.id] !== undefined ? studentChoices[q.id] : null
+        }));
 
-        if (res.ok) {
-          data = await res.json();
-        }
-      } catch (err) {
-        console.warn("Server evaluation unavailable, scoring locally:", err.message);
-      }
+        let data = null;
 
-      // If server response unavailable, compute accurate client-side evaluation
-      if (!data) {
-        let score = 0;
-        const evaluation = activeQuestions.map(q => {
-          const chosen = studentChoices[q.id] !== undefined ? studentChoices[q.id] : null;
-          const isCorrect = chosen === q.correct_option_index;
-          if (isCorrect) score++;
-          return {
-            prompt: q.prompt,
-            is_correct: isCorrect,
-            chosen_index: chosen,
-            correct_index: q.correct_option_index,
-            explanation: q.explanation
+        try {
+          const token = (window.EklavyaXAPI && EklavyaXAPI.getToken()) || localStorage.getItem("EklavyaX_token") || localStorage.getItem("token");
+          const headers = {
+            "Content-Type": "application/json",
+            ...(token ? { "Authorization": `Bearer ${token}` } : {})
           };
-        });
 
-        const totalQ = activeQuestions.length;
-        const accuracyPct = Math.round((score / totalQ) * 100);
-        const coinsAwarded = score * 15 + 10;
-        const estimatedPercentile = (85 + (score / totalQ) * 14.8).toFixed(1);
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 1800);
 
-        data = {
-          score,
-          total_questions: totalQ,
-          accuracy_pct: accuracyPct,
-          estimated_percentile: estimatedPercentile,
-          coins_awarded: coinsAwarded,
-          evaluation
-        };
+          const res = await fetch("/api/pedagogy/pyqs/submit", {
+            method: "POST",
+            headers,
+            signal: controller.signal,
+            body: JSON.stringify({
+              exam_type: activeQuestions[0]?.exam_type || "JEE Main",
+              year: activeQuestions[0]?.year || 2024,
+              subject: activeQuestions[0]?.subject || "Physics",
+              time_taken_sec: (activeQuestions.length * 90) - secondsLeft,
+              answers: answersPayload
+            })
+          });
+          clearTimeout(timeoutId);
+
+          if (res.ok) {
+            data = await res.json();
+          }
+        } catch (err) {
+          console.warn("Server evaluation unavailable or timed out, scoring locally:", err.message);
+        }
+
+        // If server response unavailable, compute accurate client-side evaluation
+        if (!data || !data.evaluation) {
+          let score = 0;
+          const evaluation = activeQuestions.map(q => {
+            const fallbackMatch = FALLBACK_PYQS.find(fb => fb.id === q.id || fb.prompt === q.prompt);
+            const correctIdx = (q.correct_option_index !== undefined) ? q.correct_option_index : (fallbackMatch?.correct_option_index ?? 0);
+            const explanation = q.explanation || fallbackMatch?.explanation || "Standard derivation per NTA key guidelines.";
+            const chosen = studentChoices[q.id] !== undefined ? studentChoices[q.id] : null;
+            const isCorrect = chosen === correctIdx;
+            if (isCorrect) score++;
+            return {
+              prompt: q.prompt,
+              is_correct: isCorrect,
+              chosen_index: chosen,
+              correct_index: correctIdx,
+              explanation: explanation
+            };
+          });
+
+          const totalQ = activeQuestions.length;
+          const accuracyPct = Math.round((score / totalQ) * 100);
+          const coinsAwarded = score * 15 + 10;
+          const estimatedPercentile = (85 + (score / totalQ) * 14.8).toFixed(1);
+
+          data = {
+            score,
+            total_questions: totalQ,
+            accuracy_pct: accuracyPct,
+            estimated_percentile: estimatedPercentile,
+            coins_awarded: coinsAwarded,
+            evaluation
+          };
+        }
+
+        // Award coins and sync real-time leaderboard
+        if (window.LeaderboardSync) {
+          try {
+            if (window.LeaderboardSync.awardCoins) {
+              window.LeaderboardSync.awardCoins("sayan", data.coins_awarded || 25, "PYQ Simulation Complete");
+            }
+            if (window.LeaderboardSync.updatePerformance) {
+              window.LeaderboardSync.updatePerformance("sayan", {
+                scorePct: data.accuracy_pct || 90,
+                coinsEarned: data.coins_awarded || 25,
+                streakDelta: 1
+              });
+            }
+            syncCoinsDisplay();
+          } catch (syncErr) {
+            console.warn("Leaderboard sync warning:", syncErr);
+          }
+        }
+
+        // Hide simulation and show results screen
+        const simEl = document.getElementById("simulationScreen");
+        const resEl = document.getElementById("resultsScreen");
+        const filterEl = document.getElementById("filterBar");
+        if (simEl) simEl.style.display = "none";
+        if (filterEl) filterEl.style.display = "none";
+        if (resEl) resEl.style.display = "block";
+
+        const scoreEl = document.getElementById("resScore");
+        const accEl = document.getElementById("resAccuracy");
+        const pctlEl = document.getElementById("resPercentile");
+        const coinsEl = document.getElementById("resCoins");
+        if (scoreEl) scoreEl.textContent = `${data.score} / ${data.total_questions}`;
+        if (accEl) accEl.textContent = `${data.accuracy_pct}%`;
+        if (pctlEl) pctlEl.textContent = `${data.estimated_percentile} %ile`;
+        if (coinsEl) coinsEl.textContent = `+${data.coins_awarded} 🪙`;
+
+        // Render Step-by-Step Solutions
+        const solList = document.getElementById("solutionsList");
+        if (solList && Array.isArray(data.evaluation)) {
+          solList.innerHTML = data.evaluation.map((ev, idx) => `
+            <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px; border-left: 4px solid ${ev.is_correct ? '#10b981' : '#ef4444'};">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                <strong style="color: #fff; font-size: 15px;">Q${idx + 1}: ${ev.prompt}</strong>
+                <span style="font-size: 12px; font-weight:800; color: ${ev.is_correct ? '#10b981' : '#ef4444'};">
+                  ${ev.is_correct ? '✅ Correct (+15 Coins)' : '❌ Incorrect'}
+                </span>
+              </div>
+              <div style="font-size: 13px; color: #cbd5e1; margin-bottom: 8px;">
+                Your Choice: <strong style="color: ${ev.is_correct ? '#34d399' : '#f87171'};">${ev.chosen_index !== null ? String.fromCharCode(65 + ev.chosen_index) : 'Not Attempted'}</strong>
+                ${!ev.is_correct ? ` | Correct NTA Key: <strong style="color: #34d399;">${String.fromCharCode(65 + (ev.correct_index ?? 0))}</strong>` : ''}
+              </div>
+              <div style="background: rgba(16,185,129,0.08); border-radius: 8px; padding: 12px; font-size: 13px; color: #e2e8f0; line-height: 1.5;">
+                <strong style="color: #34d399;"><i class="fas fa-check-circle"></i> Derivation & Formula Explanation:</strong><br>
+                ${ev.explanation || 'Refer to standard NCERT/NTA reference solutions.'}
+              </div>
+            </div>
+          `).join("");
+        }
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (fatalErr) {
+        console.error("Critical submission error:", fatalErr);
+        const simEl = document.getElementById("simulationScreen");
+        const resEl = document.getElementById("resultsScreen");
+        if (simEl) simEl.style.display = "none";
+        if (resEl) resEl.style.display = "block";
       }
-
-      // Award coins and sync real-time leaderboard
-      if (window.LeaderboardSync) {
-        const currentSt = window.LeaderboardSync.getStudentById("sayan");
-        const newCoins = (currentSt?.eduCoins || 1450) + (data.coins_awarded || 25);
-        const currentScore = currentSt?.overallScore || 94;
-        const newScore = Math.min(100, Math.round((currentScore * 3 + (data.accuracy_pct || 90)) / 4));
-        window.LeaderboardSync.updateStudent("sayan", {
-          eduCoins: newCoins,
-          overallScore: newScore
-        });
-        syncCoinsDisplay();
-      }
-
-      document.getElementById("simulationScreen").style.display = "none";
-      document.getElementById("resultsScreen").style.display = "block";
-
-      document.getElementById("resScore").textContent = `${data.score} / ${data.total_questions}`;
-      document.getElementById("resAccuracy").textContent = `${data.accuracy_pct}%`;
-      document.getElementById("resPercentile").textContent = `${data.estimated_percentile} %ile`;
-      document.getElementById("resCoins").textContent = `+${data.coins_awarded} 🪙`;
-
-      // Render Step-by-Step Solutions
-      const solList = document.getElementById("solutionsList");
-      solList.innerHTML = data.evaluation.map((ev, idx) => `
-        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px; border-left: 4px solid ${ev.is_correct ? '#10b981' : '#ef4444'};">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-            <strong style="color: #fff; font-size: 15px;">Q${idx + 1}: ${ev.prompt}</strong>
-            <span style="font-size: 12px; font-weight:800; color: ${ev.is_correct ? '#10b981' : '#ef4444'};">
-              ${ev.is_correct ? '✅ Correct (+15 Coins)' : '❌ Incorrect'}
-            </span>
-          </div>
-          <div style="font-size: 13px; color: #cbd5e1; margin-bottom: 8px;">
-            Your Choice: <strong style="color: ${ev.is_correct ? '#34d399' : '#f87171'};">${ev.chosen_index !== null ? String.fromCharCode(65 + ev.chosen_index) : 'Not Attempted'}</strong>
-            ${!ev.is_correct ? ` | Correct NTA Key: <strong style="color: #34d399;">${String.fromCharCode(65 + ev.correct_index)}</strong>` : ''}
-          </div>
-          <div style="background: rgba(16,185,129,0.08); border-radius: 8px; padding: 12px; font-size: 13px; color: #e2e8f0; line-height: 1.5;">
-            <strong style="color: #34d399;"><i class="fas fa-check-circle"></i> Derivation & Formula Explanation:</strong><br>
-            ${ev.explanation}
-          </div>
-        </div>
-      `).join("");
     }
 
     async function bookmarkQuestion(qid) {
