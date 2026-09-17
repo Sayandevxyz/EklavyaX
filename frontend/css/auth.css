@@ -360,12 +360,35 @@
 }
 
 .role-switch-line {
-  margin: 16px 0 0 0 !important;
+  margin: 14px 0 0 0 !important;
   font-size: 0.80rem !important;
   color: var(--text-dark, #29382f);
   text-align: center;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.role-switch-line .role-switch-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.role-switch-line .role-switch-sub {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.76rem !important;
+  color: #55695e;
+  font-weight: 500;
 }
 
 .role-switch-line a {
@@ -373,11 +396,17 @@
   font-weight: 700;
   font-size: 0.80rem !important;
   text-decoration: underline;
-  margin-left: 4px;
+  margin-left: 2px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   transition: all 0.2s ease;
+}
+
+.role-switch-line .role-switch-sub a {
+  font-size: 0.76rem !important;
+  color: #1b533d;
+  font-weight: 600;
 }
 
 .role-switch-line a i {
@@ -386,7 +415,13 @@
 
 .role-switch-line a:hover {
   color: var(--accent-gold, #f4ae25);
-  transform: translateX(2px);
+  transform: translateY(-1px);
+}
+
+.role-switch-line .role-sep {
+  color: #889e90;
+  font-size: 0.72rem;
+  margin: 0 1px;
 }
 
 .role-switcher-footer {
