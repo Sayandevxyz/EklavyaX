@@ -1,4 +1,5 @@
 from __future__ import annotations
+from datetime import date
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -20,7 +21,6 @@ from app.schemas.user_sch import (
     UserUpdate,
 )
 from app.services.game_logic import assign_faction, earn_coins_and_xp, update_streak
-from app.core.security import hash_password
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -222,15 +222,17 @@ def record_activity(
 ):
     """
     Call this endpoint whenever a student completes a learning activity.
-    Updates the streak and awards daily streak bonus coins if it's a new day.
+    Updates the streak and awards daily streak bonus coins ONLY once per calendar day.
     """
+    existing_streak = db.query(models.Streak).filter_by(user_id=current_user.id).first()
+    is_new_day = existing_streak is None or existing_streak.last_activity_date != date.today()
+
     streak = update_streak(db, current_user.id)
 
-   
     coins_awarded = 0
     xp_awarded = 0
-    if streak.last_activity_date is not None:
-        # Only award if this is actually a new-day streak update
+    if is_new_day:
+        # Only award once per calendar day when it is a new day of activity
         coins_awarded = settings.STREAK_BONUS_COINS
         xp_awarded = settings.STREAK_BONUS_XP
         earn_coins_and_xp(

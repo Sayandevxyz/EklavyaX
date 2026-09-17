@@ -255,6 +255,24 @@ class TestStreakLogic:
         updated = game_logic.update_streak(db, user.id)
         assert updated.longest_streak == 10
 
+    def test_record_activity_only_awards_coins_once_per_day(self, db):
+        from app.api.routes.auth import record_activity
+        from app.core.config import settings
+        user, streak = self._make_user_and_streak(db)
+        db.commit()
+
+        # First call on a new day awards coins
+        res1 = record_activity(current_user=user, db=db)
+        assert res1["coins_awarded"] == settings.STREAK_BONUS_COINS
+        wallet = db.query(models.Wallet).filter_by(user_id=user.id).first()
+        assert wallet.balance == 100 + settings.STREAK_BONUS_COINS
+
+        # Second call on the same day (e.g. refreshing dashboard) does NOT award coins
+        res2 = record_activity(current_user=user, db=db)
+        assert res2["coins_awarded"] == 0
+        db.refresh(wallet)
+        assert wallet.balance == 100 + settings.STREAK_BONUS_COINS
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 5. Wallet Credit / Debit
