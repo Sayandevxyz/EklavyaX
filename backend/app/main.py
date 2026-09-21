@@ -364,10 +364,6 @@ from app.api.routes import (  # noqa: E402
     tutor,
     leaderboard,
     notifications,
-<<<<<<< HEAD
-    parent_dashboard,
-=======
->>>>>>> 0d1e62c (Remove parent and principal portal flows)
     analytics,
     study_groups,
     achievements,
@@ -379,10 +375,6 @@ from app.api.routes import (  # noqa: E402
     reports,
     certificates,
     doubts,
-<<<<<<< HEAD
-    principal,
-=======
->>>>>>> 0d1e62c (Remove parent and principal portal flows)
     pedagogy,
 )
 
@@ -394,10 +386,6 @@ app.include_router(quiz.router)
 app.include_router(tutor.router)
 app.include_router(leaderboard.router)
 app.include_router(notifications.router)
-<<<<<<< HEAD
-app.include_router(parent_dashboard.router)
-=======
->>>>>>> 0d1e62c (Remove parent and principal portal flows)
 app.include_router(analytics.router)
 app.include_router(study_groups.router)
 app.include_router(achievements.router)
@@ -409,10 +397,6 @@ app.include_router(live_quiz.router)
 app.include_router(reports.router)
 app.include_router(certificates.router)
 app.include_router(doubts.router)
-<<<<<<< HEAD
-app.include_router(principal.router)
-=======
->>>>>>> 0d1e62c (Remove parent and principal portal flows)
 app.include_router(pedagogy.router)
 
 

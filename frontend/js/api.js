@@ -547,13 +547,6 @@ const EklavyaXAPI = (() => {
     markNotificationRead,
     markAllNotificationsRead,
     triggerNotificationReminders,
-<<<<<<< HEAD
-    generateParentCode,
-    viewParentProgress,
-    getParentMessages,
-    sendParentMessage,
-=======
->>>>>>> 0d1e62c (Remove parent and principal portal flows)
     getTeacherProfile,
     updateTeacherProfile,
     getTeacherOverview,
