@@ -208,10 +208,16 @@
                   placeholder="Ask Gravity anything (e.g. 'Derive kinetic energy formula', 'Explain photosynthesis')..."
                   autofocus></textarea>
 
-                <input id="visualDoubtInput" type="file" accept="image/*" capture="environment" hidden>
-                <button id="visualDoubtBtn" class="chat-visual-btn" type="button" title="Take a photo or upload a visual doubt" aria-label="Take a photo or upload a visual doubt">
-                  <i class="fas fa-camera"></i>
-                </button>
+                <input id="visualDoubtCameraInput" type="file" accept="image/*" capture="environment" hidden>
+                <input id="visualDoubtFileInput" type="file" accept="image/*" hidden>
+                <div class="visual-doubt-actions">
+                  <button id="visualDoubtCameraBtn" class="chat-visual-btn" type="button" title="Take a photo" aria-label="Take a photo">
+                    <i class="fas fa-camera"></i><span>Camera</span>
+                  </button>
+                  <button id="visualDoubtFileBtn" class="chat-visual-btn" type="button" title="Choose an image file" aria-label="Choose an image file">
+                    <i class="fas fa-folder-open"></i><span>File</span>
+                  </button>
+                </div>
 
                 <div class="chat-input-controls">
                   <!-- Language Selector Pill -->
@@ -283,8 +289,10 @@
     const chatMessagesEl = document.getElementById("chatMessages");
     const welcomeStateEl = document.getElementById("welcomeState");
     const chatInputEl = document.getElementById("chatInput");
-    const visualDoubtInputEl = document.getElementById("visualDoubtInput");
-    const visualDoubtBtnEl = document.getElementById("visualDoubtBtn");
+    const visualDoubtCameraInputEl = document.getElementById("visualDoubtCameraInput");
+    const visualDoubtFileInputEl = document.getElementById("visualDoubtFileInput");
+    const visualDoubtCameraBtnEl = document.getElementById("visualDoubtCameraBtn");
+    const visualDoubtFileBtnEl = document.getElementById("visualDoubtFileBtn");
     const visualDoubtPreviewEl = document.getElementById("visualDoubtPreview");
     const visualDoubtImageEl = document.getElementById("visualDoubtImage");
     const clearVisualDoubtEl = document.getElementById("clearVisualDoubt");
@@ -301,21 +309,27 @@
     const clearHistoryBtnEl = document.getElementById("clearHistoryBtn");
     let visualDoubtFile = null;
 
-    visualDoubtBtnEl?.addEventListener("click", () => visualDoubtInputEl?.click());
-    visualDoubtInputEl?.addEventListener("change", () => {
-      const file = visualDoubtInputEl.files?.[0];
+    function handleVisualDoubtSelection(event) {
+      const file = event.target.files?.[0];
       if (!file) return;
       visualDoubtFile = file;
       visualDoubtImageEl.src = URL.createObjectURL(file);
       visualDoubtPreviewEl.hidden = false;
-      visualDoubtBtnEl.classList.add("has-image");
+      visualDoubtCameraBtnEl.classList.add("has-image");
+      visualDoubtFileBtnEl.classList.add("has-image");
       chatInputEl.placeholder = "Tell Gravity what to focus on, or send to analyze this visual doubt...";
-    });
+    }
+    visualDoubtCameraBtnEl?.addEventListener("click", () => visualDoubtCameraInputEl?.click());
+    visualDoubtFileBtnEl?.addEventListener("click", () => visualDoubtFileInputEl?.click());
+    visualDoubtCameraInputEl?.addEventListener("change", handleVisualDoubtSelection);
+    visualDoubtFileInputEl?.addEventListener("change", handleVisualDoubtSelection);
     clearVisualDoubtEl?.addEventListener("click", () => {
       visualDoubtFile = null;
-      visualDoubtInputEl.value = "";
+      visualDoubtCameraInputEl.value = "";
+      visualDoubtFileInputEl.value = "";
       visualDoubtPreviewEl.hidden = true;
-      visualDoubtBtnEl.classList.remove("has-image");
+      visualDoubtCameraBtnEl.classList.remove("has-image");
+      visualDoubtFileBtnEl.classList.remove("has-image");
       chatInputEl.placeholder = defaultPlaceholder;
     });
 
@@ -845,9 +859,11 @@
       chatInputEl.value = "";
       if (visualDoubtFile) {
         visualDoubtFile = null;
-        visualDoubtInputEl.value = "";
+        visualDoubtCameraInputEl.value = "";
+        visualDoubtFileInputEl.value = "";
         visualDoubtPreviewEl.hidden = true;
-        visualDoubtBtnEl.classList.remove("has-image");
+        visualDoubtCameraBtnEl.classList.remove("has-image");
+        visualDoubtFileBtnEl.classList.remove("has-image");
         chatInputEl.placeholder = defaultPlaceholder;
       }
       autoResizeTextarea();

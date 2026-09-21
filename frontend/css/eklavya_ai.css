@@ -865,12 +865,23 @@ aside .profile .profile-info span {
   flex-shrink: 0;
 }
 
+.visual-doubt-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.chat-visual-btn span {
+  display: none;
+  margin-left: 5px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+}
+
 @media (max-width: 600px) {
-  .chat-visual-btn::after {
-    content: " Take photo";
-    margin-left: 5px;
-    font-family: var(--font-body);
-    font-size: 0.72rem;
+  .chat-visual-btn span {
+    display: inline;
   }
 }
 
