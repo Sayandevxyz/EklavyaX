@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Concept Mind Maps | Eklavya</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #081e16;
+      color: #e2e8f0;
+      margin: 0;
+    }
+    .mm-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .mm-container { grid-template-columns: 1fr; }
+    }
+    .map-canvas {
+      background: #061911;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px;
+      position: relative;
+      min-height: 520px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .concept-node {
+      background: linear-gradient(135deg, rgba(20, 56, 42, 0.9), rgba(11, 36, 26, 0.95));
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      position: absolute;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 220px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .concept-node:hover {
+      transform: translateY(-4px) scale(1.03);
+      border-color: var(--accent-gold, #f4ae25);
+      box-shadow: 0 12px 30px rgba(244, 174, 37, 0.25);
+    }
+    .concept-node.active {
+      border-color: #38bdf8;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+    .node-arrow {
+      position: absolute;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> <span>Home</span></a>
+        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> <span>My Courses</span></a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> <span>Explore Courses</span></a>
+        <a href="quiz.html"><i class="fas fa-brain" aria-hidden="true"></i> <span>Daily Quiz</span></a>
+        <a href="faction_wars.html"><i class="fas fa-shield-alt" aria-hidden="true"></i> <span>Faction Wars</span></a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> <span>Lab Simulations</span></a>
+        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> <span>GRAVITY AI</span></a>
+        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> <span>Doubts</span></a>
+        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> <span>Assignments</span></a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> <span>Announcement</span></a>
+
+        <!-- Advance Features Group -->
+        <div class="menu-group advance-features-group" id="advanceFeaturesGroup">
+          <button type="button" class="menu-group-toggle" id="advanceFeaturesToggle" onclick="toggleAdvanceFeatures()" aria-expanded="false" aria-controls="advanceFeaturesSubitems">
+            <div class="toggle-title">
+              <i class="fas fa-layer-group" style="color: var(--marigold, #eeb43e);" aria-hidden="true"></i>
+              <span>Advance Features</span>
+            </div>
+            <span class="toggle-badge">11</span>
+            <i class="fas fa-chevron-down toggle-arrow" id="advanceFeaturesArrow" aria-hidden="true"></i>
+          </button>
+
+          <div class="menu-subitems" id="advanceFeaturesSubitems">
+            <a href="leaderboard.html"><i class="fas fa-trophy" style="color: #fbbf24;"></i> <span>Leaderboard</span></a>
+            <a href="live_battle.html"><i class="fas fa-bolt" style="color: #f59e0b;"></i> <span>Live Duel 1v1</span></a>
+            <a href="flashcards.html"><i class="fas fa-layer-group" style="color: #34d399;"></i> <span>Flashcards</span></a>
+            <a href="study_planner.html"><i class="fas fa-calendar-alt" style="color: #60a5fa;"></i> <span>Study Planner</span></a>
+            <a href="study_groups.html"><i class="fas fa-users" style="color: #818cf8;"></i> <span>Study Groups</span></a>
+            <a href="chat_threads.html"><i class="fas fa-comments" style="color: #a78bfa;"></i> <span>Doubts Chat</span></a>
+            <a href="certificates.html"><i class="fas fa-certificate" style="color: #f472b6;"></i> <span>Certificates</span></a>
+            <a href="eklavyalens.html"><i class="fas fa-globe-asia" style="color: #38bdf8;"></i> <span>EklavyaLens (Maps)</span></a>
+            <a href="pyq_arena.html"><i class="fas fa-stopwatch" style="color: #fbbf24;"></i> <span>PYQ Arena (JEE/NEET)</span></a>
+            <a class="active" href="mindmaps.html"><i class="fas fa-project-diagram" style="color: #c084fc;"></i> <span>Concept Mind Maps</span></a>
+            <a href="bookmarks.html"><i class="fas fa-bookmark" style="color: #f43f5e;"></i> <span>Revision Bookmarks</span></a>
+          </div>
+        </div>
+
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> <span>Settings</span></a>
+      </nav>
+      <div class="profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
+        <div class="profile-info">
+          <strong id="profileName">Sayan Mondal</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- Header -->
+      <section class="adv-top-header" style="position: relative; width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 28px; background: linear-gradient(135deg, rgba(16, 45, 34, 0.95), rgba(7, 21, 16, 0.98)); border: 1.5px solid rgba(255, 255, 255, 0.1); border-radius: 20px; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25); margin-bottom: 20px;">
+        <div>
+          <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 10px;">
+            <span>🗺️</span> <span>Interactive Concept Mind Maps</span>
+          </h1>
+          <h2 style="margin: 6px 0 0 0; font-size: 13px; font-weight: 500; color: #94a3b8;">
+            Organize & connect conceptual prerequisite branches visually to build deep understanding.
+          </h2>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="background: rgba(244, 174, 37, 0.15); border: 1px solid rgba(244, 174, 37, 0.3); padding: 8px 16px; border-radius: 12px; display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 18px;">🪙</span>
+            <span id="mmCoinCount" style="font-family: 'Outfit', sans-serif; font-weight: 700; color: #f4ae25; font-size: 16px;">1,450</span>
+            <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">EduCoins</span>
+          </div>
+        </div>
+      </section>
+
+    <!-- Subject Switcher -->
+    <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+      <button onclick="loadMindMap('physics')" id="btnPhysics" class="filter-pill active" style="padding: 8px 20px; border-radius: 10px; border: none; background: var(--accent-gold); color: #071510; font-weight: 700; cursor: pointer;">
+        <i class="fas fa-atom"></i> Physics Mechanics Map
+      </button>
+      <button onclick="loadMindMap('math')" id="btnMath" class="filter-pill" style="padding: 8px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: #cbd5e1; font-weight: 700; cursor: pointer;">
+        <i class="fas fa-square-root-alt"></i> Math Calculus Flow
+      </button>
+      <button onclick="loadMindMap('chemistry')" id="btnChem" class="filter-pill" style="padding: 8px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: #cbd5e1; font-weight: 700; cursor: pointer;">
+        <i class="fas fa-flask"></i> Organic Chemistry Flow
+      </button>
+      <button onclick="loadMindMap('social_science')" id="btnSocial" class="filter-pill" style="padding: 8px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06); color: #cbd5e1; font-weight: 700; cursor: pointer;">
+        <i class="fas fa-globe-asia"></i> Indian Geography & History
+      </button>
+    </div>
+
+    <!-- Mind Map Canvas and Detail Drawer -->
+    <div class="mm-container">
+      <div class="map-canvas" id="mindMapCanvas">
+        <!-- SVG Connecting Arrows -->
+        <svg id="connectorSvg" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;">
+          <!-- Rendered via JS -->
+        </svg>
+
+        <!-- HTML Interactive Concept Nodes -->
+        <div id="nodesContainer" style="position: relative; width: 100%; height: 500px; z-index: 2;">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Right: Detailed Concept & Formula Drawer -->
+      <div style="background: linear-gradient(135deg, rgba(16, 45, 34, 0.8), rgba(9, 27, 20, 0.9)); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span id="detailStatusPill" style="font-size: 11px; padding: 3px 8px; border-radius: 6px; background: rgba(16,185,129,0.2); color: #34d399; font-weight: 700;">
+              Mastered (92%)
+            </span>
+            <span style="font-size: 12px; color: #94a3b8;" id="detailLevel">Prerequisite: Level 1</span>
+          </div>
+
+          <h2 id="detailTitle" style="margin: 6px 0 2px 0; font-family: 'Outfit', sans-serif; font-size: 22px; color: #fff;">1. Kinematics</h2>
+          <span id="detailSub" style="font-size: 13px; color: var(--accent-gold); font-weight: 600;">Velocity, Acceleration, 1D/2D Vectors</span>
+
+          <div style="margin-top: 18px; background: rgba(0,0,0,0.25); border-radius: 12px; padding: 14px; border-left: 3px solid #38bdf8;">
+            <strong style="color: #38bdf8; font-size: 13px;"><i class="fas fa-key"></i> Key Governing Formulas:</strong>
+            <p id="detailFormulas" style="font-size: 13px; color: #cbd5e1; margin: 6px 0 0 0; line-height: 1.6; font-family: monospace;">
+              v = u + at<br>
+              s = ut + ½at²<br>
+              v² = u² + 2as
+            </p>
+          </div>
+
+          <div style="margin-top: 14px; background: rgba(0,0,0,0.25); border-radius: 12px; padding: 14px;">
+            <strong style="color: #fff; font-size: 13px;"><i class="fas fa-sitemap"></i> Why This Connects Next:</strong>
+            <p id="detailConnectReason" style="font-size: 13px; color: #cbd5e1; margin: 6px 0 0 0; line-height: 1.5;">
+              Newton's Second Law uses acceleration calculated here to determine the resultant net force (F = ma).
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <button onclick="startConceptDrill()" style="width: 100%; background: #f4ae25; color: #0b281d; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fas fa-bolt"></i> Test This Specific Concept (+20 Coins)
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+  <!-- Concept Drill Modal -->
+  <div id="conceptDrillModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 16px;">
+    <div style="background: linear-gradient(135deg, #0d281e 0%, #081e16 100%); border: 1px solid rgba(244, 174, 37, 0.3); border-radius: 18px; max-width: 580px; width: 100%; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 20px;">⚡</span>
+          <div>
+            <h3 id="drillModalConceptTitle" style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 18px; color: #f4ae25;">Concept Mastery Check</h3>
+            <span style="font-size: 12px; color: #94a3b8;">Solve to verify your conceptual branch mastery</span>
+          </div>
+        </div>
+        <button onclick="closeConceptDrill()" style="background: transparent; border: none; color: #94a3b8; font-size: 22px; cursor: pointer;">&times;</button>
+      </div>
+
+      <div id="drillModalBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
+  <script>
+    const MAPS = {
+      physics: {
+        title: "Classical Mechanics Progression",
+        nodes: [
+          { id: "kine", title: "1. Kinematics", sub: "Displacement, Velocity, Acceleration", x: 40, y: 50, status: "Mastered", color: "#10b981", formulas: "v = u + at\ns = ut + ½at²\nv² = u² + 2as", connectReason: "Acceleration derived here feeds directly into Newton's Second Law." },
+          { id: "nlm", title: "2. Newton's Laws (NLM)", sub: "F = ma, Momentum, Action-Reaction", x: 300, y: 50, status: "Mastered", color: "#10b981", depends: "kine", formulas: "F_net = dp/dt = ma\nF_AB = -F_BA\nImpulse = Δp", connectReason: "Normal force and acceleration determine static and kinetic friction thresholds." },
+          { id: "fric", title: "3. Friction Dynamics", sub: "Static (μs), Kinetic (μk), Incline", x: 300, y: 220, status: "Needs Practice", color: "#f59e0b", depends: "nlm", formulas: "f_s ≤ μs N\nf_k = μk N\nAngle of Repose = tan⁻¹(μs)", connectReason: "Friction acts as non-conservative work, modifying the Work-Energy Theorem." },
+          { id: "wpe", title: "4. Work, Energy, Power", sub: "Conservative Forces, Potential Wells", x: 40, y: 220, status: "Mastered", color: "#10b981", depends: "nlm", formulas: "W = ∫ F · dr = ΔK\nU_spring = ½kx²\nPower = F · v", connectReason: "Rotational kinetic energy (½Iω²) extends linear kinetic energy." },
+          { id: "rot", title: "5. Rotational Dynamics", sub: "Torque, Moment of Inertia, Angular Momentum", x: 300, y: 380, status: "Struggling", color: "#ef4444", depends: "fric", formulas: "τ = Iα = r × F\nL = Iω\nRolling: v = Rω, K = ½Mv² + ½Iω²", connectReason: "Requires rolling friction and torque balance across bodies." }
+        ]
+      },
+      math: {
+        title: "Calculus & Analysis Progression",
+        nodes: [
+          { id: "lim", title: "1. Limits & Continuity", sub: "L'Hôpital Rule, Squeeze Theorem", x: 40, y: 50, status: "Mastered", color: "#10b981", formulas: "lim (sin x)/x = 1 as x→0\nL'Hôpital: 0/0 or ∞/∞ → f'(x)/g'(x)\nLeft & Right limits match", connectReason: "The derivative is formally defined as the limit of the difference quotient as Δx → 0." },
+          { id: "diff", title: "2. Differential Calculus", sub: "Product Rule, Chain Rule, Implicit", x: 300, y: 50, status: "Mastered", color: "#10b981", depends: "lim", formulas: "d/dx(uv) = u'v + uv'\nd/dx[f(g(x))] = f'(g(x))g'(x)\nd/dx(ln x) = 1/x", connectReason: "First and second derivatives pinpoint critical points and inflection concavity." },
+          { id: "aod", title: "3. Application of Derivatives", sub: "Maxima, Minima, Tangents & Normals", x: 300, y: 220, status: "Needs Practice", color: "#f59e0b", depends: "diff", formulas: "f'(x) = 0 → Critical point\nf''(x) < 0 → Local maximum\nSlope of Normal = -1 / f'(x)", connectReason: "Optimization thresholds are inverted when calculating areas accumulated under curves." },
+          { id: "integ", title: "4. Definite Integrals", sub: "Fundamental Theorem of Calculus, By Parts", x: 40, y: 220, status: "Mastered", color: "#10b981", depends: "diff", formulas: "∫ u dv = uv - ∫ v du\nKing's Property: ∫_0^a f(x)dx = ∫_0^a f(a-x)dx\nLeibniz Rule for differentiation", connectReason: "Integration resolves rates of change into algebraic functions in differential equations." },
+          { id: "diffeq", title: "5. Differential Equations", sub: "Variable Separable, Integrating Factor", x: 300, y: 380, status: "Struggling", color: "#ef4444", depends: "integ", formulas: "dy/dx + P(x)y = Q(x)\nI.F. = e^(∫ P dx)\ny · I.F. = ∫ (Q · I.F.) dx + C", connectReason: "Governs physical laws such as radioactive decay, cooling rates, and circuit transient responses." }
+        ]
+      },
+      chemistry: {
+        title: "Organic Reaction Mechanisms",
+        nodes: [
+          { id: "goc", title: "1. General Organic Chemistry", sub: "Inductive, Resonance, Hyperconjugation", x: 40, y: 60, status: "Mastered", color: "#10b981", formulas: "Carbocation: 3° > 2° > 1°\n+M > -M Resonance\nElectronegativity Order", connectReason: "Carbocation stability dictates whether a substitution follows SN1 or SN2." },
+          { id: "halo", title: "2. Haloalkanes & Haloarenes", sub: "Nucleophilic Substitution (SN1/SN2)", x: 300, y: 60, status: "Needs Practice", color: "#f59e0b", depends: "goc", formulas: "SN1: Racemization, 2-step\nSN2: Inversion (Walden), 1-step\nSolvent: Polar protic vs aprotic", connectReason: "Alkyl halides undergo nucleophilic attack by hydroxide to form alcohols." },
+          { id: "alc", title: "3. Alcohols, Phenols & Ethers", sub: "Dehydration, Oxidation, Acidity", x: 300, y: 240, status: "Mastered", color: "#10b981", depends: "halo", formulas: "R-OH + HBr → R-Br + H₂O\nPhenol acidity: Resonance of phenoxide\nWilliamson synthesis: R-O⁻ + R'-X", connectReason: "Primary alcohols oxidize to aldehydes; secondary oxidize to ketones." },
+          { id: "ald", title: "4. Aldehydes & Ketones", sub: "Nucleophilic Addition & Aldol", x: 40, y: 240, status: "Struggling", color: "#ef4444", depends: "alc", formulas: "Aldol Condensation: α-hydrogen required\nCannizzaro: No α-hydrogen\nGrignard Addition: R-MgX + C=O", connectReason: "Forms the synthetic bridge to Carboxylic Acids and Esters." }
+        ]
+      },
+      social_science: {
+        title: "Indian Geography & Historical Settlements",
+        nodes: [
+          { id: "geo1", title: "1. Himalayan Glacial Sources", sub: "Indus, Ganga, Brahmaputra Origins", x: 40, y: 60, status: "Mastered", color: "#10b981", formulas: "Perennial flow from melting snowpack\nSilt deposition annually in floodplains", connectReason: "Perennial water enabled dense sedentary populations in the arid north-west." },
+          { id: "hist1", title: "2. Indus Civilization Harappa", sub: "Urban Planning, Baked Bricks, Granaries", x: 300, y: 60, status: "Mastered", color: "#10b981", depends: "geo1", formulas: "Ravi river trade network\nLapis lazuli via mountain passes", connectReason: "River shifting and climate aridity led to migration into the Ganga plain." },
+          { id: "geo2", title: "3. Gangetic Plain Agriculture", sub: "Surplus Rice & Iron Ore Mines", x: 300, y: 240, status: "Mastered", color: "#10b981", depends: "hist1", formulas: "Alluvial soil depth > 1000m\nChota Nagpur iron ore metallurgy", connectReason: "Iron plows and river defense propelled Magadha into India's first empire." },
+          { id: "hist2", title: "4. Magadha & Pataliputra", sub: "Jaladurga (Water Fortress) Capital", x: 40, y: 240, status: "Needs Practice", color: "#f59e0b", depends: "geo2", formulas: "Confluence of Ganga, Son, Gandak\nWar elephants from eastern forests", connectReason: "River superhighways allowed rapid troop deployment across eastern India." }
+        ]
+      }
+    };
+
+    let activeMapKey = "physics";
+    let activeNodeId = "kine";
+
+    function syncCoinsDisplay() {
+      if (window.LeaderboardSync) {
+        const st = window.LeaderboardSync.getStudentById("sayan");
+        if (st) {
+          const el = document.getElementById("mmCoinCount");
+          if (el) el.textContent = Number(st.eduCoins || 1450).toLocaleString();
+        }
+      }
+    }
+
+    function loadMindMap(key) {
+      activeMapKey = key;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      if (key === 'physics') document.getElementById('btnPhysics').classList.add('active');
+      if (key === 'math') document.getElementById('btnMath').classList.add('active');
+      if (key === 'chemistry') document.getElementById('btnChem').classList.add('active');
+      if (key === 'social_science') document.getElementById('btnSocial').classList.add('active');
+
+      const data = MAPS[key];
+      activeNodeId = data.nodes[0].id;
+      renderNodes(data);
+      renderDetail(data.nodes[0]);
+    }
+
+    function renderNodes(mapData) {
+      const cont = document.getElementById("nodesContainer");
+      const svg = document.getElementById("connectorSvg");
+      let svgHtml = "";
+
+      cont.innerHTML = mapData.nodes.map(n => `
+        <div class="concept-node ${n.id === activeNodeId ? 'active' : ''}" id="node_${n.id}" onclick="selectConceptNode('${n.id}')" style="left: ${n.x}px; top: ${n.y}px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
+            <span style="font-size:10px; font-weight:800; padding:2px 6px; border-radius:4px; background:${n.color}25; color:${n.color};">
+              ${n.status}
+            </span>
+          </div>
+          <strong style="font-size: 14px; color: #fff; display:block;">${n.title}</strong>
+          <span style="font-size: 11px; color: #94a3b8; line-height: 1.3; display:block; margin-top: 4px;">${n.sub}</span>
+        </div>
+      `).join("");
+
+      // Draw connecting lines
+      mapData.nodes.forEach(n => {
+        if (n.depends) {
+          const parentNode = mapData.nodes.find(p => p.id === n.depends);
+          if (parentNode) {
+            const x1 = parentNode.x + 110;
+            const y1 = parentNode.y + 40;
+            const x2 = n.x + 110;
+            const y2 = n.y + 40;
+            svgHtml += `
+              <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(244,174,37,0.4)" stroke-width="2" stroke-dasharray="4,4" />
+              <circle cx="${x2}" cy="${y2}" r="4" fill="#f4ae25" />
+            `;
+          }
+        }
+      });
+      svg.innerHTML = svgHtml;
+    }
+
+    function selectConceptNode(id) {
+      activeNodeId = id;
+      const data = MAPS[activeMapKey];
+      const node = data.nodes.find(n => n.id === id);
+      if (!node) return;
+
+      document.querySelectorAll('.concept-node').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`node_${id}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      renderDetail(node);
+    }
+
+    function renderDetail(node) {
+      document.getElementById("detailTitle").textContent = node.title;
+      document.getElementById("detailSub").textContent = node.sub;
+      document.getElementById("detailFormulas").innerHTML = node.formulas.replace(/\n/g, "<br>");
+      document.getElementById("detailConnectReason").textContent = node.connectReason;
+
+      const pill = document.getElementById("detailStatusPill");
+      pill.textContent = node.status;
+      pill.style.background = `${node.color}25`;
+      pill.style.color = node.color;
+    }
+
+    /* Interactive In-Page Concept Mastery Drill */
+    const CONCEPT_QUESTIONS = {
+      kine: {
+        prompt: "A particle travels half the total distance with velocity v1 and the remaining half with velocity v2. What is its average velocity over the entire journey?",
+        options: ["(v1 + v2) / 2", "2 v1 v2 / (v1 + v2)", "√(v1 v2)", "(v1² + v2²) / 2"],
+        correct_idx: 1,
+        explanation: "Total time t = (d/2)/v1 + (d/2)/v2 = d(v1 + v2)/(2 v1 v2). Average velocity = Total distance / Total time = d / [d(v1 + v2)/(2 v1 v2)] = 2 v1 v2 / (v1 + v2) (Harmonic Mean)."
+      },
+      nlm: {
+        prompt: "A lift of mass 1000 kg accelerates upwards at 2 m/s² (g = 9.8 m/s²). What is the tension T in the supporting cable?",
+        options: ["11,800 N", "7,800 N", "9,800 N", "2,000 N"],
+        correct_idx: 0,
+        explanation: "Upward equation of motion: T - mg = ma ⇒ T = m(g + a) = 1000 × (9.8 + 2) = 11,800 N."
+      },
+      rot: {
+        prompt: "A thin circular ring of mass M and radius R rotates about its central geometric axis perpendicular to its plane. What is its radius of gyration k?",
+        options: ["R", "R / √2", "R / 2", "√(2/5) R"],
+        correct_idx: 0,
+        explanation: "For a ring, I = M R². By definition I = M k² ⇒ k² = R² ⇒ k = R."
+      },
+      diff: {
+        prompt: "If y = ln(sec x + tan x), what is dy/dx?",
+        options: ["sec x", "tan x", "sec² x", "sec x tan x"],
+        correct_idx: 0,
+        explanation: "dy/dx = (1 / (sec x + tan x)) × (sec x tan x + sec² x) = sec x(tan x + sec x) / (sec x + tan x) = sec x."
+      },
+      integ: {
+        prompt: "Evaluate the definite integral ∫ from -π/2 to π/2 of (sin⁵ x + cos x) dx:",
+        options: ["2", "0", "1", "π"],
+        correct_idx: 0,
+        explanation: "sin⁵ x is an odd function (f(-x) = -f(x)), so ∫_{-π/2}^{π/2} sin⁵ x dx = 0. cos x is an even function: 2 ∫_0^{π/2} cos x dx = 2 [sin x]_0^{π/2} = 2(1 - 0) = 2."
+      }
+    };
+
+    function startConceptDrill() {
+      const q = CONCEPT_QUESTIONS[activeNodeId] || {
+        prompt: `Verify your understanding of ${document.getElementById("detailTitle").textContent}:`,
+        options: ["Governed by the fundamental principle presented in the formulas.", "Inverse proportionality across boundary limits.", "Independent of coordinate frame transformation.", "Requires external zero-point calibration."],
+        correct_idx: 0,
+        explanation: "Correct! The governing formulas directly establish the rate law for this prerequisite step."
+      };
+
+      document.getElementById("drillModalConceptTitle").textContent = document.getElementById("detailTitle").textContent;
+      const body = document.getElementById("drillModalBody");
+      body.innerHTML = `
+        <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+          <p style="font-size: 15px; color: #fff; line-height: 1.5; margin: 0 0 16px 0;">${q.prompt}</p>
+          <div style="display: grid; gap: 10px;">
+            ${q.options.map((opt, idx) => `
+              <button onclick="handleConceptAnswer(${idx}, ${q.correct_idx}, '${q.explanation.replace(/'/g, "\\'")}')" id="cOptBtn_${idx}" style="text-align: left; padding: 12px 16px; border-radius: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #e2e8f0; font-size: 14px; cursor: pointer;">
+                <strong style="color: #f4ae25;">${String.fromCharCode(65 + idx)}:</strong> ${opt}
+              </button>
+            `).join("")}
+          </div>
+        </div>
+        <div id="cFeedback"></div>
+      `;
+
+      document.getElementById("conceptDrillModal").style.display = "flex";
+    }
+
+    function handleConceptAnswer(chosen, correct, explanation) {
+      const isCorrect = chosen === correct;
+      document.querySelectorAll("[id^='cOptBtn_']").forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === correct) {
+          btn.style.background = "rgba(16,185,129,0.25)";
+          btn.style.borderColor = "#10b981";
+          btn.style.color = "#34d399";
+        } else if (idx === chosen) {
+          btn.style.background = "rgba(239,68,68,0.25)";
+          btn.style.borderColor = "#ef4444";
+          btn.style.color = "#f87171";
+        }
+      });
+
+      if (isCorrect && window.LeaderboardSync) {
+        const st = window.LeaderboardSync.getStudentById("sayan");
+        const newCoins = (st?.eduCoins || 1450) + 20;
+        window.LeaderboardSync.updateStudent("sayan", { eduCoins: newCoins });
+        syncCoinsDisplay();
+      }
+
+      document.getElementById("cFeedback").innerHTML = `
+        <div style="background: ${isCorrect ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)'}; border: 1px solid ${isCorrect ? '#10b981' : '#ef4444'}; border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+          <strong style="color: ${isCorrect ? '#34d399' : '#f87171'}; font-size: 14px;">
+            ${isCorrect ? '🎉 Concept Verified! +20 EduCoins Awarded' : '💡 Review the Governing Equation:'}
+          </strong>
+          <p style="font-size: 13px; color: #cbd5e1; margin: 4px 0 0 0;">${explanation}</p>
+        </div>
+        <div style="text-align: right;">
+          <button onclick="closeConceptDrill()" style="background: #f4ae25; color: #071510; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer;">
+            Done
+          </button>
+        </div>
+      `;
+    }
+
+    function closeConceptDrill() {
+      document.getElementById("conceptDrillModal").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      loadMindMap("physics");
+
+      if (window.LeaderboardSync) {
+        window.LeaderboardSync.onSync(() => syncCoinsDisplay());
+      }
+    });
+  </script>
+</body>
+</html>

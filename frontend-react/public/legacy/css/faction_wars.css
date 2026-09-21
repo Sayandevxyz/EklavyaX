@@ -1,0 +1,925 @@
+/* =========================================================
+   EklavyaX — FACTION WARS BATTLE ARENA COMPLETE STYLES
+   ========================================================= */
+
+.battle-container {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 10px 20px 60px;
+}
+
+/* ── Top Status Strip ── */
+.fw-user-status-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: rgba(20, 56, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.fw-status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text, #eef0df);
+}
+
+.fw-status-item i {
+  color: var(--accent-gold, #f4ae25);
+  font-size: 1.1rem;
+}
+
+.fw-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: rgba(244, 174, 37, 0.15);
+  color: var(--accent-gold, #f4ae25);
+  border: 1px solid rgba(244, 174, 37, 0.3);
+}
+
+/* ── Navigation Tabs Bar ── */
+.fw-tabs-bar {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fw-tab-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted, #aebcaf);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.fw-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text, #eef0df);
+  transform: translateY(-1px);
+}
+
+.fw-tab-btn.active {
+  background: linear-gradient(135deg, rgba(244, 174, 37, 0.2), rgba(244, 174, 37, 0.05));
+  border-color: var(--accent-gold, #f4ae25);
+  color: var(--accent-gold, #f4ae25);
+  box-shadow: 0 4px 15px rgba(244, 174, 37, 0.15);
+}
+
+/* ── Tab Views ── */
+.fw-tab-view {
+  display: none;
+  animation: fadeInTab 0.3s ease;
+}
+
+.fw-tab-view.active {
+  display: block;
+}
+
+@keyframes fadeInTab {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Battle Hero Card ── */
+.battle-hero-card {
+  background: linear-gradient(135deg, rgba(20, 56, 42, 0.95), rgba(11, 40, 29, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.battle-hero-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(244, 174, 37, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.battle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.battle-title-area h2 {
+  font-size: 1.55rem;
+  color: var(--text, #eef0df);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.battle-live-tag {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid #ef4444;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  animation: pulse-live 1.5s infinite;
+}
+
+@keyframes pulse-live {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.6)); }
+  100% { opacity: 0.8; }
+}
+
+.battle-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fw-refresh-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text, #eef0df);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.fw-refresh-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: rotate(45deg);
+}
+
+.fw-refresh-btn.spinning i {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.battle-timer-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 8px 16px;
+  text-align: right;
+}
+
+.battle-timer-box span {
+  font-size: 0.75rem;
+  color: var(--text-muted, #aebcaf);
+  display: block;
+  text-transform: uppercase;
+}
+
+.battle-timer-box strong {
+  font-size: 1.25rem;
+  color: var(--accent-gold, #f4ae25);
+  font-family: monospace;
+}
+
+/* ── Overall VS Progress Bar ── */
+.vs-bar-container {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vs-bar-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted, #aebcaf);
+  margin-bottom: 8px;
+}
+
+.vs-multi-bar {
+  display: flex;
+  height: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vs-bar-segment {
+  height: 100%;
+  transition: width 0.5s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.vs-bar-segment:hover {
+  filter: brightness(1.2);
+}
+
+/* ── Clickable Arena House Cards ── */
+.vs-arena-split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.faction-war-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 22px 18px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.faction-war-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.faction-war-card.is-user-faction {
+  border-color: var(--accent-gold, #f4ae25);
+  background: rgba(244, 174, 37, 0.08);
+  box-shadow: 0 0 20px rgba(244, 174, 37, 0.15);
+}
+
+.faction-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--accent-gold, #f4ae25);
+  color: #103e2d;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.faction-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.faction-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.faction-card-header h3 {
+  font-size: 1.15rem;
+  color: var(--text, #eef0df);
+  margin: 0 0 2px;
+}
+
+.faction-card-header span {
+  font-size: 0.78rem;
+  color: var(--text-muted, #aebcaf);
+}
+
+.faction-score-number {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--text, #eef0df);
+  margin-bottom: 6px;
+}
+
+.faction-score-number small {
+  font-size: 0.85rem;
+  color: var(--text-muted, #aebcaf);
+  font-weight: normal;
+}
+
+.faction-card-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.faction-card-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.faction-contributors-label {
+  font-size: 0.8rem;
+  color: var(--text-muted, #aebcaf);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.faction-card-click-hint {
+  margin-top: auto;
+  font-size: 0.74rem;
+  color: var(--accent-gold, #f4ae25);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.faction-war-card:hover .faction-card-click-hint {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ── Lower Grid: Leaderboard & Actions ── */
+.battle-lower-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+}
+
+.battle-box {
+  background: var(--card-dark, #14382a);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.battle-box-title {
+  font-size: 1.18rem;
+  color: var(--text, #eef0df);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── Filter Pills for Leaderboard ── */
+.fw-filter-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.fw-filter-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted, #aebcaf);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.fw-filter-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text, #eef0df);
+}
+
+.fw-filter-pill.active {
+  background: var(--accent-gold, #f4ae25);
+  color: #103e2d;
+  border-color: var(--accent-gold, #f4ae25);
+  font-weight: 700;
+}
+
+/* ── Contribution Table ── */
+.contribution-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contribution-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted, #aebcaf);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contribution-table td {
+  padding: 12px;
+  font-size: 0.92rem;
+  color: var(--text, #eef0df);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.contribution-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rank-badge.top-1 { background: #f4ae25; color: #103e2d; box-shadow: 0 0 10px rgba(244, 174, 37, 0.4); }
+.rank-badge.top-2 { background: #cbd5e1; color: #1e293b; }
+.rank-badge.top-3 { background: #b45309; color: #fff; }
+
+/* ── Rewards Breakdown Card ── */
+.reward-breakdown-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.reward-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.reward-row:last-child {
+  border-bottom: none;
+}
+
+.reward-row-label {
+  font-size: 0.86rem;
+  color: var(--text-muted, #aebcaf);
+}
+
+.reward-row-val {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text, #eef0df);
+}
+
+/* ── Tab 2: The Great Houses Showcase ── */
+.houses-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  margin-top: 10px;
+}
+
+.house-showcase-card {
+  background: var(--card-dark, #14382a);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 26px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.house-showcase-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.house-showcase-card.is-my-house {
+  border-color: var(--accent-gold, #f4ae25);
+  background: linear-gradient(180deg, rgba(244, 174, 37, 0.08) 0%, rgba(20, 56, 42, 0.95) 100%);
+}
+
+.house-crest-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.house-crest-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.house-crest-info h3 {
+  font-size: 1.3rem;
+  color: var(--text, #eef0df);
+  margin: 0 0 4px;
+}
+
+.house-element-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent-gold, #f4ae25);
+}
+
+.house-motto-quote {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-muted, #aebcaf);
+  line-height: 1.4;
+  margin-bottom: 16px;
+  padding-left: 10px;
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.house-domain-badge {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.84rem;
+  color: var(--text, #eef0df);
+  margin-bottom: 18px;
+}
+
+.house-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.house-stat-item {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.house-stat-item strong {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--text, #eef0df);
+}
+
+.house-stat-item span {
+  font-size: 0.74rem;
+  color: var(--text-muted, #aebcaf);
+  text-transform: uppercase;
+}
+
+.house-champions-section {
+  margin-bottom: 20px;
+}
+
+.house-champions-section h4 {
+  font-size: 0.82rem;
+  color: var(--text-muted, #aebcaf);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.champion-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.champion-row:last-child {
+  border-bottom: none;
+}
+
+.house-card-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Tab 3: Seasonal House Standings (Podium) ── */
+.season-podium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.season-standings-card {
+  background: var(--card-dark, #14382a);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.season-standings-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.season-rank-trophy {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.season-rank-trophy.rank-1 { color: #f4ae25; filter: drop-shadow(0 0 8px rgba(244, 174, 37, 0.5)); }
+.season-rank-trophy.rank-2 { color: #cbd5e1; }
+.season-rank-trophy.rank-3 { color: #b45309; }
+.season-rank-trophy.rank-4 { color: #64748b; }
+
+/* ── Tab 4: Battle History Timeline ── */
+.history-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-card {
+  background: var(--card-dark, #14382a);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 20px 24px;
+  transition: all 0.25s;
+}
+
+.history-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.history-winner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(244, 174, 37, 0.12);
+  color: var(--accent-gold, #f4ae25);
+  border: 1px solid rgba(244, 174, 37, 0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.history-scores-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.history-score-chip {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ── Modals ── */
+.fw-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.fw-modal.active {
+  display: flex;
+}
+
+.fw-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.fw-modal-content {
+  position: relative;
+  background: #14382a;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+  max-width: 580px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 28px;
+}
+
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.fw-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+}
+
+.fw-modal-header h3 {
+  font-size: 1.35rem;
+  color: var(--text, #eef0df);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fw-modal-close {
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: var(--text-muted, #aebcaf);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.fw-modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* ── Subject Picker Cards in Quick Quiz Modal ── */
+.quiz-subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+
+.quiz-subject-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.quiz-subject-card:hover {
+  background: rgba(244, 174, 37, 0.12);
+  border-color: var(--accent-gold, #f4ae25);
+  transform: translateY(-3px);
+}
+
+.quiz-subject-card i {
+  font-size: 1.8rem;
+  color: var(--accent-gold, #f4ae25);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.quiz-subject-card strong {
+  font-size: 0.9rem;
+  color: var(--text, #eef0df);
+  display: block;
+}
+
+.quiz-subject-card span {
+  font-size: 0.72rem;
+  color: var(--text-muted, #aebcaf);
+}
+
+/* ── Challenge Wager Buttons ── */
+.wager-btn-group {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 20px;
+}
+
+.wager-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text, #eef0df);
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.wager-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.wager-btn.selected {
+  background: var(--accent-gold, #f4ae25);
+  color: #103e2d;
+  border-color: var(--accent-gold, #f4ae25);
+}
+
+/* ── Responsive ── */
+@media (max-width: 850px) {
+  .battle-lower-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fw-user-status-strip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

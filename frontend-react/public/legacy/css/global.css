@@ -1,0 +1,421 @@
+/* =========================================================
+   EklavyaX — FONT SYSTEM
+   ========================================================= */
+
+/* Latin / English */
+@font-face {
+   font-family: "Noto Sans Local";
+   src: url("../assets/fonts/NotoSans-Regular.ttf") format("truetype");
+   font-weight: 400;
+   font-style: normal;
+   font-display: swap;
+   unicode-range: U+0000-00FF, U+0100-024F;
+}
+
+/* Hindi / Devanagari */
+@font-face {
+   font-family: "Noto Sans Local";
+   src: url("../assets/fonts/NotoSansDevanagari-Regular.ttf") format("truetype");
+   font-weight: 400;
+   font-style: normal;
+   font-display: swap;
+   unicode-range: U+0900-097F;
+}
+
+/* Tamil / தமிழ் */
+@font-face {
+   font-family: "Noto Sans Local";
+   src: url("../assets/fonts/NotoSansTamil-Regular.ttf") format("truetype");
+   font-weight: 400;
+   font-style: normal;
+   font-display: swap;
+   unicode-range: U+0B80-0BFF;
+}
+
+
+/* =========================================================
+   EklavyaX — GLOBAL DESIGN TOKENS
+   ========================================================= */
+
+:root {
+
+   /* -------------------------------------------------------
+     BACKGROUNDS
+     ------------------------------------------------------- */
+
+   /* Main deep forest background */
+   --main-bg: #0b281d;
+
+   /* Slightly lighter forest surface */
+   --main-bg-light: #123629;
+
+   /* Navigation dark green */
+   --sidebar-bg: #14503a;
+
+   /* Main primary green */
+   --primary-bg: #103e2d;
+
+
+   /* -------------------------------------------------------
+     CARDS
+     ------------------------------------------------------- */
+
+   /* Cream / paper card */
+   --card-bg: #f5efdc;
+
+   /* Softer cream */
+   --card-bg-soft: #ebe2cb;
+
+   /* Dark glass card */
+   --card-dark: #14382a;
+
+   /* Glass surface */
+   --glass-bg: rgba(255, 255, 255, 0.055);
+
+
+   /* -------------------------------------------------------
+     TEXT
+     ------------------------------------------------------- */
+
+   /* Main light text */
+   --text: #eef0df;
+
+   /* Dark text for cream cards */
+   --text-dark: #29382f;
+
+   /* Secondary text */
+   --text-muted: #aebcaf;
+
+   /* Navigation text */
+   --nav-text: #f5f1df;
+
+
+   /* -------------------------------------------------------
+     EklavyaX ACCENTS
+     ------------------------------------------------------- */
+
+   /* Main saffron / golden color */
+   --accent-gold: #f4ae25;
+
+   /* Bright gold for hover */
+   --accent-gold-light: #ffc653;
+
+   /* Teacher accent */
+   --accent-yellow: #f5b52c;
+
+   /* Student accent */
+   --accent-coral: #dd7658;
+
+   /* Existing blue accent */
+   --accent-blue: #5a77df;
+
+
+   /* -------------------------------------------------------
+     LINKS
+     ------------------------------------------------------- */
+
+   --sidebar-link: #e7ebff;
+
+   --sidebar-link-hover: #ffffff;
+
+
+   /* -------------------------------------------------------
+     BORDERS
+     ------------------------------------------------------- */
+
+   --border-light: rgba(255, 255, 255, 0.13);
+
+   --border-soft: rgba(255, 255, 255, 0.08);
+
+   --border-cream: rgba(70, 65, 48, 0.14);
+
+
+   /* -------------------------------------------------------
+     RADIUS
+     ------------------------------------------------------- */
+
+   --card-radius: 20px;
+
+   --input-radius: 11px;
+
+   --button-radius: 12px;
+
+   --sidebar-radius: 0 20px 20px 0;
+
+
+   /* -------------------------------------------------------
+     SHADOWS
+     ------------------------------------------------------- */
+
+   --shadow:
+      0 20px 60px rgba(0, 0, 0, 0.25);
+
+   --shadow-soft:
+      0 10px 30px rgba(0, 0, 0, 0.16);
+
+   --shadow-gold:
+      0 12px 30px rgba(244, 174, 37, 0.20);
+
+
+   /* -------------------------------------------------------
+     SPECIAL COLORS
+     ------------------------------------------------------- */
+
+   --accent-light: #e7eefd;
+
+   --profile-blue: #91a8ed;
+
+   --item: #cac8c8;
+
+
+   /* -------------------------------------------------------
+     FONTS
+     ------------------------------------------------------- */
+
+   --font-ui:
+      "Noto Sans Local",
+      "Noto Sans",
+      system-ui,
+      sans-serif;
+
+   --font-display:
+      "Noto Sans Local",
+      "Noto Sans",
+      system-ui,
+      sans-serif;
+
+
+   /* -------------------------------------------------------
+     FONT WEIGHTS
+     ------------------------------------------------------- */
+
+   --weight-regular: 400;
+
+   --weight-semibold: 600;
+
+   --weight-bold: 700;
+
+   --weight-heavy: 800;
+
+
+   /* -------------------------------------------------------
+     TRANSITIONS
+     ------------------------------------------------------- */
+
+   --transition-fast:
+      0.2s ease;
+
+   --transition:
+      0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+   --transition-slow:
+      0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* =========================================================
+   GLOBAL FONT SETTINGS
+   ========================================================= */
+
+html,
+body {
+   font-family: var(--font-ui);
+}
+
+body {
+   font-weight: var(--weight-regular);
+   color: var(--text);
+}
+
+
+/* Better rendering */
+
+body,
+button,
+input,
+select,
+textarea {
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================
+   EklavyaX — THEME SWITCHER PALETTES
+   ========================================================= */
+
+/* 1. Cyberpunk Dark (Neon Cyan & Electric Glow) */
+[data-theme="cyberpunk"] {
+   --main-bg: #090a14;
+   --main-bg-light: #111322;
+   --sidebar-bg: #14172b;
+   --primary-bg: #0e101f;
+   --card-bg: #181b33;
+   --card-bg-soft: #202444;
+   --card-dark: #121426;
+   --glass-bg: rgba(0, 243, 255, 0.05);
+   --text: #e2e8f0;
+   --text-dark: #ffffff;
+   --text-muted: #94a3b8;
+   --accent-gold: #00f3ff;
+   --accent-gold-light: #38bdf8;
+   --accent-coral: #ec4899;
+   --accent-blue: #06b6d4;
+   --border-light: rgba(0, 243, 255, 0.18);
+   --shadow-gold: 0 12px 30px rgba(0, 243, 255, 0.20);
+}
+
+/* 2. Midnight Nebula (Deep Sapphire & Cosmic Indigo) */
+[data-theme="nebula"] {
+   --main-bg: #090d1a;
+   --main-bg-light: #0f172a;
+   --sidebar-bg: #171d38;
+   --primary-bg: #0c1222;
+   --card-bg: #1b2545;
+   --card-bg-soft: #23315a;
+   --card-dark: #111a36;
+   --glass-bg: rgba(139, 92, 246, 0.06);
+   --text: #f1f5f9;
+   --text-dark: #ffffff;
+   --text-muted: #a5b4fc;
+   --accent-gold: #8b5cf6;
+   --accent-gold-light: #a78bfa;
+   --accent-coral: #f43f5e;
+   --accent-blue: #6366f1;
+   --border-light: rgba(139, 92, 246, 0.2);
+   --shadow-gold: 0 12px 30px rgba(139, 92, 246, 0.22);
+}
+
+/* 3. Vedic Sunlight / Light Theme (Crisp Cream & Warm Saffron) */
+[data-theme="light"] {
+   --main-bg: #f8fafc;
+   --main-bg-light: #f1f5f9;
+   --sidebar-bg: #0f172a;
+   --primary-bg: #ffffff;
+   --card-bg: #ffffff;
+   --card-bg-soft: #f8fafc;
+   --card-dark: #ffffff;
+   --glass-bg: rgba(0, 0, 0, 0.03);
+   --text: #0f172a;
+   --text-dark: #0f172a;
+   --text-muted: #64748b;
+   --nav-text: #f8fafc;
+   --accent-gold: #d97706;
+   --accent-gold-light: #f59e0b;
+   --accent-coral: #ea580c;
+   --border-light: rgba(0, 0, 0, 0.1);
+   --border-soft: rgba(0, 0, 0, 0.06);
+   --border-cream: rgba(0, 0, 0, 0.08);
+   --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+   --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================================
+   COMMON SIDEBAR ADVANCE FEATURES DROPDOWN
+   ========================================================= */
+
+.menu-group.advance-features-group {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   margin: 4px 0;
+}
+
+.menu-group-toggle {
+   appearance: none;
+   border: none;
+   outline: none;
+   background: rgba(238, 180, 62, 0.09);
+   border: 1px solid rgba(238, 180, 62, 0.28);
+   border-radius: 12px;
+   color: var(--marigold, #eeb43e);
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+   padding: 11px 14px;
+   cursor: pointer;
+   font-family: inherit;
+   font-size: 0.92rem;
+   font-weight: 700;
+   transition: all 0.25s ease;
+   box-sizing: border-box;
+}
+
+.menu-group-toggle:hover {
+   background: rgba(238, 180, 62, 0.18);
+   border-color: rgba(238, 180, 62, 0.5);
+   color: #fff;
+   transform: translateX(3px);
+}
+
+.menu-group-toggle .toggle-title {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   white-space: nowrap;
+}
+
+.menu-group-toggle .toggle-title i {
+   width: 20px;
+   min-width: 20px;
+   text-align: center;
+   font-size: 1.05rem;
+}
+
+.toggle-badge {
+   background: rgba(238, 180, 62, 0.25);
+   color: var(--marigold, #eeb43e);
+   font-size: 0.72rem;
+   font-weight: 800;
+   padding: 2px 7px;
+   border-radius: 10px;
+   margin-left: auto;
+   margin-right: 8px;
+   letter-spacing: 0.02em;
+}
+
+.menu-group-toggle .toggle-arrow {
+   font-size: 0.8rem;
+   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+   opacity: 0.85;
+}
+
+.menu-group.open .menu-group-toggle {
+   background: rgba(238, 180, 62, 0.22);
+   border-color: rgba(238, 180, 62, 0.55);
+   color: #fff;
+}
+
+.menu-group.open .menu-group-toggle .toggle-arrow {
+   transform: rotate(180deg);
+}
+
+.menu-subitems {
+   max-height: 0;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+   gap: 3px;
+   margin-top: 4px;
+   margin-left: 14px;
+   padding-left: 10px;
+   border-left: 2px dashed rgba(238, 180, 62, 0.3);
+   transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.25s ease;
+}
+
+.menu-group.open .menu-subitems {
+   max-height: 750px;
+   padding-top: 4px;
+   padding-bottom: 4px;
+}
+
+.menu-subitems a {
+   padding: 8px 12px !important;
+   font-size: 0.86rem !important;
+   border-radius: 8px !important;
+   gap: 10px !important;
+}
+
+.menu-subitems a:hover {
+   background: rgba(245, 240, 226, 0.09) !important;
+}

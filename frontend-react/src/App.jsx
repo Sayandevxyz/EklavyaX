@@ -38,7 +38,19 @@ function App() {
     return <Dashboard user={session.user} onLogout={() => { clearSession(); setSession({ token: null, user: null }); navigate("/"); }} />;
   }
 
+  if (/^\/(student|teacher)\/.+\.html$/.test(path)) {
+    return <LegacyPage src={`/legacy${path}`} />;
+  }
+
   return <Home onChoose={(role) => navigate(`/login?role=${role}`)} />;
+}
+
+function LegacyPage({ src }) {
+  return (
+    <div className="legacy-page">
+      <iframe className="legacy-frame" title="EklavyaX learning page" src={src} />
+    </div>
+  );
 }
 
 function Shell({ children, compact = false }) {

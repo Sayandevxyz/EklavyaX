@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalized Study Planner & Roadmap | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="../css/student_dashboard.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      background: #071510;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .countdown-banner {
+      background: linear-gradient(135deg, rgba(16, 45, 34, 0.9), rgba(9, 27, 20, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .countdown-timer-units {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .timer-unit-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px 20px;
+      min-width: 80px;
+    }
+    .timer-val {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent-gold, #f4ae25);
+      font-family: 'Outfit', sans-serif;
+    }
+    .timer-lbl {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .task-item {
+      background: linear-gradient(135deg, rgba(16, 45, 34, 0.75), rgba(9, 27, 20, 0.85));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    .task-item:hover {
+      border-color: rgba(244, 174, 37, 0.4);
+      transform: translateY(-2px);
+    }
+    .task-item.completed {
+      opacity: 0.65;
+      background: rgba(0, 0, 0, 0.25);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .task-checkbox {
+      width: 22px;
+      height: 22px;
+      accent-color: #10b981;
+      cursor: pointer;
+    }
+    .progress-bar-wrap {
+      background: rgba(0,0,0,0.3);
+      height: 10px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .progress-bar-fill {
+      background: linear-gradient(90deg, #10b981, #f4ae25);
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 20px;
+    }
+    .modal-card {
+      background: #092016;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 28px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX Logo">
+        <span class="logo-text">EklavyaX</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="student_dashboard.html"><i class="fas fa-home" aria-hidden="true"></i> <span>Home</span></a>
+        <a href="student_my_courses.html"><i class="fas fa-book" aria-hidden="true"></i> <span>My Courses</span></a>
+        <a href="explore_courses.html"><i class="fas fa-compass" aria-hidden="true"></i> <span>Explore Courses</span></a>
+        <a href="quiz.html"><i class="fas fa-brain" aria-hidden="true"></i> <span>Daily Quiz</span></a>
+        <a href="faction_wars.html"><i class="fas fa-shield-alt" aria-hidden="true"></i> <span>Faction Wars</span></a>
+        <a href="lab_simulation.html"><i class="fas fa-vials" aria-hidden="true"></i> <span>Lab Simulations</span></a>
+        <a href="eklavya_ai.html"><i class="fas fa-robot" aria-hidden="true"></i> <span>GRAVITY AI</span></a>
+        <a href="doubts.html"><i class="fas fa-question-circle" aria-hidden="true"></i> <span>Doubts</span></a>
+        <a href="assignments.html"><i class="fas fa-tasks" aria-hidden="true"></i> <span>Assignments</span></a>
+        <a href="announcements.html"><i class="fas fa-bullhorn" aria-hidden="true"></i> <span>Announcement</span></a>
+
+        <!-- Advance Features Group -->
+        <div class="menu-group advance-features-group" id="advanceFeaturesGroup">
+          <button type="button" class="menu-group-toggle" id="advanceFeaturesToggle" onclick="toggleAdvanceFeatures()" aria-expanded="false" aria-controls="advanceFeaturesSubitems">
+            <div class="toggle-title">
+              <i class="fas fa-layer-group" style="color: var(--marigold, #eeb43e);" aria-hidden="true"></i>
+              <span>Advance Features</span>
+            </div>
+            <span class="toggle-badge">11</span>
+            <i class="fas fa-chevron-down toggle-arrow" id="advanceFeaturesArrow" aria-hidden="true"></i>
+          </button>
+
+          <div class="menu-subitems" id="advanceFeaturesSubitems">
+            <a href="leaderboard.html"><i class="fas fa-trophy" style="color: #fbbf24;"></i> <span>Leaderboard</span></a>
+            <a href="live_battle.html"><i class="fas fa-bolt" style="color: #f59e0b;"></i> <span>Live Duel 1v1</span></a>
+            <a href="flashcards.html"><i class="fas fa-layer-group" style="color: #34d399;"></i> <span>Flashcards</span></a>
+            <a class="active" href="study_planner.html"><i class="fas fa-calendar-alt" style="color: #60a5fa;"></i> <span>Study Planner</span></a>
+            <a href="study_groups.html"><i class="fas fa-users" style="color: #818cf8;"></i> <span>Study Groups</span></a>
+            <a href="chat_threads.html"><i class="fas fa-comments" style="color: #a78bfa;"></i> <span>Doubts Chat</span></a>
+            <a href="certificates.html"><i class="fas fa-certificate" style="color: #f472b6;"></i> <span>Certificates</span></a>
+            <a href="eklavyalens.html"><i class="fas fa-globe-asia" style="color: #38bdf8;"></i> <span>EklavyaLens (Maps)</span></a>
+            <a href="pyq_arena.html"><i class="fas fa-stopwatch" style="color: #fbbf24;"></i> <span>PYQ Arena (JEE/NEET)</span></a>
+            <a href="mindmaps.html"><i class="fas fa-project-diagram" style="color: #c084fc;"></i> <span>Concept Mind Maps</span></a>
+            <a href="bookmarks.html"><i class="fas fa-bookmark" style="color: #f43f5e;"></i> <span>Revision Bookmarks</span></a>
+          </div>
+        </div>
+
+        <a href="settings.html" id="settingsBtn"><i class="fas fa-cog" aria-hidden="true"></i> <span>Settings</span></a>
+      </nav>
+      <div class="profile">
+        <img id="userAvatarImg" src="../assets/img/student_boy.jpg" alt="Profile">
+        <div class="profile-info">
+          <strong id="profileName">Sayan Mondal</strong>
+          <span id="profileAction">Log out</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="top-bar">
+        <div class="welcome-text">
+          <h1>📅 <strong>Personalized Study Roadmap & Daily Milestones</strong></h1>
+          <h2>Track daily syllabus completion, practice quotas, and target exam countdowns!</h2>
+        </div>
+      </section>
+
+      <!-- Exam Countdown Banner -->
+      <div class="countdown-banner">
+        <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: #34d399; font-weight: 800;">
+          TARGET EXAMINATION COUNTDOWN
+        </span>
+        <h2 id="targetExamTitle" style="margin: 8px 0 0 0; font-size: 28px; color: #ffffff;">JEE Main & Advanced 2026</h2>
+        <div class="countdown-timer-units">
+          <div class="timer-unit-box">
+            <div class="timer-val" id="cntDays">88</div>
+            <div class="timer-lbl">Days</div>
+          </div>
+          <div class="timer-unit-box">
+            <div class="timer-val" id="cntHours">14</div>
+            <div class="timer-lbl">Hours</div>
+          </div>
+          <div class="timer-unit-box">
+            <div class="timer-val" id="cntMins">32</div>
+            <div class="timer-lbl">Minutes</div>
+          </div>
+          <div class="timer-unit-box">
+            <div class="timer-val" id="cntSecs">45</div>
+            <div class="timer-lbl">Seconds</div>
+          </div>
+        </div>
+        <div style="margin-top: 20px;">
+          <button onclick="openPlannerConfigModal()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 10px 22px; border-radius: 10px; font-weight: 800; cursor: pointer;">
+            <i class="fas fa-edit"></i> Customize Target Exam / Goal Date
+          </button>
+        </div>
+      </div>
+
+      <!-- Syllabus Progress Summary -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="margin: 0; color: var(--accent-gold, #f4ae25); font-size: 18px;"><i class="fas fa-tasks"></i> 15-Day Strategic Milestone Plan</h3>
+        <span id="completionBadge" style="font-weight: 800; background: rgba(16,185,129,0.2); color: #34d399; padding: 5px 14px; border-radius: 12px; font-size: 13px;">
+          0% Completed (0/6 Tasks)
+        </span>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+      </div>
+
+      <!-- Task Checklist -->
+      <div id="tasksContainer">
+        <!-- Rendered via JS -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Configure Exam Modal -->
+  <div class="modal-overlay" id="configPlannerModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="margin: 0; color: #fff;"><i class="fas fa-calendar-alt" style="color: var(--accent-gold, #f4ae25);"></i> Target Exam Settings</h3>
+        <span onclick="closePlannerConfigModal()" style="color: #94a3b8; cursor: pointer; font-size: 20px;">&times;</span>
+      </div>
+      <div style="margin-bottom: 14px;">
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 6px;">Target Exam</label>
+        <select id="modalExamSelect" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+          <option value="JEE Main & Advanced 2026">JEE Main & Advanced 2026</option>
+          <option value="NEET UG Medical 2026">NEET UG Medical 2026</option>
+          <option value="CBSE Class 12 Boards 2026">CBSE Class 12 Boards 2026</option>
+          <option value="KVPY / Science Olympiad">KVPY / Science Olympiad</option>
+        </select>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 6px;">Target Examination Date</label>
+        <input type="date" id="modalExamDate" style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.1);">
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button onclick="closePlannerConfigModal()" style="background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; padding: 8px 16px; border-radius: 8px; cursor: pointer;">Cancel</button>
+        <button onclick="savePlannerConfig()" style="background: var(--accent-gold, #f4ae25); color: #071510; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">Save Roadmap</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/page_init.js"></script>
+  <script src="../js/theme_toggle.js"></script>
+  <script src="../js/leaderboard_sync.js"></script>
+  <script>
+    const DEFAULT_PLAN_TASKS = [
+      {
+        id: 101,
+        day_number: 1,
+        subject: "Physics",
+        topic: "Rotational Dynamics & Moment of Inertia",
+        subtasks: ["Derive parallel and perpendicular axis theorems", "Solve 15 PYQs on Rolling without slipping", "Complete interactive moment of inertia simulation"],
+        xp_reward: 50,
+        coin_reward: 15,
+        is_completed: false
+      },
+      {
+        id: 102,
+        day_number: 2,
+        subject: "Chemistry",
+        topic: "Chemical Thermodynamics & Gibbs Free Energy",
+        subtasks: ["Revise ΔG = ΔH - TΔS spontaneous conditions", "Solve 12 numericals on Carnot engine and entropy", "Review faculty lecture notes"],
+        xp_reward: 45,
+        coin_reward: 15,
+        is_completed: false
+      },
+      {
+        id: 103,
+        day_number: 3,
+        subject: "Mathematics",
+        topic: "Definite Integrals & Properties",
+        subtasks: ["Memorize King's Property and Queen's Property", "Solve 20 definite integration problems", "Complete Daily Mathematics Quiz"],
+        xp_reward: 60,
+        coin_reward: 20,
+        is_completed: false
+      },
+      {
+        id: 104,
+        day_number: 4,
+        subject: "Physics",
+        topic: "Electrostatics & Gauss's Law Applications",
+        subtasks: ["Compute electric field for infinite sheet and cylinder", "Derive potential energy of dipole in electric field", "Attempt 1v1 speed duel in arena"],
+        xp_reward: 50,
+        coin_reward: 15,
+        is_completed: false
+      },
+      {
+        id: 105,
+        day_number: 5,
+        subject: "Chemistry",
+        topic: "Aldehydes, Ketones & Carboxylic Acids",
+        subtasks: ["Review Aldol condensation & Cannizzaro mechanisms", "Practice 10 road-map conversions", "Update flashcard revision deck"],
+        xp_reward: 55,
+        coin_reward: 15,
+        is_completed: false
+      },
+      {
+        id: 106,
+        day_number: 6,
+        subject: "Mathematics",
+        topic: "Differential Equations & Orthogonal Trajectories",
+        subtasks: ["Solve first-order linear ODEs using integrating factors", "Solve homogeneous equations", "Complete weekly mock diagnostic test"],
+        xp_reward: 65,
+        coin_reward: 25,
+        is_completed: false
+      }
+    ];
+
+    let currentPlanTasks = [];
+    let targetExamTitle = "JEE Main & Advanced 2026";
+    let targetExamDate = null;
+    let countdownInterval = null;
+
+    function initPlan() {
+      // Load saved state from localStorage
+      try {
+        const savedExam = localStorage.getItem("eklavyax_target_exam");
+        const savedDate = localStorage.getItem("eklavyax_target_date");
+        const savedTasks = localStorage.getItem("eklavyax_study_tasks");
+
+        if (savedExam) targetExamTitle = savedExam;
+        if (savedDate) {
+          targetExamDate = new Date(savedDate);
+        } else {
+          targetExamDate = new Date();
+          targetExamDate.setDate(targetExamDate.getDate() + 88);
+        }
+
+        if (savedTasks) {
+          currentPlanTasks = JSON.parse(savedTasks);
+        } else {
+          currentPlanTasks = DEFAULT_PLAN_TASKS;
+        }
+      } catch (_) {
+        currentPlanTasks = DEFAULT_PLAN_TASKS;
+        targetExamDate = new Date();
+        targetExamDate.setDate(targetExamDate.getDate() + 88);
+      }
+
+      document.getElementById("targetExamTitle").textContent = targetExamTitle;
+      startCountdownTimer();
+      renderTasks();
+    }
+
+    function startCountdownTimer() {
+      if (countdownInterval) clearInterval(countdownInterval);
+
+      function updateClock() {
+        const now = new Date();
+        const diffMs = targetExamDate - now;
+
+        if (diffMs <= 0) {
+          document.getElementById("cntDays").textContent = "00";
+          document.getElementById("cntHours").textContent = "00";
+          document.getElementById("cntMins").textContent = "00";
+          document.getElementById("cntSecs").textContent = "00";
+          return;
+        }
+
+        const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+        document.getElementById("cntDays").textContent = String(days).padStart(2, "0");
+        document.getElementById("cntHours").textContent = String(hours).padStart(2, "0");
+        document.getElementById("cntMins").textContent = String(minutes).padStart(2, "0");
+        document.getElementById("cntSecs").textContent = String(seconds).padStart(2, "0");
+      }
+
+      updateClock();
+      countdownInterval = setInterval(updateClock, 1000);
+    }
+
+    function renderTasks() {
+      const container = document.getElementById("tasksContainer");
+      const completedCount = currentPlanTasks.filter(t => t.is_completed).length;
+      const totalCount = currentPlanTasks.length;
+      const pct = Math.round((completedCount / totalCount) * 100);
+
+      document.getElementById("completionBadge").textContent = `${pct}% Completed (${completedCount}/${totalCount} Milestones)`;
+      document.getElementById("progressBarFill").style.width = `${pct}%`;
+
+      container.innerHTML = currentPlanTasks.map(t => `
+        <div class="task-item ${t.is_completed ? 'completed' : ''}" id="task-${t.id}">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <input type="checkbox" class="task-checkbox" ${t.is_completed ? 'checked' : ''} onchange="toggleTask(${t.id})">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 3px;">
+                <span style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: rgba(244,174,37,0.2); color: #f4ae25; font-weight: 700;">
+                  Day ${t.day_number} • ${t.subject}
+                </span>
+                <strong style="font-size: 16px; color: ${t.is_completed ? '#94a3b8' : '#ffffff'};">${t.topic}</strong>
+              </div>
+              <div style="font-size: 13px; color: #94a3b8;">
+                ${t.subtasks.join(' • ')}
+              </div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 13px; font-weight: 800; color: var(--accent-gold, #f4ae25); display: block;">+${t.coin_reward} 🪙</span>
+            <span style="font-size: 11px; color: #34d399; font-weight: 600;">+${t.xp_reward} XP</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function toggleTask(id) {
+      const t = currentPlanTasks.find(item => item.id === id);
+      if (!t) return;
+
+      t.is_completed = !t.is_completed;
+
+      // Award EduCoins when marked complete
+      if (t.is_completed && window.LeaderboardSync) {
+        window.LeaderboardSync.awardCoins("sayan", t.coin_reward, `Completed Day ${t.day_number} Milestone`);
+      }
+
+      try {
+        localStorage.setItem("eklavyax_study_tasks", JSON.stringify(currentPlanTasks));
+      } catch (_) {}
+
+      renderTasks();
+    }
+
+    function openPlannerConfigModal() {
+      document.getElementById("configPlannerModal").style.display = "flex";
+      document.getElementById("modalExamSelect").value = targetExamTitle;
+      const dStr = targetExamDate.toISOString().split("T")[0];
+      document.getElementById("modalExamDate").value = dStr;
+    }
+
+    function closePlannerConfigModal() {
+      document.getElementById("configPlannerModal").style.display = "none";
+    }
+
+    function savePlannerConfig() {
+      const exam = document.getElementById("modalExamSelect").value;
+      const dateVal = document.getElementById("modalExamDate").value;
+
+      if (!dateVal) {
+        alert("Please select a target examination date.");
+        return;
+      }
+
+      targetExamTitle = exam;
+      targetExamDate = new Date(dateVal);
+
+      try {
+        localStorage.setItem("eklavyax_target_exam", targetExamTitle);
+        localStorage.setItem("eklavyax_target_date", dateVal);
+      } catch (_) {}
+
+      closePlannerConfigModal();
+      document.getElementById("targetExamTitle").textContent = targetExamTitle;
+      startCountdownTimer();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initPage("student", "student_login.html");
+      initPlan();
+    });
+  </script>
+</body>
+</html>

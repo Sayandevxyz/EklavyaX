@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="orbitGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="orbitGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#eeb43e" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.8"/>
+    </linearGradient>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="1"/>
+      <stop offset="35%" stop-color="#818cf8" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#a855f7" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#0c1813" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowEffect" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Dark Cosmic Backdrop Circle -->
+  <circle cx="50" cy="50" r="46" fill="#091510" stroke="rgba(245,240,226,0.15)" stroke-width="1.5"/>
+
+  <!-- Orbital Rings -->
+  <g filter="url(#glowEffect)">
+    <!-- Ellipse 1 (Horizontal 0 deg) -->
+    <ellipse cx="50" cy="50" rx="36" ry="14" fill="none" stroke="url(#orbitGrad1)" stroke-width="1.8" transform="rotate(0 50 50)"/>
+    <!-- Ellipse 2 (60 deg) -->
+    <ellipse cx="50" cy="50" rx="36" ry="14" fill="none" stroke="url(#orbitGrad2)" stroke-width="1.8" transform="rotate(60 50 50)"/>
+    <!-- Ellipse 3 (120 deg) -->
+    <ellipse cx="50" cy="50" rx="36" ry="14" fill="none" stroke="url(#orbitGrad1)" stroke-width="1.8" transform="rotate(120 50 50)"/>
+  </g>
+
+  <!-- Central Quantum Gravity Core -->
+  <circle cx="50" cy="50" r="20" fill="url(#coreGlow)" filter="url(#glowEffect)"/>
+  <circle cx="50" cy="50" r="14" fill="none" stroke="#f5f0e2" stroke-width="1.2" stroke-opacity="0.6" stroke-dasharray="2 3"/>
+  <circle cx="50" cy="50" r="7" fill="#ffffff" filter="url(#glowEffect)"/>
+
+  <!-- Orbital Photon Nodes -->
+  <circle cx="86" cy="50" r="2.5" fill="#38bdf8"/>
+  <circle cx="32" cy="19" r="2.5" fill="#eeb43e"/>
+  <circle cx="32" cy="81" r="2.5" fill="#a855f7"/>
+</svg>

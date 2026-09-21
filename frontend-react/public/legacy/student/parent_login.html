@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent & Guardian Access Portal | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 15%,
+          rgba(58, 111, 82, 0.25),
+          transparent 45%),
+        linear-gradient(135deg,
+          #0a241b 0%,
+          #0e3023 45%,
+          #092218 100%);
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .parent-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 6vw;
+      border-bottom: 1px solid rgba(244, 174, 37, 0.2);
+      background: rgba(10, 36, 27, 0.75);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-badge img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #f4ae25;
+      letter-spacing: 0.5px;
+    }
+
+    .login-container {
+      max-width: 500px;
+      width: 90%;
+      margin: 36px auto;
+      background: linear-gradient(145deg, rgba(14, 48, 35, 0.92), rgba(9, 34, 24, 0.96));
+      border: 1px solid rgba(244, 174, 37, 0.35);
+      border-radius: 20px;
+      padding: 34px 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(244, 174, 37, 0.12);
+      position: relative;
+    }
+
+    .shield-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(244, 174, 37, 0.15);
+      border: 1px solid rgba(244, 174, 37, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: #f4ae25;
+      margin: 0 auto 14px;
+    }
+
+    .login-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin: 0 0 6px;
+    }
+
+    .login-sub {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.88rem;
+      margin: 0 0 20px;
+      line-height: 1.45;
+    }
+
+    .auth-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 4px;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 10px 8px;
+      background: transparent;
+      border: none;
+      border-radius: 9px;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      text-align: center;
+    }
+
+    .auth-tab-btn.active {
+      background: #f4ae25;
+      color: #071510;
+      box-shadow: 0 2px 10px rgba(244, 174, 37, 0.35);
+    }
+
+    .auth-error-box {
+      display: none;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .auth-error-box.is-visible {
+      display: flex;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .admin-input:focus {
+      outline: none;
+      border-color: #f4ae25;
+      box-shadow: 0 0 0 3px rgba(244, 174, 37, 0.2);
+    }
+
+    .btn-parent-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #071510;
+      font-weight: 800;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      margin-top: 12px;
+    }
+
+    .btn-parent-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+    }
+
+    .switch-prompt {
+      text-align: center;
+      font-size: 0.86rem;
+      color: #94a3b8;
+      margin-top: 16px;
+    }
+
+    .switch-prompt a {
+      color: #f4ae25;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .switch-prompt a:hover {
+      text-decoration: underline;
+    }
+
+    .portal-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+    }
+
+    .portal-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .portal-links a:hover {
+      color: #f4ae25;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="parent-nav">
+    <a href="../index.html" class="logo-badge">
+      <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX">
+      <span class="logo-title">EklavyaX</span>
+    </a>
+    <div style="font-size: 0.85rem; color: #f4ae25; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+      <i class="fas fa-user-shield"></i> Parent & Guardian Observation Window
+    </div>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <div class="shield-icon">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <h1 class="login-title" id="parentHeaderTitle">Parent Access Portal</h1>
+      <p class="login-sub" id="parentHeaderSub">Track your child's daily STEM attendance, quiz mastery, and academic growth.</p>
+
+      <!-- Mode Switcher Tabs -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="tabCodeBtn" onclick="switchParentTab('code')">
+          <i class="fas fa-key"></i> Student Code
+        </button>
+        <button type="button" class="auth-tab-btn" id="tabLoginBtn" onclick="switchParentTab('login')">
+          <i class="fas fa-sign-in-alt"></i> Parent Login
+        </button>
+      </div>
+
+      <!-- Error Box -->
+      <div class="auth-error-box" id="parentErrorBox">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="parentErrorMsg"></span>
+      </div>
+
+      <!-- 1. Student Code / Email Access Form -->
+      <form id="codeAccessForm" onsubmit="handleCodeAccess(event)">
+        <div class="form-group">
+          <label><i class="fas fa-id-card"></i> Student Guardian Code or Student Email</label>
+          <input type="text" id="parentInput" class="admin-input" placeholder="e.g. EK-948215 or student@eklavya.edu" required>
+        </div>
+
+        <button type="submit" class="btn-parent-login" id="parentCodeBtn">
+          <i class="fas fa-chart-line"></i> View Student Progress Dashboard
+        </button>
+
+        <p class="switch-prompt">
+          Have a parent account?
+          <a href="javascript:void(0)" onclick="switchParentTab('login')">Parent Sign In &rarr;</a>
+        </p>
+      </form>
+
+      <!-- 2. Registered Parent Account Login -->
+      <form id="parentLoginForm" onsubmit="handleParentLogin(event)" style="display: none;">
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Parent Email or Username</label>
+          <input type="text" id="parentAccountEmail" class="admin-input" placeholder="e.g. parent@gmail.com" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Parent Password</label>
+          <input type="password" id="parentAccountPassword" class="admin-input" placeholder="Enter password" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn-parent-login" id="parentLoginBtn">
+          <i class="fas fa-door-open"></i> Sign In to Parent Portal
+        </button>
+
+        <p class="switch-prompt">
+          New guardian?
+          <a href="javascript:void(0)" onclick="switchParentTab('register')">Create Parent Account &rarr;</a>
+        </p>
+      </form>
+
+      <!-- 3. Create New Parent Account -->
+      <form id="parentRegisterForm" onsubmit="handleParentRegister(event)" style="display: none;">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Parent / Guardian Full Name</label>
+          <input type="text" id="regParentName" class="admin-input" placeholder="e.g. Meenakshi Sharma" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Parent Email Address</label>
+          <input type="email" id="regParentEmail" class="admin-input" placeholder="e.g. meenakshi@gmail.com" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-child"></i> Child's Student Email or Guardian Code</label>
+          <input type="text" id="regChildCode" class="admin-input" placeholder="e.g. EK-948215 or rishabh@eklavya.edu" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Password (min. 8 characters)</label>
+          <input type="password" id="regParentPassword" class="admin-input" placeholder="Create password" required minlength="8">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-shield-alt"></i> Confirm Password</label>
+          <input type="password" id="regParentConfirmPassword" class="admin-input" placeholder="Confirm password" required minlength="8">
+        </div>
+
+        <button type="submit" class="btn-parent-login" id="regParentBtn">
+          <i class="fas fa-user-check"></i> Register Parent Account
+        </button>
+
+        <p class="switch-prompt">
+          Already have an account?
+          <a href="javascript:void(0)" onclick="switchParentTab('login')">Sign In &rarr;</a>
+        </p>
+      </form>
+
+      <div class="portal-links">
+        <a href="../teacher/principal_login.html"><i class="fas fa-crown"></i> Principal Login</a>
+        <a href="../teacher/login.html"><i class="fas fa-chalkboard-teacher"></i> Teacher Login</a>
+        <a href="student_login.html"><i class="fas fa-user-graduate"></i> Student Login</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© EklavyaX — Guardian Transparency & Direct Teacher Communication</p>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script>
+    function showError(msg) {
+      const box = document.getElementById("parentErrorBox");
+      const txt = document.getElementById("parentErrorMsg");
+      txt.textContent = msg;
+      box.classList.add("is-visible");
+    }
+
+    function clearError() {
+      const box = document.getElementById("parentErrorBox");
+      box.classList.remove("is-visible");
+    }
+
+    function switchParentTab(mode) {
+      clearError();
+      const tabCode = document.getElementById("tabCodeBtn");
+      const tabLogin = document.getElementById("tabLoginBtn");
+      const tabRegister = document.getElementById("tabRegisterBtn");
+
+      const formCode = document.getElementById("codeAccessForm");
+      const formLogin = document.getElementById("parentLoginForm");
+      const formRegister = document.getElementById("parentRegisterForm");
+
+      const title = document.getElementById("parentHeaderTitle");
+      const sub = document.getElementById("parentHeaderSub");
+
+      tabCode.classList.remove("active");
+      tabLogin.classList.remove("active");
+      tabRegister.classList.remove("active");
+
+      formCode.style.display = "none";
+      formLogin.style.display = "none";
+      formRegister.style.display = "none";
+
+      if (mode === 'login') {
+        tabLogin.classList.add("active");
+        formLogin.style.display = "block";
+        title.textContent = "Parent Account Sign In";
+        sub.textContent = "Log in with your registered guardian account to access your linked child's progress.";
+      } else if (mode === 'register') {
+        tabRegister.classList.add("active");
+        formRegister.style.display = "block";
+        title.textContent = "Create Parent Account";
+        sub.textContent = "Register as a guardian and connect with your child's student profile.";
+      } else {
+        tabCode.classList.add("active");
+        formCode.style.display = "block";
+        title.textContent = "Parent Access Portal";
+        sub.textContent = "Track your child's daily STEM attendance, quiz mastery, and academic growth.";
+      }
+    }
+
+    function handleCodeAccess(e) {
+      e.preventDefault();
+      clearError();
+      const val = document.getElementById("parentInput").value.trim();
+      if (!val) {
+        showError("Please enter your child's access code or email.");
+        return;
+      }
+      window.location.href = `parent_dashboard.html?code=${encodeURIComponent(val)}`;
+    }
+
+    async function handleParentLogin(e) {
+      e.preventDefault();
+      clearError();
+      const btn = document.getElementById("parentLoginBtn");
+      const username = document.getElementById("parentAccountEmail").value.trim();
+      const password = document.getElementById("parentAccountPassword").value;
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Signing in...`;
+
+      try {
+        const res = await EklavyaXAPI.login({ username, password });
+        EklavyaXAPI.saveSession(res.access_token, res.user);
+        window.location.href = "parent_dashboard.html";
+      } catch (err) {
+        showError(err.message || "Invalid parent credentials. Please try again.");
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-door-open"></i> Sign In to Parent Portal`;
+      }
+    }
+
+    function slugify(name, email) {
+      const base = name.trim().toLowerCase().replace(/\s+/g, "_") || email.split("@")[0];
+      const clean = base.replace(/[^a-z0-9_-]/g, "").slice(0, 35);
+      return clean || "parent_user";
+    }
+
+    async function handleParentRegister(e) {
+      e.preventDefault();
+      clearError();
+
+      const name = document.getElementById("regParentName").value.trim();
+      const email = document.getElementById("regParentEmail").value.trim();
+      const childCode = document.getElementById("regChildCode").value.trim();
+      const password = document.getElementById("regParentPassword").value;
+      const confirmPassword = document.getElementById("regParentConfirmPassword").value;
+      const btn = document.getElementById("regParentBtn");
+
+      if (password !== confirmPassword) {
+        showError("Passwords do not match.");
+        return;
+      }
+
+      if (password.length < 8) {
+        showError("Password must be at least 8 characters long.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Creating Parent Account...`;
+
+      const username = slugify(name, email);
+
+      try {
+        let res;
+        try {
+          res = await EklavyaXAPI.register({
+            username: username,
+            email: email,
+            password: password,
+            role: "parent",
+            avatar_url: "assets/img/logo.png"
+          });
+        } catch (err) {
+          if (/already taken/i.test(err.message || "")) {
+            const suffix = Math.floor(100 + Math.random() * 900);
+            res = await EklavyaXAPI.register({
+              username: `${username}_${suffix}`,
+              email: email,
+              password: password,
+              role: "parent",
+              avatar_url: "assets/img/logo.png"
+            });
+          } else {
+            throw err;
+          }
+        }
+
+        // Save session & link child
+        EklavyaXAPI.saveSession(res.access_token, {
+          ...res.user,
+          full_name: name,
+          linked_child: childCode
+        });
+
+        if (childCode) {
+          localStorage.setItem("parent_linked_child", childCode);
+        }
+
+        window.location.href = childCode ? `parent_dashboard.html?code=${encodeURIComponent(childCode)}` : "parent_dashboard.html";
+      } catch (err) {
+        showError(err.message || "Failed to create parent account. Please try again.");
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-user-check"></i> Register Parent Account`;
+      }
+    }
+  </script>
+</body>
+
+</html>

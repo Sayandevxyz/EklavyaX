@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Principal & School Admin Portal | EklavyaX</title>
+  <link rel="icon" type="image/png" href="../assets/img/logo.png?v=3.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 15%,
+          rgba(58, 111, 82, 0.25),
+          transparent 45%),
+        linear-gradient(135deg,
+          #0a241b 0%,
+          #0e3023 45%,
+          #092218 100%);
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .admin-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 6vw;
+      border-bottom: 1px solid rgba(244, 174, 37, 0.2);
+      background: rgba(10, 36, 27, 0.75);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-badge img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+
+    .login-container {
+      max-width: 480px;
+      width: 90%;
+      margin: 36px auto;
+      background: linear-gradient(145deg, rgba(14, 48, 35, 0.92), rgba(9, 34, 24, 0.96));
+      border: 1px solid rgba(244, 174, 37, 0.35);
+      border-radius: 20px;
+      padding: 34px 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(244, 174, 37, 0.12);
+      position: relative;
+    }
+
+    .crown-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(244, 174, 37, 0.15);
+      border: 1px solid rgba(244, 174, 37, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: #f4ae25;
+      margin: 0 auto 14px;
+    }
+
+    .login-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      text-align: center;
+      margin: 0 0 6px;
+    }
+
+    .login-sub {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.88rem;
+      margin: 0 0 20px;
+      line-height: 1.45;
+    }
+
+    .auth-tabs {
+      display: flex;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 4px;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 10px 14px;
+      background: transparent;
+      border: none;
+      border-radius: 9px;
+      color: #94a3b8;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .auth-tab-btn.active {
+      background: #f4ae25;
+      color: #071510;
+      box-shadow: 0 2px 10px rgba(244, 174, 37, 0.35);
+    }
+
+    .auth-error-box {
+      display: none;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .auth-error-box.is-visible {
+      display: flex;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .admin-input:focus {
+      outline: none;
+      border-color: #f4ae25;
+      box-shadow: 0 0 0 3px rgba(244, 174, 37, 0.2);
+    }
+
+    .admin-input option {
+      background: #0d2b20;
+      color: #fff;
+      padding: 10px;
+    }
+
+    .btn-admin-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #071510;
+      font-weight: 800;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      margin-top: 12px;
+    }
+
+    .btn-admin-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+    }
+
+    .switch-prompt {
+      text-align: center;
+      font-size: 0.86rem;
+      color: #94a3b8;
+      margin-top: 16px;
+    }
+
+    .switch-prompt a {
+      color: #f4ae25;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .switch-prompt a:hover {
+      text-decoration: underline;
+    }
+
+    .portal-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+    }
+
+    .portal-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .portal-links a:hover {
+      color: #f4ae25;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="admin-nav">
+    <a href="../index.html" class="logo-badge">
+      <img src="../assets/img/logo.png?v=3.0" alt="EklavyaX">
+      <span class="logo-title">EklavyaX</span>
+    </a>
+    <div style="font-size: 0.85rem; color: #fbbf24; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+      <i class="fas fa-shield-alt"></i> Official Institutional Registry
+    </div>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <div class="crown-icon">
+        <i class="fas fa-crown"></i>
+      </div>
+      <h1 class="login-title" id="portalHeaderTitle">School Principal Portal</h1>
+      <p class="login-sub" id="portalHeaderSub">Access executive dashboard, student roster, faculty assignments, attendance & academic records.</p>
+
+      <!-- Auth Switch Tabs -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="tabLoginBtn" onclick="switchPrincipalTab('login')">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+        <button type="button" class="auth-tab-btn" id="tabRegisterBtn" onclick="switchPrincipalTab('register')">
+          <i class="fas fa-user-plus"></i> Create New Account
+        </button>
+      </div>
+
+      <!-- Error Box -->
+      <div class="auth-error-box" id="authErrorBox">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="authErrorMsg"></span>
+      </div>
+
+      <!-- 1. Principal Login Form -->
+      <form id="principalLoginForm" onsubmit="handlePrincipalLogin(event)">
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Principal Email or Admin ID</label>
+          <input type="text" id="adminEmail" class="admin-input" placeholder="e.g. principal@eklavya.edu" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-key"></i> Administrative Password</label>
+          <input type="password" id="adminPassword" class="admin-input" placeholder="Enter password" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn-admin-login" id="loginBtn">
+          <i class="fas fa-door-open"></i> Enter Executive Dashboard
+        </button>
+
+        <p class="switch-prompt">
+          New school or principal?
+          <a href="javascript:void(0)" onclick="switchPrincipalTab('register')">Create Principal Account &rarr;</a>
+        </p>
+      </form>
+
+      <!-- 2. Principal Registration Form -->
+      <form id="principalRegisterForm" onsubmit="handlePrincipalRegister(event)" style="display: none;">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Principal / Administrator Name</label>
+          <input type="text" id="regFullName" class="admin-input" placeholder="e.g. Dr. Rajesh Sharma" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-school"></i> School / Institution Name (Pondicherry)</label>
+          <select id="regSchoolName" class="admin-input" onchange="toggleCustomSchool(this.value)" required>
+            <option value="">-- Select School in Pondicherry --</option>
+            <option value="Kendriya Vidyalaya, Pondicherry University Campus">Kendriya Vidyalaya, Pondicherry University Campus</option>
+            <option value="Kendriya Vidyalaya No. 1, JIPMER Campus, Puducherry">Kendriya Vidyalaya No. 1, JIPMER Campus, Puducherry</option>
+            <option value="Jawahar Navodaya Vidyalaya, Kalapet, Puducherry">Jawahar Navodaya Vidyalaya, Kalapet, Puducherry</option>
+            <option value="Sri Aurobindo International Centre of Education, Puducherry">Sri Aurobindo International Centre of Education, Puducherry</option>
+            <option value="Petit Seminaire Higher Secondary School, Puducherry">Petit Seminaire Higher Secondary School, Puducherry</option>
+            <option value="St. Patrick Matriculation Higher Secondary School, Puducherry">St. Patrick Matriculation Higher Secondary School, Puducherry</option>
+            <option value="Vivekananda Higher Secondary School, Lawspet, Puducherry">Vivekananda Higher Secondary School, Lawspet, Puducherry</option>
+            <option value="Achariya Siksha Mandir, Villianur, Puducherry">Achariya Siksha Mandir, Villianur, Puducherry</option>
+            <option value="Aditya Vidyashram Residential School, Poraiyur, Puducherry">Aditya Vidyashram Residential School, Poraiyur, Puducherry</option>
+            <option value="Jawahar Higher Secondary School, Puducherry">Jawahar Higher Secondary School, Puducherry</option>
+            <option value="Subramania Bharathi Government Girls Higher Secondary School, Puducherry">Subramania Bharathi Government Girls Higher Secondary School, Puducherry</option>
+            <option value="Calve College Government Higher Secondary School, Puducherry">Calve College Government Higher Secondary School, Puducherry</option>
+            <option value="Don Bosco Higher Secondary School, Lawspet, Puducherry">Don Bosco Higher Secondary School, Lawspet, Puducherry</option>
+            <option value="St. Joseph of Cluny Higher Secondary School, Puducherry">St. Joseph of Cluny Higher Secondary School, Puducherry</option>
+            <option value="Seventh-day Adventist Higher Secondary School, Puducherry">Seventh-day Adventist Higher Secondary School, Puducherry</option>
+            <option value="Kendriya Vidyalaya, Karaikal, Puducherry">Kendriya Vidyalaya, Karaikal, Puducherry</option>
+            <option value="Jawahar Navodaya Vidyalaya, Mahe, Puducherry">Jawahar Navodaya Vidyalaya, Mahe, Puducherry</option>
+            <option value="Jawahar Navodaya Vidyalaya, Yanam, Puducherry">Jawahar Navodaya Vidyalaya, Yanam, Puducherry</option>
+            <option value="Annai Sivagami Govt Girls Higher Secondary School, Puducherry">Annai Sivagami Govt Girls Higher Secondary School, Puducherry</option>
+            <option value="Thiruvalluvar Govt Higher Secondary School, Puducherry">Thiruvalluvar Govt Higher Secondary School, Puducherry</option>
+            <option value="Other">Other School / Institution (Type Custom)</option>
+          </select>
+          <input type="text" id="regSchoolNameCustom" class="admin-input" placeholder="Type custom school / institution name" style="display: none; margin-top: 8px;">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-envelope"></i> Official Institutional Email</label>
+          <input type="email" id="regEmail" class="admin-input" placeholder="e.g. principal@institution.edu" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-lock"></i> Password (min. 8 characters)</label>
+          <input type="password" id="regPassword" class="admin-input" placeholder="Create admin password" required minlength="8">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-shield-alt"></i> Confirm Password</label>
+          <input type="password" id="regConfirmPassword" class="admin-input" placeholder="Confirm password" required minlength="8">
+        </div>
+
+        <button type="submit" class="btn-admin-login" id="regBtn">
+          <i class="fas fa-check-circle"></i> Create Principal & School Account
+        </button>
+
+        <p class="switch-prompt">
+          Already registered?
+          <a href="javascript:void(0)" onclick="switchPrincipalTab('login')">Sign In &rarr;</a>
+        </p>
+      </form>
+
+      <div class="portal-links">
+        <a href="login.html"><i class="fas fa-chalkboard-teacher"></i> Teacher Login</a>
+        <a href="../student/student_login.html"><i class="fas fa-user-graduate"></i> Student Login</a>
+        <a href="../student/parent_login.html"><i class="fas fa-user-shield"></i> Parent Portal</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© EklavyaX — Gamified STEM Learning & Institutional Command Suite</p>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script>
+    function showError(msg) {
+      const box = document.getElementById("authErrorBox");
+      const txt = document.getElementById("authErrorMsg");
+      txt.textContent = msg;
+      box.classList.add("is-visible");
+    }
+
+    function clearError() {
+      const box = document.getElementById("authErrorBox");
+      box.classList.remove("is-visible");
+    }
+
+    function switchPrincipalTab(mode) {
+      clearError();
+      const loginTab = document.getElementById("tabLoginBtn");
+      const regTab = document.getElementById("tabRegisterBtn");
+      const loginForm = document.getElementById("principalLoginForm");
+      const regForm = document.getElementById("principalRegisterForm");
+      const headerTitle = document.getElementById("portalHeaderTitle");
+      const headerSub = document.getElementById("portalHeaderSub");
+
+      if (mode === 'register') {
+        loginTab.classList.remove("active");
+        regTab.classList.add("active");
+        loginForm.style.display = "none";
+        regForm.style.display = "block";
+        headerTitle.textContent = "Register Institution & Principal";
+        headerSub.textContent = "Set up your school's digital command suite to monitor student cohorts, teacher assignments and analytics.";
+      } else {
+        regTab.classList.remove("active");
+        loginTab.classList.add("active");
+        regForm.style.display = "none";
+        loginForm.style.display = "block";
+        headerTitle.textContent = "School Principal Login";
+        headerSub.textContent = "Access executive dashboard, student roster, faculty assignments, attendance & academic records.";
+      }
+    }
+
+    async function handlePrincipalLogin(e) {
+      e.preventDefault();
+      clearError();
+      const btn = document.getElementById("loginBtn");
+      const email = document.getElementById("adminEmail").value.trim();
+      const password = document.getElementById("adminPassword").value;
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Authenticating...`;
+
+      try {
+        const res = await EklavyaXAPI.login({ username: email, password });
+        EklavyaXAPI.saveSession(res.access_token, res.user);
+        window.location.href = "principal_dashboard.html";
+      } catch (err) {
+        showError(err.message || "Invalid credentials. Please verify your email and password.");
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-door-open"></i> Enter Executive Dashboard`;
+      }
+    }
+
+    function toggleCustomSchool(val) {
+      const customInput = document.getElementById("regSchoolNameCustom");
+      if (val === "Other") {
+        customInput.style.display = "block";
+        customInput.required = true;
+        customInput.focus();
+      } else {
+        customInput.style.display = "none";
+        customInput.required = false;
+      }
+    }
+
+    function slugify(name, email) {
+      const base = name.trim().toLowerCase().replace(/\s+/g, "_") || email.split("@")[0];
+      const clean = base.replace(/[^a-z0-9_-]/g, "").slice(0, 35);
+      return clean || "principal_admin";
+    }
+
+    async function handlePrincipalRegister(e) {
+      e.preventDefault();
+      clearError();
+
+      const fullName = document.getElementById("regFullName").value.trim();
+      const schoolSelect = document.getElementById("regSchoolName");
+      const schoolCustom = document.getElementById("regSchoolNameCustom");
+      const schoolName = schoolSelect.value === "Other" ? (schoolCustom.value.trim() || "Custom Institution") : schoolSelect.value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value;
+      const confirmPassword = document.getElementById("regConfirmPassword").value;
+      const btn = document.getElementById("regBtn");
+
+      if (password !== confirmPassword) {
+        showError("Passwords do not match. Please re-enter.");
+        return;
+      }
+
+      if (password.length < 8) {
+        showError("Password must be at least 8 characters long.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Creating Institutional Account...`;
+
+      const username = slugify(fullName, email);
+
+      try {
+        let res;
+        try {
+          res = await EklavyaXAPI.register({
+            username: username,
+            email: email,
+            password: password,
+            role: "admin",
+            avatar_url: "assets/img/logo.png"
+          });
+        } catch (err) {
+          if (/already taken/i.test(err.message || "")) {
+            const suffix = Math.floor(100 + Math.random() * 900);
+            res = await EklavyaXAPI.register({
+              username: `${username}_${suffix}`,
+              email: email,
+              password: password,
+              role: "admin",
+              avatar_url: "assets/img/logo.png"
+            });
+          } else {
+            throw err;
+          }
+        }
+
+        // Save session & store school name in profile
+        EklavyaXAPI.saveSession(res.access_token, {
+          ...res.user,
+          school: schoolName,
+          full_name: fullName
+        });
+
+        window.location.href = "principal_dashboard.html";
+      } catch (err) {
+        showError(err.message || "Failed to create principal account. Please try again.");
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fas fa-check-circle"></i> Create Principal & School Account`;
+      }
+    }
+  </script>
+</body>
+
+</html>
