@@ -865,6 +865,15 @@ aside .profile .profile-info span {
   flex-shrink: 0;
 }
 
+@media (max-width: 600px) {
+  .chat-visual-btn::after {
+    content: " Take photo";
+    margin-left: 5px;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+  }
+}
+
 .chat-visual-btn:hover,
 .chat-visual-btn.has-image {
   color: var(--marigold);
