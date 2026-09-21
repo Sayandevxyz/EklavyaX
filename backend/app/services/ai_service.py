@@ -184,38 +184,49 @@ async def get_visual_explanation(
         f"Then give a direct answer and a clear step-by-step explanation in {target_language}. "
         "If the image is unclear, say exactly what part is unreadable and do not invent details."
     )
-    payload = {
-        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
-        "messages": [{
-            "role": "user",
-            "content": [
-                {"type": "text", "text": prompt},
-                {"type": "image_url", "image_url": {"url": f"data:{content_type};base64,{image_data}"}},
-            ],
-        }],
-        "temperature": 0.3,
-        "max_tokens": 2500,
-    }
     headers = {
         "Authorization": f"Bearer {settings.GROQ_API_KEY}",
         "Content-Type": "application/json",
     }
+    models = [
+        settings.GROQ_VISION_MODEL,
+        "meta-llama/llama-4-scout-17b-16e-instruct",
+        "meta-llama/llama-4-maverick-17b-128e-instruct",
+    ]
+    models = list(dict.fromkeys(models))
+    last_error = ""
     async with httpx.AsyncClient(timeout=60.0) as client:
-        response = await client.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            json=payload,
-            headers=headers,
-        )
-    if response.status_code >= 400:
-        logger.error("Groq visual explanation failed: %s", response.text[:500])
-        raise HTTPException(
-            status_code=status.HTTP_502_BAD_GATEWAY,
-            detail="Visual AI could not analyze this image. Please try a clearer photo.",
-        )
-    content = response.json().get("choices", [{}])[0].get("message", {}).get("content")
-    if not content:
-        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Visual AI returned an empty answer.")
-    return content
+        for model in models:
+            payload = {
+                "model": model,
+                "messages": [{
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {"type": "image_url", "image_url": {"url": f"data:{content_type};base64,{image_data}"}},
+                    ],
+                }],
+                "temperature": 0.3,
+                "max_tokens": 2500,
+            }
+            response = await client.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                json=payload,
+                headers=headers,
+            )
+            if response.status_code >= 400:
+                last_error = response.text[:300]
+                logger.error("Groq visual model %s failed (%s): %s", model, response.status_code, last_error)
+                continue
+            content = response.json().get("choices", [{}])[0].get("message", {}).get("content")
+            if content:
+                return content
+            last_error = "empty response"
+
+    raise HTTPException(
+        status_code=status.HTTP_502_BAD_GATEWAY,
+        detail=f"Visual AI provider rejected the image request. Check GROQ_VISION_MODEL or API access. ({last_error})",
+    )
 
 
 
