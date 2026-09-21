@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="../css/global.css?v=2026.1">
   <link rel="stylesheet" href="../css/app_pages.css?v=3.2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <style>
     :root { --material-board: #162c22; --material-surface: rgba(22, 51, 39, .78); --material-border: rgba(245, 240, 226, .14); --material-chalk: #f5f0e2; --material-dim: #a9bdae; --material-gold: #eeb43e; --material-terra: #d97a5c; }
     body { min-height:100vh; background: radial-gradient(circle at 88% 8%, rgba(238,180,62,.12), transparent 25rem), var(--material-board); color:var(--material-chalk); }
@@ -39,6 +42,14 @@
     .result-section { margin-top:20px; padding-top:16px; border-top:1px solid var(--material-border); }
     .result-section h3 { margin:0 0 8px; color:var(--material-gold); font-size:.92rem; }
     .result-section p,.result-section li { color:var(--material-chalk); line-height:1.6; }
+    .study-rich-text { color:var(--material-chalk); line-height:1.7; }
+    .study-rich-text h3,.study-rich-text h4 { margin:18px 0 8px; color:var(--material-gold); line-height:1.25; }
+    .study-rich-text h3 { font-size:1.18rem; }.study-rich-text h4 { font-size:1rem; }
+    .study-rich-text strong { color:#ffe5a0; }.study-rich-text ul,.study-rich-text ol { padding-left:24px; margin:8px 0; }
+    .study-rich-text li { margin:5px 0; }.study-rich-text code { padding:2px 6px; border-radius:5px; color:#8fe4c0; background:rgba(0,0,0,.24); }
+    .study-rich-text pre { overflow:auto; padding:14px; border:1px solid var(--material-border); border-radius:8px; color:#d9f5e8; background:#0b1c15; }
+    .study-rich-text hr { border:0; border-top:1px solid var(--material-border); margin:18px 0; }
+    .study-rich-text .katex-display { overflow-x:auto; padding:10px 0; color:#ffe5a0; }
     .result-section ul { padding-left:20px; }
     .material-error { padding:10px; border:1px solid rgba(217,122,92,.35); border-radius:8px; color:#ffc8b8; background:rgba(217,122,92,.12); }
     @media (max-width:760px) { .material-page { padding:20px 16px 60px; }.material-topbar { margin-bottom:34px; }.material-hero,.material-grid { display:block; }.material-hero p { margin-top:20px; }.material-panel + .material-panel { margin-top:18px; } }
@@ -89,10 +100,34 @@
       submit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
       try {
         const data = await EklavyaXAPI.analyzeStudyMaterial(body);
-        result.innerHTML = `<h2><i class="fas fa-layer-group"></i> Your study pack</h2><div class="result-section"><h3>AI summary</h3><p>${escapeHtml(data.summary)}</p></div><div class="result-section"><h3>Important concepts</h3><ul>${data.important_concepts.map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div><div class="result-section"><h3>Formula sheet</h3><ul>${(data.formula_sheet.length ? data.formula_sheet : ["No formulas detected yet. Add notes containing equations for extraction."]).map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div><div class="result-section"><h3>Chapter-wise notes</h3><ul>${data.chapter_notes.map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div>`;
+        result.innerHTML = `<h2><i class="fas fa-layer-group"></i> Your study pack</h2><div class="result-section"><h3>AI summary</h3><div class="study-rich-text">${formatStudyMarkdown(data.summary)}</div></div><div class="result-section"><h3>Important concepts</h3><ul>${data.important_concepts.map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div><div class="result-section"><h3>Formula sheet</h3><div class="study-rich-text">${formatStudyMarkdown((data.formula_sheet.length ? data.formula_sheet : ["No formulas detected yet. Add notes containing equations for extraction."]).join("\n- "))}</div></div><div class="result-section"><h3>Chapter-wise notes</h3><div class="study-rich-text">${formatStudyMarkdown(data.chapter_notes.join("\n- "))}</div></div>`;
+        result.querySelectorAll(".study-rich-text").forEach((element) => {
+          if (window.renderMathInElement) renderMathInElement(element, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "\\[", right: "\\]", display: true }, { left: "\\(", right: "\\)", display: false }, { left: "$", right: "$", display: false }] });
+        });
       } catch (error) { result.innerHTML = `<h2><i class="fas fa-layer-group"></i> Your study pack</h2><p class="material-error">${escapeHtml(error.message)}</p>`; } finally { submit.disabled = false; submit.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> Generate study material'; }
     });
     function escapeHtml(value) { const div = document.createElement("div"); div.textContent = value ?? ""; return div.innerHTML; }
+    function formatStudyMarkdown(value) {
+      if (!value) return "";
+      const math = [];
+      const code = [];
+      let text = String(value).replace(/```(?:[\w-]+)?\n([\s\S]*?)```/g, (_, block) => { code.push(block); return `@@CODE${code.length - 1}@@`; });
+      text = text.replace(/\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^$\n]+\$|\\\([^\n]*?\\\)/g, (match) => { math.push(match); return `@@MATH${math.length - 1}@@`; });
+      let html = escapeHtml(text)
+        .replace(/^### (.*)$/gim, "<h4>$1</h4>")
+        .replace(/^## (.*)$/gim, "<h3>$1</h3>")
+        .replace(/^# (.*)$/gim, "<h3>$1</h3>")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/`([^`\n]+)`/g, "<code>$1</code>")
+        .replace(/^\s*[-*]\s+(.*)$/gim, "<li>$1</li>")
+        .replace(/^\s*\d+\.\s+(.*)$/gim, "<li>$1</li>")
+        .replace(/(<li>.*<\/li>)(?:<br>|\n)?/g, "$1")
+        .replace(/\n\n/g, "<br><br>")
+        .replace(/\n/g, "<br>");
+      math.forEach((item, index) => { html = html.replace(`@@MATH${index}@@`, item); });
+      code.forEach((item, index) => { html = html.replace(`@@CODE${index}@@`, `<pre>${escapeHtml(item)}</pre>`); });
+      return html;
+    }
   </script>
 </body>
 </html>
