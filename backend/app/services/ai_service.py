@@ -188,7 +188,7 @@ async def get_visual_explanation(
         "Authorization": f"Bearer {settings.GROQ_API_KEY}",
         "Content-Type": "application/json",
     }
-    models = ["meta-llama/llama-4-scout-17b-16e-instruct"]
+    models = ["qwen/qwen3.8-27b"]
     models = list(dict.fromkeys(models))
     last_error = ""
     async with httpx.AsyncClient(timeout=60.0) as client:
@@ -203,7 +203,7 @@ async def get_visual_explanation(
                     ],
                 }],
                 "temperature": 0.3,
-                "max_tokens": 2500,
+                "max_completion_tokens": 2500,
             }
             response = await client.post(
                 "https://api.groq.com/openai/v1/chat/completions",
