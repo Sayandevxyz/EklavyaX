@@ -128,17 +128,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
 
     def ensure_default_accounts_exist(db_sess):
         from app.core.security import hash_password
-        # 1. Principal / Admin
-        if not db_sess.query(models.User).filter_by(email="principal@eklavya.edu").first():
-            db_sess.add(models.User(
-                username="principal",
-                email="principal@eklavya.edu",
-                hashed_password=hash_password("Admin@123"),
-                role=models.UserRole.admin,
-                school="Eklavya Central Academy",
-                department="Administration",
-            ))
-        # 2. Teacher (Physics)
+        # 1. Teacher (Physics)
         if not db_sess.query(models.User).filter_by(email="teacher@eklavya.edu").first():
             db_sess.add(models.User(
                 username="teacher_physics",
@@ -150,7 +140,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
                 specialization_subject="Physics",
                 office_hours="Mon-Fri 02:00 PM - 04:00 PM",
             ))
-        # 3. Student (Class 10)
+        # 2. Student (Class 10)
         if not db_sess.query(models.User).filter_by(email="student@eklavya.edu").first():
             st = models.User(
                 username="sayan_mondal",
@@ -169,15 +159,6 @@ async def lifespan(app: FastAPI) -> AsyncGenerator:
             db_sess.flush()
             db_sess.add(models.Wallet(user_id=st.id, balance=250, xp=480))
             db_sess.add(models.Streak(user_id=st.id, current_streak=5, longest_streak=7))
-        # 4. Parent
-        if not db_sess.query(models.User).filter_by(email="parent@eklavya.edu").first():
-            db_sess.add(models.User(
-                username="parent_bikash",
-                email="parent@eklavya.edu",
-                hashed_password=hash_password("Parent@123"),
-                role=models.UserRole.parent,
-                parent_phone="+91 9876543200",
-            ))
         db_sess.commit()
 
     db = SessionLocal()
@@ -383,7 +364,10 @@ from app.api.routes import (  # noqa: E402
     tutor,
     leaderboard,
     notifications,
+<<<<<<< HEAD
     parent_dashboard,
+=======
+>>>>>>> 0d1e62c (Remove parent and principal portal flows)
     analytics,
     study_groups,
     achievements,
@@ -395,7 +379,10 @@ from app.api.routes import (  # noqa: E402
     reports,
     certificates,
     doubts,
+<<<<<<< HEAD
     principal,
+=======
+>>>>>>> 0d1e62c (Remove parent and principal portal flows)
     pedagogy,
 )
 
@@ -407,7 +394,10 @@ app.include_router(quiz.router)
 app.include_router(tutor.router)
 app.include_router(leaderboard.router)
 app.include_router(notifications.router)
+<<<<<<< HEAD
 app.include_router(parent_dashboard.router)
+=======
+>>>>>>> 0d1e62c (Remove parent and principal portal flows)
 app.include_router(analytics.router)
 app.include_router(study_groups.router)
 app.include_router(achievements.router)
@@ -419,7 +409,10 @@ app.include_router(live_quiz.router)
 app.include_router(reports.router)
 app.include_router(certificates.router)
 app.include_router(doubts.router)
+<<<<<<< HEAD
 app.include_router(principal.router)
+=======
+>>>>>>> 0d1e62c (Remove parent and principal portal flows)
 app.include_router(pedagogy.router)
 
 

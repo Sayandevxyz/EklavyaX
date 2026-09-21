@@ -27,7 +27,6 @@ class UserRole(str, enum.Enum):
     student = "student"
     teacher = "teacher"
     admin = "admin"
-    parent = "parent"
 
 
 class ChallengeStatus(str, enum.Enum):

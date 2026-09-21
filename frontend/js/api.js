@@ -404,15 +404,6 @@ const EklavyaXAPI = (() => {
   const markAllNotificationsRead = () => request("/api/notifications/read-all", { method: "POST" });
   const triggerNotificationReminders = () => request("/api/notifications/trigger-reminders", { method: "POST" });
 
-  const generateParentCode = (parentName, parentEmail) =>
-    request("/api/parent/generate-code", { method: "POST", body: { parent_name: parentName, parent_email: parentEmail } });
-  const viewParentProgress = (code) =>
-    request(`/api/parent/view/${code}`, { auth: false });
-  const getParentMessages = (studentId) =>
-    request(`/api/parent/messages/${studentId}`, { auth: false });
-  const sendParentMessage = (data) =>
-    request("/api/parent/message/send", { method: "POST", auth: false, body: data });
-
   const getTeacherProfile = () => request("/auth/teacher-profile");
   const updateTeacherProfile = (data) =>
     request("/auth/teacher-profile", { method: "PUT", body: data });
@@ -556,10 +547,13 @@ const EklavyaXAPI = (() => {
     markNotificationRead,
     markAllNotificationsRead,
     triggerNotificationReminders,
+<<<<<<< HEAD
     generateParentCode,
     viewParentProgress,
     getParentMessages,
     sendParentMessage,
+=======
+>>>>>>> 0d1e62c (Remove parent and principal portal flows)
     getTeacherProfile,
     updateTeacherProfile,
     getTeacherOverview,

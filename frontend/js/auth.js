@@ -95,11 +95,9 @@
 
       // Intelligent auto-redirect based on actual role
       if (result.user.role === "admin") {
-        window.location.href = window.location.pathname.includes("/teacher/") ? "principal_dashboard.html" : "../teacher/principal_dashboard.html";
+        window.location.href = window.location.pathname.includes("/teacher/") ? "dashboard.html" : "../teacher/dashboard.html";
       } else if (result.user.role === "teacher") {
         window.location.href = window.location.pathname.includes("/teacher/") ? "dashboard.html" : "../teacher/dashboard.html";
-      } else if (result.user.role === "parent") {
-        window.location.href = window.location.pathname.includes("/student/") ? "parent_dashboard.html" : "../student/parent_dashboard.html";
       } else {
         window.location.href = window.location.pathname.includes("/student/") ? "student_dashboard.html" : "../student/student_dashboard.html";
       }

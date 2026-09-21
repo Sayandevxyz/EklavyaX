@@ -11,7 +11,6 @@ class UserRole(str, Enum):
     student = "student"
     teacher = "teacher"
     admin = "admin"
-    parent = "parent"
 
 
 

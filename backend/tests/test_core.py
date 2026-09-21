@@ -75,6 +75,16 @@ def db(db_engine):
 # 1. Password Hashing
 # ─────────────────────────────────────────────────────────────────────────────
 
+class TestRoleModel:
+    """Parent should no longer be a user role, and principal access should be removed from the user-facing flow."""
+
+    def test_parent_role_is_removed_and_student_teacher_roles_still_exist(self):
+        roles = {role.value for role in models.UserRole}
+        assert "parent" not in roles
+        assert "principal" not in roles
+        assert {"student", "teacher"}.issubset(roles)
+
+
 class TestPasswordSecurity:
     """Tests for bcrypt password hashing utilities."""
 
