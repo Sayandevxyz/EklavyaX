@@ -107,6 +107,24 @@ const EklavyaXAPI = (() => {
     return data;
   }
 
+  async function analyzeStudyMaterial(formData) {
+    const token = getToken();
+    const response = await fetch(`${API_BASE}/api/study-materials/analyze`, {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    });
+    const raw = await response.text();
+    let data;
+    try {
+      data = raw ? JSON.parse(raw) : null;
+    } catch {
+      throw new Error(raw.slice(0, 240) || `Study material request failed (${response.status})`);
+    }
+    if (!response.ok) throw new Error(data?.detail || `Study material request failed (${response.status})`);
+    return data;
+  }
+
   // ── Auth endpoints ───────────────────────────────────────────────────────
 
   function register({ username, email, password, role, gender, avatar_url }) {
@@ -554,6 +572,7 @@ const EklavyaXAPI = (() => {
     tutorHistory,
     tutorClearHistory,
     tutorTranscribe,
+    analyzeStudyMaterial,
     uploadVisualDoubt,
     visualDoubtExplain,
     listChallenges,

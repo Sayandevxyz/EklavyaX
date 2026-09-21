@@ -88,7 +88,7 @@
       submit.disabled = true;
       submit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
       try {
-        const data = await fetch("/api/study-materials/analyze", { method:"POST", headers:{ Authorization:`Bearer ${EklavyaXAPI.getToken()}` }, body }).then(async (response) => { const json = await response.json(); if (!response.ok) throw new Error(json.detail || "Could not analyze material."); return json; });
+        const data = await EklavyaXAPI.analyzeStudyMaterial(body);
         result.innerHTML = `<h2><i class="fas fa-layer-group"></i> Your study pack</h2><div class="result-section"><h3>AI summary</h3><p>${escapeHtml(data.summary)}</p></div><div class="result-section"><h3>Important concepts</h3><ul>${data.important_concepts.map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div><div class="result-section"><h3>Formula sheet</h3><ul>${(data.formula_sheet.length ? data.formula_sheet : ["No formulas detected yet. Add notes containing equations for extraction."]).map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div><div class="result-section"><h3>Chapter-wise notes</h3><ul>${data.chapter_notes.map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div>`;
       } catch (error) { result.innerHTML = `<h2><i class="fas fa-layer-group"></i> Your study pack</h2><p class="material-error">${escapeHtml(error.message)}</p>`; } finally { submit.disabled = false; submit.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> Generate study material'; }
     });
