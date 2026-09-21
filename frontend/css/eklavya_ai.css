@@ -911,6 +911,21 @@ aside .profile .profile-info span {
   cursor: pointer;
 }
 
+.user-visual-attachment img {
+  display: block;
+  width: min(280px, 100%);
+  max-height: 240px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.visual-instruction {
+  color: inherit;
+  white-space: pre-wrap;
+}
+
 .chat-input-controls {
   display: flex;
   align-items: center;
