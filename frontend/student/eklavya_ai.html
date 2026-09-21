@@ -812,10 +812,25 @@
 
     // ── Send Message Workflow ────────────────────────────────────────────────────
     async function handleSendMessage() {
-      const text = chatInputEl.value.trim();
+      let text = chatInputEl.value.trim();
       const lang = chatLangEl.value;
 
-      if (!text || isGenerating) return;
+      if ((!text && !visualDoubtFile) || isGenerating) return;
+
+      if (visualDoubtFile) {
+        sendBtnEl.disabled = true;
+        sendBtnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        try {
+          const upload = await EklavyaXAPI.uploadVisualDoubt(visualDoubtFile);
+          const instruction = text || "Solve this visual doubt step-by-step. Identify whether it is mathematics, physics, chemistry, or a programming error.";
+          text = `${instruction}\n\nVisual doubt image: ${upload.file_url}`;
+        } catch (err) {
+          appendErrorMessage(`I couldn't upload that image: ${err.message || "Please try again."}`);
+          sendBtnEl.disabled = false;
+          sendBtnEl.innerHTML = '<i class="fas fa-arrow-up"></i>';
+          return;
+        }
+      }
 
       // Hide welcome state
       if (welcomeStateEl) welcomeStateEl.style.display = "none";
@@ -825,6 +840,13 @@
 
       // Clear and reset textarea
       chatInputEl.value = "";
+      if (visualDoubtFile) {
+        visualDoubtFile = null;
+        visualDoubtInputEl.value = "";
+        visualDoubtPreviewEl.hidden = true;
+        visualDoubtBtnEl.classList.remove("has-image");
+        chatInputEl.placeholder = defaultPlaceholder;
+      }
       autoResizeTextarea();
 
       // Show Gemini thinking indicator

@@ -234,6 +234,23 @@ const EklavyaXAPI = (() => {
     });
   }
 
+  function uploadVisualDoubt(file) {
+    const formData = new FormData();
+    formData.append("file", file, file.name || "visual-doubt.png");
+    const token = getToken();
+    return fetch(`${API_BASE}/api/doubts/upload`, {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    }).then(async (res) => {
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        throw new Error(data?.detail || `Image upload failed (${res.status})`);
+      }
+      return data;
+    });
+  }
+
   // ── Peer Challenges ──────────────────────────────────────────────────────
 
   function listChallenges(statusFilter = null) {
@@ -520,6 +537,7 @@ const EklavyaXAPI = (() => {
     tutorHistory,
     tutorClearHistory,
     tutorTranscribe,
+    uploadVisualDoubt,
     listChallenges,
     createChallenge,
     acceptChallenge,
