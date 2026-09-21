@@ -15,7 +15,7 @@ from app.core.config import settings
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
 REACT_FRONTEND_DIR = PROJECT_DIR / "frontend-react" / "dist"
-FRONTEND_DIR = REACT_FRONTEND_DIR if REACT_FRONTEND_DIR.is_dir() else PROJECT_DIR / "frontend"
+FRONTEND_DIR = REACT_FRONTEND_DIR
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
