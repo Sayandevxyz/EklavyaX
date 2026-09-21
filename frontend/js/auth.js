@@ -181,9 +181,5 @@
   loginForm.addEventListener("submit", handleLogin);
   signupForm.addEventListener("submit", handleSignup);
 
-  // If already logged in as this role, skip straight to the dashboard.
-  const existingUser = EklavyaXAPI.getUser();
-  if (EklavyaXAPI.isLoggedIn() && existingUser && existingUser.role === role) {
-    window.location.href = redirectUrl;
-  }
+  // Keep the login page visible even when a previous session exists.
 })();
