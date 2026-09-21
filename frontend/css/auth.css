@@ -217,6 +217,49 @@
   display: none !important;
 }
 
+.language-menu {
+  position: relative;
+}
+
+.language-menu > button {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.language-options {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 20;
+  display: grid;
+  min-width: 120px;
+  padding: 6px;
+  border: 1px solid rgba(41, 56, 47, 0.18);
+  border-radius: 6px;
+  background: #fffdf4;
+  box-shadow: 0 8px 20px rgba(41, 56, 47, 0.16);
+}
+
+.language-options[hidden] {
+  display: none;
+}
+
+.language-options button {
+  padding: 8px 10px;
+  border: 0;
+  color: #29382f;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.language-options button:hover {
+  background: rgba(244, 174, 37, 0.18);
+}
+
 .auth-field--split .auth-field {
   flex: 1;
   margin-bottom: 0;

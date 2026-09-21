@@ -25,8 +25,15 @@
       <span class="logo-text">EklavyaX</span>
     </div>
     <div class="nav-right">
-      <div class="lang"><i class="fas fa-globe"></i> EN <i class="fas fa-chevron-down"></i></div>
-      <div class="settings"><i class="fas fa-cog"></i> Settings</div>
+      <div class="lang language-menu">
+        <button type="button" id="languageToggle"><i class="fas fa-globe"></i> <span id="languageLabel">EN</span> <i class="fas fa-chevron-down"></i></button>
+        <div class="language-options" id="languageOptions" hidden>
+          <button type="button" data-language="EN">English</button>
+          <button type="button" data-language="HI">Hindi</button>
+          <button type="button" data-language="BN">Bengali</button>
+        </div>
+      </div>
+      <a class="settings" href="settings.html"><i class="fas fa-cog"></i> Settings</a>
     </div>
   </header>
 
@@ -153,6 +160,19 @@
 
   <script src="../js/api.js?v=2.2"></script>
   <script src="../js/auth.js?v=2.2"></script>
+  <script>
+    const languageToggle = document.getElementById("languageToggle");
+    const languageOptions = document.getElementById("languageOptions");
+    const languageLabel = document.getElementById("languageLabel");
+    const savedLanguage = localStorage.getItem("eklavya_language") || "EN";
+    languageLabel.textContent = savedLanguage;
+    languageToggle?.addEventListener("click", () => { languageOptions.hidden = !languageOptions.hidden; });
+    languageOptions?.querySelectorAll("button").forEach((option) => option.addEventListener("click", () => {
+      languageLabel.textContent = option.dataset.language;
+      localStorage.setItem("eklavya_language", option.dataset.language);
+      languageOptions.hidden = true;
+    }));
+  </script>
   <script src="../js/chatbot.js?v=2.2"></script>
 </body>
 
