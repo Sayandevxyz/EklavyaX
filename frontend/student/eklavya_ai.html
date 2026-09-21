@@ -821,9 +821,10 @@
         sendBtnEl.disabled = true;
         sendBtnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
         try {
-          const upload = await EklavyaXAPI.uploadVisualDoubt(visualDoubtFile);
           const instruction = text || "Solve this visual doubt step-by-step. Identify whether it is mathematics, physics, chemistry, or a programming error.";
-          text = `${instruction}\n\nVisual doubt image: ${upload.file_url}`;
+          const visualResult = await EklavyaXAPI.visualDoubtExplain(visualDoubtFile, instruction, lang);
+          text = instruction;
+          window.__visualDoubtResult = visualResult;
         } catch (err) {
           appendErrorMessage(`I couldn't upload that image: ${err.message || "Please try again."}`);
           sendBtnEl.disabled = false;
@@ -858,7 +859,8 @@
       sendBtnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
       try {
-        const res = await EklavyaXAPI.tutorExplain(text, lang);
+        const res = window.__visualDoubtResult || await EklavyaXAPI.tutorExplain(text, lang);
+        window.__visualDoubtResult = null;
 
         // Remove typing indicator
         if (typingRow && typingRow.parentNode) {

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import base64
 from typing import Optional
 
 import httpx
@@ -160,6 +161,61 @@ async def _call_groq(prompt: str) -> str:
         status_code=status.HTTP_502_BAD_GATEWAY,
         detail="AI provider (Groq) is currently unavailable. Please try again in a moment.",
     )
+
+
+async def get_visual_explanation(
+    image_bytes: bytes,
+    content_type: str,
+    instruction: str,
+    target_language: str = "English",
+) -> str:
+    """Analyze a student image with a vision-capable Groq model."""
+    if not settings.GROQ_API_KEY:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Visual AI is not configured. Set GROQ_API_KEY on the backend.",
+        )
+
+    image_data = base64.b64encode(image_bytes).decode("ascii")
+    prompt = (
+        f"You are Gravity, a patient STEM tutor. Analyze the attached student image. "
+        f"{instruction or 'Solve the problem shown in the image step by step.'} "
+        f"First identify whether it is mathematics, physics, chemistry, or a programming error. "
+        f"Then give a direct answer and a clear step-by-step explanation in {target_language}. "
+        "If the image is unclear, say exactly what part is unreadable and do not invent details."
+    )
+    payload = {
+        "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+        "messages": [{
+            "role": "user",
+            "content": [
+                {"type": "text", "text": prompt},
+                {"type": "image_url", "image_url": {"url": f"data:{content_type};base64,{image_data}"}},
+            ],
+        }],
+        "temperature": 0.3,
+        "max_tokens": 2500,
+    }
+    headers = {
+        "Authorization": f"Bearer {settings.GROQ_API_KEY}",
+        "Content-Type": "application/json",
+    }
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        response = await client.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            json=payload,
+            headers=headers,
+        )
+    if response.status_code >= 400:
+        logger.error("Groq visual explanation failed: %s", response.text[:500])
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Visual AI could not analyze this image. Please try a clearer photo.",
+        )
+    content = response.json().get("choices", [{}])[0].get("message", {}).get("content")
+    if not content:
+        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Visual AI returned an empty answer.")
+    return content
 
 
 

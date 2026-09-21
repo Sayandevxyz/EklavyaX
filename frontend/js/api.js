@@ -251,6 +251,23 @@ const EklavyaXAPI = (() => {
     });
   }
 
+  function visualDoubtExplain(file, instruction, targetLanguage = "English") {
+    const formData = new FormData();
+    formData.append("file", file, file.name || "visual-doubt.png");
+    formData.append("instruction", instruction || "Solve this visual doubt step-by-step.");
+    formData.append("target_language", targetLanguage);
+    const token = getToken();
+    return fetch(`${API_BASE}/tutor/visual-explain`, {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    }).then(async (res) => {
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.detail || `Visual AI failed (${res.status})`);
+      return data;
+    });
+  }
+
   // ── Peer Challenges ──────────────────────────────────────────────────────
 
   function listChallenges(statusFilter = null) {
@@ -538,6 +555,7 @@ const EklavyaXAPI = (() => {
     tutorClearHistory,
     tutorTranscribe,
     uploadVisualDoubt,
+    visualDoubtExplain,
     listChallenges,
     createChallenge,
     acceptChallenge,

@@ -13,10 +13,51 @@ from app.schemas.tutor_sch import (
     ExplainResponse,
     FeedbackResponse,
 )
-from app.services.ai_service import get_explanation, transcribe_audio_groq
+from app.services.ai_service import get_explanation, get_visual_explanation, transcribe_audio_groq
 from app.services.game_logic import earn_coins_and_xp, refund_coins, spend_coins
 
 router = APIRouter(prefix="/tutor", tags=["GRAVITY.ai Tutor"])
+
+
+@router.post("/visual-explain", response_model=ExplainResponse, summary="Analyze a student visual doubt")
+async def explain_visual(
+    file: UploadFile = File(...),
+    instruction: str = Form("Solve this visual doubt step-by-step."),
+    target_language: str = Form("English"),
+    current_user: models.User = Depends(require_role("student")),
+    db: Session = Depends(get_db),
+):
+    content_type = file.content_type or "image/jpeg"
+    if content_type not in {"image/jpeg", "image/png", "image/webp"}:
+        raise HTTPException(status_code=400, detail="Please upload a JPG, PNG, or WebP image.")
+    image_bytes = await file.read()
+    if not image_bytes or len(image_bytes) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="Image must be between 1 byte and 10MB.")
+
+    cost = settings.AI_EXPLAIN_COST
+    wallet = db.query(models.Wallet).filter_by(user_id=current_user.id).first()
+    if not wallet or wallet.balance < cost:
+        raise HTTPException(status_code=400, detail=f"Insufficient EduCoins. Visual AI costs {cost} coins.")
+    updated_wallet = spend_coins(db, current_user.id, coins=cost, reason="ai_visual_explain")
+    explanation = await get_visual_explanation(image_bytes, content_type, instruction, target_language)
+    log_entry = models.AIExplanationLog(
+        user_id=current_user.id,
+        highlighted_text=f"Visual doubt: {instruction}",
+        target_language=target_language,
+        explanation=explanation,
+        cost_coins=cost,
+        refunded=False,
+    )
+    db.add(log_entry)
+    db.commit()
+    db.refresh(log_entry)
+    return ExplainResponse(
+        explanation_log_id=log_entry.id,
+        explanation=explanation,
+        cost_coins=cost,
+        new_balance=updated_wallet.balance,
+        target_language=target_language,
+    )
 
 
 
