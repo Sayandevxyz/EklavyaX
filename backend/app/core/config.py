@@ -40,7 +40,6 @@ class Settings(BaseSettings):
     AI_PROVIDER: str = "groq"           
     GROQ_API_KEY: str = ""
     GROQ_MODEL: str = "openai/gpt-oss-120b"
-    GROQ_VISION_MODEL: str = "meta-llama/llama-4-scout-17b-16e-instruct"
     OPENROUTER_API_KEY: str = ""
     OPENROUTER_MODEL: str = "openai/gpt-oss-120b"
     GEMINI_API_KEY: str = ""

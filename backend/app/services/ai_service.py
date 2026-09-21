@@ -188,10 +188,7 @@ async def get_visual_explanation(
         "Authorization": f"Bearer {settings.GROQ_API_KEY}",
         "Content-Type": "application/json",
     }
-    supported_vision_model = "meta-llama/llama-4-scout-17b-16e-instruct"
-    configured_model = settings.GROQ_VISION_MODEL
-    models = [configured_model] if configured_model == supported_vision_model else []
-    models.append(supported_vision_model)
+    models = ["meta-llama/llama-4-scout-17b-16e-instruct"]
     models = list(dict.fromkeys(models))
     last_error = ""
     async with httpx.AsyncClient(timeout=60.0) as client:
@@ -224,7 +221,7 @@ async def get_visual_explanation(
 
     raise HTTPException(
         status_code=status.HTTP_502_BAD_GATEWAY,
-        detail=f"Visual AI provider rejected the image request. Check GROQ_VISION_MODEL or API access. ({last_error})",
+        detail=f"Groq Vision rejected the image request. Check GROQ_API_KEY and model access. ({last_error})",
     )
 
 
