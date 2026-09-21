@@ -13,7 +13,15 @@
   <style>
     :root { --material-board: #162c22; --material-surface: rgba(22, 51, 39, .78); --material-border: rgba(245, 240, 226, .14); --material-chalk: #f5f0e2; --material-dim: #a9bdae; --material-gold: #eeb43e; --material-terra: #d97a5c; }
     body { min-height:100vh; background: radial-gradient(circle at 88% 8%, rgba(238,180,62,.12), transparent 25rem), var(--material-board); color:var(--material-chalk); }
-    .material-page { max-width:1100px; margin:0 auto; padding:28px 28px 80px; }
+    .material-menu-toggle { display:none; position:fixed; top:16px; left:16px; z-index:60; width:42px; height:42px; border:1px solid var(--material-border); border-radius:10px; color:var(--material-chalk); background:var(--material-surface); cursor:pointer; }
+    .material-sidebar { position:fixed; inset:0 auto 0 0; z-index:50; width:240px; padding:24px 14px; overflow-y:auto; border-right:1px solid rgba(245,240,226,.1); background:rgba(8,27,19,.96); }
+    .material-sidebar-logo { display:flex; align-items:center; gap:10px; margin:0 12px 24px; color:var(--material-gold); font-family:Kalam,cursive; font-size:1.55rem; font-weight:700; }
+    .material-sidebar-logo img { width:38px; height:38px; object-fit:contain; }
+    .material-sidebar nav { display:grid; gap:5px; }
+    .material-sidebar a { display:flex; align-items:center; gap:13px; padding:12px 14px; border-radius:10px; color:var(--material-dim); text-decoration:none; font-weight:600; }
+    .material-sidebar a:hover,.material-sidebar a.active { color:#12251c; background:#f5efdc; }
+    .material-sidebar a i { width:18px; text-align:center; color:var(--material-gold); }
+    .material-page { max-width:1100px; margin:0 auto 0 240px; padding:28px 40px 80px; }
     .material-topbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:46px; }
     .material-brand { display:flex; align-items:center; gap:10px; color:var(--material-chalk); font-weight:700; text-decoration:none; }
     .material-brand i { color:var(--material-gold); font-size:1.3rem; }
@@ -52,10 +60,26 @@
     .study-rich-text .katex-display { overflow-x:auto; padding:10px 0; color:#ffe5a0; }
     .result-section ul { padding-left:20px; }
     .material-error { padding:10px; border:1px solid rgba(217,122,92,.35); border-radius:8px; color:#ffc8b8; background:rgba(217,122,92,.12); }
-    @media (max-width:760px) { .material-page { padding:20px 16px 60px; }.material-topbar { margin-bottom:34px; }.material-hero,.material-grid { display:block; }.material-hero p { margin-top:20px; }.material-panel + .material-panel { margin-top:18px; } }
+    @media (max-width:760px) { .material-menu-toggle { display:block; }.material-sidebar { transform:translateX(-100%); transition:transform .2s ease; }.material-sidebar.open { transform:translateX(0); }.material-page { margin:0; padding:76px 16px 60px; }.material-topbar { margin-bottom:34px; }.material-hero,.material-grid { display:block; }.material-hero p { margin-top:20px; }.material-panel + .material-panel { margin-top:18px; } }
   </style>
 </head>
 <body>
+  <button class="material-menu-toggle" id="materialMenuToggle" type="button" aria-label="Open student menu"><i class="fas fa-bars"></i></button>
+  <aside class="material-sidebar" id="materialSidebar" aria-label="Student navigation">
+    <div class="material-sidebar-logo"><img src="../assets/img/logo.png" alt="EklavyaX"><span>EklavyaX</span></div>
+    <nav>
+      <a href="student_dashboard.html"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="student_my_courses.html"><i class="fas fa-book"></i><span>My Courses</span></a>
+      <a href="explore_courses.html"><i class="fas fa-compass"></i><span>Explore Courses</span></a>
+      <a href="quiz.html"><i class="fas fa-brain"></i><span>Daily Quiz</span></a>
+      <a href="faction_wars.html"><i class="fas fa-shield-alt"></i><span>Faction Wars</span></a>
+      <a href="lab_simulation.html"><i class="fas fa-vials"></i><span>Lab Simulations</span></a>
+      <a href="eklavya_ai.html"><i class="fas fa-robot"></i><span>GRAVITY AI</span></a>
+      <a href="doubts.html"><i class="fas fa-question-circle"></i><span>Doubts</span></a>
+      <a class="active" href="study_materials.html"><i class="fas fa-layer-group"></i><span>Smart Study Material</span></a>
+      <a href="settings.html"><i class="fas fa-cog"></i><span>Settings</span></a>
+    </nav>
+  </aside>
   <main class="material-page">
     <header class="material-topbar"><a class="material-brand" href="student_dashboard.html"><i class="fas fa-arrow-left"></i><span>EklavyaX / Student</span></a><a class="material-back" href="student_dashboard.html">Back to dashboard</a></header>
     <section class="material-hero">
@@ -83,6 +107,7 @@
   </main>
   <script src="../js/api.js?v=2.2"></script>
   <script>
+    document.getElementById("materialMenuToggle").addEventListener("click", () => document.getElementById("materialSidebar").classList.toggle("open"));
     const form = document.getElementById("materialForm");
     const result = document.getElementById("materialResult");
     const submit = document.getElementById("materialSubmit");
