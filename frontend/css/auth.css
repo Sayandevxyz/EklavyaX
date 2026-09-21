@@ -213,6 +213,10 @@
   gap: 14px;
 }
 
+#collegeDetails[hidden] {
+  display: none !important;
+}
+
 .auth-field--split .auth-field {
   flex: 1;
   margin-bottom: 0;
