@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="../css/global.css?v=2026.1">
   <link rel="stylesheet" href="../css/app_pages.css?v=3.2">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <style>
     :root { --voice-board:#162c22; --voice-surface:rgba(22,51,39,.78); --voice-border:rgba(245,240,226,.14); --voice-chalk:#f5f0e2; --voice-dim:#a9bdae; --voice-gold:#eeb43e; }
     body { min-height:100vh; color:var(--voice-chalk); background:radial-gradient(circle at 88% 8%,rgba(238,180,62,.12),transparent 25rem),var(--voice-board); }
@@ -17,7 +20,8 @@
     .voice-page { max-width:1100px; margin:0 auto 0 240px; padding:28px 40px 80px; }.voice-topbar { display:flex; justify-content:space-between; margin-bottom:48px; }.voice-brand,.voice-back { color:var(--voice-dim); text-decoration:none; }.voice-brand i { margin-right:8px; color:var(--voice-gold); }.voice-back:hover { color:var(--voice-gold); }
     .voice-hero { display:flex; align-items:end; justify-content:space-between; gap:40px; margin-bottom:30px; }.voice-kicker { margin:0 0 12px; color:var(--voice-gold); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; }.voice-hero h1 { max-width:10ch; margin:0; color:var(--voice-chalk); font-family:Kalam,cursive; font-size:clamp(2.8rem,6vw,5rem); line-height:.96; }.voice-hero p { max-width:42ch; color:var(--voice-dim); line-height:1.7; }
     .voice-card { max-width:820px; padding:28px; border:1px solid var(--voice-border); border-radius:14px; background:var(--voice-surface); box-shadow:0 18px 45px rgba(0,0,0,.18); }.voice-controls { display:flex; align-items:center; gap:12px; margin-bottom:20px; }.voice-controls select { flex:1; padding:12px; border:1px solid var(--voice-border); border-radius:8px; color:var(--voice-chalk); background:rgba(5,20,14,.35); }.voice-controls option { color:#172c22; }.voice-mic { min-width:150px; padding:12px 16px; border:0; border-radius:8px; color:#12251c; background:var(--voice-gold); font-weight:700; cursor:pointer; }.voice-mic:hover { filter:brightness(1.08); }.voice-mic.listening { color:#fff; background:#d9534f; }.voice-status { min-height:22px; margin:0 0 12px; color:var(--voice-dim); font-size:.84rem; }.voice-question { width:100%; min-height:120px; padding:14px; border:1px solid var(--voice-border); border-radius:9px; outline:0; resize:vertical; color:var(--voice-chalk); background:rgba(5,20,14,.35); line-height:1.6; }.voice-question:focus { border-color:var(--voice-gold); box-shadow:0 0 0 3px rgba(238,180,62,.12); }.voice-ask { margin-top:14px; padding:13px 22px; border:0; border-radius:8px; color:#12251c; background:linear-gradient(135deg,var(--voice-gold),#d4982a); font-weight:700; cursor:pointer; }.voice-ask:disabled { opacity:.6; cursor:wait; }.voice-answer { display:none; margin-top:22px; padding-top:22px; border-top:1px solid var(--voice-border); }.voice-answer.visible { display:block; }.voice-answer h2 { margin:0 0 14px; color:var(--voice-gold); font-size:1.1rem; }.voice-answer-text { color:var(--voice-chalk); line-height:1.75; white-space:pre-wrap; }.voice-read { margin-top:14px; padding:9px 13px; border:1px solid var(--voice-border); border-radius:8px; color:var(--voice-chalk); background:rgba(255,255,255,.07); cursor:pointer; }.voice-read:hover { border-color:var(--voice-gold); color:var(--voice-gold); }
-    @media(max-width:760px) { .voice-menu-toggle { display:block; }.voice-sidebar { transform:translateX(-100%); transition:transform .2s ease; }.voice-sidebar.open { transform:translateX(0); }.voice-page { margin:0; padding:76px 16px 60px; }.voice-hero { display:block; }.voice-hero p { margin-top:20px; }.voice-controls { align-items:stretch; flex-direction:column; }.voice-mic { width:100%; } }
+    .voice-answer-head { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:16px; }.voice-answer-badge { padding:5px 9px; border:1px solid rgba(238,180,62,.3); border-radius:999px; color:var(--voice-gold); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; }.voice-answer-text { white-space:normal; }.voice-answer-text h3,.voice-answer-text h4 { margin:18px 0 8px; color:var(--voice-gold); line-height:1.25; }.voice-answer-text strong { color:#ffe5a0; }.voice-answer-text ul,.voice-answer-text ol { margin:8px 0; padding-left:24px; }.voice-answer-text li { margin:5px 0; }.voice-answer-text code { padding:2px 6px; border-radius:5px; color:#8fe4c0; background:rgba(0,0,0,.24); }.voice-answer-text pre { overflow:auto; padding:14px; border-radius:8px; color:#d9f5e8; background:#0b1c15; }
+    @media(max-width:760px) { .voice-menu-toggle { display:block; }.voice-sidebar { transform:translateX(-100%); transition:transform .2s ease; }.voice-sidebar.open { transform:translateX(0); }.voice-page { margin:0; padding:76px 16px 60px; }.voice-hero { display:block; }.voice-hero p { margin-top:20px; }.voice-controls { align-items:stretch; flex-direction:column; }.voice-mic { width:100%; }.voice-answer-head { align-items:flex-start; flex-direction:column; } }
   </style>
 </head>
 <body>
@@ -51,7 +55,7 @@
       <p class="voice-status" id="voice-tutor-status-text">Voice Tutor: English</p>
       <textarea class="voice-question" id="voiceQuestion" placeholder="Your spoken question will appear here. You can also type a question..."></textarea>
       <button class="voice-ask" id="voiceAsk" type="button"><i class="fas fa-paper-plane"></i> Ask Gravity</button>
-      <div class="voice-answer" id="voiceAnswer"><h2><i class="fas fa-volume-up"></i> Gravity's answer</h2><div class="voice-answer-text" id="voiceAnswerText"></div><button class="voice-read" id="voiceRead" type="button"><i class="fas fa-volume-up"></i> Read answer aloud</button></div>
+      <div class="voice-answer" id="voiceAnswer"><div class="voice-answer-head"><h2><i class="fas fa-volume-up"></i> Gravity's answer</h2><span class="voice-answer-badge">Tutor response</span></div><div class="voice-answer-text" id="voiceAnswerText"></div><button class="voice-read" id="voiceRead" type="button"><i class="fas fa-volume-up"></i> Read answer aloud</button></div>
     </section>
   </main>
   <script src="../js/api.js?v=2.2"></script>
@@ -70,9 +74,17 @@
       const text = question.value.trim();
       if (!text) { question.focus(); return; }
       askButton.disabled = true; askButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Thinking...'; answer.classList.add("visible"); answerText.textContent = "Gravity is preparing your explanation...";
-      try { const result = await EklavyaXAPI.tutorExplain(text, speechLanguage[language.value]); answerText.textContent = result.explanation; } catch (error) { answerText.textContent = error.message || "Could not get an answer."; } finally { askButton.disabled = false; askButton.innerHTML = '<i class="fas fa-paper-plane"></i> Ask Gravity'; }
+      try { const result = await EklavyaXAPI.tutorExplain(text, speechLanguage[language.value]); answerText.innerHTML = formatVoiceAnswer(result.explanation); if (window.renderMathInElement) renderMathInElement(answerText, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "\\[", right: "\\]", display: true }, { left: "\\(", right: "\\)", display: false }, { left: "$", right: "$", display: false }] }); } catch (error) { answerText.textContent = error.message || "Could not get an answer."; } finally { askButton.disabled = false; askButton.innerHTML = '<i class="fas fa-paper-plane"></i> Ask Gravity'; }
     });
     document.getElementById("voiceRead").addEventListener("click", () => VoiceTutor.speakText(answerText.textContent, { lang: language.value }));
+    function escapeHtml(value) { const node = document.createElement("div"); node.textContent = value || ""; return node.innerHTML; }
+    function formatVoiceAnswer(value) {
+      const math = [];
+      let text = String(value || "").replace(/\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^$\n]+\$|\\\([^\n]*?\\\)/g, (match) => { math.push(match); return `@@MATH${math.length - 1}@@`; });
+      let html = escapeHtml(text).replace(/^### (.*)$/gim, "<h4>$1</h4>").replace(/^## (.*)$/gim, "<h3>$1</h3>").replace(/^# (.*)$/gim, "<h3>$1</h3>").replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/`([^`\n]+)`/g, "<code>$1</code>").replace(/^\s*[-*]\s+(.*)$/gim, "<li>$1</li>").replace(/^\s*\d+\.\s+(.*)$/gim, "<li>$1</li>").replace(/\n\n/g, "<br><br>").replace(/\n/g, "<br>");
+      math.forEach((formula, index) => { html = html.replace(`@@MATH${index}@@`, formula); });
+      return html;
+    }
   </script>
 </body>
 </html>
