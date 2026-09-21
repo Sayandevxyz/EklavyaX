@@ -13,13 +13,25 @@ from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 
 
-FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
+PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
+REACT_FRONTEND_DIR = PROJECT_DIR / "frontend-react" / "dist"
+FRONTEND_DIR = REACT_FRONTEND_DIR if REACT_FRONTEND_DIR.is_dir() else PROJECT_DIR / "frontend"
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
     level=logging.DEBUG if settings.APP_ENV == "development" else logging.INFO,
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
 )
+
+
+class SPAStaticFiles(StaticFiles):
+    """Serve the React entry point for client-side routes."""
+
+    async def get_response(self, path: str, scope):
+        response = await super().get_response(path, scope)
+        if response.status_code == 404:
+            return await super().get_response("index.html", scope)
+        return response
 
 
 
@@ -456,7 +468,7 @@ if FRONTEND_DIR.is_dir():
 
     app.mount(
         "/",
-        StaticFiles(
+        SPAStaticFiles(
             directory=str(FRONTEND_DIR),
             html=True,
         ),
