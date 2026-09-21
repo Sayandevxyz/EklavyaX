@@ -208,6 +208,11 @@
                   placeholder="Ask Gravity anything (e.g. 'Derive kinetic energy formula', 'Explain photosynthesis')..."
                   autofocus></textarea>
 
+                <input id="visualDoubtInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+                <button id="visualDoubtBtn" class="chat-visual-btn" type="button" title="Upload a visual doubt">
+                  <i class="fas fa-camera"></i>
+                </button>
+
                 <div class="chat-input-controls">
                   <!-- Language Selector Pill -->
                   <select id="chatLang" class="lang-select-pill" title="Target explanation language">
@@ -226,6 +231,14 @@
                     <i class="fas fa-arrow-up"></i>
                   </button>
                 </div>
+              </div>
+              <div id="visualDoubtPreview" class="visual-doubt-preview" hidden>
+                <img id="visualDoubtImage" alt="Selected visual doubt preview">
+                <div>
+                  <strong>Visual Doubt Solver</strong>
+                  <span>Math step-by-step &bull; Physics diagrams &bull; Chemistry equations &bull; Programming errors</span>
+                </div>
+                <button id="clearVisualDoubt" type="button" title="Remove image"><i class="fas fa-times"></i></button>
               </div>
             </div>
             <div class="chat-input-footer-hint">
@@ -270,6 +283,11 @@
     const chatMessagesEl = document.getElementById("chatMessages");
     const welcomeStateEl = document.getElementById("welcomeState");
     const chatInputEl = document.getElementById("chatInput");
+    const visualDoubtInputEl = document.getElementById("visualDoubtInput");
+    const visualDoubtBtnEl = document.getElementById("visualDoubtBtn");
+    const visualDoubtPreviewEl = document.getElementById("visualDoubtPreview");
+    const visualDoubtImageEl = document.getElementById("visualDoubtImage");
+    const clearVisualDoubtEl = document.getElementById("clearVisualDoubt");
     const chatLangEl = document.getElementById("chatLang");
     const voiceMicBtnEl = document.getElementById("voiceMicBtn");
     const sendBtnEl = document.getElementById("sendBtn");
@@ -281,6 +299,25 @@
     const closeHistoryBtnEl = document.getElementById("closeHistoryBtn");
     const newChatTopBtnEl = document.getElementById("newChatTopBtn");
     const clearHistoryBtnEl = document.getElementById("clearHistoryBtn");
+    let visualDoubtFile = null;
+
+    visualDoubtBtnEl?.addEventListener("click", () => visualDoubtInputEl?.click());
+    visualDoubtInputEl?.addEventListener("change", () => {
+      const file = visualDoubtInputEl.files?.[0];
+      if (!file) return;
+      visualDoubtFile = file;
+      visualDoubtImageEl.src = URL.createObjectURL(file);
+      visualDoubtPreviewEl.hidden = false;
+      visualDoubtBtnEl.classList.add("has-image");
+      chatInputEl.placeholder = "Tell Gravity what to focus on, or send to analyze this visual doubt...";
+    });
+    clearVisualDoubtEl?.addEventListener("click", () => {
+      visualDoubtFile = null;
+      visualDoubtInputEl.value = "";
+      visualDoubtPreviewEl.hidden = true;
+      visualDoubtBtnEl.classList.remove("has-image");
+      chatInputEl.placeholder = defaultPlaceholder;
+    });
 
     // ── Speech / Voice Language Mapping ──────────────────────────────────────────
     const SPEECH_LANG_MAP = {
