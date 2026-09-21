@@ -203,7 +203,7 @@ async def get_visual_explanation(
                     ],
                 }],
                 "temperature": 0.3,
-                "max_completion_tokens": 2500,
+                "max_completion_tokens": 900,
             }
             response = await client.post(
                 "https://api.groq.com/openai/v1/chat/completions",
