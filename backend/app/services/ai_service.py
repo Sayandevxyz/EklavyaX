@@ -188,11 +188,10 @@ async def get_visual_explanation(
         "Authorization": f"Bearer {settings.GROQ_API_KEY}",
         "Content-Type": "application/json",
     }
-    models = [
-        settings.GROQ_VISION_MODEL,
-        "meta-llama/llama-4-scout-17b-16e-instruct",
-        "meta-llama/llama-4-maverick-17b-128e-instruct",
-    ]
+    supported_vision_model = "meta-llama/llama-4-scout-17b-16e-instruct"
+    configured_model = settings.GROQ_VISION_MODEL
+    models = [configured_model] if configured_model == supported_vision_model else []
+    models.append(supported_vision_model)
     models = list(dict.fromkeys(models))
     last_error = ""
     async with httpx.AsyncClient(timeout=60.0) as client:
