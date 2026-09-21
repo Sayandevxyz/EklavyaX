@@ -14,6 +14,11 @@ const VoiceTutor = (() => {
     "ml-IN": { label: "🌴 Malayalam (മലയാളം)", aiName: "Malayalam", voicePrefix: "ml" },
     "te-IN": { label: "🏛️ Telugu (తెలుగు)", aiName: "Telugu", voicePrefix: "te" },
     "ta-IN": { label: "🪔 Tamil (தமிழ்)", aiName: "Tamil", voicePrefix: "ta" },
+    "bn-IN": { label: "বাংলা Bengali", aiName: "Bengali", voicePrefix: "bn" },
+    "kn-IN": { label: "ಕನ್ನಡ Kannada", aiName: "Kannada", voicePrefix: "kn" },
+    "mr-IN": { label: "मराठी Marathi", aiName: "Marathi", voicePrefix: "mr" },
+    "gu-IN": { label: "ગુજરાતી Gujarati", aiName: "Gujarati", voicePrefix: "gu" },
+    "or-IN": { label: "ଓଡ଼ିଆ Odia", aiName: "Odia", voicePrefix: "or" },
   };
 
   function init() {
