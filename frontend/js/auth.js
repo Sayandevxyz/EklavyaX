@@ -120,6 +120,7 @@
     const email = form.email.value.trim();
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
+    const studentClass = form.studentClass ? form.studentClass.value : "";
 
     if (password !== confirmPassword) {
       showError("Passwords don't match.");
@@ -143,7 +144,7 @@
     try {
       let result;
       try {
-        result = await EklavyaXAPI.register({ username, email, password, role, gender, avatar_url });
+        result = await EklavyaXAPI.register({ username, email, password, role, gender, avatar_url, grade: studentClass });
       } catch (err) {
         // Username collision → retry once with a short random suffix.
         if (/already taken/i.test(err.message || "")) {
@@ -155,6 +156,7 @@
             role,
             gender,
             avatar_url,
+            grade: studentClass,
           });
         } else {
           throw err;
