@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Study Material | EklavyaX</title>
+  <link rel="stylesheet" href="../css/global.css?v=2026.1">
+  <link rel="stylesheet" href="../css/app_pages.css?v=3.2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .material-page { max-width: 1100px; margin: 0 auto; padding: 34px 24px 80px; }
+    .material-hero { display:flex; justify-content:space-between; gap:24px; align-items:end; margin-bottom:28px; }
+    .material-hero h1 { margin:0; color:var(--text-dark,#29382f); font-size:clamp(2rem,5vw,3.5rem); }
+    .material-hero p { max-width:52ch; color:#6d786f; line-height:1.6; }
+    .material-grid { display:grid; grid-template-columns: minmax(280px,.8fr) minmax(320px,1.2fr); gap:20px; }
+    .material-panel { padding:24px; border:1px solid rgba(41,56,47,.14); border-radius:14px; background:rgba(255,253,244,.78); box-shadow:0 10px 30px rgba(41,56,47,.08); }
+    .material-panel h2 { margin-top:0; color:#29382f; }
+    .material-form label { display:block; margin:14px 0 6px; color:#6d786f; font-size:.84rem; }
+    .material-form input,.material-form select,.material-form textarea { width:100%; padding:12px; border:1px solid rgba(41,56,47,.18); border-radius:8px; color:#29382f; background:#fffdf4; }
+    .material-form textarea { min-height:150px; resize:vertical; }
+    .material-submit { width:100%; margin-top:18px; padding:13px 16px; border:0; border-radius:8px; color:#fffdf4; background:#294d3c; font-weight:700; cursor:pointer; }
+    .material-submit:disabled { opacity:.6; cursor:wait; }
+    .material-help { display:grid; gap:10px; margin-top:18px; color:#6d786f; font-size:.88rem; line-height:1.45; }
+    .material-help div { padding:10px 12px; border-left:3px solid #eeb43e; background:rgba(238,180,62,.1); }
+    .result-empty { color:#879188; line-height:1.6; }
+    .result-section { margin-top:20px; padding-top:16px; border-top:1px solid rgba(41,56,47,.12); }
+    .result-section h3 { margin:0 0 8px; color:#a76532; font-size:1rem; }
+    .result-section p,.result-section li { color:#425247; line-height:1.6; }
+    .result-section ul { padding-left:20px; }
+    .material-error { color:#a6372c; background:#fff0ed; padding:10px; border-radius:8px; }
+    @media (max-width:760px) { .material-hero,.material-grid { display:block; }.material-hero p { margin-bottom:20px; }.material-panel + .material-panel { margin-top:18px; } }
+  </style>
+</head>
+<body>
+  <main class="material-page">
+    <section class="material-hero">
+      <div><p style="color:#a76532;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;">SMART STUDY MATERIAL</p><h1>Turn notes into a study path.</h1></div>
+      <p>Upload a PDF, PPT, or paste notes. Gravity extracts the important concepts, summaries, formulas, and chapter-wise revision notes.</p>
+    </section>
+    <div class="material-grid">
+      <section class="material-panel">
+        <h2><i class="fas fa-file-alt"></i> Add material</h2>
+        <form id="materialForm" class="material-form">
+          <label for="materialFile">PDF, PPT, PPTX, or notes file</label>
+          <input id="materialFile" type="file" accept=".pdf,.ppt,.pptx,.txt,.md">
+          <label for="materialSubject">Subject</label>
+          <input id="materialSubject" placeholder="Physics, Chemistry, Mathematics..." required>
+          <label for="materialChapter">Chapter</label>
+          <input id="materialChapter" placeholder="e.g. Kinematics">
+          <label for="materialNotes">Paste notes for a richer AI summary</label>
+          <textarea id="materialNotes" placeholder="Paste the key pages or notes here..."></textarea>
+          <button class="material-submit" id="materialSubmit"><i class="fas fa-wand-magic-sparkles"></i> Generate study material</button>
+        </form>
+        <div class="material-help"><div><b>Summary:</b> Get the main idea without rereading every page.</div><div><b>Concepts:</b> Find the terms and ideas worth revising.</div><div><b>Formula sheet:</b> Keep equations and derivations together.</div></div>
+      </section>
+      <section class="material-panel" id="materialResult"><h2><i class="fas fa-layer-group"></i> Your study pack</h2><p class="result-empty">Your generated summary, concepts, formula sheet, and chapter notes will appear here.</p></section>
+    </div>
+  </main>
+  <script src="../js/api.js?v=2.2"></script>
+  <script>
+    const form = document.getElementById("materialForm");
+    const result = document.getElementById("materialResult");
+    const submit = document.getElementById("materialSubmit");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const file = document.getElementById("materialFile").files[0];
+      const notes = document.getElementById("materialNotes").value.trim();
+      if (!file && !notes) { result.innerHTML = '<h2><i class="fas fa-layer-group"></i> Your study pack</h2><p class="material-error">Upload a file or paste notes first.</p>'; return; }
+      const body = new FormData();
+      if (file) body.append("file", file);
+      body.append("subject", document.getElementById("materialSubject").value);
+      body.append("chapter", document.getElementById("materialChapter").value);
+      body.append("notes", notes);
+      submit.disabled = true;
+      submit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+      try {
+        const data = await fetch("/api/study-materials/analyze", { method:"POST", headers:{ Authorization:`Bearer ${EklavyaXAPI.getToken()}` }, body }).then(async (response) => { const json = await response.json(); if (!response.ok) throw new Error(json.detail || "Could not analyze material."); return json; });
+        result.innerHTML = `<h2><i class="fas fa-layer-group"></i> Your study pack</h2><div class="result-section"><h3>AI summary</h3><p>${escapeHtml(data.summary)}</p></div><div class="result-section"><h3>Important concepts</h3><ul>${data.important_concepts.map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div><div class="result-section"><h3>Formula sheet</h3><ul>${(data.formula_sheet.length ? data.formula_sheet : ["No formulas detected yet. Add notes containing equations for extraction."]).map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div><div class="result-section"><h3>Chapter-wise notes</h3><ul>${data.chapter_notes.map(escapeHtml).map(item => `<li>${item}</li>`).join("")}</ul></div>`;
+      } catch (error) { result.innerHTML = `<h2><i class="fas fa-layer-group"></i> Your study pack</h2><p class="material-error">${escapeHtml(error.message)}</p>`; } finally { submit.disabled = false; submit.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> Generate study material'; }
+    });
+    function escapeHtml(value) { const div = document.createElement("div"); div.textContent = value ?? ""; return div.innerHTML; }
+  </script>
+</body>
+</html>

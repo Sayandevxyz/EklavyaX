@@ -376,6 +376,7 @@ from app.api.routes import (  # noqa: E402
     certificates,
     doubts,
     pedagogy,
+    study_materials,
 )
 
 app.include_router(auth.router)
@@ -398,6 +399,7 @@ app.include_router(reports.router)
 app.include_router(certificates.router)
 app.include_router(doubts.router)
 app.include_router(pedagogy.router)
+app.include_router(study_materials.router)
 
 
 
