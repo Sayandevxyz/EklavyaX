@@ -80,6 +80,7 @@ def register(payload: UserCreate, db: Session = Depends(get_db)):
         role=models.UserRole(payload.role.value),
         gender=payload.gender,
         avatar_url=avatar_url,
+        grade=payload.grade,
         faction_id=faction.id if faction else None,
     )
     db.add(user)

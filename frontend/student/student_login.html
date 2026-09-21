@@ -133,6 +133,37 @@
                 </div>
               </div>
 
+              <div class="auth-field auth-field--split" id="collegeDetails" hidden>
+                <div class="auth-field">
+                  <label>College level</label>
+                  <select name="collegeLevel" id="collegeLevel">
+                    <option value="">-- Select Level --</option>
+                    <option value="UG">UG</option>
+                    <option value="PG">PG</option>
+                  </select>
+                </div>
+                <div class="auth-field">
+                  <label>Branch</label>
+                  <select name="collegeBranch" id="collegeBranch">
+                    <option value="">-- Select Branch --</option>
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="BCA">BCA</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="BA">BA</option>
+                  </select>
+                </div>
+                <div class="auth-field">
+                  <label>Year</label>
+                  <select name="collegeYear" id="collegeYear">
+                    <option value="">-- Select Year --</option>
+                    <option value="Year 1">1st Year</option>
+                    <option value="Year 2">2nd Year</option>
+                    <option value="Year 3">3rd Year</option>
+                    <option value="Year 4">4th Year</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="auth-field">
                 <label>Email address</label>
                 <input type="email" name="email" placeholder="Enter your email" required>
@@ -168,6 +199,23 @@
 
   <script src="../js/api.js?v=2.2"></script>
   <script src="../js/auth.js?v=2.2"></script>
+  <script>
+    const studentClassSelect = document.querySelector('select[name="studentClass"]');
+    const collegeDetails = document.getElementById("collegeDetails");
+    const collegeFields = collegeDetails ? collegeDetails.querySelectorAll("select") : [];
+
+    function toggleCollegeDetails() {
+      const isCollegeStudent = studentClassSelect?.value === "College Student";
+      if (collegeDetails) collegeDetails.hidden = !isCollegeStudent;
+      collegeFields.forEach((field) => {
+        field.required = isCollegeStudent;
+        if (!isCollegeStudent) field.value = "";
+      });
+    }
+
+    studentClassSelect?.addEventListener("change", toggleCollegeDetails);
+    toggleCollegeDetails();
+  </script>
   <script src="../js/chatbot.js?v=2.2"></script>
 </body>
 

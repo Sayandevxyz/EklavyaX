@@ -23,6 +23,7 @@ class UserCreate(BaseModel):
     role: UserRole = Field(UserRole.student, description="User role")
     gender: Optional[str] = Field(None, description="User gender: boy/girl/male/female/other")
     avatar_url: Optional[str] = Field(None, max_length=255)
+    grade: Optional[str] = None
 
     @field_validator("username")
     @classmethod

@@ -121,6 +121,12 @@
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
     const studentClass = form.studentClass ? form.studentClass.value : "";
+    const collegeLevel = form.collegeLevel ? form.collegeLevel.value : "";
+    const collegeBranch = form.collegeBranch ? form.collegeBranch.value : "";
+    const collegeYear = form.collegeYear ? form.collegeYear.value : "";
+    const grade = studentClass === "College Student"
+      ? `${studentClass} - ${collegeLevel} - ${collegeBranch} - ${collegeYear}`
+      : studentClass;
 
     if (password !== confirmPassword) {
       showError("Passwords don't match.");
@@ -144,7 +150,7 @@
     try {
       let result;
       try {
-        result = await EklavyaXAPI.register({ username, email, password, role, gender, avatar_url, grade: studentClass });
+        result = await EklavyaXAPI.register({ username, email, password, role, gender, avatar_url, grade });
       } catch (err) {
         // Username collision → retry once with a short random suffix.
         if (/already taken/i.test(err.message || "")) {
@@ -156,7 +162,7 @@
             role,
             gender,
             avatar_url,
-            grade: studentClass,
+            grade,
           });
         } else {
           throw err;
