@@ -62,6 +62,7 @@ async def analyze_material(
     subject: str = Form("General"),
     chapter: str = Form(""),
     notes: str = Form(""),
+    target_language: str = Form("English"),
     current_user: models.User = Depends(require_role("student")),
 ):
     if not file and not notes.strip():
@@ -88,7 +89,7 @@ async def analyze_material(
         try:
             insights["summary"] = await get_explanation(
                 f"Create a concise study summary for {subject}, chapter {chapter or 'unspecified'} from this uploaded study material. Extract important concepts, formulas, and chapter-wise notes.\n{extracted_notes[:12000]}",
-                "Simple English",
+                target_language,
             )
         except Exception:
             pass
@@ -99,5 +100,6 @@ async def analyze_material(
         "stored_file": f"/assets/uploads/study-materials/{filename}" if filename else None,
         "subject": subject,
         "chapter": chapter,
+        "target_language": target_language,
         **insights,
     }

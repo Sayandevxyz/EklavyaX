@@ -96,6 +96,19 @@
           <input id="materialSubject" placeholder="Physics, Chemistry, Mathematics..." required>
           <label for="materialChapter">Chapter</label>
           <input id="materialChapter" placeholder="e.g. Kinematics">
+          <label for="materialLanguage">Answer language</label>
+          <select id="materialLanguage">
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Telugu">Telugu</option>
+            <option value="Malayalam">Malayalam</option>
+            <option value="Kannada">Kannada</option>
+            <option value="Marathi">Marathi</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Odia">Odia</option>
+          </select>
           <label for="materialNotes">Paste notes for a richer AI summary</label>
           <textarea id="materialNotes" placeholder="Paste the key pages or notes here..."></textarea>
           <button class="material-submit" id="materialSubmit"><i class="fas fa-wand-magic-sparkles"></i> Generate study material</button>
@@ -121,6 +134,7 @@
       body.append("subject", document.getElementById("materialSubject").value);
       body.append("chapter", document.getElementById("materialChapter").value);
       body.append("notes", notes);
+      body.append("target_language", document.getElementById("materialLanguage").value);
       submit.disabled = true;
       submit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
       try {
