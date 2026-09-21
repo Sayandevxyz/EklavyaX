@@ -202,14 +202,14 @@ def run_tests():
 
     # Test 9: Verify HTML Files Exist and Contain Key Pedagogical Components
     html_checks = [
-        ("frontend-react/public/legacy/teacher/analytics.html", ["Doubt & Struggle Heatmap", "High Struggle", "Schedule 15-Min Remedial", "Assign Targeted Practice"]),
-        ("frontend-react/public/legacy/student/eklavyalens.html", ["EklavyaLens", "Indus", "Ganga", "Himalayas", "Civilization", "Terrain"]),
-        ("frontend-react/public/legacy/student/pyq_arena.html", ["PYQ Arena", "JEE Main", "NEET", "CBSE Class 12", "timerDisplay"]),
-        ("frontend-react/public/legacy/student/bookmarks.html", ["Revision Bookmarks Vault", "Practice My Bookmarks", "Formulas"]),
-        ("frontend-react/public/legacy/student/mindmaps.html", ["Concept Dependency Mind Map", "Interactive Concept Network", "Prerequisite Flow"]),
-        ("frontend-react/public/legacy/student/explore_courses.html", ["Classes 6", "EklavyaLens Maps", "Social Science (EklavyaLens)", "All Grades"]),
-        ("frontend-react/public/legacy/student/student_dashboard.html", ["EklavyaLens Maps", "PYQ Arena", "Mind Maps", "Revision Vault", "Silently Struggling Detector", "Revision Radar"]),
-        ("frontend-react/public/legacy/student/quiz.html", ["EklavyaALERT", "Prerequisite Dependency", "bookmarkCurrentQuestion"]),
+        ("frontend/public/legacy/teacher/analytics.html", ["Doubt & Struggle Heatmap", "High Struggle", "Schedule 15-Min Remedial", "Assign Targeted Practice"]),
+        ("frontend/public/legacy/student/eklavyalens.html", ["EklavyaLens", "Indus", "Ganga", "Himalayas", "Civilization", "Terrain"]),
+        ("frontend/public/legacy/student/pyq_arena.html", ["PYQ Arena", "JEE Main", "NEET", "CBSE Class 12", "timerDisplay"]),
+        ("frontend/public/legacy/student/bookmarks.html", ["Revision Bookmarks Vault", "Practice My Bookmarks", "Formulas"]),
+        ("frontend/public/legacy/student/mindmaps.html", ["Concept Dependency Mind Map", "Interactive Concept Network", "Prerequisite Flow"]),
+        ("frontend/public/legacy/student/explore_courses.html", ["Classes 6", "EklavyaLens Maps", "Social Science (EklavyaLens)", "All Grades"]),
+        ("frontend/public/legacy/student/student_dashboard.html", ["EklavyaLens Maps", "PYQ Arena", "Mind Maps", "Revision Vault", "Silently Struggling Detector", "Revision Radar"]),
+        ("frontend/public/legacy/student/quiz.html", ["EklavyaALERT", "Prerequisite Dependency", "bookmarkCurrentQuestion"]),
     ]
 
     for rel_path, required_strings in html_checks:

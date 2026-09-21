@@ -51,7 +51,7 @@ uvicorn app.main:app --reload --port 8000
 ```
 eklavyax/
 ├── backend/
-├── frontend-react/
+├── frontend/
 └── README.md
 ```
 

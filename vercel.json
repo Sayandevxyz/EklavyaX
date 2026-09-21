@@ -6,7 +6,7 @@
       "use": "@vercel/python"
     },
     {
-      "src": "frontend-react/**",
+      "src": "frontend/**",
       "use": "@vercel/static"
     }
   ],
@@ -25,7 +25,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "frontend-react/dist/$1"
+      "dest": "frontend/dist/$1"
     }
   ],
   "headers": [
