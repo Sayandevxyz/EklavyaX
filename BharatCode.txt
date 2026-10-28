@@ -1,0 +1,17 @@
+Project: EklavyaX
+Direction: Learning & education
+Summary: Gamified AI learning platform where students learn physics with an AI tutor and virtual labs, and teachers track progress and grade assignments.
+
+How BharatCode is used:
+- Model: <qwen-3.8-27b / confirm>
+- API: BharatCode Model API (OpenAI-compatible)
+- Code: backend/app/<ai file path>
+- Uses: tutoring with hints, quiz generation, doubt solving
+
+Harness design:
+- Prompts: <path>
+- Tools: quiz generator, virtual lab, progress tracker
+- Workflow: diagnose -> teach -> test -> adapt
+
+Run: see README (set BHARATCODE_API_KEY in backend/.env)
+Demo: <link>
